@@ -467,6 +467,11 @@
 (function(){
   var toc=document.getElementById('toc-toggle');
   var sidebar=document.querySelector('.sidebar');
+  var back=document.querySelector('.mobile-back');
+  var path=location.pathname;
+  var isIndex=/index\.html$/.test(path)||path==='/'||/\/$/.test(path);
+  if(toc&&!sidebar)toc.style.display='none';
+  if(back&&isIndex)back.style.display='none';
   if(!toc||!sidebar)return;
   var ov=document.createElement('div');
   ov.className='sidebar-overlay';
