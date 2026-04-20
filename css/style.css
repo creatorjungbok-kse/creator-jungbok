@@ -1759,6 +1759,51 @@ strong { font-weight: 700; }
 #btn-top:hover { transform: translateY(-3px); }
 
 /* ============================================================
+   모바일 — 뒤로가기 & 목차 버튼
+   ============================================================ */
+.mobile-back {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-sub);
+  cursor: pointer;
+  padding: 4px 6px 4px 0;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.mobile-back:hover { color: var(--red); }
+
+.toc-toggle {
+  display: none;
+  background: var(--bg-soft);
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--text);
+  cursor: pointer;
+  padding: .3rem .65rem;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.toc-toggle:hover { border-color: var(--red); color: var(--red); }
+
+/* ============================================================
+   모바일 — 사이드바 드로어
+   ============================================================ */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  z-index: 150;
+  cursor: pointer;
+}
+.sidebar-open .sidebar-overlay { display: block; }
+
+/* ============================================================
    햄버거 메뉴 (모바일 전용)
    ============================================================ */
 .nav-toggle {
@@ -1788,6 +1833,35 @@ strong { font-weight: 700; }
 /* ============================================================
    모바일 전용 개선
    ============================================================ */
+@media (max-width: 900px) {
+  /* 뒤로가기 & 목차 버튼 표시 */
+  .mobile-back { display: block; }
+  .toc-toggle { display: block; }
+
+  /* 헤더 레이아웃 — 로고가 가운데 가득 차도록 */
+  .header-inner { gap: .5rem; }
+  .site-logo { flex: 1; }
+
+  /* 사이드바 → 드로어로 전환 */
+  .sidebar {
+    display: block !important;
+    position: fixed;
+    top: 0;
+    left: -290px;
+    width: 270px;
+    height: 100vh;
+    overflow-y: auto;
+    background: var(--bg);
+    z-index: 200;
+    padding: 1.5rem 1.25rem;
+    padding-top: 4.5rem;
+    border-right: 1px solid var(--border);
+    box-shadow: 4px 0 24px rgba(0,0,0,.12);
+    transition: left .3s cubic-bezier(.4,0,.2,1);
+  }
+  .sidebar-open .sidebar { left: 0; }
+}
+
 @media (max-width: 700px) {
 
   /* 헤더 — 햄버거 활성 */

@@ -15,8 +15,10 @@
 <!-- 헤더 -->
 <header class="site-header">
   <div class="header-inner">
+    <button class="mobile-back" onclick="history.back()" aria-label="뒤로가기">&#8592;</button>
     <a href="../index.html" class="site-logo">크리에이터 <span>완전정복</span></a>
     <button class="nav-toggle" aria-label="메뉴" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+    <button class="toc-toggle" id="toc-toggle" aria-label="목차 열기">목차</button>
     <nav class="header-nav">
       <a href="../index.html">홈</a>
       <a href="../basics/index.html" class="nav-active">유튜브 기초</a>
@@ -132,6 +134,19 @@
   var b=document.getElementById('btn-top');
   window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
   b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+<script>
+(function(){
+  var toc=document.getElementById('toc-toggle');
+  var sidebar=document.querySelector('.sidebar');
+  if(!toc||!sidebar)return;
+  var ov=document.createElement('div');
+  ov.className='sidebar-overlay';
+  document.body.appendChild(ov);
+  function closeDrawer(){document.body.classList.remove('sidebar-open');}
+  toc.addEventListener('click',function(){document.body.classList.toggle('sidebar-open');});
+  ov.addEventListener('click',closeDrawer);
+})();
 </script>
 </body>
 </html>
