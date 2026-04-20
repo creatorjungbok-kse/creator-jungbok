@@ -1858,12 +1858,12 @@ strong { font-weight: 700; }
   }
   .mobile-back:hover { opacity: .8; transform: translateY(-2px); }
 
-  /* 목차 — 우측 하단 고정 플로팅 버튼 (맨 위로 버튼 위) */
+  /* 목차 — 좌측 하단, 뒤로가기 위 */
   .toc-toggle {
     display: flex;
     position: fixed;
     bottom: 5.5rem;
-    right: 1.25rem;
+    left: 1.25rem;
     width: 44px;
     height: 44px;
     background: var(--dark);
