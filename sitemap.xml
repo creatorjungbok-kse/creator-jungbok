@@ -151,6 +151,14 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- 쇼츠 -->
+  <url>
+    <loc>https://creatorjungbok.co.kr/practice/shorts/</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- 소개 / 법적 -->
   <url>
     <loc>https://creatorjungbok.co.kr/about/</loc>

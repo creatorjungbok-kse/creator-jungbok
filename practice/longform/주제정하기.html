@@ -63,6 +63,12 @@
     .next-cta-title { font-size: 1.1rem; font-weight: 800; color: #fff; }
     .next-cta-arrow { font-size: 1.5rem; color: var(--red); flex-shrink: 0; }
   </style>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="크리에이터 완전정복">
+  <meta property="og:title" content="주제 정하기 | 일반 영상 (롱폼) | 크리에이터 완전정복">
+  <meta property="og:description" content="AI 유튜브 채널 주제를 어떻게 정해야 할까. 벤치마킹부터 유튜브 정책, 직접 수익화 정지를 당한 경험까지.">
+  <meta property="og:url" content="https://creatorjungbok.co.kr/practice/longform/주제정하기.html">
 </head>
 <body>
 
@@ -161,7 +167,7 @@
         <p>2026년 4월 초, 결국 수익화 정지 통보를 받았습니다.</p>
 
         <div class="step-img">
-          <img src="../../images/practice/1.topic/1.png" alt="수익화 정지 통보 메일">
+          <img loading="lazy" src="../../images/practice/1.topic/1.png" alt="수익화 정지 통보 메일">
           <div class="img-caption">수익화 정지 통보 메일</div>
         </div>
 
@@ -224,7 +230,7 @@
   // 라이트박스
   const overlay = document.createElement('div');
   overlay.className = 'lightbox-overlay';
-  overlay.innerHTML = '<span class="lightbox-close">✕</span><img id="lightbox-img" src="" alt="">';
+  overlay.innerHTML = '<span class="lightbox-close">✕</span><img loading="lazy" id="lightbox-img" src="" alt="">';
   document.body.appendChild(overlay);
   document.querySelectorAll('.step-img img').forEach(img => {
     img.addEventListener('click', () => {
