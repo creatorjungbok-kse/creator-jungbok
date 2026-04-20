@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>마무리 | 유튜브 기초 | 크리에이터 완전정복</title>
+  <meta name="description" content="유튜브 기초 마무리. 이제 진짜 실전입니다.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .closing-cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: var(--dark);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 2rem;
+      margin-top: 3rem;
+      text-decoration: none;
+      transition: opacity .2s;
+    }
+    .closing-cta:hover { opacity: .85; text-decoration: none; }
+    .closing-cta-label {
+      font-size: .72rem; font-weight: 800;
+      color: rgba(255,255,255,.4);
+      text-transform: uppercase; letter-spacing: .1em;
+      margin-bottom: .3rem;
+    }
+    .closing-cta-title { font-size: 1.1rem; font-weight: 800; color: #fff; }
+    .closing-cta-arrow { font-size: 1.5rem; color: var(--red); flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="site-logo">크리에이터 <span>완전정복</span></a>
+    <nav class="header-nav">
+      <a href="../index.html">홈</a>
+      <a href="../basics/index.html" class="nav-active">유튜브 기초</a>
+      <a href="../practice/index.html" ><span class="nav-ai-red">AI</span> 유튜브 실전</a>
+      <a href="../course/index.html">강의실</a>
+      <a href="../community/index.html">커뮤니티</a>
+      <a href="../about/index.html">소개</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-title">유튜브 시작하기</div>
+    <ul class="sidebar-list" id="sidebar-list"></ul>
+  </aside>
+
+  <main class="main-content">
+
+    <article>
+      <header class="post-header">
+        <p class="post-chap">유튜브 기초 · 마무리</p>
+        <h1 class="post-title">여기까지가 유튜브 기초였습니다.</h1>
+      </header>
+
+      <hr class="divider">
+
+      <div class="post-body">
+
+        <p>구글 계정 만들기부터 유튜브 스튜디오까지 — 사실 이 내용은 AI 유튜브가 아닌 일반 유튜브 채널을 만들 때도 똑같이 사용되는 가장 첫 번째 단계예요. 어떤 채널을 만들든 이 기초는 동일합니다.</p>
+        <p>이제 기초는 끝났어요. 다음은 진짜 실전입니다. AI로 어떤 콘텐츠를 만드는지, 어떻게 수익화하는지, 실제로 해보면서 겪은 것들을 유튜브 실전에서 모두 풀어드릴게요.</p>
+
+      </div>
+    </article>
+
+    <nav class="post-nav" id="post-nav"></nav>
+
+        <a href="../practice/index.html" class="closing-cta">
+          <div>
+            <div class="closing-cta-label">다음 단계</div>
+            <div class="closing-cta-title">유튜브 실전 보러 가기 →</div>
+          </div>
+          <span class="closing-cta-arrow">→</span>
+        </a>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">크리에이터 <span>완전정복</span></div>
+    <p class="footer-desc">AI로 유튜브 만들기 — 실제 경험 기반 무료 공개</p>
+    <div class="footer-links">
+      <a href="../index.html">홈</a>
+      <a href="../basics/index.html">유튜브 기초</a>
+      <a href="../practice/index.html" ><span class="nav-ai-red">AI</span> 유튜브 실전</a>
+      <a href="../course/index.html">강의실</a>
+      <a href="../community/index.html">커뮤니티</a>
+      <a href="../about/index.html">소개</a>
+    </div>
+    <div class="footer-legal">
+      <a href="../privacy/index.html">개인정보처리방침</a>
+    </div>
+    <p class="footer-copy">© 크리에이터 완전정복. 무단 복제 및 배포를 금합니다.</p>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+
+<button id="btn-top" aria-label="맨 위로">↑</button>
+<script>
+  var b=document.getElementById('btn-top');
+  window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+</body>
+</html>

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>구글 계정 만들기 | 유튜브 롱폼 완전정복</title>
+  <meta name="description" content="유튜브를 시작하려면 구글 계정이 필요합니다. 구글 계정 만드는 법을 단계별로 설명합니다.">
+  <meta property="og:title" content="구글 계정 만들기 — 유튜브 롱폼 완전정복">
+  <meta property="og:description" content="유튜브를 시작하려면 구글 계정이 필요합니다. 구글 계정 만드는 법을 단계별로 설명합니다.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .chrome-banner {
+      display: inline-flex; align-items: center; gap: .6rem;
+      background: #e8f0fe;
+      border: 1px solid #4285f4;
+      border-radius: 8px;
+      padding: .55rem 1rem;
+      font-size: .88rem; font-weight: 600;
+      color: #1a73e8;
+      text-decoration: none;
+      margin-top: .5rem;
+      transition: background .2s;
+    }
+    .chrome-banner:hover { background: #d2e3fc; text-decoration: none; }
+    .chrome-banner .chrome-icon { font-size: 1.2rem; }
+    .checklist { list-style: none; padding: 0; }
+    .checklist li {
+      display: flex; align-items: flex-start; gap: .6rem;
+      padding: .45rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: .95rem;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist li::before {
+      content: '✅';
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .congrats-box {
+      background: linear-gradient(135deg, #fff0f1 0%, #fff 100%);
+      border: 2px solid var(--red);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+      margin: 2rem 0;
+    }
+    .congrats-box .congrats-emoji { font-size: 2.5rem; margin-bottom: .5rem; }
+    .congrats-box h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: .4rem; }
+    .congrats-box p { color: var(--text-sub); margin: 0; font-size: .92rem; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="site-logo">크리에이터 <span>완전정복</span></a>
+    <nav class="header-nav">
+      <a href="../index.html">홈</a>
+      <a href="../basics/index.html" class="nav-active">유튜브 기초</a>
+      <a href="../practice/index.html" ><span class="nav-ai-red">AI</span> 유튜브 실전</a>
+      <a href="../course/index.html">강의실</a>
+      <a href="../community/index.html">커뮤니티</a>
+      <a href="../about/index.html">소개</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-title">유튜브 시작하기</div>
+    <ul class="sidebar-list" id="sidebar-list"></ul>
+  </aside>
+
+  <main class="main-content">
+
+    <!-- 진행 바 -->
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>진행률</span>
+        <span id="progress-label"></span>
+      </div>
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+      </div>
+    </div>
+
+    <article>
+      <header class="post-header">
+        <p class="post-chap">Chapter 01</p>
+        <h1 class="post-title">구글 계정 만들기</h1>
+        <p class="post-desc">유튜브는 구글 것이기 때문에 구글 아이디가 필요합니다.</p>
+      </header>
+
+      <hr class="divider">
+
+      <div class="post-body">
+
+        <!-- 이 챕터에서 하는 것 -->
+        <div class="callout info">
+          <div class="callout-label">📋 이 챕터에서 하는 것</div>
+          <ul style="margin:0; padding-left:1.25rem;">
+            <li>구글 계정(Gmail) 만들기</li>
+            <li>유튜브 접속 확인하기</li>
+          </ul>
+        </div>
+
+        <!-- STEP 1 -->
+        <h2>1단계. 인터넷 열기</h2>
+
+        <p>컴퓨터에서 인터넷을 열어주세요. 어떤 브라우저든 상관없지만, <strong>구글 크롬</strong>을 사용하는 것을 추천합니다.</p>
+
+        <a href="https://www.google.com/intl/ko/chrome/" target="_blank" class="chrome-banner">
+          <span class="chrome-icon">🌐</span>
+          구글 크롬이 뭔지 모르시나요? → 여기를 클릭해서 크롬을 설치해 주세요
+        </a>
+
+        <div class="callout tip" style="margin-top:1rem;">
+          <div class="callout-label">💡 왜 크롬을 추천하나요?</div>
+          <p>구글이 만든 브라우저라서 유튜브, Gmail 등 구글 서비스와 가장 잘 맞습니다. 속도도 빠르고 오류가 적습니다.</p>
+        </div>
+
+        <!-- STEP 2 -->
+        <h2>2단계. 구글 계정 만들기</h2>
+
+        <p>아래 순서대로 따라하시면 됩니다. 하나씩 천천히 해주세요.</p>
+
+        <!-- 2-1 -->
+        <div class="step-block">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>구글 창 오른쪽 상단 → "로그인" 클릭</h3>
+            <p>구글(google.com)에 접속하면 오른쪽 상단에 파란색 로그인 버튼을 클릭해주세요.</p>
+            <div class="step-img">
+              <img src="../images/basics/chapter01/1.png" alt="구글 첫 화면 — 오른쪽 상단 로그인 버튼">
+              <div class="img-caption">구글 첫 화면 — 오른쪽 상단 "로그인" 버튼</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2-2 -->
+        <div class="step-block">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>"계정 만들기" 클릭 → "개인용" 선택</h3>
+            <p>로그인 화면이 뜨면 아래쪽에 <strong>"계정 만들기"</strong>를 클릭합니다.</p>
+            <div class="step-img">
+              <img src="../images/basics/chapter01/2.png" alt="계정 만들기 버튼 빨간 동그라미 표시">
+              <div class="img-caption">"계정 만들기" 버튼을 빨간 동그라미로 표시한 화면</div>
+            </div>
+            <p style="margin-top:.85rem;">클릭하면 3가지 선택지가 나옵니다.</p>
+            <ul>
+              <li><strong>개인용</strong> ← 이걸 선택하세요</li>
+              <li>자녀 계정</li>
+              <li>직장 또는 비즈니스용</li>
+            </ul>
+            <div class="step-img">
+              <img src="../images/basics/chapter01/3.png" alt="개인용 자녀 계정 직장 또는 비즈니스용 선택 화면">
+              <div class="img-caption">개인용 · 자녀 계정 · 직장 또는 비즈니스용 선택 화면</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2-3 -->
+        <div class="step-block">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3>성과 이름 입력 → 다음 클릭</h3>
+            <p>실명을 입력해도 되고 닉네임을 입력해도 됩니다. 유튜브 채널 이름과 달라도 됩니다.</p>
+          </div>
+        </div>
+
+        <!-- 2-4 -->
+        <div class="step-block">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h3>생년월일, 성별 입력 → 다음 클릭</h3>
+            <p>생년월일과 성별을 입력한 뒤 다음을 클릭하세요.</p>
+          </div>
+        </div>
+
+        <!-- 2-5 -->
+        <div class="step-block">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h3>Gmail 주소 선택 또는 직접 만들기</h3>
+            <p>구글이 이메일 주소 2개를 추천해줍니다. 마음에 들면 추천 중 하나를 선택하면 되고, 원하는 주소가 있다면 <strong>"나만의 Gmail 주소 만들기"</strong>를 선택해서 직접 입력해도 됩니다.</p>
+            <div class="callout tip">
+              <div class="callout-label">💡 팁</div>
+              <p>이 이메일 주소가 곧 구글 아이디가 됩니다. 유튜브 채널 이름과 달라도 됩니다.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2-6 -->
+        <div class="step-block">
+          <div class="step-num">6</div>
+          <div class="step-content">
+            <h3>비밀번호 설정 → 다음 클릭</h3>
+            <p>영문 대소문자, 숫자, 특수문자를 섞어서 8자 이상으로 만들어주세요. 같은 비밀번호를 두 번 입력해야 합니다.</p>
+            <div class="callout warn">
+              <div class="callout-label">⚠ 주의</div>
+              <p>비밀번호는 반드시 어딘가에 따로 적어두세요. 잊어버리면 찾기 번거롭습니다.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2-7 -->
+        <div class="step-block">
+          <div class="step-num">7</div>
+          <div class="step-content">
+            <h3>휴대전화로 인증 코드 받기</h3>
+            <p>본인 핸드폰 번호를 입력하면 국제발신 번호로 <strong>6자리 숫자</strong>가 문자로 옵니다. 받은 번호를 입력하고 다음을 클릭합니다.</p>
+          </div>
+        </div>
+
+        <!-- 2-8 -->
+        <div class="step-block">
+          <div class="step-num">8</div>
+          <div class="step-content">
+            <h3>복구 이메일 주소 입력 (선택)</h3>
+            <p>네이버, 다음 등 다른 이메일이 있다면 입력하세요. 없거나 모르겠으면 <strong>"건너뛰기"</strong>를 눌러도 됩니다.</p>
+          </div>
+        </div>
+
+        <!-- 2-9 -->
+        <div class="step-block">
+          <div class="step-num">9</div>
+          <div class="step-content">
+            <h3>전화번호 추가 → 다음 클릭</h3>
+            <p>아까 인증한 전화번호가 자동으로 채워져 있을 겁니다. 그냥 다음을 클릭하세요.</p>
+          </div>
+        </div>
+
+        <!-- 2-10 -->
+        <div class="step-block">
+          <div class="step-num">10</div>
+          <div class="step-content">
+            <h3>전화번호 다양하게 활용하기</h3>
+            <p><strong>"업데이트"</strong>를 클릭하거나 <strong>"건너뛰기"</strong>를 눌러도 됩니다. 어느 쪽이든 상관없습니다.</p>
+          </div>
+        </div>
+
+        <!-- 2-11 -->
+        <div class="step-block">
+          <div class="step-num">11</div>
+          <div class="step-content">
+            <h3>계정 정보 검토 → 다음 클릭</h3>
+            <p>지금까지 입력한 내용이 정리되어 보입니다. 확인 후 다음을 클릭하세요.</p>
+          </div>
+        </div>
+
+        <!-- 2-12 -->
+        <div class="step-block">
+          <div class="step-num">12</div>
+          <div class="step-content">
+            <h3>개인정보 보호 및 약관 동의 → 계정 만들기 클릭</h3>
+            <p>아래쪽에 체크란 2개가 있습니다. 두 개 모두 체크한 뒤 <strong>"계정 만들기"</strong> 버튼을 누르세요.</p>
+          </div>
+        </div>
+
+        <!-- 완료 이미지 -->
+        <div class="step-img">
+          <img src="../images/basics/chapter01/4.png" alt="구글 계정이 만들어진 화면 — 오른쪽 상단 로그인 확인">
+          <div class="img-caption">구글 계정이 만들어진 화면 — 오른쪽 상단에 로그인된 것이 보입니다</div>
+        </div>
+
+        <div class="callout tip" style="margin-top:1.5rem;">
+          <div class="callout-label">✅ 확인</div>
+          <p>구글 화면 오른쪽 상단에 내 이니셜 또는 사진이 보이면 계정이 정상적으로 만들어진 겁니다.</p>
+        </div>
+
+        <!-- STEP 3 -->
+        <h2>3단계. 유튜브 접속하기</h2>
+
+        <!-- 3-1 -->
+        <div class="step-block">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>구글 검색창에 "유튜브" 검색</h3>
+            <p>구글 아이디로 로그인된 상태에서 검색창에 <strong>유튜브</strong>라고 입력한 후, 유튜브에 들어가줍니다.</p>
+            <div class="step-img">
+              <img src="../images/basics/chapter01/5.png" alt="구글 검색창에 유튜브 검색하는 화면">
+              <div class="img-caption">구글 검색창에 "유튜브" 검색하는 화면</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3-2 -->
+        <div class="step-block">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>유튜브 클릭 → 첫 화면 확인</h3>
+            <p>검색 결과에서 <strong>YouTube</strong>를 클릭합니다. 처음 만든 계정이라 추천 영상이 없는 것이 정상입니다.</p>
+            <div class="step-img">
+              <img src="../images/basics/chapter01/6.png" alt="처음 접속한 유튜브 첫 화면">
+              <div class="img-caption">처음 접속한 유튜브 첫 화면 — 영상이 없는 것이 정상</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout warn" style="margin-top:1rem;">
+          <div class="callout-label">⚠ 주의</div>
+          <p>지금은 아무것도 검색하지 않는 것을 추천합니다.</p>
+        </div>
+
+        <hr class="divider">
+
+        <!-- 마무리 멘트 -->
+        <div class="chapter-end-box">
+          <p>이번 챕터에서는 구글 아이디를 만들었습니다. 나만의 유튜브 채널을 시작하기 위한 첫 걸음입니다.</p>
+          <p>인터넷에 익숙하지 않은 분들을 위해 구글 아이디 만드는 것부터 함께 했습니다. 기존에 구글 아이디가 있는 분들은 그 아이디를 그대로 사용하면 됩니다.</p>
+          <p>다음 챕터에서는 유튜브 채널 만드는 방법에 대해 알아보겠습니다.</p>
+        </div>
+
+
+      </div>
+    </article>
+
+    <hr class="divider">
+
+    <!-- 다음 챕터 버튼 -->
+    <div style="text-align:center; margin: 2rem 0;">
+      <a href="02-채널완성.html" class="next-chapter-btn">
+        다음 챕터로 →
+      </a>
+    </div>
+
+    <!-- 이전/다음 내비 -->
+    <nav class="post-nav" id="post-nav"></nav>
+
+    <!-- 피드백 -->
+    <div class="feedback-section">
+      <h2>이 글이 도움이 됐나요?</h2>
+      <p>궁금한 점, 더 알고 싶은 내용을 댓글로 남겨주세요. 피드백을 보고 내용을 계속 추가하겠습니다.</p>
+      <div id="disqus_thread"></div>
+      <noscript>댓글을 보려면 JavaScript를 활성화해주세요.</noscript>
+    </div>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">크리에이터 <span>완전정복</span></div>
+    <p class="footer-desc">AI로 유튜브 만들기 — 실제 경험 기반 무료 공개</p>
+    <div class="footer-links">
+      <a href="../index.html">홈</a>
+      <a href="../basics/index.html">유튜브 기초</a>
+      <a href="../practice/index.html" ><span class="nav-ai-red">AI</span> 유튜브 실전</a>
+      <a href="../course/index.html">강의실</a>
+      <a href="../community/index.html">커뮤니티</a>
+      <a href="../about/index.html">소개</a>
+    </div>
+    <div class="footer-legal">
+      <a href="../privacy/index.html">개인정보처리방침</a>
+    </div>
+    <p class="footer-copy">© 크리에이터 완전정복. 무단 복제 및 배포를 금합니다.</p>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script>
+  // 라이트박스
+  const overlay = document.createElement('div');
+  overlay.className = 'lightbox-overlay';
+  overlay.innerHTML = '<span class="lightbox-close">✕</span><img id="lightbox-img" src="" alt="">';
+  document.body.appendChild(overlay);
+
+  document.querySelectorAll('.step-img img').forEach(img => {
+    img.addEventListener('click', () => {
+      document.getElementById('lightbox-img').src = img.src;
+      overlay.classList.add('active');
+    });
+  });
+
+  overlay.addEventListener('click', () => overlay.classList.remove('active'));
+</script>
+<button id="btn-top" aria-label="맨 위로">↑</button>
+<script>
+  var b=document.getElementById('btn-top');
+  window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+</body>
+</html>

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>업로드하기 | 업로드하기 | 크리에이터 완전정복</title>
+  <meta name="description" content="유튜브 영상 업로드 전 과정. 동영상 파일 업로드부터 세부정보 입력, A/B 테스팅, 예약 업로드까지 단계별 완전 가이드.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    .warn-box {
+      border: 2px solid var(--red);
+      background: var(--red-light);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.4rem;
+      margin: 1.75rem 0;
+      font-size: .93rem;
+      line-height: 1.8;
+      color: var(--text);
+    }
+    .warn-box-label {
+      font-size: .78rem;
+      font-weight: 800;
+      color: var(--red);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: .5rem;
+    }
+    .tip-box {
+      border-left: 3px solid #f59e0b;
+      background: #fffbeb;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.1rem 1.4rem;
+      margin: 1.25rem 0;
+      font-size: .93rem;
+      line-height: 1.85;
+      color: var(--text);
+    }
+    .tip-box-label {
+      font-size: .78rem;
+      font-weight: 800;
+      color: #b45309;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: .4rem;
+    }
+    .info-box {
+      background: var(--bg-soft);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.4rem;
+      margin: 1.25rem 0;
+      font-size: .93rem;
+      line-height: 1.85;
+      color: var(--text);
+    }
+    .info-box a {
+      color: var(--red);
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .info-box a:hover { text-decoration: underline; }
+    .link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      background: var(--red);
+      color: #fff;
+      font-size: .9rem;
+      font-weight: 700;
+      padding: .55rem 1.2rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: opacity .2s;
+      margin: .5rem 0 1rem;
+    }
+    .link-btn:hover { opacity: .85; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../../index.html" class="site-logo">크리에이터 <span>완전정복</span></a>
+    <nav class="header-nav">
+      <a href="../../index.html">홈</a>
+      <a href="../../basics/index.html">유튜브 기초</a>
+      <a href="../../practice/index.html" class="nav-active"><span class="nav-ai-red">AI</span> 유튜브 실전</a>
+      <a href="../../course/index.html">강의실</a>
+      <a href="../../community/index.html">커뮤니티</a>
+      <a href="../../about/index.html">소개</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-title">AI 유튜브 실전</div>
+    <ul class="sidebar-list" id="practice-nav-list"></ul>
+  </aside>
+
+  <main class="main-content">
+    <article>
+      <header class="post-header">
+        <p class="post-chap">업로드하기</p>
+        <h1 class="post-title">업로드하기</h1>
+      </header>
+
+      <hr class="divider">
+
+      <div class="post-body">
+
+        <!-- 1. 동영상 업로드 -->
+        <h2 id="upload">1. 동영상 업로드</h2>
+
+        <p>본인의 유튜브 채널에 접속합니다. 오른쪽 상단의 <strong>만들기 → 동영상 업로드</strong>를 클릭합니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/7.upload/1.png" alt="만들기 → 동영상 업로드 클릭">
+          <div class="img-caption">▲ 만들기 → 동영상 업로드 클릭</div>
+        </div>
+
+        <p>동영상 업로드 창이 뜨면 Vrew로 최종 편집한 영상을 <strong>파일 선택</strong>을 클릭해서 넣거나 드래그해서 넣어줍니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/7.upload/2.png" alt="동영상 업로드 창">
+          <div class="img-caption">▲ 파일 선택 또는 드래그해서 업로드</div>
+        </div>
+
+        <div class="warn-box">
+          <div class="warn-box-label">주의사항</div>
+          반드시 Vrew에서 최종적으로 만든 영상을 확인한 후 업로드하시기 바랍니다.
+        </div>
+
+        <hr class="divider">
+
+        <!-- 2. 세부정보 입력 -->
+        <h2 id="details">2. 세부정보 입력</h2>
+
+        <p>세부정보 입력 창이 뜨면 저번 챕터에서 만들어놓은 제목을 입력합니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/7.upload/3.png" alt="제목 입력 화면">
+          <div class="img-caption">▲ 제목 입력 화면</div>
+        </div>
+
+        <p>마찬가지로 설명글과 해시태그도 입력합니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/7.upload/4.png" alt="설명글 및 해시태그 입력 화면">
+          <div class="img-caption">▲ 설명글 및 해시태그 입력 화면</div>
+        </div>
+
+        <div class="tip-box">
+          <div class="tip-box-label">꿀팁</div>
+          해시태그는 복사 붙여넣기보다 #부터 직접 하나하나 입력하는 것을 추천합니다.
+        </div>
+
+        <hr class="divider">
+
+        <!-- 3. 썸네일 업로드 -->
+        <h2 id="thumbnail">3. 썸네일 업로드</h2>
+
+        <p>만들어놓은 썸네일을 <strong>파일 업로드</strong>를 클릭해서 넣거나 드래그해서 넣어줍니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/7.upload/5.png" alt="썸네일 업로드 화면">
+          <div class="img-caption">▲ 썸네일 업로드 화면</div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- 4. A/B 테스팅 -->
+        <h2 id="ab-testing">4. A/B 테스팅 (선택)</h2>
+
+        <p>A/B 테스팅은 제목과 썸네일을 최대 3개까지 테스트해볼 수 있는 기능입니다. 저번 챕터에서 제목을 3개, 썸네일을 3개 만들어보라고 했던 이유가 바로 이것입니다. 처음에 어떤 썸네일과 제목이 잘 될지 모르겠다면 테스트해보는 것도 좋은 방법입니다. 필수는 아닙니다.</p>
+
+        <p><strong>A/B 테스팅</strong>을 클릭합니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/7.upload/6.png" alt="A/B 테스팅 클릭">
+          <div class="img-caption">▲ A/B 테스팅 클릭</div>
+        </div>
+
+        <div class="tip-box">
+          <div class="tip-box-label">꿀팁</div>
+          이미 썸네일을 넣은 후 A/B 테스팅을 하고 싶다면 썸네일 위에 마우스를 올려서 <strong>점 3개 클릭 → A/B 테스팅</strong>을 클릭하면 됩니다.
+        </div>
+
+        <div class="step-img">
+          <img src="../../images/practice/7.upload/6-1.png" alt="썸네일에서 A/B 테스팅 클릭">
+          <div class="img-caption">▲ 썸네일에서 A/B 테스팅 클릭</div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- 5. 고급 인증 -->
+        <h2 id="advanced-auth">5. 고급 인증</h2>
+
+        <div class="info-box">
+          고급 인증을 이미 완료하신 분들은 바로 A/B 테스트 설정으로 넘어가세요.<br>
+          <a href="#ab-test-setting">A/B 테스트 설정으로 바로가기 →</a>
+        </div>
+
+        <p>고급 인증을 아직 안 하신 분들은 아래와 같은 창이 뜹니다. <strong>다음</strong>을 클릭합니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/7.upload/7.png" alt="고급 인증 안내 화면">
+          <div class="img-caption">▲ 고급 인증 안내 화면</div>
+        </div>
+
+        <p>고급 기능을 이용하기 위한 인증 방법 3가지가 나옵니다.</p>
+
+        <ul>
+          <li>내 모습을 담은 6초 길이의 동영상 촬영</li>
+          <li>신분증 사진 촬영</li>
+          <li>활동하면서 기록 쌓기</li>
+        </ul>
+
+        <p>활동하면서 기록 쌓기 이외에 위 2가지 중 원하는 것을 선택해서 인증합니다. 대부분 <strong>내 모습을 담은 6초 길이의 동영상 촬영</strong>으로 진행하시면 됩니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/7.upload/8.png" alt="인증 방법 선택 화면">
+          <div class="img-caption">▲ 인증 방법 선택 화면</div>
+        </div>
+
+        <p><strong>다음</strong>을 클릭합니다.</p>
+
+        <p>자신의 구글 이메일로 인증 메일이 온다고 합니다. <strong>이메일 받기</strong>를 클릭하거나 <strong>QR 코드 스캔</strong>을 눌러 핸드폰으로 스캔해도 됩니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/7.upload/9.png" alt="이메일 받기 또는 QR 코드 스캔 선택">
+          <div class="img-caption">▲ 이메일 받기 또는 QR 코드 스캔 선택</div>
+        </div>
+
+        <p>구글 사이트에 접속해서 오른쪽 상단의 <strong>Gmail</strong>에 들어갑니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/7.upload/10.png" alt="Gmail 접속">
+          <div class="img-caption">▲ Gmail 접속</div>
+        </div>
+
+        <p>구글에서 <strong>"~님, YouTube 인증 영상을 만드세요"</strong>라는 이메일이 와있습니다. 클릭해서 들어간 후 <strong>확인 시작</strong>을 클릭합니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/7.upload/11.png" alt="인증 이메일 확인 시작">
+          <div class="img-caption">▲ 인증 이메일 확인 시작</div>
+        </div>
+
+        <p>QR 코드가 뜨면 핸드폰 카메라로 스캔합니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/7.upload/12.png" alt="QR 코드 스캔">
+          <div class="img-caption">▲ QR 코드 스캔</div>
+        </div>
+
+        <p>핸드폰에서 로그인 후 영상 인증에 동의 창이 뜨면 동의 체크 후 <strong>동의</strong>를 클릭하고 얼굴 인증을 진행합니다.</p>
+
+        <p>완료되었으면 다시 유튜브 업로드 화면으로 돌아와서 <strong>A/B 테스팅</strong>을 클릭합니다. 아직 완료가 안 됐다고 뜨면 새로고침(F5)을 눌러주세요.</p>
+
+        <hr class="divider">
+
+        <!-- 6. A/B 테스트 설정 -->
+        <h2 id="ab-test-setting">6. A/B 테스트 설정</h2>
+
+        <p>A/B 테스트 창이 뜹니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/7.upload/13.png" alt="A/B 테스트 설정 화면">
+          <div class="img-caption">▲ A/B 테스트 설정 화면</div>
+        </div>
+
+        <p>제목만, 썸네일만, 제목과 썸네일 모두를 테스트할 수 있습니다. 원하는 항목을 선택한 후 각각 썸네일과 제목을 입력하고 <strong>테스트 설정</strong>을 클릭합니다. 2개만 테스트하고 싶으면 2개만, 3개 모두 하고 싶으면 3개 다 해도 됩니다.</p>
+
+        <hr class="divider">
+
+        <!-- 7. 시청자층 -->
+        <h2 id="audience">7. 시청자층</h2>
+
+        <p>우리 영상은 아동용이 아니기 때문에 <strong>아니요, 아동용이 아닙니다</strong>를 클릭합니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/7.upload/14.png" alt="시청자층 설정">
+          <div class="img-caption">▲ 시청자층 설정</div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- 8. 변경된 콘텐츠 -->
+        <h2 id="altered-content">8. 변경된 콘텐츠</h2>
+
+        <p>아래로 내리다 보면 <strong>변경된 콘텐츠</strong> 체크 항목이 있습니다. 우리는 AI를 사용해서 영상을 만들었기 때문에 반드시 체크해야 합니다. 체크하지 않으면 나중에 불이익을 받을 수 있습니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/7.upload/15.png" alt="변경된 콘텐츠 체크">
+          <div class="img-caption">▲ 변경된 콘텐츠 체크</div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- 9. 태그 -->
+        <h2 id="tags">9. 태그</h2>
+
+        <p>저번 챕터에서 복사해둔 태그를 붙여넣기 합니다. 태그는 쉼표(,)로 구분됩니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/7.upload/16.png" alt="태그 입력 화면">
+          <div class="img-caption">▲ 태그 입력 화면</div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- 10. 카테고리 -->
+        <h2 id="category">10. 카테고리</h2>
+
+        <p>카테고리가 <strong>교육</strong>으로 설정되어 있는지 확인합니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/7.upload/17.png" alt="카테고리 교육 확인">
+          <div class="img-caption">▲ 카테고리 교육 확인</div>
+        </div>
+
+        <div class="tip-box">
+          <div class="tip-box-label">꿀팁</div>
+          여기까지 완료되었으면 <strong>다음</strong>을 클릭합니다. 언급하지 않은 부분들은 건드릴 필요 없습니다.
+        </div>
+
+        <hr class="divider">
+
+        <!-- 11. 엔딩화면 추가 -->
+        <h2 id="endscreen">11. 엔딩화면 추가</h2>
+
+        <p>내 영상이 끝날 때 이전 영상이나 추천 영상을 홍보할 수 있는 엔딩화면을 추가합니다. <strong>추가</strong>를 클릭합니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/7.upload/18.png" alt="엔딩화면 추가 클릭">
+          <div class="img-caption">▲ 엔딩화면 추가 클릭</div>
+        </div>
+
+        <p>추천 동영상과 구독 버튼을 넣을 수 있습니다. 첫 번째 항목을 클릭합니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/7.upload/19.png" alt="엔딩화면 구성 선택">
+          <div class="img-caption">▲ 엔딩화면 구성 선택</div>
+        </div>
+
+        <p>동영상 선택 후 <strong>시청자 맞춤 → 최근 업로드된 동영상</strong>으로 변경합니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/7.upload/20.png" alt="최근 업로드된 동영상으로 설정">
+          <div class="img-caption">▲ 최근 업로드된 동영상으로 설정</div>
+        </div>
+
+        <p>위치는 원하는 곳으로 배치합니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/7.upload/21.png" alt="엔딩화면 위치 설정">
+          <div class="img-caption">▲ 엔딩화면 위치 설정</div>
+        </div>
+
+        <p>저장 후 <strong>다음</strong>을 클릭합니다.</p>
+
+        <hr class="divider">
+
+        <!-- 12. 검토 -->
+        <h2 id="review">12. 검토</h2>
+
+        <p>저작권에 체크 표시가 되어있는지 확인하고 <strong>다음</strong>을 클릭합니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/7.upload/22.png" alt="검토 화면">
+          <div class="img-caption">▲ 검토 화면</div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- 13. 예약 업로드 -->
+        <h2 id="schedule">13. 예약 업로드</h2>
+
+        <p>영상을 올릴 때는 바로 올리지 않고 예약을 설정하는 것이 좋습니다. 바로 올리면 화질도 좋지 않을 뿐더러, 매번 업로드 시간이 달라져서 일관성이 없어집니다. 시청자들은 일관성 있게 올라오는 영상을 더 좋아합니다.</p>
+
+        <p>업로드 시간이 잘 모르겠다면 벤치마킹한 영상이 몇 시에 올라왔는지 확인해서 비슷한 시간대로 설정해보세요.</p>
+
+        <p style="font-size:.9rem; color:var(--text-sub); margin-bottom:.4rem;">혹시 잊어버렸거나 아직 없는 분들은 확인하세요.</p>
+        <a href="벤치마킹.html#upload-time" class="link-btn">
+          유튜브 업로드 타임 바로가기 →
+        </a>
+
+        <p><strong>예약</strong>을 클릭합니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/7.upload/23.png" alt="예약 클릭">
+          <div class="img-caption">▲ 예약 클릭</div>
+        </div>
+
+        <p>원하는 날짜와 시간을 선택합니다. 시간은 분 단위로 설정 가능하며 키보드로 숫자를 직접 입력하면 됩니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/7.upload/24.png" alt="날짜 및 시간 선택">
+          <div class="img-caption">▲ 날짜 및 시간 선택</div>
+        </div>
+
+        <p>설정이 완료되면 하단의 <strong>예약</strong> 버튼을 클릭해서 업로드합니다.</p>
+
+        <hr class="divider">
+
+        <!-- 마무리 -->
+        <h2 id="closing">마무리</h2>
+
+        <p>업로드한 영상은 예약 시간 전에 한 번 시청해보시기 바랍니다. 혹시 잘못된 부분이 있거나 마음에 안 드는 부분이 있으면 예약을 취소하고 다시 올리면 됩니다. 바로 올리지 않고 예약 발행을 하는 이유가 바로 이것입니다.</p>
+
+        <div class="warn-box">
+          <div class="warn-box-label">주의사항</div>
+          이미 업로드되어 시청자들에게 보여진 영상은 삭제하지 않는 것이 좋습니다. 영상을 삭제하면 유튜브 알고리즘이 꼬일 수 있습니다. 또한 이미 올라간 영상의 썸네일, 제목 등을 한꺼번에 변경하는 것도 추천하지 않습니다.
+        </div>
+
+        <!-- 이전 / 다음 글 -->
+        <div style="display:flex; align-items:stretch; background:var(--dark); border-radius:var(--radius-lg); overflow:hidden; margin-top:3rem;">
+          <a href="제목설명태그.html" style="flex:1; display:flex; align-items:center; gap:.75rem; padding:1.5rem 1.75rem; text-decoration:none; transition:opacity .2s; border-right:1px solid rgba(255,255,255,.1);" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">
+            <span style="font-size:1.3rem; color:var(--red); flex-shrink:0;">←</span>
+            <div>
+              <div style="font-size:.7rem; font-weight:800; color:rgba(255,255,255,.4); text-transform:uppercase; letter-spacing:.1em; margin-bottom:.25rem;">이전 글</div>
+              <div style="font-size:1rem; font-weight:800; color:#fff;">제목 · 설명 · 태그 작성하기</div>
+            </div>
+          </a>
+          <div style="flex:1; display:flex; align-items:center; justify-content:flex-end; gap:.75rem; padding:1.5rem 1.75rem; opacity:.3;">
+            <div style="text-align:right;">
+              <div style="font-size:.7rem; font-weight:800; color:rgba(255,255,255,.4); text-transform:uppercase; letter-spacing:.1em; margin-bottom:.25rem;">다음 글</div>
+              <div style="font-size:1rem; font-weight:800; color:#fff;">준비 중</div>
+            </div>
+            <span style="font-size:1.3rem; color:var(--red); flex-shrink:0;">→</span>
+          </div>
+        </div>
+
+      </div>
+    </article>
+  </main>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">크리에이터 <span>완전정복</span></div>
+    <p class="footer-desc">AI로 유튜브 만들기 — 실제 경험 기반 무료 공개</p>
+    <div class="footer-links">
+      <a href="../../index.html">홈</a>
+      <a href="../../basics/index.html">유튜브 기초</a>
+      <a href="../../practice/index.html"><span class="nav-ai-red">AI</span> 유튜브 실전</a>
+      <a href="../../course/index.html">강의실</a>
+      <a href="../../community/index.html">커뮤니티</a>
+      <a href="../../about/index.html">소개</a>
+    </div>
+    <div class="footer-legal">
+      <a href="../../privacy/index.html">개인정보처리방침</a>
+    </div>
+    <p class="footer-copy">© 크리에이터 완전정복. 무단 복제 및 배포를 금합니다.</p>
+  </div>
+</footer>
+
+<script>
+  const overlay = document.createElement('div');
+  overlay.className = 'lightbox-overlay';
+  overlay.innerHTML = '<span class="lightbox-close">✕</span><img id="lightbox-img" src="" alt="">';
+  document.body.appendChild(overlay);
+  document.querySelectorAll('.step-img img').forEach(img => {
+    img.addEventListener('click', () => {
+      document.getElementById('lightbox-img').src = img.src;
+      overlay.classList.add('active');
+    });
+  });
+  overlay.addEventListener('click', () => overlay.classList.remove('active'));
+</script>
+
+<script src="../../js/practice-nav.js"></script>
+<button id="btn-top" aria-label="맨 위로">↑</button>
+<script>
+  var b=document.getElementById('btn-top');
+  window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+
+</body>
+</html>

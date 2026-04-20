@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>이미지 → 동영상 변환하기 | AI 건강 채널 | 크리에이터 완전정복</title>
+  <meta name="description" content="Google Flow와 구글 비즈로 이미지를 동영상으로 변환하는 방법. 무료로 후킹 영상 만들기.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    .warn-box {
+      border: 2px solid var(--red);
+      background: var(--red-light);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.4rem;
+      margin: 1.75rem 0;
+      font-size: .93rem;
+      line-height: 1.8;
+      color: var(--text);
+    }
+    .warn-box-label {
+      font-size: .78rem;
+      font-weight: 800;
+      color: var(--red);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: .5rem;
+    }
+    .info-box {
+      border-left: 3px solid #3b82f6;
+      padding: 1rem 1.3rem;
+      background: #eff6ff;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 1.75rem 0;
+      font-size: .93rem;
+      line-height: 1.8;
+      color: var(--text);
+    }
+    .info-box-label {
+      font-size: .78rem;
+      font-weight: 800;
+      color: #2563eb;
+      letter-spacing: .06em;
+      margin-bottom: .5rem;
+    }
+    .tip-box {
+      border: 2px solid #f5c518;
+      background: #fffdf0;
+      border-radius: var(--radius);
+      padding: 1.25rem 1.4rem;
+      margin: 1.75rem 0;
+      font-size: .93rem;
+      line-height: 1.8;
+      color: var(--text);
+    }
+    .tip-box-label {
+      font-size: .78rem;
+      font-weight: 800;
+      color: #b8920a;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: .6rem;
+    }
+    .ext-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      background: var(--red);
+      color: #fff;
+      font-size: .9rem;
+      font-weight: 700;
+      padding: .6rem 1.3rem;
+      border-radius: 6px;
+      text-decoration: none;
+      margin: .75rem 0 1.25rem;
+      transition: opacity .2s;
+    }
+    .ext-btn:hover { opacity: .85; text-decoration: none; }
+    .ext-btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      background: transparent;
+      color: var(--red);
+      font-size: .9rem;
+      font-weight: 700;
+      padding: .55rem 1.2rem;
+      border-radius: 6px;
+      border: 2px solid var(--red);
+      text-decoration: none;
+      margin: .75rem 0 1.25rem;
+      transition: opacity .2s;
+    }
+    .ext-btn-ghost:hover { opacity: .75; text-decoration: none; }
+    .warn-list {
+      list-style: none;
+      padding: 0;
+      margin: .5rem 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: .45rem;
+    }
+    .warn-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: .5rem;
+      font-size: .93rem;
+      line-height: 1.7;
+    }
+    .warn-list li::before {
+      content: '–';
+      color: var(--red);
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../../index.html" class="site-logo">크리에이터 <span>완전정복</span></a>
+    <nav class="header-nav">
+      <a href="../../index.html">홈</a>
+      <a href="../../basics/index.html">유튜브 기초</a>
+      <a href="../../practice/index.html" class="nav-active"><span class="nav-ai-red">AI</span> 유튜브 실전</a>
+      <a href="../../course/index.html">강의실</a>
+      <a href="../../community/index.html">커뮤니티</a>
+      <a href="../../about/index.html">소개</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-title">AI 유튜브 실전</div>
+    <ul class="sidebar-list" id="practice-nav-list"></ul>
+  </aside>
+
+  <main class="main-content">
+    <article>
+      <header class="post-header">
+        <p class="post-chap">영상 제작 · AI 건강 채널</p>
+        <h1 class="post-title">이미지 → 동영상 변환하기</h1>
+      </header>
+
+      <hr class="divider">
+
+      <div class="post-body">
+
+        <p>여기까지 완료되면 대본에 대한 영상 제작은 모두 완료되었습니다. 이제는 인트로 후킹 이미지를 동영상으로 변환하는 방법에 대해 배워보겠습니다.</p>
+
+        <div class="info-box">
+          <div class="info-box-label">참고사항</div>
+          AI 건강 채널은 이미 <strong>HeyGen</strong>으로 아바타 영상을 만들었기 때문에 따로 동영상을 넣지 않아도 상관은 없습니다. 넣고 싶은 분들만 선택적으로 진행하시면 됩니다. 잘 만든 동영상을 후킹에 넣으면 영상 퀄리티가 올라가긴 하지만, 대본 후킹만 제대로 만들어서 좋은 성과를 내는 채널들도 많습니다. 또한 다음 챕터에서 다룰 <strong>Vrew(편집기)</strong> 안에서도 무료로 사용할 수 있는 이미지와 영상들이 있으니 초반에는 하고 싶은 분들만 해보시기 바랍니다.
+        </div>
+
+        <hr class="divider">
+
+        <!-- 방법 1 -->
+        <h2 id="flow">방법 1. Google Flow에서 이미지 → 동영상 변환</h2>
+
+        <a href="https://flow.google" class="ext-btn" target="_blank" rel="noopener">Google Flow 바로가기 →</a>
+
+        <p>Flow에서는 처음 가입 시 100크레딧을 드리고, 이후 하루 50크레딧씩 새로 제공됩니다. 동영상 1개 생성에 <strong>20크레딧</strong>이 소모되므로 <strong>하루에 약 2개</strong>의 동영상을 무료로 만들 수 있습니다. 또한 이미지 1개를 <strong>8초짜리 동영상</strong>으로 변환해줍니다.</p>
+
+        <p>Flow에서 이미지 만드는 방법 기억나시나요? 혹시 기억이 나지 않으신다면 아래 버튼을 눌러 다시 확인해보세요.</p>
+
+        <a href="이미지만들기-건강.html#hooking" class="ext-btn-ghost">후킹 이미지 만들기로 바로가기 →</a>
+
+        <p>앞에서 "응급실에 실려가는 70대 할아버지"라는 프롬프트로 만들었던 이미지를 동영상으로 변환해보겠습니다.</p>
+
+        <p>이미지에 마우스를 올려서 <strong>점 3개 클릭 → 애니메이션 적용</strong>을 클릭합니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/5.senior-health/3.imagetovideo/19.png" alt="이미지에서 점 3개 → 애니메이션 적용 클릭">
+          <div class="img-caption">점 3개 → 애니메이션 적용 클릭</div>
+        </div>
+
+        <p>그러면 프롬프트를 입력할 수 있는 창이 뜹니다. 아래와 같이 프롬프트를 입력하고 동영상을 만들어보겠습니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/5.senior-health/3.imagetovideo/20.png" alt="동영상 변환 프롬프트 입력">
+          <div class="img-caption">프롬프트 입력 후 생성</div>
+        </div>
+
+        <div class="warn-box">
+          <div class="warn-box-label">주의사항</div>
+          <p style="margin:0 0 .75rem;">동영상이 <strong>x4</strong>로 되어있다면 <strong>x1</strong>로 변경 후 생성해주세요.</p>
+          <p style="margin:0 0 .4rem;">사람이 이야기하는 더빙 영상을 만들고 싶다면 아래 형식으로 작성해주세요.</p>
+          <p style="margin:0 0 .4rem; padding:.6rem .9rem; background:rgba(0,0,0,.04); border-radius:6px; font-size:.9rem;">
+            <strong>"(사람)가 한국어로 "(대사)"라고 이야기하며 (상황)"</strong>
+          </p>
+          <p style="margin:0; font-size:.9rem; color:var(--text-sub);">예시) 할아버지가 한국어로 "아이고 나 죽네"라고 이야기하며 응급실에 실려가는 장면.</p>
+        </div>
+
+        <p>조금 기다리면 이미지 옆에 동영상이 생성된 것을 확인할 수 있습니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/5.senior-health/3.imagetovideo/21.png" alt="이미지 옆에 동영상 생성 완료">
+          <div class="img-caption">이미지 옆에 동영상 생성 확인</div>
+        </div>
+
+        <p>영상을 클릭해서 확인 후 마음에 든다면 오른쪽 상단의 <strong>다운로드 → 720p</strong>로 다운로드합니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/5.senior-health/3.imagetovideo/22.png" alt="동영상 다운로드 → 720p 선택">
+          <div class="img-caption">다운로드 → 720p 선택</div>
+        </div>
+
+        <p>마음에 들지 않는다면 다른 프롬프트로 다시 만들어보세요.</p>
+
+        <hr class="divider">
+
+        <!-- 방법 2 -->
+        <h2 id="vids">방법 2. 구글 비즈에서 이미지 → 동영상 변환</h2>
+
+        <a href="https://vids.google.com" class="ext-btn" target="_blank" rel="noopener">Google Vids 바로가기 →</a>
+
+        <p>구글 비즈는 이미지 → 동영상 변환을 <strong>월 10건</strong>까지 무료로 사용할 수 있습니다. 앞에서 소개한 <strong>Gemini(제미나이) 유료 버전(Google AI Pro)</strong>을 구독 중이신 분들은 더 많이 사용할 수 있습니다.</p>
+
+        <p>구글 비즈에 로그인합니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/5.senior-health/3.imagetovideo/23.png" alt="구글 비즈 로그인 화면">
+          <div class="img-caption">구글 계정으로 로그인</div>
+        </div>
+
+        <p>아래와 같은 화면이 뜨는데 <strong>Veo 3.1</strong>을 클릭합니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/5.senior-health/3.imagetovideo/24.png" alt="Veo 3.1 클릭">
+          <div class="img-caption">Veo 3.1 클릭</div>
+        </div>
+
+        <p>아래와 같은 창이 뜹니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/5.senior-health/3.imagetovideo/25.png" alt="Veo 3.1 생성 화면">
+          <div class="img-caption">Veo 3.1 생성 화면</div>
+        </div>
+
+        <p>오른쪽의 <strong>처음부터 만들기</strong>를 <strong>이미지 애니메이션 효과 적용</strong>으로 변경합니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/5.senior-health/3.imagetovideo/26.png" alt="이미지 애니메이션 효과 적용으로 변경">
+          <div class="img-caption">처음부터 만들기 → 이미지 애니메이션 효과 적용</div>
+        </div>
+
+        <p>이미지 추가로 변경된 것을 확인할 수 있습니다. 동영상으로 변환하고 싶은 이미지를 드래그해서 넣거나, <strong>이미지 추가</strong>를 클릭해서 저장된 이미지를 추가합니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/5.senior-health/3.imagetovideo/27.png" alt="이미지 추가 화면">
+          <div class="img-caption">이미지 드래그 또는 이미지 추가 클릭</div>
+        </div>
+
+        <p>이미지가 추가되었으면 원하는 동영상 프롬프트를 입력합니다. Flow에서 사용했던 프롬프트를 그대로 입력해보겠습니다. 프롬프트 입력 후 <strong>생성</strong> 버튼을 클릭합니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/5.senior-health/3.imagetovideo/28.png" alt="프롬프트 입력 후 생성 클릭">
+          <div class="img-caption">프롬프트 입력 후 생성 클릭</div>
+        </div>
+
+        <p>기다리면 생성 버튼 아래에 <strong>8초짜리 동영상</strong>이 만들어진 것을 확인할 수 있습니다. 클릭해서 확인합니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/5.senior-health/3.imagetovideo/29.png" alt="<strong>8초짜리 동영상</strong> 생성 완료">
+          <div class="img-caption">생성된 동영상 클릭해서 확인</div>
+        </div>
+
+        <p>큰 화면으로 영상이 나옵니다. <strong>삽입</strong>을 클릭해줍니다. 마음에 들지 않는다면 오른쪽에서 프롬프트를 변경해서 다시 생성합니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/5.senior-health/3.imagetovideo/30.png" alt="영상 확인 후 삽입 클릭">
+          <div class="img-caption">마음에 든다면 삽입 클릭</div>
+        </div>
+
+        <p>마음에 든다면 오른쪽 상단의 공유 옆 버튼을 눌러서 <strong>MP4로 다운로드</strong>를 클릭합니다.</p>
+
+        <hr class="divider">
+
+        <!-- 마무리 -->
+        <h2 id="closing">마무리</h2>
+
+        <p>이렇게 해서 영상 제작이 모두 끝났습니다.</p>
+
+        <p>2026년 초까지만 해도 무료 AI 툴들이 많았는데 점점 유료화되어가고 있고, 무료 횟수 제한도 많이 생기고 있습니다. 하지만 무료로도 충분히 시작할 수 있습니다. 무료로 써보고 퀄리티를 체크한 후, 나에게 맞는 툴을 충분히 고민하고 유료로 전환하는 것이 좋습니다.</p>
+
+        <p>모든 AI 툴은 처음부터 너무 비싼 요금제를 선택하지 말고 가장 저렴한 플랜으로 시작해서 퀄리티를 확인 후 사용하는 것을 권장합니다. 저도 그렇게 하지 않아서 많은 돈을 날렸기 때문에 여러분들은 그러지 않으시길 바랍니다.</p>
+
+        <p>유료 전환을 고민하고 계신다면 각 툴의 자세한 정보는 아래에서 확인하세요.</p>
+
+        <a href="AI툴소개.html" class="ext-btn-ghost">AI 툴 소개 바로가기 →</a>
+
+        <p>각 툴의 가격 변동이나 새로운 무료 툴이 생기면 이 사이트를 통해 계속 업데이트해드리겠습니다.</p>
+
+        <!-- 이전 / 다음 글 -->
+        <div style="display:flex; align-items:stretch; background:var(--dark); border-radius:var(--radius-lg); overflow:hidden; margin-top:3rem;">
+          <a href="heygen-건강.html" style="flex:1; display:flex; align-items:center; gap:.75rem; padding:1.5rem 1.75rem; text-decoration:none; transition:opacity .2s; border-right:1px solid rgba(255,255,255,.1);" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">
+            <span style="font-size:1.3rem; color:var(--red); flex-shrink:0;">←</span>
+            <div>
+              <div style="font-size:.7rem; font-weight:800; color:rgba(255,255,255,.4); text-transform:uppercase; letter-spacing:.1em; margin-bottom:.25rem;">이전 글</div>
+              <div style="font-size:1rem; font-weight:800; color:#fff;">HeyGen으로 동영상 만들기</div>
+            </div>
+          </a>
+          <a href="편집하기-건강.html" style="flex:1; display:flex; align-items:center; justify-content:flex-end; gap:.75rem; padding:1.5rem 1.75rem; text-decoration:none; transition:opacity .2s;" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">
+            <div style="text-align:right;">
+              <div style="font-size:.7rem; font-weight:800; color:rgba(255,255,255,.4); text-transform:uppercase; letter-spacing:.1em; margin-bottom:.25rem;">다음 글</div>
+              <div style="font-size:1rem; font-weight:800; color:#fff;">편집하기</div>
+            </div>
+            <span style="font-size:1.3rem; color:var(--red); flex-shrink:0;">→</span>
+          </a>
+        </div>
+
+      </div>
+    </article>
+  </main>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">크리에이터 <span>완전정복</span></div>
+    <p class="footer-desc">AI로 유튜브 만들기 — 실제 경험 기반 무료 공개</p>
+    <div class="footer-links">
+      <a href="../../index.html">홈</a>
+      <a href="../../basics/index.html">유튜브 기초</a>
+      <a href="../../practice/index.html"><span class="nav-ai-red">AI</span> 유튜브 실전</a>
+      <a href="../../course/index.html">강의실</a>
+      <a href="../../community/index.html">커뮤니티</a>
+      <a href="../../about/index.html">소개</a>
+    </div>
+    <div class="footer-legal">
+      <a href="../../privacy/index.html">개인정보처리방침</a>
+    </div>
+    <p class="footer-copy">© 크리에이터 완전정복. 무단 복제 및 배포를 금합니다.</p>
+  </div>
+</footer>
+
+<script>
+  const overlay = document.createElement('div');
+  overlay.className = 'lightbox-overlay';
+  overlay.innerHTML = '<span class="lightbox-close">✕</span><img id="lightbox-img" src="" alt="">';
+  document.body.appendChild(overlay);
+  document.querySelectorAll('.step-img img').forEach(img => {
+    img.addEventListener('click', () => {
+      document.getElementById('lightbox-img').src = img.src;
+      overlay.classList.add('active');
+    });
+  });
+  overlay.addEventListener('click', () => overlay.classList.remove('active'));
+</script>
+
+<script src="../../js/practice-nav.js"></script>
+<button id="btn-top" aria-label="맨 위로">↑</button>
+<script>
+  var b=document.getElementById('btn-top');
+  window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+
+</body>
+</html>

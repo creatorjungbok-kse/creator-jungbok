@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>강의실 | 크리에이터 완전정복</title>
+  <meta name="description" content="단계별로 따라할 수 있는 영상 강의. 곧 공개됩니다.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<!-- 헤더 -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="site-logo">크리에이터 <span>완전정복</span></a>
+    <nav class="header-nav">
+      <a href="../index.html">홈</a>
+      <a href="../basics/index.html">유튜브 기초</a>
+      <a href="../practice/index.html" ><span class="nav-ai-red">AI</span> 유튜브 실전</a>
+      <a href="../course/index.html" class="nav-active">강의실</a>
+      <a href="../community/index.html">커뮤니티</a>
+      <a href="../about/index.html">소개</a>
+    </nav>
+  </div>
+</header>
+
+<!-- 페이지 히어로 -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <span class="page-eyebrow">강의실</span>
+    <h1>단계별 영상 강의</h1>
+  </div>
+</div>
+
+<!-- 준비중 -->
+<div class="coming-page">
+  <div class="coming-inner">
+    <span class="coming-icon">🎓</span>
+    <p class="coming-subtitle">
+      텍스트만으로는 부족한 내용을<br>영상으로 단계별 설명하는 강의를 준비하고 있습니다.<br><br>
+      <strong>곧 공개됩니다.</strong>
+    </p>
+    <div style="margin-top:2rem;">
+      <a href="../index.html" style="font-size:.9rem; font-weight:700; color:var(--red);">← 홈으로 돌아가기</a>
+    </div>
+  </div>
+</div>
+
+<!-- 푸터 -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">크리에이터 <span>완전정복</span></div>
+    <p class="footer-desc">AI로 유튜브·틱톡 만들기 — 실제 경험 기반 무료 공개</p>
+    <div class="footer-links">
+      <a href="../index.html">홈</a>
+      <a href="../basics/index.html">유튜브 기초</a>
+      <a href="../practice/index.html" ><span class="nav-ai-red">AI</span> 유튜브 실전</a>
+      <a href="../course/index.html">강의실</a>
+      <a href="../community/index.html">커뮤니티</a>
+      <a href="../about/index.html">소개</a>
+    </div>
+    <div class="footer-legal">
+      <a href="../privacy/index.html">개인정보처리방침</a>
+    </div>
+    <p class="footer-copy">© 크리에이터 완전정복. 무단 복제 및 배포를 금합니다.</p>
+  </div>
+</footer>
+
+<button id="btn-top" aria-label="맨 위로">↑</button>
+<script>
+  var b=document.getElementById('btn-top');
+  window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+</body>
+</html>

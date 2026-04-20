@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>벤치마킹 | 일반 영상 (롱폼) | 크리에이터 완전정복</title>
+  <meta name="description" content="잘 되는 채널을 분석해서 내 채널에 적용하는 벤치마킹 방법. 채널 고르는 기준부터 분석 포인트까지.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    .warn-box {
+      border-left: 3px solid var(--red);
+      padding: 1.1rem 1.4rem;
+      background: var(--red-light);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 1.75rem 0;
+      font-size: .93rem;
+      line-height: 1.8;
+      color: var(--text);
+    }
+    .tip-box {
+      border: 2px solid #f5c518;
+      background: #fffdf0;
+      border-radius: var(--radius);
+      padding: 1.25rem 1.4rem;
+      margin: 1.75rem 0;
+      font-size: .93rem;
+      line-height: 1.8;
+      color: var(--text);
+    }
+    .tip-box-label {
+      font-size: .78rem;
+      font-weight: 800;
+      color: #b8920a;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: .6rem;
+    }
+    .info-box {
+      border-left: 3px solid #3b82f6;
+      padding: .9rem 1.2rem;
+      background: #eff6ff;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 1rem 0;
+      font-size: .9rem;
+      line-height: 1.7;
+      color: var(--text);
+    }
+    .ext-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      background: var(--red);
+      color: #fff;
+      font-size: .9rem;
+      font-weight: 700;
+      padding: .6rem 1.3rem;
+      border-radius: 6px;
+      text-decoration: none;
+      margin: .75rem 0 1.25rem;
+      transition: opacity .2s;
+    }
+    .ext-btn:hover { opacity: .85; text-decoration: none; }
+    .check-list {
+      list-style: none;
+      padding: 0;
+      margin: .75rem 0 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+    .check-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: .6rem;
+      font-size: .95rem;
+      line-height: 1.6;
+    }
+    .check-list li::before {
+      content: '–';
+      color: var(--red);
+      font-weight: 900;
+      flex-shrink: 0;
+      margin-top: .05rem;
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../../index.html" class="site-logo">크리에이터 <span>완전정복</span></a>
+    <nav class="header-nav">
+      <a href="../../index.html">홈</a>
+      <a href="../../basics/index.html">유튜브 기초</a>
+      <a href="../../practice/index.html" class="nav-active"><span class="nav-ai-red">AI</span> 유튜브 실전</a>
+      <a href="../../course/index.html">강의실</a>
+      <a href="../../community/index.html">커뮤니티</a>
+      <a href="../../about/index.html">소개</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-title">AI 유튜브 실전</div>
+    <ul class="sidebar-list" id="practice-nav-list"></ul>
+  </aside>
+
+  <main class="main-content">
+    <article>
+      <header class="post-header">
+        <p class="post-chap">채널 준비</p>
+        <h1 class="post-title">벤치마킹</h1>
+        <p class="post-desc">조회수 터지는 채널 찾는 법과 꼭 봐야 하는 요소</p>
+      </header>
+
+      <hr class="divider">
+
+      <div class="post-body">
+
+        <!-- 섹션 1 -->
+        <h2 id="intro">벤치마킹이란?</h2>
+
+        <p>벤치마킹이란 이미 잘 되고 있는 채널과 영상을 분석해서 내 채널에 적용하는 것입니다. 유튜브에서 벤치마킹을 잘하는 것이 곧 유튜브를 잘하는 것이라고 해도 과언이 아닙니다.</p>
+
+        <p>특히 AI 유튜브는 처음부터 모든 것을 혼자 만들어낼 필요가 없습니다. 이미 조회수가 터지고 있는 채널을 철저하게 분석하고, 그 핵심을 내 채널에 적용하는 것이 가장 빠른 성장 방법입니다.</p>
+
+        <hr class="divider">
+
+        <!-- 섹션 2 -->
+        <h2 id="extensions">추가 확장 프로그램 설치하기</h2>
+
+        <p>VidIQ는 이미 설치했죠? 벤치마킹을 더 효과적으로 하기 위해 두 가지 확장 프로그램을 추가로 설치해 놓겠습니다.</p>
+
+        <!-- Youtube Summary -->
+        <h3><strong>Youtube Summary</strong></h3>
+
+        <p>벤치마킹할 영상의 대본(스크립트)을 볼 수 있는 확장 프로그램입니다. 영상을 끝까지 보지 않아도 전체 대본을 텍스트로 확인할 수 있어 영상 구성과 흐름을 빠르게 파악할 수 있습니다. 벤치마킹할 때 꼭 필요한 확장 프로그램입니다.</p>
+
+        <a href="https://chromewebstore.google.com/detail/youtube-summary-with-chat/nmmicjeknamkfloonkhhcjmomieiodli" class="ext-btn" target="_blank" rel="noopener">
+          Youtube Summary 설치하기 →
+        </a>
+
+        <div class="step-img">
+          <img src="../../images/practice/3.benchmarking/1.png" alt="Youtube Summary Chrome에 추가 클릭">
+          <div class="img-caption">Chrome에 추가 클릭</div>
+        </div>
+
+        <p style="margin-top:1rem;">설치 후 유튜브 영상 아무거나 클릭해서 들어가보면 오른쪽에 Youtube Summary가 설치된 것을 확인할 수 있습니다. 아래로 펼쳐보기 버튼을 클릭하면 해당 영상의 대본을 텍스트로 볼 수 있고, 복사도 가능합니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/3.benchmarking/2.png" alt="유튜브 영상 오른쪽에 Youtube Summary 작동 화면">
+          <div class="img-caption">영상 오른쪽에 대본 텍스트로 확인 가능</div>
+        </div>
+
+        <!-- Youtube Upload Time -->
+        <h3 id="upload-time" style="margin-top:2rem;"><strong>Youtube Upload Time</strong></h3>
+
+        <p>벤치마킹할 영상이 정확히 몇 시에 업로드되었는지 확인할 수 있는 확장 프로그램입니다. 나중에 내 영상을 업로드할 때 최적의 시간을 정하는 데 활용할 것입니다. 필수는 아니지만, 벤치마킹할 채널의 영상이 몇 시에 올라가는지 궁금한 분들은 설치해두시기 바랍니다.</p>
+
+        <a href="https://chromewebstore.google.com/detail/youtube-upload-time/nenoecmaibjcahoahnmeinahlapheblg?hl=ko" class="ext-btn" target="_blank" rel="noopener">
+          Youtube Upload Time 설치하기 →
+        </a>
+
+        <div class="step-img">
+          <img src="../../images/practice/3.benchmarking/3.png" alt="Youtube Upload Time Chrome에 추가 클릭">
+          <div class="img-caption">Chrome에 추가 클릭</div>
+        </div>
+
+        <p style="margin-top:1rem;">설치 후 유튜브 영상에 들어가서 오른쪽 상단의 퍼즐 모양을 클릭한 뒤 Youtube Upload Time을 클릭하면 해당 영상이 몇 시에 업로드되었는지 확인할 수 있습니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/3.benchmarking/4.png" alt="Youtube Upload Time 업로드 시간 확인 화면">
+          <div class="img-caption">퍼즐 모양 → Youtube Upload Time → 업로드 시간 확인</div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- 섹션 3 -->
+        <h2 id="find">벤치마킹 채널 찾는 방법</h2>
+
+        <p>알고리즘 세팅에서 30~50개의 채널을 구독한 이유, 기억하시나요? 내 홈 화면에서 최근 떡상한 영상이 무엇인지, 어떤 주제와 키워드를 사용했는지 한눈에 파악하기 위해서였습니다.</p>
+
+        <p>이제 그 30~50개 채널 중에서 <strong>딱 하나의 채널을 골라 집중적으로 파고들 것입니다.</strong> 이 채널 하나만 제대로 벤치마킹한다는 마인드로 접근하는 것이 중요합니다.</p>
+
+        <h3><strong>채널 고르는 기준</strong></h3>
+
+        <ul class="check-list">
+          <li>구독자 <strong>3만 명 이하</strong></li>
+          <li>첫 영상 업로드 <strong>1~3개월 이내</strong>인 채널</li>
+          <li>최근 올리는 영상마다 VidIQ 기준 <strong>x100 이상</strong>인 채널 (조회수 1만 이상이 터지는 채널)</li>
+        </ul>
+
+        <div class="tip-box">
+          <div class="tip-box-label">💡 꿀팁</div>
+          <p style="margin:0;"><strong>채널 개설일이 오래됐어도 괜찮습니다.</strong><br>
+          간혹 채널을 만든 지 오래됐지만 영상 수가 별로 없는 채널들이 있습니다. 이런 채널은 채널을 구매했거나, 기존 영상을 모두 삭제하고 새로 운영하는 경우일 수 있습니다.<br><br>
+          확인 방법은 해당 채널 홈 화면 → <strong>동영상 → 날짜순</strong>을 클릭해서 첫 영상이 언제 올라왔는지 보면 됩니다. 영상을 올린 지 얼마 안 됐다면 이 채널도 기준에 해당됩니다.</p>
+        </div>
+
+        <h3><strong>채널을 골랐으면 이렇게 파고드세요</strong></h3>
+
+        <p>이 채널을 완전히 분해한다는 마인드로 철저하게 분석합니다.</p>
+
+        <ul class="check-list">
+          <li>영상을 끝까지 시청해보기</li>
+          <li>초반 30초~1분, 시청자를 사로잡는 <strong>후킹 멘트</strong> 파악하기</li>
+          <li>영상 길이 확인하기</li>
+          <li>이미지로만 만든 영상인지, 동영상으로 만든 영상인지 확인하기</li>
+          <li>썸네일 패턴 확인하기</li>
+          <li>제목 구조 확인하기</li>
+          <li>해시태그, 태그 확인하기</li>
+        </ul>
+
+        <div class="info-box">
+          썸네일, 제목, 후킹, 해시태그, 태그는 이후 글에서 자세히 다룰 예정입니다.
+        </div>
+
+        <hr class="divider">
+
+        <!-- 섹션 4 -->
+        <h2 id="difference">벤치마킹과 복사의 차이</h2>
+
+        <p>벤치마킹이라고 해서 그 채널과 영상을 그대로 베끼는 것이 아닙니다. 영상 대본이나 제목을 그대로 복사했다가는 저작권 침해로 채널이 신고당하거나 삭제될 위험이 있습니다.</p>
+
+        <p>우리가 벤치마킹하는 것은 다음과 같습니다.</p>
+
+        <ul class="check-list">
+          <li>핵심 키워드</li>
+          <li>글의 구성 (뼈대)</li>
+          <li>흐름과 전개 방식</li>
+          <li>표현 기법</li>
+          <li>스토리 전개</li>
+        </ul>
+
+        <p>이러한 요소들을 참고해서 저작권 침해 위험이 전혀 없는 나만의 글을 만드는 것입니다. 이 부분은 영상 제작 과정에서 더 자세히 다룰 예정입니다.</p>
+
+        <!-- 이전 / 다음 글 -->
+        <div style="display:flex; align-items:stretch; background:var(--dark); border-radius:var(--radius-lg); overflow:hidden; margin-top:3rem;">
+          <a href="알고리즘세팅.html" style="flex:1; display:flex; align-items:center; gap:.75rem; padding:1.5rem 1.75rem; text-decoration:none; transition:opacity .2s; border-right:1px solid rgba(255,255,255,.1);" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">
+            <span style="font-size:1.3rem; color:var(--red); flex-shrink:0;">←</span>
+            <div>
+              <div style="font-size:.7rem; font-weight:800; color:rgba(255,255,255,.4); text-transform:uppercase; letter-spacing:.1em; margin-bottom:.25rem;">이전 글</div>
+              <div style="font-size:1rem; font-weight:800; color:#fff;">알고리즘 세팅</div>
+            </div>
+          </a>
+          <a href="AI툴소개.html" style="flex:1; display:flex; align-items:center; justify-content:flex-end; gap:.75rem; padding:1.5rem 1.75rem; text-decoration:none; transition:opacity .2s;" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">
+            <div style="text-align:right;">
+              <div style="font-size:.7rem; font-weight:800; color:rgba(255,255,255,.4); text-transform:uppercase; letter-spacing:.1em; margin-bottom:.25rem;">다음 글</div>
+              <div style="font-size:1rem; font-weight:800; color:#fff;">AI 툴 소개</div>
+            </div>
+            <span style="font-size:1.3rem; color:var(--red); flex-shrink:0;">→</span>
+          </a>
+        </div>
+
+      </div>
+    </article>
+  </main>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">크리에이터 <span>완전정복</span></div>
+    <p class="footer-desc">AI로 유튜브 만들기 — 실제 경험 기반 무료 공개</p>
+    <div class="footer-links">
+      <a href="../../index.html">홈</a>
+      <a href="../../basics/index.html">유튜브 기초</a>
+      <a href="../../practice/index.html"><span class="nav-ai-red">AI</span> 유튜브 실전</a>
+      <a href="../../course/index.html">강의실</a>
+      <a href="../../community/index.html">커뮤니티</a>
+      <a href="../../about/index.html">소개</a>
+    </div>
+    <div class="footer-legal">
+      <a href="../../privacy/index.html">개인정보처리방침</a>
+    </div>
+    <p class="footer-copy">© 크리에이터 완전정복. 무단 복제 및 배포를 금합니다.</p>
+  </div>
+</footer>
+
+<script>
+  const overlay = document.createElement('div');
+  overlay.className = 'lightbox-overlay';
+  overlay.innerHTML = '<span class="lightbox-close">✕</span><img id="lightbox-img" src="" alt="">';
+  document.body.appendChild(overlay);
+  document.querySelectorAll('.step-img img').forEach(img => {
+    img.addEventListener('click', () => {
+      document.getElementById('lightbox-img').src = img.src;
+      overlay.classList.add('active');
+    });
+  });
+  overlay.addEventListener('click', () => overlay.classList.remove('active'));
+</script>
+
+<script src="../../js/practice-nav.js"></script>
+<button id="btn-top" aria-label="맨 위로">↑</button>
+<script>
+  var b=document.getElementById('btn-top');
+  window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+
+</body>
+</html>

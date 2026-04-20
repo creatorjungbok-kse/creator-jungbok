@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>대본 작성하기 | AI 건강 채널 | 크리에이터 완전정복</title>
+  <meta name="description" content="AI 건강 채널 대본 작성하기. 떡상 영상 분석부터 템플릿 생성, Claude 대본 생성까지 6단계로 완성.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    /* 안내 박스 */
+    .info-box {
+      background: var(--bg-soft);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.4rem;
+      margin: 1.25rem 0;
+      font-size: .95rem;
+      line-height: 1.85;
+      color: var(--text);
+    }
+    /* 추천 박스 */
+    .tip-box {
+      border-left: 3px solid #f59e0b;
+      background: #fffbeb;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.1rem 1.4rem;
+      margin: 1.25rem 0;
+      font-size: .95rem;
+      line-height: 1.85;
+      color: var(--text);
+    }
+    /* 경고/강조 박스 (빨간 테두리) */
+    .warn-box {
+      border: 2px solid var(--red);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.6rem;
+      margin: 1.5rem 0;
+      font-size: .97rem;
+      line-height: 1.9;
+      color: var(--text);
+    }
+    .warn-box ul {
+      margin: .75rem 0 0;
+      padding-left: 1.4rem;
+    }
+    .warn-box ul li {
+      margin-bottom: .4rem;
+    }
+    /* 프롬프트 박스 */
+    .prompt-wrap {
+      background: #1e1e2e;
+      border-radius: var(--radius);
+      margin: 1.25rem 0;
+      overflow: hidden;
+    }
+    .prompt-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #2a2a3e;
+      padding: .6rem 1rem;
+    }
+    .prompt-header span {
+      font-size: .75rem;
+      font-weight: 700;
+      color: rgba(255,255,255,.45);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .copy-btn {
+      font-size: .75rem;
+      font-weight: 700;
+      color: rgba(255,255,255,.55);
+      background: transparent;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 4px;
+      padding: .25rem .65rem;
+      cursor: pointer;
+      transition: all .2s;
+      font-family: inherit;
+    }
+    .copy-btn:hover { color: #fff; border-color: rgba(255,255,255,.5); }
+    .copy-btn.copied { color: #4ade80; border-color: #4ade80; }
+    .prompt-body {
+      padding: 1.1rem 1.25rem;
+      font-size: .9rem;
+      line-height: 1.95;
+      color: #e2e8f0;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .prompt-body mark {
+      background: rgba(251,191,36,.2);
+      color: #fbbf24;
+      border-radius: 3px;
+      padding: 0 .2rem;
+      font-style: normal;
+    }
+    /* 이미지 자리 */
+    .img-placeholder {
+      background: var(--bg-soft);
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+      color: var(--text-sub);
+      font-size: .9rem;
+      margin: 1.25rem 0;
+    }
+    .step-img {
+      margin: 1.25rem 0;
+    }
+    .step-img img {
+      width: 100%;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      display: block;
+    }
+    .img-caption {
+      font-size: .82rem;
+      color: var(--text-sub);
+      text-align: center;
+      margin-top: .5rem;
+    }
+    /* 외부 링크 버튼 */
+    .link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      background: var(--red);
+      color: #fff;
+      font-size: .95rem;
+      font-weight: 700;
+      padding: .65rem 1.4rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: opacity .2s;
+      margin: .75rem 0 1rem;
+    }
+    .link-btn:hover { opacity: .85; text-decoration: none; }
+    /* 필요한 것 */
+    .tools-needed {
+      background: var(--bg-soft);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.4rem;
+      margin-bottom: 1.5rem;
+    }
+    .tools-needed-title {
+      font-size: .8rem;
+      font-weight: 800;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: .85rem;
+    }
+    .tools-needed-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+    }
+    .tool-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      padding: .45rem 1rem;
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      transition: border-color .15s, color .15s;
+    }
+    .tool-btn:hover { border-color: var(--red); color: var(--red); text-decoration: none; }
+    .tool-btn-arrow { font-size: .8rem; color: var(--text-sub); }
+    .tool-btn:hover .tool-btn-arrow { color: var(--red); }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../../index.html" class="site-logo">크리에이터 <span>완전정복</span></a>
+    <nav class="header-nav">
+      <a href="../../index.html">홈</a>
+      <a href="../../basics/index.html">유튜브 기초</a>
+      <a href="../../practice/index.html" class="nav-active"><span class="nav-ai-red">AI</span> 유튜브 실전</a>
+      <a href="../../course/index.html">강의실</a>
+      <a href="../../community/index.html">커뮤니티</a>
+      <a href="../../about/index.html">소개</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-title">AI 유튜브 실전</div>
+    <ul class="sidebar-list" id="practice-nav-list"></ul>
+  </aside>
+
+  <main class="main-content">
+    <article>
+      <header class="post-header">
+        <p class="post-chap">영상 제작 · AI 건강 채널</p>
+        <h1 class="post-title">대본 작성하기</h1>
+        <p class="post-desc">떡상 영상 분석부터 Claude 대본 생성까지 6단계</p>
+      </header>
+
+      <hr class="divider">
+
+      <div class="post-body">
+
+        <!-- 필요한 것 -->
+        <div class="tools-needed">
+          <div class="tools-needed-title">필요한 것</div>
+          <div class="tools-needed-list">
+            <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" class="tool-btn">
+              Claude <span class="tool-btn-arrow">↗</span>
+            </a>
+            <a href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" class="tool-btn">
+              ChatGPT <span class="tool-btn-arrow">↗</span>
+            </a>
+            <a href="https://gemini.google.com" target="_blank" rel="noopener noreferrer" class="tool-btn">
+              Gemini <span class="tool-btn-arrow">↗</span>
+            </a>
+            <a href="https://www.speechtime.co.kr/" target="_blank" rel="noopener noreferrer" class="tool-btn">
+              발표시간 계산기 <span class="tool-btn-arrow">↗</span>
+            </a>
+          </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- 1단계 -->
+        <h2 id="step1">1단계 — 떡상 영상 대본 가져오기</h2>
+
+        <p>벤치마킹할 채널에서 최근 2주 안에 떡상한 영상을 클릭합니다. VidIQ 기준 <strong>x100</strong> 이상이거나 <strong>VPH(시간당 조회수)</strong> 300~500 이상인 영상이 좋습니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/4.script-writing/0.png" alt="VidIQ x100 이상 떡상 영상 확인 화면">
+        </div>
+
+        <p>영상에 들어가면 오른쪽에 Youtube Summary가 보입니다. 아래로 펼쳐보기를 클릭하면 해당 영상의 대본이 텍스트로 나옵니다. 전체 복사해주세요.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/4.script-writing/1.png" alt="Youtube Summary 대본 텍스트 복사 화면">
+        </div>
+
+        <hr class="divider">
+
+        <!-- 2단계 -->
+        <h2 id="step2">2단계 — 스크립트 분석</h2>
+
+        <p>복사한 대본을 Claude, ChatGPT, Gemini 중 하나에 붙여넣고 <strong>Shift+Enter</strong>를 누른 후 아래 프롬프트를 입력합니다.</p>
+
+        <div class="tip-box">
+          분석과 템플릿 생성은 ChatGPT 또는 Gemini가 더 잘 정리해줍니다. (무료 버전이어도 괜찮습니다.)
+        </div>
+
+        <div class="prompt-wrap">
+          <div class="prompt-header">
+            <span>프롬프트</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">복사하기</button>
+          </div>
+          <div class="prompt-body">당신은 유튜브 콘텐츠 전략 전문가입니다.
+아래에 붙여넣은 텍스트는 현재 유튜브에서 높은 조회수를
+기록하고 있는 영상의 스크립트입니다.
+
+이 스크립트를 아래 항목에 따라 철저하게 분석해 주세요.
+
+<mark>[복사한 채널 영상의 스크립트를 여기에 넣어주세요]</mark>
+
+1. 후킹 전략 (첫 30초~1분)
+- 어떤 방식으로 시청자의 관심을 끌었는가?
+- 어떤 감정이나 호기심을 자극했는가?
+- 사용된 핵심 표현이나 문장 패턴은 무엇인가?
+
+2. 구성 분석
+- 도입부 / 본문 / 마무리의 비율과 흐름
+- 각 파트에서 사용된 전개 방식
+
+3. 표현 기법
+- 반복, 대조, 질문, 스토리텔링 등 사용된 기법
+- 시청자 감정을 자극하는 표현 방식
+
+4. 핵심 키워드
+- 자주 등장하는 단어와 주제 키워드
+
+5. 스크립트의 강점
+- 이 영상이 높은 조회수를 얻을 수 있었던 이유
+
+분석 결과는 항목별로 명확하게 구분해서 작성해주세요.</div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- 3단계 -->
+        <h2 id="step3">3단계 — 템플릿 생성</h2>
+
+        <p>분석이 완료되면 같은 대화창에서 아래 프롬프트를 바로 입력합니다.</p>
+        <p style="font-size:.88rem; color:var(--text-sub); margin-top:-.5rem;">(AI가 분석해준 분석본을 한 번 읽어보기 바랍니다.)</p>
+
+        <div class="prompt-wrap">
+          <div class="prompt-header">
+            <span>프롬프트</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">복사하기</button>
+          </div>
+          <div class="prompt-body">앞에서 분석한 구조, 표현 기법, 후킹 전략, 핵심 키워드를
+바탕으로 새로운 대본 작성에 바로 사용할 수 있는
+스크립트 템플릿을 만들어 주세요.
+
+어떤 주제를 입력하더라도 이 형식에 맞춰
+저작권 문제 없이 새로운 대본을 작성할 수 있도록 해주세요.
+아티팩트 사용하지 말고 본문에서 바로 복사해서
+사용할 수 있도록 작성해주세요.
+
+추가로 원본 영상의 총 글자수와
+파트별 글자수 비율도 함께 분석해서
+템플릿 상단에 포함시켜 주세요.
+
+- 페르소나: 건강 정보를 쉽고 친근하게 전달하는 전문 크리에이터
+- 타겟: 60대 이상 시니어
+
+템플릿이 완성되면 전체를 복사합니다.</div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- 4단계 -->
+        <h2 id="step4">4단계 — 대본 생성</h2>
+
+        <p>템플릿이 완성되었나요? 이제 나온 템플릿을 전체 복사하세요.</p>
+
+        <div class="info-box">
+          <strong>Claude를 사용해서 템플릿을 만드신 분</strong> → 새로운 대화창을 열어주세요. 원본 영상이 있는 대화창에서 그대로 작성하면 저작권 침해 확률이 높아질 수 있습니다.<br><br>
+          <strong>ChatGPT 또는 Gemini를 사용해서 템플릿을 만드신 분</strong> → Claude 새 대화창으로 이동합니다.
+        </div>
+
+        <div class="step-img">
+          <img src="../../images/practice/4.script-writing/3.png" alt="Claude 새 채팅창 위치">
+        </div>
+
+        <p>복사한 템플릿을 붙여넣고 Shift+Enter를 누른 뒤 아래 프롬프트 안에 <strong>[주제]</strong> 부분에 벤치마킹한 영상의 제목을 넣고 입력합니다.</p>
+
+        <div class="prompt-wrap">
+          <div class="prompt-header">
+            <span>프롬프트</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">복사하기</button>
+          </div>
+          <div class="prompt-body">나는 건강 콘텐츠를 오랫동안 제작해온 유튜브 크리에이터야.
+복잡한 건강 정보를 누구나 이해할 수 있게 풀어내고,
+시청자가 영상 끝까지 집중해서 볼 수 있도록
+스토리텔링하는 것이 내 핵심 역량이야.
+
+타겟: 60~80대 시니어
+건강에 관심이 높고 가족의 건강을 챙기려는 분들.
+만성질환 예방과 노화 방지에 관심이 많으며
+자연 식품을 통한 건강 관리를 선호하는 시청자들.
+
+<strong>주제: <mark>[여기에 벤치마킹한 영상의 제목 입력]</mark></strong>
+목표: 시청자의 문제를 해결하고 구체적인 행동을 이끌어내는 교육형 콘텐츠
+길이: 공백 미포함 10,000자~15,000자 (영상 20~30분 분량)
+단, 템플릿에 명시된 글자수와 파트별 비율을 우선 따를 것
+
+<필수 지침>
+📌 대본 작성 전 반드시 웹 서칭을 통해 주제와 관련된 최신 정보와
+   사실적인 내용을 수집하고, 이를 바탕으로 정확한 정보를 제공할 것
+📌 수집한 정보 중 신뢰할 수 있는 내용만 선별해서 사용할 것
+📌 한 번에 전체를 작성하지 말고 파트별로 나눠서 작성할 것
+📌 각 파트 마지막 문장은 다음 파트로 자연스럽게 이어지는 브릿지 멘트로 끝낼 것
+📌 모든 파트가 완성되었을 때 하나의 영상 대본처럼 매끄럽게 읽혀야 함
+📌 도입부에 시청자가 끝까지 보고 싶게 만드는 강렬한 후킹 문구를 넣을 것
+📌 한글 표현만 사용할 것 (영어, 한자 금지)
+📌 의사 사칭 절대 금지
+📌 확정적인 단정 표현 대신 부드러운 경향·가능성 표현 사용
+📌 소제목 없이 문장과 문장이 자연스럽게 이어지도록 작성할 것
+📌 원본과 저작권 침해 문제가 없도록 비유법, 표현, 사례를 완전히 새롭게 재창작할 것
+📌 실제 사람이 어르신들에게 친절하고 쉽게 설명하는 듯한 말투로 작성할 것
+📌 어미를 다양하게 활용하고 공감과 감정을 담을 것
+📌 어렵고 생소한 의학적, 과학적 단어는 최소화할 것
+📌 겉핥기식 묘사가 아닌 구체적인 상황과 장면을 제시하는 묘사를 넣을 것
+📌 아티팩트 사용하지 말고 본문에 바로 작성할 것
+📌 대본 작성 전에 전체 글자수와 파트 구성을 먼저 계획하고 시작할 것
+📌 대본을 한 번에 전부 작성하지 말 것
+📌 파트 1 작성 완료 후 반드시 멈추고
+   "파트 1이 완성되었습니다. 다음 파트를 작성할까요?" 라고 물어볼 것
+📌 사용자가 확인하고 승인한 후에만 다음 파트로 넘어갈 것
+📌 모든 파트는 사용자의 승인을 받은 후 순서대로 작성할 것
+
+입력하면 Claude가 웹서칭으로 최신 정보를 수집한 후
+작성을 시작합니다.</div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- 5단계 -->
+        <h2 id="step5">5단계 — 발표시간 계산기로 확인하기</h2>
+
+        <p>파트 1 대본이 완성되면 아래 사이트에 복붙해서 글자수와 예상 영상 시간을 확인하세요. 각 파트가 완성될 때마다 여기에 모아두면 전체 대본을 한눈에 관리할 수 있습니다.</p>
+
+        <div class="step-img">
+          <img src="../../images/practice/4.script-writing/2.png" alt="발표시간 계산기 사이트 화면">
+        </div>
+
+        <a href="https://www.speechtime.co.kr/" target="_blank" rel="noopener noreferrer" class="link-btn">발표시간 계산기 바로가기 →</a>
+
+        <p>파트 내용이 마음에 들면 <strong>"다음 파트 진행"</strong>이라고 입력합니다. 수정하고 싶은 부분이 있다면 <strong>"( ) 이 부분을 이렇게 수정해줘"</strong>라고 입력해서 수정 후 진행합니다. 이 작업을 마무리 파트까지 반복합니다.</p>
+
+        <hr class="divider">
+
+        <!-- 6단계 -->
+        <h2 id="step6">6단계 — 최종 대본 완성</h2>
+
+        <p>모든 파트가 완성되면 발표시간 계산기에 모아둔 전체 대본을 처음부터 끝까지 한 번 읽어보세요.</p>
+
+        <p>수정하고 싶은 부분이 있다면 전체 대본을 복사한 후 Claude에 들어가서 <strong>"( ) 이 부분을 ( ) 이런 식으로 수정/추가/삭제 해줘"</strong>라고 입력하여 대본을 점점 완성도 있게 만들어가면 됩니다.</p>
+
+        <div class="warn-box">
+          <strong>⚠️ 중요! — 완성된 대본은 꼭 따로 메모장이나 다른 곳에 저장해두시기 바랍니다!</strong>
+        </div>
+
+        <hr class="divider">
+
+        <!-- 대본, 이것만큼은 꼭 기억하세요 -->
+        <h2 id="reminder">대본, 이것만큼은 꼭 기억하세요</h2>
+
+        <div class="warn-box">
+          <p><strong>AI 유튜브에서 가장 중요한 것은 얼굴도, 목소리도 아닙니다. 바로 대본입니다.</strong></p>
+
+          <p>특히 시니어 건강 채널은 영상을 눈으로 보는 것보다 오디오북처럼 틀어놓고 귀로 청취하는 분들이 많습니다. 그만큼 대본의 질이 영상의 질을 결정합니다.</p>
+
+          <p>또한 시니어 분들의 특징은 썸네일을 보고 클릭한 후, 후킹만 제대로 되어 있다면 끝까지 그냥 틀어놓는 경우가 많습니다. 첫 30초~1분의 후킹에 많은 신경을 써야 하는 이유입니다.</p>
+
+          <p><strong>가장 중요한 것은 사람 냄새가 나느냐입니다.</strong></p>
+
+          <p>아무리 좋은 프롬프트를 써도 AI가 쓴 티는 납니다. 대본을 뽑은 후 반드시 직접 읽어보고 어색한 부분, 너무 딱딱한 부분, 어르신들이 이해하기 어려운 부분을 사람의 손으로 다듬어야 합니다.</p>
+
+          <p>유튜브 대본은 절대 "딸깍" 한 번으로 완성되지 않습니다. 이런 식으로 만든다면 조회수가 나오지 않고 구독자가 모이지 않는 것은 당연한 결과입니다. 설령 운이 좋아서 영상이 한번 터지더라도 결국 반짝으로 끝날 것입니다. 못 믿겠다면 직접 경험해봐도 좋습니다.</p>
+
+          <p><strong>AI만 믿고 수정하지 않으면 생기는 문제들:</strong></p>
+          <ul>
+            <li>드물지만 저작권 침해 가능성이 생길 수 있습니다.</li>
+            <li>각 파트가 자연스럽게 이어지지 않고 내용이 산으로 갈 수 있습니다.</li>
+            <li>AI가 사실과 다른 정보를 넣어도 모르고 올릴 수 있습니다.</li>
+          </ul>
+
+          <p style="margin-top:1rem;">꼭 대본을 끝까지 읽고, 진짜 사람이 이야기하는 것처럼 다듬어서 올리시기 바랍니다.</p>
+
+          <hr style="border:none; border-top:1px solid var(--border); margin:1.25rem 0;">
+
+          <p><strong>프롬프트는 기본 틀일 뿐입니다.</strong></p>
+
+          <p>제가 작성한 프롬프트는 수많은 시도와 수정을 거쳐서 만든 기본 틀입니다. 사용해보시다가 마음에 들지 않거나, 수정·추가할 부분이 있다고 판단되신다면 꼭 변경해서 사용하시기 바랍니다.</p>
+
+          <p>이 기본 프롬프트를 바탕으로 다양하게 테스트하고 수정해가면서 아무도 따라하지 못하는 자신만의 프롬프트를 만들어간다면, 조회수와 구독자수는 자연스럽게 따라올 것입니다.</p>
+        </div>
+
+        <!-- 이전 / 다음 글 -->
+        <div style="display:flex; align-items:stretch; background:var(--dark); border-radius:var(--radius-lg); overflow:hidden; margin-top:3rem;">
+          <a href="시작전체크리스트.html" style="flex:1; display:flex; align-items:center; gap:.75rem; padding:1.5rem 1.75rem; text-decoration:none; transition:opacity .2s; border-right:1px solid rgba(255,255,255,.1);" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">
+            <span style="font-size:1.3rem; color:var(--red); flex-shrink:0;">←</span>
+            <div>
+              <div style="font-size:.7rem; font-weight:800; color:rgba(255,255,255,.4); text-transform:uppercase; letter-spacing:.1em; margin-bottom:.25rem;">이전 글</div>
+              <div style="font-size:1rem; font-weight:800; color:#fff;">시작 전 체크리스트</div>
+            </div>
+          </a>
+          <a href="이미지만들기-건강.html" style="flex:1; display:flex; align-items:center; justify-content:flex-end; gap:.75rem; padding:1.5rem 1.75rem; text-decoration:none; transition:opacity .2s;" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">
+            <div style="text-align:right;">
+              <div style="font-size:.7rem; font-weight:800; color:rgba(255,255,255,.4); text-transform:uppercase; letter-spacing:.1em; margin-bottom:.25rem;">다음 글</div>
+              <div style="font-size:1rem; font-weight:800; color:#fff;">이미지 만들기</div>
+            </div>
+            <span style="font-size:1.3rem; color:var(--red); flex-shrink:0;">→</span>
+          </a>
+        </div>
+
+      </div>
+    </article>
+  </main>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">크리에이터 <span>완전정복</span></div>
+    <p class="footer-desc">AI로 유튜브 만들기 — 실제 경험 기반 무료 공개</p>
+    <div class="footer-links">
+      <a href="../../index.html">홈</a>
+      <a href="../../basics/index.html">유튜브 기초</a>
+      <a href="../../practice/index.html"><span class="nav-ai-red">AI</span> 유튜브 실전</a>
+      <a href="../../course/index.html">강의실</a>
+      <a href="../../community/index.html">커뮤니티</a>
+      <a href="../../about/index.html">소개</a>
+    </div>
+    <div class="footer-legal">
+      <a href="../../privacy/index.html">개인정보처리방침</a>
+    </div>
+    <p class="footer-copy">© 크리에이터 완전정복. 무단 복제 및 배포를 금합니다.</p>
+  </div>
+</footer>
+
+<script src="../../js/practice-nav.js"></script>
+<button id="btn-top" aria-label="맨 위로">↑</button>
+<script>
+  var b=document.getElementById('btn-top');
+  window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  function copyPrompt(btn) {
+    var text = btn.closest('.prompt-wrap').querySelector('.prompt-body').innerText;
+    navigator.clipboard.writeText(text).then(function() {
+      btn.textContent = '복사됨 ✓';
+      btn.classList.add('copied');
+      setTimeout(function() {
+        btn.textContent = '복사하기';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+</script>
+
+</body>
+</html>
