@@ -1964,6 +1964,11 @@ strong { font-weight: 700; }
   .practice-card-grid .cat-card > div:first-child { width: 80px !important; height: 60px !important; flex-shrink: 0; margin-bottom: 0 !important; }
   .practice-card-grid .cat-name { margin-bottom: .25rem !important; }
 
+  /* 포스트 리스트 아이템 */
+  .post-list-item { padding: .85rem .9rem; gap: .75rem; }
+  .post-list-title { font-size: .9rem; }
+  .post-list-desc { font-size: .75rem; }
+
   /* 푸터 */
   .footer-links { flex-wrap: wrap; gap: .6rem 1.2rem; justify-content: center; }
 
