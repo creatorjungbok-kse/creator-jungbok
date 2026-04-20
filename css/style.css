@@ -1945,9 +1945,10 @@ strong { font-weight: 700; }
   .hero-desc { font-size: .95rem; }
 
   /* 홈 운영자 소개 */
-  .about-stats { grid-template-columns: repeat(3, 1fr) !important; gap: .75rem !important; min-width: 0 !important; }
-  .about-stat-num { font-size: 1.3rem !important; }
-  .about-stat-lbl { font-size: .72rem; }
+  .about-stats { grid-template-columns: repeat(3, 1fr) !important; gap: .5rem !important; min-width: 0 !important; width: 100% !important; }
+  .about-stat-item { padding: .75rem .4rem !important; }
+  .about-stat-num { font-size: 1.15rem !important; margin-bottom: .2rem !important; }
+  .about-stat-lbl { font-size: .68rem !important; }
 
   /* 카테고리 */
   .cat-grid { grid-template-columns: 1fr; gap: .75rem; }
