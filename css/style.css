@@ -1757,3 +1757,105 @@ strong { font-weight: 700; }
 }
 #btn-top.visible { display: flex; }
 #btn-top:hover { transform: translateY(-3px); }
+
+/* ============================================================
+   햄버거 메뉴 (모바일 전용)
+   ============================================================ */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 4px;
+  flex-shrink: 0;
+  z-index: 101;
+}
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: transform .25s, opacity .2s;
+}
+.nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ============================================================
+   모바일 전용 개선
+   ============================================================ */
+@media (max-width: 700px) {
+
+  /* 헤더 — 햄버거 활성 */
+  .site-header { position: relative; }
+  .nav-toggle { display: flex; }
+
+  .header-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border-bottom: 2px solid var(--border);
+    flex-direction: column;
+    gap: 0;
+    padding: .5rem 0;
+    z-index: 100;
+    box-shadow: 0 8px 24px rgba(0,0,0,.08);
+    overflow-x: visible;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: auto;
+  }
+  .header-nav.nav-open { display: flex; }
+  .header-nav a {
+    padding: .85rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    font-size: .95rem;
+    font-weight: 600;
+    color: var(--text);
+    white-space: normal;
+  }
+  .header-nav a:last-child { border-bottom: none; }
+  .header-nav a:hover { background: var(--bg-soft); color: var(--red); text-decoration: none; }
+  .header-nav a.nav-active { color: var(--red); }
+
+  /* 히어로 */
+  .hero { padding: 3.5rem 1.25rem 3rem !important; }
+  .hero h1 { font-size: 1.7rem !important; line-height: 1.45; }
+  .hero-desc { font-size: .95rem; }
+
+  /* 홈 운영자 소개 */
+  .about-stats { grid-template-columns: repeat(3, 1fr) !important; gap: .75rem !important; min-width: 0 !important; }
+  .about-stat-num { font-size: 1.3rem !important; }
+  .about-stat-lbl { font-size: .72rem; }
+
+  /* 카테고리 */
+  .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .cat-section { padding: 2.5rem 1rem; }
+  .cat-card { padding: 1.5rem 1rem; }
+  .cat-name { font-size: 1.1rem; }
+  .cat-desc { font-size: .85rem; }
+
+  /* 푸터 */
+  .footer-links { flex-wrap: wrap; gap: .6rem 1.2rem; justify-content: center; }
+
+  /* 이전/다음 글 버튼 */
+  .post-nav-wrap { flex-direction: column; }
+
+  /* 프롬프트 박스 가로 오버플로 방지 */
+  .prompt-box-body, .prompt-wrap pre { overflow-x: auto; }
+
+  /* 운영자 소개 섹션 flex */
+  .about-block > div { flex-direction: column !important; gap: 1.5rem !important; }
+}
+
+@media (max-width: 400px) {
+  .cat-grid { grid-template-columns: 1fr; }
+  .about-stats { grid-template-columns: 1fr !important; }
+  .hero h1 { font-size: 1.45rem !important; }
+}
