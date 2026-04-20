@@ -1950,11 +1950,12 @@ strong { font-weight: 700; }
   .about-stat-lbl { font-size: .72rem; }
 
   /* 카테고리 */
-  .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-  .cat-section { padding: 2.5rem 1rem; }
-  .cat-card { padding: 1.5rem 1rem; }
-  .cat-name { font-size: 1.1rem; }
-  .cat-desc { font-size: .85rem; }
+  .cat-grid { grid-template-columns: repeat(2, 1fr); gap: .75rem; }
+  .cat-section { padding: 2rem .75rem; }
+  .cat-card { padding: 1.1rem .9rem; }
+  .cat-name { font-size: 1rem; }
+  .cat-desc { font-size: .8rem; }
+  .cat-svg-icon { width: 28px; height: 28px; margin-bottom: .6rem; }
 
   /* 푸터 */
   .footer-links { flex-wrap: wrap; gap: .6rem 1.2rem; justify-content: center; }
@@ -1971,6 +1972,5 @@ strong { font-weight: 700; }
 
 @media (max-width: 400px) {
   .cat-grid { grid-template-columns: 1fr; }
-  .about-stats { grid-template-columns: 1fr !important; }
   .hero h1 { font-size: 1.45rem !important; }
 }
