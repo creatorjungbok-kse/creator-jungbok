@@ -1950,12 +1950,18 @@ strong { font-weight: 700; }
   .about-stat-lbl { font-size: .72rem; }
 
   /* 카테고리 */
-  .cat-grid { grid-template-columns: repeat(2, 1fr); gap: .75rem; }
+  .cat-grid { grid-template-columns: 1fr; gap: .75rem; }
   .cat-section { padding: 2rem .75rem; }
-  .cat-card { padding: 1.1rem .9rem; }
-  .cat-name { font-size: 1rem; }
-  .cat-desc { font-size: .8rem; }
-  .cat-svg-icon { width: 28px; height: 28px; margin-bottom: .6rem; }
+  .cat-card { padding: 1.1rem 1.2rem; display: flex; flex-direction: row; align-items: center; gap: 1rem; }
+  .cat-svg-icon { width: 32px; height: 32px; flex-shrink: 0; margin-bottom: 0; }
+  .cat-name { font-size: 1rem; margin-bottom: .2rem; }
+  .cat-desc { font-size: .8rem; margin: 0; }
+
+  /* AI 유튜브 실전 포맷 카드 */
+  .practice-card-grid { grid-template-columns: 1fr !important; gap: 1rem !important; }
+  .practice-card-grid .cat-card { flex-direction: row !important; padding: 1rem 1.2rem !important; text-align: left !important; }
+  .practice-card-grid .cat-card > div:first-child { width: 80px !important; height: 60px !important; flex-shrink: 0; margin-bottom: 0 !important; }
+  .practice-card-grid .cat-name { margin-bottom: .25rem !important; }
 
   /* 푸터 */
   .footer-links { flex-wrap: wrap; gap: .6rem 1.2rem; justify-content: center; }
