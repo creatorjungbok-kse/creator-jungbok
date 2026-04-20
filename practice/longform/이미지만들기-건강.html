@@ -80,7 +80,7 @@
   <div class="header-inner">
     <button class="mobile-back" onclick="history.back()" aria-label="뒤로가기">&#8592;</button>
     <a href="../../index.html" class="site-logo">크리에이터 <span>완전정복</span></a>
-    <button class="nav-toggle" aria-label="메뉴" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+    <button class="nav-toggle" aria-label="메뉴" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
     <button class="toc-toggle" id="toc-toggle" aria-label="목차 열기">목차</button>
     <nav class="header-nav">
       <a href="../../index.html">홈</a>
