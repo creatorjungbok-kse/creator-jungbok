@@ -1834,13 +1834,54 @@ strong { font-weight: 700; }
    모바일 전용 개선
    ============================================================ */
 @media (max-width: 900px) {
-  /* 뒤로가기 & 목차 버튼 표시 */
-  .mobile-back { display: block; }
-  .toc-toggle { display: block; }
+  /* 뒤로가기 — 좌측 하단 고정 플로팅 버튼 */
+  .mobile-back {
+    display: flex;
+    position: fixed;
+    bottom: 2rem;
+    left: 1.25rem;
+    width: 44px;
+    height: 44px;
+    background: var(--dark);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.15rem;
+    font-weight: 700;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,.22);
+    z-index: 999;
+    cursor: pointer;
+    padding: 0;
+    transition: opacity .2s, transform .2s;
+  }
+  .mobile-back:hover { opacity: .8; transform: translateY(-2px); }
 
-  /* 헤더 레이아웃 — 로고가 가운데 가득 차도록 */
-  .header-inner { gap: .5rem; }
-  .site-logo { flex: 1; }
+  /* 목차 — 우측 하단 고정 플로팅 버튼 (맨 위로 버튼 위) */
+  .toc-toggle {
+    display: flex;
+    position: fixed;
+    bottom: 5.5rem;
+    right: 1.25rem;
+    width: 44px;
+    height: 44px;
+    background: var(--dark);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: .72rem;
+    font-weight: 800;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,.22);
+    z-index: 999;
+    cursor: pointer;
+    padding: 0;
+    transition: opacity .2s, transform .2s;
+    letter-spacing: -.02em;
+  }
+  .toc-toggle:hover { opacity: .8; transform: translateY(-2px); }
 
   /* 사이드바 → 드로어로 전환 */
   .sidebar {
