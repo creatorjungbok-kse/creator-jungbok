@@ -1986,3 +1986,21 @@ strong { font-weight: 700; }
   .cat-grid { grid-template-columns: 1fr; }
   .hero h1 { font-size: 1.45rem !important; }
 }
+
+
+/* 언어 스위처 */
+.lang-switch {
+  font-size: .8rem;
+  font-weight: 600;
+  padding: .25rem .65rem;
+  border: 1.5px solid var(--border, #e5e5e5);
+  border-radius: 20px;
+  color: var(--text-sub) !important;
+  text-decoration: none;
+  transition: border-color .2s, color .2s;
+  white-space: nowrap;
+}
+.lang-switch:hover {
+  border-color: var(--red);
+  color: var(--red) !important;
+}
