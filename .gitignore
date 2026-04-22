@@ -30,3 +30,12 @@ en/drafts/
 # 자동화 로그
 scripts/logs/
 *.automation.log
+
+# 학습 축적 데이터 — CEO 사유 데이터, 공개 금지
+scripts/archive/
+
+# 전략/자동화 로직 — CEO 사유, 외부 공개 금지
+docs/
+scripts/
+CLAUDE.md
+SESSION-STATE.md
