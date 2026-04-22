@@ -22,3 +22,11 @@ logs/
 node_modules/
 __pycache__/
 *.pyc
+
+# 드래프트 — 승인 전까지 비공개
+drafts/
+en/drafts/
+
+# 자동화 로그
+scripts/logs/
+*.automation.log
