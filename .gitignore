@@ -1,0 +1,24 @@
+# 민감 정보 — 절대 GitHub에 올리면 안 됨
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+
+# 시스템 파일
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 에디터
+.vscode/
+.idea/
+
+# 로그
+*.log
+logs/
+
+# 빌드/임시
+node_modules/
+__pycache__/
+*.pyc
