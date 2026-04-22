@@ -1,0 +1,14 @@
+# 라인 엔딩 일관성 보장 (Windows CRLF ↔ Linux LF 혼동 방지)
+* text=auto eol=lf
+
+# 바이너리 파일
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.svg binary
+*.ico binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
+*.ttf binary

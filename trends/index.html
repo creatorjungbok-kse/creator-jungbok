@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 트렌드 — 유튜브·틱톡·AI 툴 최신 소식 | 크리에이터 완전정복</title>
+  <meta name="description" content="유튜브·틱톡·AI 툴 관련 최신 트렌드를 매일 정리합니다. 팩트 기반, 크리에이터에게 꼭 필요한 정보만.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .trends-hero {
+      padding: 2rem 0 1.5rem 0;
+      border-bottom: 2px solid #111;
+      margin-bottom: 0;
+    }
+    .trends-hero h1 {
+      font-size: 2rem;
+      font-weight: 900;
+      margin: 0 0 .5rem 0;
+      letter-spacing: -.02em;
+    }
+    .trends-hero p {
+      color: #666;
+      font-size: .95rem;
+      margin: 0;
+      line-height: 1.65;
+    }
+
+    .lang-switch {
+      font-size: .82rem;
+      color: #666;
+      margin-bottom: 1rem;
+      text-align: right;
+    }
+    .lang-switch a { color: #666; text-decoration: none; padding: 0 .35rem; }
+    .lang-switch a.active { color: var(--red, #e53935); font-weight: 800; text-decoration: underline; }
+    .lang-switch a:hover { color: var(--red, #e53935); }
+
+    .trend-filter {
+      display: flex;
+      gap: 1.25rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid #e5e5e5;
+      font-size: .9rem;
+      overflow-x: auto;
+    }
+    .trend-filter a {
+      color: #666;
+      text-decoration: none;
+      padding: .25rem 0;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      font-weight: 600;
+    }
+    .trend-filter a.active {
+      color: #111;
+      border-bottom-color: var(--red, #e53935);
+    }
+    .trend-filter a:hover { color: #111; }
+
+    .trend-list { margin: 0; padding: 0; list-style: none; }
+    .trend-item {
+      display: block;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid #eee;
+      text-decoration: none;
+      color: inherit;
+      transition: background .15s;
+    }
+    .trend-item:hover { background: #fafafa; text-decoration: none; }
+    .trend-item:hover .trend-title { color: var(--red, #e53935); }
+
+    .trend-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #111;
+      line-height: 1.5;
+      margin: 0 0 .5rem 0;
+      transition: color .15s;
+    }
+    .trend-badge-new {
+      display: inline-block;
+      background: var(--red, #e53935);
+      color: #fff;
+      font-size: .65rem;
+      font-weight: 800;
+      padding: .15rem .5rem;
+      border-radius: 4px;
+      margin-right: .5rem;
+      letter-spacing: .05em;
+      vertical-align: 2px;
+    }
+
+    .trend-excerpt {
+      color: #555;
+      font-size: .9rem;
+      line-height: 1.65;
+      margin: 0 0 .6rem 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .trend-meta {
+      color: #888;
+      font-size: .8rem;
+      display: flex;
+      gap: .4rem .75rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .trend-meta .sep { color: #ddd; }
+
+    .empty-state {
+      padding: 3rem 1rem;
+      text-align: center;
+      color: #999;
+      font-size: .95rem;
+      border: 1px dashed #ddd;
+      border-radius: 10px;
+      margin: 2rem 0;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: .35rem;
+      margin: 2.5rem 0 1rem 0;
+    }
+    .pagination a, .pagination span {
+      display: inline-block;
+      padding: .4rem .75rem;
+      font-size: .85rem;
+      color: #666;
+      text-decoration: none;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      min-width: 2rem;
+      text-align: center;
+    }
+    .pagination a.active, .pagination span.active {
+      background: #111;
+      color: #fff;
+      border-color: #111;
+      font-weight: 700;
+    }
+    .pagination a:hover { background: #f5f5f5; color: #111; }
+
+    @media (max-width: 480px) {
+      .trends-hero { padding: 1.5rem 0 1rem 0; }
+      .trends-hero h1 { font-size: 1.5rem; }
+      .trends-hero p { font-size: .88rem; }
+      .trend-item { padding: 1.25rem 0; }
+      .trend-title { font-size: 1.02rem; }
+      .trend-excerpt { font-size: .85rem; }
+      .trend-meta { font-size: .75rem; }
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="크리에이터 완전정복">
+  <meta property="og:title" content="AI 트렌드 — 유튜브·틱톡·AI 툴 최신 소식">
+  <meta property="og:description" content="유튜브·틱톡·AI 툴 관련 최신 트렌드를 매일 정리합니다. 팩트 기반, 크리에이터에게 꼭 필요한 정보만.">
+  <meta property="og:url" content="https://creatorjungbok.co.kr/trends/">
+  <link rel="alternate" hreflang="ko" href="https://creatorjungbok.co.kr/trends/">
+  <link rel="alternate" hreflang="en" href="https://creatorjungbok.co.kr/en/trends/">
+  <link rel="alternate" hreflang="x-default" href="https://creatorjungbok.co.kr/trends/">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <button class="mobile-back" onclick="history.back()" aria-label="뒤로가기" style="display:none;">&#8592;</button>
+    <a href="../index.html" class="site-logo">크리에이터 <span>완전정복</span></a>
+    <button class="nav-toggle" aria-label="메뉴" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+    <nav class="header-nav">
+      <a href="../index.html">홈</a>
+      <a href="../basics/index.html">유튜브 기초</a>
+      <a href="../practice/index.html"><span class="nav-ai-red">AI</span> 유튜브 실전</a>
+      <a href="index.html" class="nav-active">AI 트렌드</a>
+      <a href="../course/index.html">강의실</a>
+      <a href="../community/index.html">커뮤니티</a>
+      <a href="../about/index.html">소개</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+
+  <main class="main-content">
+
+    <div class="lang-switch">
+      <a href="index.html" class="active" onclick="try{localStorage.setItem('cj-lang-pref','ko');}catch(e){}">한국어</a> /
+      <a href="../en/trends/index.html" onclick="try{localStorage.setItem('cj-lang-pref','en');}catch(e){}">English</a>
+    </div>
+
+    <section class="trends-hero">
+      <h1>AI 트렌드</h1>
+      <p>SNS + AI 툴 최신 소식을 매일 쉽게 알려드립니다.</p>
+    </section>
+
+    <nav class="trend-filter" aria-label="트렌드 필터">
+      <a href="index.html" class="active">전체</a>
+      <a href="#" onclick="return false;">이번 주</a>
+      <a href="#" onclick="return false;">이번 달</a>
+      <a href="#" onclick="return false;">AI 툴</a>
+      <a href="#" onclick="return false;">알고리즘</a>
+      <a href="#" onclick="return false;">수익화</a>
+    </nav>
+
+    <!-- 글 목록 — 최신순 자동 정렬 -->
+    <ul class="trend-list">
+
+      <li>
+        <a href="2026-04-23-tiktok-symphony-expansion.html" class="trend-item">
+          <h2 class="trend-title">
+            <span class="trend-badge-new">NEW</span>틱톡 Symphony 확장: AI 영상 도구를 크리에이터도 쓸 수 있게 된 이야기
+          </h2>
+          <p class="trend-excerpt">틱톡이 AI 영상 도구 'Symphony'를 크리에이터에게 공개했어요. 뭐가 달라졌고 왜 중요한지, 쉽게 정리합니다.</p>
+          <div class="trend-meta">
+            <span>📅 2026-04-23</span>
+            <span class="sep">·</span>
+            <span>⏱ 약 4분 읽기</span>
+            <span class="sep">·</span>
+            <span>🏷️ AI 툴</span>
+          </div>
+        </a>
+      </li>
+
+      <!-- 자동 생성되는 글이 여기에 최신순으로 추가됩니다 -->
+
+    </ul>
+
+    <!-- 글 개수가 충분히 쌓이면 자동으로 활성화 -->
+    <!--
+    <nav class="pagination" aria-label="페이지 이동">
+      <a href="#">이전</a>
+      <span class="active">1</span>
+      <a href="#">2</a>
+      <a href="#">3</a>
+      <a href="#">다음</a>
+    </nav>
+    -->
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">크리에이터 <span>완전정복</span></div>
+    <p class="footer-desc">AI로 유튜브 만들기 — 실제 경험 기반 무료 공개</p>
+    <div class="footer-links">
+      <a href="../index.html">홈</a>
+      <a href="../basics/index.html">유튜브 기초</a>
+      <a href="../practice/index.html"><span class="nav-ai-red">AI</span> 유튜브 실전</a>
+      <a href="index.html">AI 트렌드</a>
+      <a href="../course/index.html">강의실</a>
+      <a href="../community/index.html">커뮤니티</a>
+      <a href="../about/index.html">소개</a>
+    </div>
+    <div class="footer-legal">
+      <a href="../privacy/index.html">개인정보처리방침</a>
+    </div>
+    <p class="footer-copy">© 크리에이터 완전정복. 무단 복제 및 배포를 금합니다.</p>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+
+<button id="btn-top" aria-label="맨 위로">↑</button>
+<script>
+  var b=document.getElementById('btn-top');
+  window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+
+<!-- 영어권 브라우저 자동 리디렉션 (사용자 선택 시 해제됨) -->
+<script>
+(function(){
+  try {
+    if (localStorage.getItem('cj-lang-pref')) return;
+    if (sessionStorage.getItem('cj-auto-redirect-done')) return;
+    var ul = (navigator.language || '').toLowerCase();
+    if (ul.indexOf('en') === 0) {
+      sessionStorage.setItem('cj-auto-redirect-done','1');
+      location.href = '../en/trends/index.html';
+    }
+  } catch(e){}
+})();
+</script>
+
+</body>
+</html>

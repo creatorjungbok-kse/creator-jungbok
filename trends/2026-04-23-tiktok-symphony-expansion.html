@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>틱톡 Symphony 확장: AI 영상 도구를 크리에이터도 쓸 수 있게 된 이야기 | 크리에이터 완전정복</title>
+  <meta name="description" content="틱톡이 AI 영상 도구 'Symphony'를 크리에이터에게 공개했어요. 뭐가 달라졌고 왜 중요한지, 쉽게 정리합니다.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* ========== 트렌드 글 전용 스타일 (모바일 우선) ========== */
+    .trend-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem 1rem;
+      font-size: .8rem;
+      color: #666;
+      margin: .75rem 0 1.25rem 0;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border, #e5e5e5);
+      align-items: center;
+    }
+    .trend-meta span { display: inline-flex; align-items: center; gap: .3rem; line-height: 1.4; }
+    .trend-meta .meta-cat {
+      background: var(--red, #e53935);
+      color: #fff;
+      padding: .2rem .7rem;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: .7rem;
+      letter-spacing: .02em;
+    }
+
+    .lang-switch {
+      font-size: .82rem;
+      color: #666;
+      padding: .6rem 0;
+      text-align: right;
+      border-bottom: 1px dashed #ddd;
+      margin-bottom: 1.25rem;
+    }
+    .lang-switch a { color: #666; text-decoration: none; padding: 0 .35rem; }
+    .lang-switch a.active { color: var(--red, #e53935); font-weight: 800; text-decoration: underline; }
+    .lang-switch a:hover { color: var(--red, #e53935); }
+
+    .lead-para {
+      font-size: 1.02rem;
+      line-height: 1.85;
+      color: var(--text, #222);
+      padding: 1.1rem 1.25rem;
+      background: #fff7f6;
+      border-left: 4px solid var(--red, #e53935);
+      border-radius: 0 8px 8px 0;
+      margin: 1.25rem 0 2rem 0;
+    }
+    .lead-para strong { color: #c62828; }
+
+    .big-date {
+      display: inline-block;
+      padding: .35rem .8rem;
+      background: var(--dark, #1a1a1a);
+      color: #fff;
+      border-radius: 6px;
+      font-weight: 800;
+      font-size: .85rem;
+      letter-spacing: .02em;
+      margin: 0 .2rem;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: .9rem;
+      margin: 1.5rem 0;
+    }
+    @media (min-width: 700px) {
+      .feature-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    }
+    .feature-card {
+      border: 1px solid var(--border, #e5e5e5);
+      border-radius: 10px;
+      padding: 1.1rem 1.25rem;
+      background: #fafafa;
+      transition: border-color .15s, transform .15s;
+    }
+    .feature-card:hover { border-color: var(--red, #e53935); }
+    .feature-card-num {
+      display: inline-block;
+      background: var(--red, #e53935);
+      color: #fff;
+      width: 1.6rem;
+      height: 1.6rem;
+      line-height: 1.6rem;
+      text-align: center;
+      border-radius: 50%;
+      font-weight: 800;
+      font-size: .85rem;
+      margin-right: .5rem;
+    }
+    .feature-card-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text, #222);
+      margin-bottom: .5rem;
+      display: flex;
+      align-items: center;
+      gap: .35rem;
+    }
+    .feature-card-desc { font-size: .92rem; line-height: 1.75; color: #444; margin: 0; }
+
+    .compare-box {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: .75rem;
+      margin: 1.5rem 0;
+    }
+    @media (min-width: 700px) {
+      .compare-box { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    }
+    .compare-side {
+      padding: 1rem 1.1rem;
+      border-radius: 10px;
+      font-size: .92rem;
+      line-height: 1.7;
+    }
+    .compare-before { background: #f5f5f5; border: 1px solid #e0e0e0; }
+    .compare-after { background: #fff5f5; border: 1px solid #ffcdd2; }
+    .compare-label {
+      display: block;
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      margin-bottom: .5rem;
+      text-transform: uppercase;
+    }
+    .compare-before .compare-label { color: #757575; }
+    .compare-after .compare-label { color: var(--red, #e53935); }
+
+    .callout {
+      margin: 1.75rem 0;
+      padding: 1.1rem 1.25rem;
+      border-radius: 10px;
+      border-left: 4px solid;
+      font-size: .93rem;
+      line-height: 1.75;
+    }
+    .callout.tip { background: #f0fdf4; border-color: #22c55e; }
+    .callout.info { background: #eff6ff; border-color: #3b82f6; }
+    .callout.warn { background: #fffbeb; border-color: #f59e0b; }
+    .callout-label {
+      font-weight: 800;
+      font-size: .85rem;
+      margin-bottom: .5rem;
+      display: flex;
+      align-items: center;
+      gap: .35rem;
+    }
+    .callout.tip .callout-label { color: #16a34a; }
+    .callout.info .callout-label { color: #2563eb; }
+    .callout.warn .callout-label { color: #d97706; }
+    .callout ul { margin: .4rem 0 0 1.1rem; padding: 0; }
+    .callout li { margin-bottom: .3rem; }
+    .callout a { color: inherit; text-decoration: underline; word-break: break-all; }
+
+    .related-links {
+      margin: 2.5rem 0 1rem 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border, #e5e5e5);
+    }
+    .related-links-title {
+      font-size: .8rem;
+      font-weight: 800;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: .75rem;
+    }
+    .related-links ul { list-style: none; padding: 0; margin: 0; }
+    .related-links li { margin-bottom: .6rem; }
+    .related-links a {
+      color: var(--text, #222);
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 1px solid transparent;
+      font-size: .95rem;
+    }
+    .related-links a:hover { border-bottom-color: var(--red, #e53935); }
+
+    /* 모바일 최적화 추가 */
+    @media (max-width: 480px) {
+      .post-title { font-size: 1.55rem !important; line-height: 1.4 !important; }
+      .lead-para { font-size: .95rem; padding: 1rem; }
+      .trend-meta { font-size: .75rem; gap: .5rem .75rem; }
+      .feature-card { padding: 1rem; }
+      .feature-card-title { font-size: .95rem; }
+      .feature-card-desc { font-size: .88rem; }
+      .compare-side { font-size: .88rem; }
+      .callout { padding: 1rem; font-size: .88rem; }
+    }
+
+    .post-body strong { color: #111; font-weight: 800; }
+    .post-body h2 {
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+      line-height: 1.4;
+    }
+    @media (max-width: 480px) {
+      .post-body h2 { font-size: 1.2rem; margin-top: 2rem; }
+    }
+    .post-body p { line-height: 1.85; font-size: .98rem; }
+    @media (max-width: 480px) {
+      .post-body p { font-size: .95rem; line-height: 1.8; }
+    }
+    .post-body ul { line-height: 1.85; }
+    .post-body ul li { margin-bottom: .35rem; }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="크리에이터 완전정복">
+  <meta property="og:title" content="틱톡 Symphony 확장: AI 영상 도구를 크리에이터도 쓸 수 있게 된 이야기">
+  <meta property="og:description" content="틱톡이 AI 영상 도구 'Symphony'를 크리에이터에게 공개했어요. 뭐가 달라졌고 왜 중요한지, 쉽게 정리합니다.">
+  <meta property="og:url" content="https://creatorjungbok.co.kr/trends/2026-04-23-tiktok-symphony-expansion.html">
+  <meta property="article:published_time" content="2026-04-23T03:00:00+09:00">
+  <meta property="article:section" content="AI 트렌드">
+  <meta name="twitter:card" content="summary">
+  <link rel="alternate" hreflang="ko" href="https://creatorjungbok.co.kr/trends/2026-04-23-tiktok-symphony-expansion.html">
+  <link rel="alternate" hreflang="en" href="https://creatorjungbok.co.kr/en/trends/2026-04-23-tiktok-symphony-expansion.html">
+  <link rel="alternate" hreflang="x-default" href="https://creatorjungbok.co.kr/trends/2026-04-23-tiktok-symphony-expansion.html">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <button class="mobile-back" onclick="history.back()" aria-label="뒤로가기">&#8592;</button>
+    <a href="../index.html" class="site-logo">크리에이터 <span>완전정복</span></a>
+    <button class="nav-toggle" aria-label="메뉴" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+    <nav class="header-nav">
+      <a href="../index.html">홈</a>
+      <a href="../basics/index.html">유튜브 기초</a>
+      <a href="../practice/index.html"><span class="nav-ai-red">AI</span> 유튜브 실전</a>
+      <a href="../trends/index.html" class="nav-active">AI 트렌드</a>
+      <a href="../course/index.html">강의실</a>
+      <a href="../community/index.html">커뮤니티</a>
+      <a href="../about/index.html">소개</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+
+  <main class="main-content">
+
+    <article>
+      <header class="post-header">
+        <p class="post-chap">AI 트렌드</p>
+        <h1 class="post-title">틱톡 Symphony 확장: AI 영상 도구를 크리에이터도 쓸 수 있게 된 이야기</h1>
+        <div class="lang-switch">
+          <a href="2026-04-23-tiktok-symphony-expansion.html" class="active" onclick="try{localStorage.setItem('cj-lang-pref','ko');}catch(e){}">한국어</a> /
+          <a href="../en/trends/2026-04-23-tiktok-symphony-expansion.html" onclick="try{localStorage.setItem('cj-lang-pref','en');}catch(e){}">English</a>
+        </div>
+        <div class="trend-meta">
+          <span class="meta-cat">AI 트렌드</span>
+          <span>🗓 2026-04-23</span>
+          <span>⏱ 약 4분 읽기</span>
+          <span>📎 출처: TikTok Newsroom</span>
+        </div>
+      </header>
+
+      <hr class="divider">
+
+      <div class="post-body">
+
+        <p class="lead-para">
+          틱톡에서 <strong>재밌는 소식</strong> 하나 있어요. 지난 4월 15일, 틱톡이 <strong>AI로 영상을 자동으로 만들어주는 도구 'Symphony'</strong>를 크리에이터에게 풀어줬습니다. 예전엔 대형 광고주만 쓸 수 있었던 기능이 이제는 <strong>일반 크리에이터도 사용 가능</strong>해진 거예요. 뭐가 바뀌었고, 왜 중요한지 쉽게 정리해봤습니다.
+        </p>
+
+        <h2>Symphony가 뭔지부터</h2>
+        <p><strong>"텍스트 한 줄만 넣으면 영상이 만들어지는 AI 도구"</strong>. 이게 Symphony의 핵심이에요.</p>
+
+        <p>예를 들어 "여름 해변에서 강아지가 뛰어노는 장면"이라고 글로 적으면, <strong>AI가 실제 영상을 만들어줍니다.</strong> 예전에는 영상 하나 만들려면 촬영 → 편집 → 자막 → 더빙을 하나씩 다 해야 했는데, 이걸 AI가 통째로 해주는 거죠.</p>
+
+        <p>원래 Symphony는 <strong>삼성, 코카콜라</strong> 같은 대형 광고주들이 광고 영상을 빠르게 만들 때 쓰던 도구였어요. 그런데 이번 발표로 <strong>일반 크리에이터도 사용할 수 있게</strong> 문이 열린 겁니다.</p>
+
+        <div class="compare-box">
+          <div class="compare-side compare-before">
+            <span class="compare-label">📅 예전 방식</span>
+            촬영 + 편집 앱(프리미어, 캡컷)<br>+ 자막 다는 앱 + 더빙 툴<br><strong>= 영상 하나에 3~5시간</strong>
+          </div>
+          <div class="compare-side compare-after">
+            <span class="compare-label">✨ Symphony 이후</span>
+            틱톡 Studio 안에서<br>텍스트 한 줄 → AI 자동 생성<br><strong>= 영상 하나에 5~10분</strong>
+          </div>
+        </div>
+
+        <h2>이번에 새로 풀린 4가지 기능</h2>
+        <p>크리에이터가 실제로 써볼 수 있는 기능은 크게 <strong>4가지</strong>예요. 하나씩 볼게요.</p>
+
+        <div class="feature-grid">
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">1</span>Smart Split</div>
+            <p class="feature-card-desc">긴 유튜브 롱폼(10분짜리) 영상 하나 올리면, <strong>AI가 알아서 3~5개의 숏폼</strong>으로 잘라줘요. 자막, 세로 리프레이밍까지 한 번에. <strong>Opus Clip 같은 외부 도구 없이</strong> 틱톡 안에서 바로 됩니다.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">2</span>AI Outline</div>
+            <p class="feature-card-desc">"반려동물 훈련법" 같은 주제만 넣으면 AI가 <strong>제목 후보, 해시태그, 도입부 훅(첫 3초 멘트), 전체 개요</strong>를 자동으로 뽑아줘요. "오늘 뭘 찍지?" 고민이 줄어듭니다.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">3</span>AI Dubbing + Fashion Maker</div>
+            <p class="feature-card-desc">틱톡 샵(TikTok Shop)에서 물건 파시는 분들에게 유용. <strong>AI 자동 더빙</strong>, 패션 영상 자동 생성까지. 판매 영상 만드는 시간이 확 줄어요.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">4</span>AI Summaries</div>
+            <p class="feature-card-desc"><strong>1시간짜리 라이브 방송</strong>을 하면 AI가 하이라이트만 뽑아서 <strong>짧은 영상 여러 개</strong>로 만들어줍니다. 라이브 끝나고 다시 편집할 필요 없음.</p>
+          </div>
+
+        </div>
+
+        <h2>그래서, 크리에이터한테 뭐가 좋아지나?</h2>
+        <p>이번 업데이트가 크리에이터에게 중요한 이유 <strong>3가지</strong>예요.</p>
+
+        <p><strong>① 편집 배울 시간이 줄어요.</strong><br>
+        예전엔 긴 영상을 숏폼으로 만들 때 <strong>Opus Clip, CapCut</strong> 같은 외부 앱을 따로 배워야 했어요. 이제는 틱톡 Studio 안에서 바로 됩니다. <strong>앱 여러 개 왔다 갔다 할 필요 없음.</strong></p>
+
+        <p><strong>② "오늘 뭐 찍지?" 고민이 줄어요.</strong><br>
+        AI Outline이 주제 아이디어 → 훅 → 해시태그까지 다 뽑아주니까, <strong>매일 업로드하는 구조</strong>를 안정적으로 만들 수 있어요. 특히 <strong>초보 크리에이터</strong>에게 큰 도움.</p>
+
+        <p><strong>③ 유튜브 하시는 분이 틱톡으로 확장하기 쉬워요.</strong><br>
+        이미 유튜브 롱폼을 가지고 계시다면, Smart Split으로 <strong>같은 영상을 틱톡 숏폼으로 재활용</strong>할 수 있어요. 한 번 만든 콘텐츠로 <strong>채널 여러 개를 동시에 키우는 게</strong> 가능해집니다.</p>
+
+        <div class="callout warn">
+          <div class="callout-label">⚠ 한 가지 주의할 점</div>
+          AI로 만든 영상은 <strong>모두 'AI 생성' 라벨</strong>이 자동으로 붙습니다. 그리고 틱톡의 안전성 검사를 통과해야 추천 피드에 올라가요. <strong>즉, AI라고 해서 무조건 바이럴되는 건 아닙니다.</strong> 콘텐츠 자체의 완성도는 여전히 중요해요.
+        </div>
+
+        <h2>한국에서는 언제 쓸 수 있나요?</h2>
+        <p>발표일(2026-04-15) 기준, <strong>글로벌 순차 배포 중</strong>이에요. 한국 계정에 언제 전면 도입될지는 공식 공지에서 따로 확인이 필요합니다.</p>
+
+        <p><strong>지금 바로 확인해보는 법:</strong></p>
+        <ul>
+          <li>1️⃣ <strong>TikTok Studio Web</strong>(tiktok.com/studio)에 로그인</li>
+          <li>2️⃣ 메뉴에 <strong>'Symphony' 항목</strong>이 있는지 확인</li>
+          <li>3️⃣ 있으면 → 지금 바로 사용 가능 ✅</li>
+          <li>4️⃣ 없으면 → 조금 기다리기 (곧 풀릴 예정)</li>
+        </ul>
+
+        <div class="callout tip">
+          <div class="callout-label">💡 핵심만 다시</div>
+          <ul>
+            <li>틱톡이 2026-04-15 AI 영상 도구 <strong>Symphony</strong>를 크리에이터에 공개</li>
+            <li>긴 영상 → 숏폼 자동 분할 (<strong>Smart Split</strong>) + 주제 입력 → 제목·해시태그 자동 생성 (<strong>AI Outline</strong>)</li>
+            <li>TikTok Studio Web에서 <strong>'Symphony' 메뉴</strong> 있는지 바로 확인 가능</li>
+            <li>AI 영상도 <strong>'AI 생성' 라벨</strong>이 붙고 안전성 검사 통과해야 피드 노출</li>
+          </ul>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-label">📎 출처 (공식)</div>
+          <ul>
+            <li>TikTok Newsroom — <a href="https://newsroom.tiktok.com/new-ai-powered-tools-to-make-it-easier-to-create-and-share-on-tiktok" target="_blank" rel="noopener">AI-powered tools to make it easier to create and share on TikTok</a></li>
+            <li>MediaPost (2026-04-15) — <a href="https://www.mediapost.com/publications/article/414301/tiktok-expands-symphony-offers-ai-video-for-bra.html" target="_blank" rel="noopener">TikTok Expands 'Symphony,' Offers AI Video For Brands, Creators</a></li>
+          </ul>
+        </div>
+
+        <div class="related-links">
+          <div class="related-links-title">더 읽어볼 글</div>
+          <ul>
+            <li><a href="../posts/00-AI유튜브란.html">AI 유튜브란? — 쇼츠와 롱폼, 무엇부터 시작할까</a></li>
+            <li><a href="../practice/index.html">AI 유튜브 실전 — 기획부터 업로드까지</a></li>
+            <li><a href="../posts/04-채널세팅.html">채널 세팅 기본 — 수익화 전 체크리스트</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </article>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">크리에이터 <span>완전정복</span></div>
+    <p class="footer-desc">AI로 유튜브 만들기 — 실제 경험 기반 무료 공개</p>
+    <div class="footer-links">
+      <a href="../index.html">홈</a>
+      <a href="../basics/index.html">유튜브 기초</a>
+      <a href="../practice/index.html"><span class="nav-ai-red">AI</span> 유튜브 실전</a>
+      <a href="../trends/index.html">AI 트렌드</a>
+      <a href="../course/index.html">강의실</a>
+      <a href="../community/index.html">커뮤니티</a>
+      <a href="../about/index.html">소개</a>
+    </div>
+    <div class="footer-legal">
+      <a href="../privacy/index.html">개인정보처리방침</a>
+    </div>
+    <p class="footer-copy">© 크리에이터 완전정복. 무단 복제 및 배포를 금합니다.</p>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+
+<button id="btn-top" aria-label="맨 위로">↑</button>
+<script>
+  var b=document.getElementById('btn-top');
+  window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+
+<!-- 브라우저 언어 자동 감지 (영어권 첫 방문자만 영어 페이지로) -->
+<script>
+(function(){
+  try {
+    if (localStorage.getItem('cj-lang-pref')) return;
+    if (sessionStorage.getItem('cj-auto-redirect-done')) return;
+    var ul = (navigator.language || '').toLowerCase();
+    if (ul.indexOf('en') === 0) {
+      sessionStorage.setItem('cj-auto-redirect-done','1');
+      location.href = location.pathname.replace('/trends/','/en/trends/');
+    }
+  } catch(e){}
+})();
+</script>
+
+</body>
+</html>

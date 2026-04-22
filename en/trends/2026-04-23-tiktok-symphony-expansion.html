@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TikTok Opens Symphony AI Video Tools to Creators — What Actually Changed | Creator Jungbok</title>
+  <meta name="description" content="TikTok just opened its Symphony AI video suite to creators. Here's what changed, which features you can actually use, and why it matters.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    body { font-family: 'Inter', 'Noto Sans KR', sans-serif; }
+
+    .trend-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem 1rem;
+      font-size: .8rem;
+      color: #666;
+      margin: .75rem 0 1.25rem 0;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border, #e5e5e5);
+      align-items: center;
+    }
+    .trend-meta span { display: inline-flex; align-items: center; gap: .3rem; line-height: 1.4; }
+    .trend-meta .meta-cat {
+      background: var(--red, #e53935);
+      color: #fff;
+      padding: .2rem .7rem;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: .7rem;
+      letter-spacing: .02em;
+    }
+
+    .lang-switch {
+      font-size: .82rem;
+      color: #666;
+      padding: .6rem 0;
+      text-align: right;
+      border-bottom: 1px dashed #ddd;
+      margin-bottom: 1.25rem;
+    }
+    .lang-switch a { color: #666; text-decoration: none; padding: 0 .35rem; }
+    .lang-switch a.active { color: var(--red, #e53935); font-weight: 800; text-decoration: underline; }
+    .lang-switch a:hover { color: var(--red, #e53935); }
+
+    .lead-para {
+      font-size: 1.02rem;
+      line-height: 1.75;
+      color: var(--text, #222);
+      padding: 1.1rem 1.25rem;
+      background: #fff7f6;
+      border-left: 4px solid var(--red, #e53935);
+      border-radius: 0 8px 8px 0;
+      margin: 1.25rem 0 2rem 0;
+    }
+    .lead-para strong { color: #c62828; }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: .9rem;
+      margin: 1.5rem 0;
+    }
+    @media (min-width: 700px) {
+      .feature-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    }
+    .feature-card {
+      border: 1px solid var(--border, #e5e5e5);
+      border-radius: 10px;
+      padding: 1.1rem 1.25rem;
+      background: #fafafa;
+      transition: border-color .15s;
+    }
+    .feature-card:hover { border-color: var(--red, #e53935); }
+    .feature-card-num {
+      display: inline-block;
+      background: var(--red, #e53935);
+      color: #fff;
+      width: 1.6rem;
+      height: 1.6rem;
+      line-height: 1.6rem;
+      text-align: center;
+      border-radius: 50%;
+      font-weight: 800;
+      font-size: .85rem;
+      margin-right: .5rem;
+    }
+    .feature-card-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text, #222);
+      margin-bottom: .5rem;
+      display: flex;
+      align-items: center;
+      gap: .35rem;
+    }
+    .feature-card-desc { font-size: .92rem; line-height: 1.7; color: #444; margin: 0; }
+
+    .compare-box {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: .75rem;
+      margin: 1.5rem 0;
+    }
+    @media (min-width: 700px) {
+      .compare-box { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    }
+    .compare-side {
+      padding: 1rem 1.1rem;
+      border-radius: 10px;
+      font-size: .92rem;
+      line-height: 1.65;
+    }
+    .compare-before { background: #f5f5f5; border: 1px solid #e0e0e0; }
+    .compare-after { background: #fff5f5; border: 1px solid #ffcdd2; }
+    .compare-label {
+      display: block;
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      margin-bottom: .5rem;
+      text-transform: uppercase;
+    }
+    .compare-before .compare-label { color: #757575; }
+    .compare-after .compare-label { color: var(--red, #e53935); }
+
+    .callout {
+      margin: 1.75rem 0;
+      padding: 1.1rem 1.25rem;
+      border-radius: 10px;
+      border-left: 4px solid;
+      font-size: .93rem;
+      line-height: 1.7;
+    }
+    .callout.tip { background: #f0fdf4; border-color: #22c55e; }
+    .callout.info { background: #eff6ff; border-color: #3b82f6; }
+    .callout.warn { background: #fffbeb; border-color: #f59e0b; }
+    .callout-label {
+      font-weight: 800;
+      font-size: .85rem;
+      margin-bottom: .5rem;
+      display: flex;
+      align-items: center;
+      gap: .35rem;
+    }
+    .callout.tip .callout-label { color: #16a34a; }
+    .callout.info .callout-label { color: #2563eb; }
+    .callout.warn .callout-label { color: #d97706; }
+    .callout ul { margin: .4rem 0 0 1.1rem; padding: 0; }
+    .callout li { margin-bottom: .3rem; }
+    .callout a { color: inherit; text-decoration: underline; word-break: break-all; }
+
+    .related-links {
+      margin: 2.5rem 0 1rem 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border, #e5e5e5);
+    }
+    .related-links-title {
+      font-size: .8rem;
+      font-weight: 800;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: .75rem;
+    }
+    .related-links ul { list-style: none; padding: 0; margin: 0; }
+    .related-links li { margin-bottom: .6rem; }
+    .related-links a {
+      color: var(--text, #222);
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 1px solid transparent;
+      font-size: .95rem;
+    }
+    .related-links a:hover { border-bottom-color: var(--red, #e53935); }
+
+    @media (max-width: 480px) {
+      .post-title { font-size: 1.55rem !important; line-height: 1.3 !important; }
+      .lead-para { font-size: .95rem; padding: 1rem; line-height: 1.65; }
+      .trend-meta { font-size: .75rem; gap: .5rem .75rem; }
+      .feature-card { padding: 1rem; }
+      .feature-card-title { font-size: .95rem; }
+      .feature-card-desc { font-size: .88rem; }
+      .compare-side { font-size: .88rem; }
+      .callout { padding: 1rem; font-size: .88rem; }
+    }
+
+    .post-body strong { color: #111; font-weight: 700; }
+    .post-body h2 {
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+      line-height: 1.35;
+    }
+    @media (max-width: 480px) {
+      .post-body h2 { font-size: 1.2rem; margin-top: 2rem; }
+    }
+    .post-body p { line-height: 1.75; font-size: .98rem; }
+    @media (max-width: 480px) {
+      .post-body p { font-size: .95rem; line-height: 1.7; }
+    }
+    .post-body ul { line-height: 1.75; }
+    .post-body ul li { margin-bottom: .35rem; }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Creator Jungbok">
+  <meta property="og:title" content="TikTok Opens Symphony AI Video Tools to Creators — What Actually Changed">
+  <meta property="og:description" content="TikTok just opened its Symphony AI video suite to creators. Here's what changed, which features you can actually use, and why it matters.">
+  <meta property="og:url" content="https://creatorjungbok.co.kr/en/trends/2026-04-23-tiktok-symphony-expansion.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="article:published_time" content="2026-04-23T03:00:00+09:00">
+  <meta property="article:section" content="AI Trends">
+  <meta name="twitter:card" content="summary">
+  <link rel="alternate" hreflang="ko" href="https://creatorjungbok.co.kr/trends/2026-04-23-tiktok-symphony-expansion.html">
+  <link rel="alternate" hreflang="en" href="https://creatorjungbok.co.kr/en/trends/2026-04-23-tiktok-symphony-expansion.html">
+  <link rel="alternate" hreflang="x-default" href="https://creatorjungbok.co.kr/trends/2026-04-23-tiktok-symphony-expansion.html">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <button class="mobile-back" onclick="history.back()" aria-label="Back">&#8592;</button>
+    <a href="../../index.html" class="site-logo">Creator <span>Jungbok</span></a>
+    <button class="nav-toggle" aria-label="Menu" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+    <nav class="header-nav">
+      <a href="../../index.html">Home</a>
+      <a href="../../basics/index.html">YouTube Basics</a>
+      <a href="../../practice/index.html"><span class="nav-ai-red">AI</span> YouTube Playbook</a>
+      <a href="../index.html" class="nav-active">AI Trends</a>
+      <a href="../../course/index.html">Courses</a>
+      <a href="../../community/index.html">Community</a>
+      <a href="../../about/index.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+
+  <main class="main-content">
+
+    <article>
+      <header class="post-header">
+        <p class="post-chap">AI Trends</p>
+        <h1 class="post-title">TikTok Opens Symphony AI Video Tools to Creators — What Actually Changed</h1>
+        <div class="lang-switch">
+          <a href="../../trends/2026-04-23-tiktok-symphony-expansion.html" onclick="try{localStorage.setItem('cj-lang-pref','ko');}catch(e){}">한국어</a> /
+          <a href="2026-04-23-tiktok-symphony-expansion.html" class="active" onclick="try{localStorage.setItem('cj-lang-pref','en');}catch(e){}">English</a>
+        </div>
+        <div class="trend-meta">
+          <span class="meta-cat">AI Trends</span>
+          <span>🗓 April 23, 2026</span>
+          <span>⏱ 4 min read</span>
+          <span>📎 Source: TikTok Newsroom</span>
+        </div>
+      </header>
+
+      <hr class="divider">
+
+      <div class="post-body">
+
+        <p class="lead-para">
+          Here's something worth paying attention to. On <strong>April 15, 2026</strong>, TikTok officially opened its <strong>Symphony AI video suite</strong> — previously reserved for large advertisers — to individual creators. The same tools that major brands used to generate video ads in seconds are now available to anyone running a TikTok account. Let's break down what's actually new, what you can use today, and why it matters.
+        </p>
+
+        <h2>So what is Symphony, exactly?</h2>
+        <p>In one line: <strong>Symphony is an AI suite that turns a text prompt into a finished video.</strong></p>
+
+        <p>Type something like "a golden retriever running on a beach at sunset," and the AI generates a usable video clip — no cameras, no editing software, no manual cuts. Until now, Symphony lived inside TikTok's advertiser-only tooling, used by brands like <strong>Samsung and Coca-Cola</strong> to spin up campaign variations quickly. This week's announcement is the first time creator-facing features have been rolled into the same suite.</p>
+
+        <div class="compare-box">
+          <div class="compare-side compare-before">
+            <span class="compare-label">📅 Before Symphony</span>
+            Film your own clips + edit in Premiere or CapCut + add captions + record voiceover<br><strong>= 3–5 hours per video</strong>
+          </div>
+          <div class="compare-side compare-after">
+            <span class="compare-label">✨ With Symphony</span>
+            Type a prompt inside TikTok Studio → AI generates a complete clip<br><strong>= 5–10 minutes per video</strong>
+          </div>
+        </div>
+
+        <h2>The 4 new features creators can actually use</h2>
+        <p>Here are the four features that matter most for creators — in plain terms:</p>
+
+        <div class="feature-grid">
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">1</span>Smart Split</div>
+            <p class="feature-card-desc">Upload one long video (say, a <strong>10-minute YouTube long-form</strong>) and the AI automatically slices it into <strong>3–5 short-form clips</strong>, adding captions and reframing to vertical. This used to require external tools like <strong>Opus Clip</strong>; now it lives inside TikTok Studio.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">2</span>AI Outline</div>
+            <p class="feature-card-desc">Type a topic — like "dog training basics" — and Symphony auto-generates <strong>title ideas, hashtags, a 3-second opening hook, and a full script outline</strong>. The goal: cut down the time you spend staring at a blank screen wondering what to post today.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">3</span>AI Dubbing + Fashion Maker</div>
+            <p class="feature-card-desc">Built for TikTok Shop sellers. Auto-dubbing removes the need to re-record audio for each language, and AI Fashion Maker generates product showcase videos from a single image — useful if you're running an e-commerce angle.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">4</span>AI Summaries</div>
+            <p class="feature-card-desc">Run a <strong>1-hour livestream</strong>, and the AI automatically extracts highlight moments and packages them into <strong>multiple short clips</strong> you can reuse. No manual scrubbing through the recording later.</p>
+          </div>
+
+        </div>
+
+        <h2>Why this actually matters for creators</h2>
+        <p>Three reasons this update is worth your attention:</p>
+
+        <p><strong>① The learning curve for short-form editing just dropped.</strong><br>
+        Until now, splitting long videos into shorts meant learning tools like <strong>Opus Clip or CapCut</strong>. Now it's native to TikTok Studio. Fewer apps, fewer subscriptions, less time context-switching.</p>
+
+        <p><strong>② "What do I post today?" becomes a smaller problem.</strong><br>
+        AI Outline handles the ideation → hook → hashtag pipeline. For anyone trying to post consistently — especially <strong>new creators</strong> building early momentum — this removes a real daily friction point.</p>
+
+        <p><strong>③ YouTube-first creators can expand to TikTok faster.</strong><br>
+        If you already publish YouTube long-form, Smart Split lets you <strong>repurpose that content as TikTok shorts</strong> without learning a new workflow. One piece of content, multiple platforms — that's channel diversification with almost no extra effort.</p>
+
+        <div class="callout warn">
+          <div class="callout-label">⚠ One important caveat</div>
+          All AI-generated content gets an <strong>automatic "AI-generated" label</strong> and still has to pass TikTok's safety checks before appearing in recommendation feeds. Translation: using AI doesn't guarantee reach. <strong>The content still has to be good.</strong>
+        </div>
+
+        <h2>When can you access it?</h2>
+        <p>As of the April 15 announcement, these features are rolling out <strong>globally in phases</strong>. There's no single launch date — availability depends on your region and account type.</p>
+
+        <p><strong>How to check if you have it today:</strong></p>
+        <ul>
+          <li>1️⃣ Log into <strong>TikTok Studio Web</strong> (tiktok.com/studio)</li>
+          <li>2️⃣ Look for a <strong>"Symphony" menu</strong> in the sidebar</li>
+          <li>3️⃣ If it's there → you're already in ✅</li>
+          <li>4️⃣ If not → expect it in the coming weeks</li>
+        </ul>
+
+        <div class="callout tip">
+          <div class="callout-label">💡 The short version</div>
+          <ul>
+            <li>TikTok opened its <strong>Symphony</strong> AI video suite to creators on April 15, 2026</li>
+            <li><strong>Smart Split</strong> auto-converts long videos into short-form clips; <strong>AI Outline</strong> generates titles, hashtags, and hooks from a single topic prompt</li>
+            <li>Check availability via <strong>TikTok Studio Web</strong> → look for the 'Symphony' menu</li>
+            <li>AI-generated content still requires TikTok's safety review and gets an auto-label before hitting feeds</li>
+          </ul>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-label">📎 Sources (official)</div>
+          <ul>
+            <li>TikTok Newsroom — <a href="https://newsroom.tiktok.com/new-ai-powered-tools-to-make-it-easier-to-create-and-share-on-tiktok" target="_blank" rel="noopener">AI-powered tools to make it easier to create and share on TikTok</a></li>
+            <li>MediaPost (April 15, 2026) — <a href="https://www.mediapost.com/publications/article/414301/tiktok-expands-symphony-offers-ai-video-for-bra.html" target="_blank" rel="noopener">TikTok Expands 'Symphony,' Offers AI Video For Brands, Creators</a></li>
+          </ul>
+        </div>
+
+        <div class="related-links">
+          <div class="related-links-title">Keep Reading</div>
+          <ul>
+            <li><a href="../../posts/00-AI유튜브란.html">What is AI YouTube? Shorts vs. Long-form, where to start</a></li>
+            <li><a href="../../practice/index.html">The AI YouTube Playbook — from planning to upload</a></li>
+            <li><a href="../../posts/04-채널세팅.html">Channel setup basics — a monetization-ready checklist</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </article>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Creator <span>Jungbok</span></div>
+    <p class="footer-desc">AI-powered YouTube creation — free, experience-based guides.</p>
+    <div class="footer-links">
+      <a href="../../index.html">Home</a>
+      <a href="../../basics/index.html">YouTube Basics</a>
+      <a href="../../practice/index.html"><span class="nav-ai-red">AI</span> YouTube Playbook</a>
+      <a href="../index.html">AI Trends</a>
+      <a href="../../course/index.html">Courses</a>
+      <a href="../../community/index.html">Community</a>
+      <a href="../../about/index.html">About</a>
+    </div>
+    <div class="footer-legal">
+      <a href="../../privacy/index.html">Privacy Policy</a>
+    </div>
+    <p class="footer-copy">© Creator Jungbok. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="../../js/main.js"></script>
+
+<button id="btn-top" aria-label="To top">↑</button>
+<script>
+  var b=document.getElementById('btn-top');
+  window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+
+<!-- If a Korean-preference browser hits the English page first, offer Korean -->
+<script>
+(function(){
+  try {
+    if (localStorage.getItem('cj-lang-pref')) return;
+    if (sessionStorage.getItem('cj-auto-redirect-done')) return;
+    var ul = (navigator.language || '').toLowerCase();
+    if (ul.indexOf('ko') === 0) {
+      sessionStorage.setItem('cj-auto-redirect-done','1');
+      location.href = location.pathname.replace('/en/trends/','/trends/');
+    }
+  } catch(e){}
+})();
+</script>
+
+</body>
+</html>
