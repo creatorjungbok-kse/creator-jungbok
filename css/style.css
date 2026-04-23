@@ -2090,6 +2090,8 @@ strong { font-weight: 700; }
 
 .trend-card {
   flex: 0 0 340px;
+  width: 340px;
+  max-width: 340px;
   scroll-snap-align: start;
   display: block;
   background: #fff;
@@ -2106,12 +2108,16 @@ strong { font-weight: 700; }
   box-shadow: 0 8px 24px rgba(0,0,0,0.08);
 }
 .trend-card-thumb {
-  aspect-ratio: 16 / 9;
-  background: #f0f0f0;
   position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 aspect ratio (9/16 = 0.5625) */
+  background: #f0f0f0;
   overflow: hidden;
 }
 .trend-card-thumb img {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -2184,12 +2190,12 @@ strong { font-weight: 700; }
   .latest-trends-header h2 { font-size: 1.4rem; }
   .slider-nav { order: 2; }
   .slider-btn { width: 38px; height: 38px; font-size: 1rem; }
-  .trend-card { flex: 0 0 280px; }
+  .trend-card { flex: 0 0 280px; width: 280px; max-width: 280px; }
   .trend-card-title { font-size: .95rem; }
   .trend-card-desc { font-size: .8rem; }
 }
 @media (max-width: 480px) {
   .latest-trends-header h2 { font-size: 1.25rem; }
-  .trend-card { flex: 0 0 260px; }
+  .trend-card { flex: 0 0 260px; width: 260px; max-width: 260px; }
 }
 
