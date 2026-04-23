@@ -37,10 +37,40 @@
       margin-top: .35rem;
     }
 
+    .post-list-thumb {
+      flex-shrink: 0;
+      width: 160px;
+      aspect-ratio: 16 / 9;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #f5f5f5;
+      position: relative;
+    }
+    .post-list-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .post-list-thumb .thumb-badge {
+      position: absolute;
+      top: .5rem;
+      left: .5rem;
+      background: var(--red, #e53935);
+      color: #fff;
+      padding: .15rem .45rem;
+      border-radius: 4px;
+      font-size: .62rem;
+      font-weight: 800;
+      letter-spacing: .05em;
+    }
+
     @media (max-width: 480px) {
       .page-hero h1 { font-size: 1.85rem !important; }
       .page-hero p { font-size: .88rem !important; }
       .lang-switch-bar { padding: 0 1rem; }
+      .post-list-thumb { width: 110px; border-radius: 6px; }
+      .post-list-thumb .thumb-badge { font-size: .55rem; padding: .1rem .35rem; }
     }
   </style>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -97,7 +127,10 @@
   <div class="post-list-inner">
 
     <a href="2026-04-23-chatgpt-images-2-launch.html" class="post-list-item">
-      <span class="post-list-num new">NEW</span>
+      <div class="post-list-thumb">
+        <img src="images/chatgpt-images-2.png" alt="ChatGPT Images 2.0 공개" loading="lazy" />
+        <span class="thumb-badge">NEW</span>
+      </div>
       <div class="post-list-info">
         <div class="post-list-title">ChatGPT Images 2.0 공개: 한국어 글자가 이미지에 제대로 박히는 시대</div>
         <p class="post-list-desc">OpenAI가 2026-04-21 공개한 ChatGPT Images 2.0(gpt-image-2). 한국어·일본어·아랍어 텍스트 렌더링, 8장 일괄 생성, 무료 즉시 모드까지 핵심 정리.</p>
@@ -107,7 +140,9 @@
     </a>
 
     <a href="2026-04-23-tiktok-symphony-expansion.html" class="post-list-item">
-      <span class="post-list-num">01</span>
+      <div class="post-list-thumb">
+        <img src="images/tiktok-symphony.png" alt="TikTok Symphony AI 영상 도구 공개" loading="lazy" />
+      </div>
       <div class="post-list-info">
         <div class="post-list-title">틱톡 Symphony 확장: AI 영상 도구를 크리에이터도 쓸 수 있게 된 이야기</div>
         <p class="post-list-desc">틱톡이 AI 영상 도구 'Symphony'를 크리에이터에게 공개했어요. 뭐가 달라졌고 왜 중요한지, 쉽게 정리합니다.</p>
