@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatGPT Images 2.0: OpenAI's First Image Model That "Thinks" Before It Draws | Creator Jungbok</title>
+  <meta name="description" content="OpenAI shipped ChatGPT Images 2.0 (gpt-image-2) on April 21, 2026 - native multilingual text rendering, 2K resolution, thinking mode. What creators get.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    body { font-family: 'Inter', 'Noto Sans KR', sans-serif; }
+    .trend-meta { display: flex; flex-wrap: wrap; gap: .6rem 1rem; font-size: .8rem; color: #666; margin: .75rem 0 1.25rem 0; padding-bottom: 1rem; border-bottom: 1px solid var(--border, #e5e5e5); align-items: center; }
+    .trend-meta span { display: inline-flex; align-items: center; gap: .3rem; line-height: 1.4; }
+    .trend-meta .meta-cat { background: var(--red, #e53935); color: #fff; padding: .2rem .7rem; border-radius: 999px; font-weight: 700; font-size: .7rem; letter-spacing: .02em; }
+    .lang-switch { font-size: .82rem; color: #666; padding: .6rem 0; text-align: right; border-bottom: 1px dashed #ddd; margin-bottom: 1.25rem; }
+    .lang-switch a { color: #666; text-decoration: none; padding: 0 .35rem; }
+    .lang-switch a.active { color: var(--red, #e53935); font-weight: 800; text-decoration: underline; }
+    .lang-switch a:hover { color: var(--red, #e53935); }
+    .lead-para { font-size: 1.02rem; line-height: 1.75; color: var(--text, #222); padding: 1.1rem 1.25rem; background: #fff7f6; border-left: 4px solid var(--red, #e53935); border-radius: 0 8px 8px 0; margin: 1.25rem 0 2rem 0; }
+    .lead-para strong { color: #c62828; }
+    .feature-grid { display: grid; grid-template-columns: 1fr; gap: .9rem; margin: 1.5rem 0; }
+    @media (min-width: 700px) { .feature-grid { grid-template-columns: 1fr 1fr; gap: 1rem; } }
+    .feature-card { border: 1px solid var(--border, #e5e5e5); border-radius: 10px; padding: 1.1rem 1.25rem; background: #fafafa; transition: border-color .15s; }
+    .feature-card:hover { border-color: var(--red, #e53935); }
+    .feature-card-num { display: inline-block; background: var(--red, #e53935); color: #fff; width: 1.6rem; height: 1.6rem; line-height: 1.6rem; text-align: center; border-radius: 50%; font-weight: 800; font-size: .85rem; margin-right: .5rem; }
+    .feature-card-title { font-size: 1rem; font-weight: 800; color: var(--text, #222); margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .feature-card-desc { font-size: .92rem; line-height: 1.7; color: #444; margin: 0; }
+    .compare-box { display: grid; grid-template-columns: 1fr; gap: .75rem; margin: 1.5rem 0; }
+    @media (min-width: 700px) { .compare-box { grid-template-columns: 1fr 1fr; gap: 1rem; } }
+    .compare-side { padding: 1rem 1.1rem; border-radius: 10px; font-size: .92rem; line-height: 1.65; }
+    .compare-before { background: #f5f5f5; border: 1px solid #e0e0e0; }
+    .compare-after { background: #fff5f5; border: 1px solid #ffcdd2; }
+    .compare-label { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .08em; margin-bottom: .5rem; text-transform: uppercase; }
+    .compare-before .compare-label { color: #757575; }
+    .compare-after .compare-label { color: var(--red, #e53935); }
+    .callout { margin: 1.75rem 0; padding: 1.1rem 1.25rem; border-radius: 10px; border-left: 4px solid; font-size: .93rem; line-height: 1.7; }
+    .callout.tip { background: #f0fdf4; border-color: #22c55e; }
+    .callout.info { background: #eff6ff; border-color: #3b82f6; }
+    .callout.warn { background: #fffbeb; border-color: #f59e0b; }
+    .callout-label { font-weight: 800; font-size: .85rem; margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .callout.tip .callout-label { color: #16a34a; }
+    .callout.info .callout-label { color: #2563eb; }
+    .callout.warn .callout-label { color: #d97706; }
+    .callout ul { margin: .4rem 0 0 1.1rem; padding: 0; }
+    .callout li { margin-bottom: .3rem; }
+    .callout a { color: inherit; text-decoration: underline; word-break: break-all; }
+    .related-links { margin: 2.5rem 0 1rem 0; padding-top: 1.5rem; border-top: 1px solid var(--border, #e5e5e5); }
+    .related-links-title { font-size: .8rem; font-weight: 800; color: #666; text-transform: uppercase; letter-spacing: .08em; margin-bottom: .75rem; }
+    .related-links ul { list-style: none; padding: 0; margin: 0; }
+    .related-links li { margin-bottom: .6rem; }
+    .related-links a { color: var(--text, #222); text-decoration: none; font-weight: 600; border-bottom: 1px solid transparent; font-size: .95rem; }
+    .related-links a:hover { border-bottom-color: var(--red, #e53935); }
+    @media (max-width: 480px) {
+      .post-title { font-size: 1.55rem !important; line-height: 1.4 !important; }
+      .lead-para { font-size: .95rem; padding: 1rem; }
+      .trend-meta { font-size: .75rem; gap: .5rem .75rem; }
+      .feature-card { padding: 1rem; }
+      .feature-card-title { font-size: .95rem; }
+      .feature-card-desc { font-size: .88rem; }
+      .compare-side { font-size: .88rem; }
+      .callout { padding: 1rem; font-size: .88rem; }
+    }
+    .post-body strong { color: #111; font-weight: 800; }
+    .post-body h2 { margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.4rem; line-height: 1.4; }
+    @media (max-width: 480px) { .post-body h2 { font-size: 1.2rem; margin-top: 2rem; } }
+    .post-body p { line-height: 1.75; font-size: .98rem; }
+    @media (max-width: 480px) { .post-body p { font-size: .95rem; line-height: 1.7; } }
+    .post-body ul { line-height: 1.75; }
+    .post-body ul li { margin-bottom: .35rem; }
+    .page-wrap { justify-content: center; }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="Creator Jungbok">
+  <meta property="og:title" content="ChatGPT Images 2.0: OpenAI Image Model That Thinks Before It Draws">
+  <meta property="og:description" content="OpenAI shipped ChatGPT Images 2.0 (gpt-image-2) on April 21, 2026. Multilingual text, 2K output, free Instant mode. What creators actually get.">
+  <meta property="og:url" content="https://creatorjungbok.co.kr/en/trends/2026-04-23-chatgpt-images-2-launch.html">
+  <meta property="article:published_time" content="2026-04-23T07:00:00+09:00">
+  <meta property="article:section" content="AI Trends">
+  <meta name="twitter:card" content="summary">
+  <link rel="alternate" hreflang="ko" href="https://creatorjungbok.co.kr/trends/2026-04-23-chatgpt-images-2-launch.html">
+  <link rel="alternate" hreflang="en" href="https://creatorjungbok.co.kr/en/trends/2026-04-23-chatgpt-images-2-launch.html">
+  <link rel="alternate" hreflang="x-default" href="https://creatorjungbok.co.kr/en/trends/2026-04-23-chatgpt-images-2-launch.html">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <button class="mobile-back" onclick="history.back()" aria-label="Back">&#8592;</button>
+    <a href="../../" class="site-logo">Creator <span>Jungbok</span></a>
+    <button class="nav-toggle" aria-label="Menu" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+    <nav class="header-nav">
+      <a href="../../">Home</a>
+      <a href="../../basics/">YouTube Basics</a>
+      <a href="../../practice/"><span class="nav-ai-red">AI</span> YouTube Playbook</a>
+      <a href="./" class="nav-active">AI Trends</a>
+      <a href="../../course/">Courses</a>
+      <a href="../../community/">Community</a>
+      <a href="../../about/">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+  <main class="main-content">
+    <article>
+      <header class="post-header">
+        <p class="post-chap">AI Trends</p>
+        <h1 class="post-title">ChatGPT Images 2.0: OpenAI Image Model That Thinks Before It Draws</h1>
+        <div class="lang-switch">
+          <a href="../../trends/2026-04-23-chatgpt-images-2-launch.html" onclick="try{localStorage.setItem('cj-lang-pref','ko');}catch(e){}">Korean</a> /
+          <a href="2026-04-23-chatgpt-images-2-launch.html" class="active" onclick="try{localStorage.setItem('cj-lang-pref','en');}catch(e){}">English</a>
+        </div>
+        <div class="trend-meta">
+          <span class="meta-cat">AI Trends</span>
+          <span>April 23, 2026</span>
+          <span>5 min read</span>
+          <span>Source: OpenAI</span>
+        </div>
+      </header>
+      <hr class="divider">
+      <div class="post-body">
+        <p class="lead-para">
+          OpenAI shipped <strong>ChatGPT Images 2.0</strong> on <strong>April 21, 2026</strong>, powered by a new model called <strong>gpt-image-2</strong>. Within 12 hours it took the #1 spot on every category of the Image Arena leaderboard by a +242 point margin - the largest lead ever recorded there. Three things actually matter for creators: <strong>real multilingual text rendering</strong> (Korean, Japanese, Arabic, Hindi all readable inside images), a <strong>thinking mode</strong> that plans layout and verifies its own output, and <strong>free access</strong> to the core quality jump. DALL-E 2 and 3 retire on May 12, 2026.
+        </p>
+
+        <h2>What is actually new</h2>
+        <p>Per OpenAI's launch post (April 21, 2026), gpt-image-2 brings concrete upgrades across four dimensions:</p>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">1</span>Multilingual text inside images</div>
+            <p class="feature-card-desc">Korean, Japanese, Chinese, Hindi, Bengali, Arabic, Cyrillic, and Greek scripts now render legibly inside generated images. The broken-Hangul-on-thumbnail problem that plagued every prior image model is largely fixed for short headlines.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">2</span>Thinking Mode</div>
+            <p class="feature-card-desc">OpenAI first image model with native reasoning. It can plan layout, search the web for real-time references, generate up to 8 images from a single prompt, and double-check its own output before returning. Magazine-grade composition is now viable.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">3</span>Higher resolution and multiple aspect ratios</div>
+            <p class="feature-card-desc">Up to <strong>2K resolution</strong>. Native 9:16 (Reels and Shorts), 16:9 (YouTube thumbnails), 4:5 (Instagram), and square - no more upscaling square outputs and praying.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">4</span>Free Instant Mode for everyone</div>
+            <p class="feature-card-desc"><strong>Instant Mode is open to every ChatGPT user, including the free tier.</strong> Thinking Mode (web search, multi-image batching, output verification) is gated to Plus ($20/mo), Pro ($200/mo), Business, and Enterprise. API access uses the same model.</p>
+          </div>
+        </div>
+
+        <h2>Why this matters for creators outside the US</h2>
+        <p>Until now, generating a thumbnail in Korean, Japanese, or Arabic meant one of two ugly workflows:</p>
+        <div class="compare-box">
+          <div class="compare-side compare-before">
+            <span class="compare-label">Before Images 2.0</span>
+            Generate the visual in English, then composite native-script text in Photoshop or Figma<br>or use Midjourney for the background, then manually add text in a separate font tool<br><strong>= 30-60 minutes per thumbnail</strong>
+          </div>
+          <div class="compare-side compare-after">
+            <span class="compare-label">With Images 2.0</span>
+            16:9 YouTube thumbnail, red background, Korean text, bold typography<br>8 variations from a single prompt<br><strong>= 1-2 minutes per thumbnail</strong>
+          </div>
+        </div>
+        <p>The three creator workflows where this lands hardest:</p>
+        <ul>
+          <li><strong>YouTube thumbnails in non-English markets</strong> - bold native-script text plus a high-contrast background, eight variants in one shot.</li>
+          <li><strong>Instagram and LinkedIn carousels</strong> - 10-card sets where typographic consistency across cards used to require a designer.</li>
+          <li><strong>TikTok and Reels static intros</strong> - 9:16 frames with overlaid native-script captions, generated in a single pass.</li>
+        </ul>
+
+        <h2>Pricing and access tiers</h2>
+        <p>Different gates for different modes:</p>
+        <ul>
+          <li><strong>Instant Mode (Free)</strong> - every signed-in user. Daily generation cap, no Thinking features.</li>
+          <li><strong>Thinking Mode (Plus, $20/mo)</strong> - web search, layout reasoning, 8-image batching, automatic output verification. Higher daily limits.</li>
+          <li><strong>Pro ($200/mo)</strong> - near-unlimited Thinking Mode plus priority compute.</li>
+          <li><strong>API</strong> - call directly via model ID gpt-image-2. Per-token and per-resolution pricing.</li>
+        </ul>
+        <p>The same announcement confirmed that <strong>DALL-E 2 and DALL-E 3 will be retired on May 12, 2026</strong>. Any production pipeline still calling DALL-E endpoints needs to migrate within roughly three weeks.</p>
+
+        <div class="callout warn">
+          <div class="callout-label">Two caveats worth knowing</div>
+          <ul>
+            <li><strong>Multilingual rendering is not bulletproof yet.</strong> Short headlines hold up well; long sentences in Korean or Arabic can still produce occasional character distortion. Visually proof everything before publishing.</li>
+            <li><strong>Likeness and brand policies are unchanged.</strong> Generating real people faces or branded logos remains restricted. Source attribution stays the user responsibility.</li>
+          </ul>
+        </div>
+
+        <h2>How to migrate a DALL-E pipeline (3 weeks left)</h2>
+        <p>If your automation stack still calls the DALL-E API, you have roughly three weeks before the May 12, 2026 sunset. Three things to plan for:</p>
+        <p><strong>Swap the model ID - usually the smallest change.</strong><br>
+        Replace dall-e-3 or dall-e-2 in your model parameter with gpt-image-2. The response schema is largely compatible, so most downstream parsing code keeps working without modification. Run an integration test on a low-volume queue first.</p>
+        <p><strong>Rewrite your prompts - DALL-E shorthand leaves quality on the table.</strong><br>
+        gpt-image-2 follows layout instructions far more literally than DALL-E did, which means terse prompts that worked before now under-specify the new model. For thumbnails with native-script text, name the text position, font weight, background contrast, and aspect ratio explicitly. Treat this as a one-time prompt audit, not a per-call concern.</p>
+        <p><strong>Model the cost - resolution drives the bill.</strong><br>
+        Instant Mode pricing is roughly comparable to DALL-E 3 per image. Thinking Mode costs more because it consumes additional tokens for layout reasoning and verification. For pipelines generating 1,000+ images per month, a hybrid pattern works well: keep batch generation on Instant, escalate only headline thumbnails to Thinking. This caps cost while reserving the quality unlock for visuals where it matters.</p>
+        <p>OpenAI has not published a one-click migration tool, but the API surface is similar enough that most teams report a half-day port for typical pipelines. The longer tail of work is prompt rewriting, which scales with how many distinct visual templates a pipeline uses.</p>
+
+        <h2>How to check if you have it</h2>
+        <p>The fastest way to confirm access on your account:</p>
+        <ul>
+          <li>Open chat.openai.com and start a new chat</li>
+          <li>Prompt: Generate 8 variants of a 16:9 YouTube thumbnail with bold red background and the headline AI Creator 2026</li>
+          <li>If 8 images return at once, Thinking Mode is live (Plus or higher)</li>
+          <li>If a single image returns, Instant Mode (free tier behavior)</li>
+          <li>For API users, the model ID is gpt-image-2</li>
+        </ul>
+
+        <div class="callout tip">
+          <div class="callout-label">The short version</div>
+          <ul>
+            <li>OpenAI launched <strong>ChatGPT Images 2.0 (gpt-image-2)</strong> on April 21, 2026</li>
+            <li><strong>Multilingual text rendering</strong> finally works inside images - Korean, Japanese, Chinese, Hindi, Arabic. Direct unlock for non-US creators.</li>
+            <li><strong>Instant Mode is free for everyone, Thinking Mode is Plus ($20/mo) or higher.</strong> 8-image batching, web search, and self-verification are Thinking-only.</li>
+            <li><strong>DALL-E 2 and 3 retire on May 12, 2026</strong> - DALL-E API workflows need to migrate within ~3 weeks.</li>
+          </ul>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-label">Sources (official + tier-1)</div>
+          <ul>
+            <li>OpenAI (April 21, 2026) - <a href="https://openai.com/index/introducing-chatgpt-images-2-0/" target="_blank" rel="noopener">Introducing ChatGPT Images 2.0</a></li>
+            <li>MacRumors (April 22, 2026) - <a href="https://www.macrumors.com/2026/04/22/openai-chatgpt-images-2-0/" target="_blank" rel="noopener">OpenAI Launches ChatGPT Images 2.0 With Thinking Capabilities and Better Text Rendering</a></li>
+            <li>PetaPixel (April 21, 2026) - <a href="https://petapixel.com/2026/04/21/openai-claims-chatgpt-images-2-0-can-think/" target="_blank" rel="noopener">OpenAI Claims ChatGPT Images 2.0 Can Think</a></li>
+            <li>9to5Mac (April 21, 2026) - <a href="https://9to5mac.com/2026/04/21/openai-unveiling-chatgpt-images-2-image-generation-model-watch-live-demo-here/" target="_blank" rel="noopener">OpenAI unveils ChatGPT Images 2 image-gen model capable of magazine design</a></li>
+          </ul>
+        </div>
+
+        <div class="related-links">
+          <div class="related-links-title">Keep Reading</div>
+          <ul>
+            <li><a href="2026-04-23-tiktok-symphony-expansion.html">TikTok Opens Symphony AI Video Tools to Creators - What Actually Changed</a></li>
+            <li><a href="../../posts/00-AI유튜브란.html">What is AI YouTube? Shorts vs Long-form, where to start</a></li>
+            <li><a href="../../practice/">The AI YouTube Playbook - from planning to upload</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Creator <span>Jungbok</span></div>
+    <p class="footer-desc">AI-powered YouTube creation - free, experience-based guides.</p>
+    <div class="footer-links">
+      <a href="../../">Home</a>
+      <a href="../../basics/">YouTube Basics</a>
+      <a href="../../practice/"><span class="nav-ai-red">AI</span> YouTube Playbook</a>
+      <a href="./">AI Trends</a>
+      <a href="../../course/">Courses</a>
+      <a href="../../community/">Community</a>
+      <a href="../../about/">About</a>
+    </div>
+    <div class="footer-legal">
+      <a href="../../privacy/">Privacy Policy</a>
+    </div>
+    <p class="footer-copy">Creator Jungbok. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="../../js/main.js"></script>
+
+<button id="btn-top" aria-label="To top">^</button>
+<script>
+  var b=document.getElementById('btn-top');
+  window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+
+<script>
+(function(){
+  try {
+    if (localStorage.getItem('cj-lang-pref')) return;
+    if (sessionStorage.getItem('cj-auto-redirect-done')) return;
+    var ul = (navigator.language || '').toLowerCase();
+    if (ul.indexOf('ko') === 0) {
+      sessionStorage.setItem('cj-auto-redirect-done','1');
+      location.href = location.pathname.replace('/en/trends/','/trends/');
+    }
+  } catch(e){}
+})();
+</script>
+
+</body>
+</html>
