@@ -11,6 +11,9 @@ oauth-client.json
 oauth-token.json
 *-oauth.json
 
+# PowerShell 자동화 스크립트 — CEO 사유, 외부 공개 금지
+*.ps1
+
 # 시스템 파일
 .DS_Store
 Thumbs.db
@@ -45,3 +48,4 @@ docs/
 scripts/
 CLAUDE.md
 SESSION-STATE.md
+deliverables/
