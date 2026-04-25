@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>X, Grok 기반 'Custom Timelines' 출시 — 크리에이터 발견 경로의 재편 | 크리에이터 완전정복</title>
+  <meta name="description" content="2026년 4월 22일, X가 Grok AI로 큐레이션된 75개+ 주제 피드 기능을 공개했습니다. 크리에이터의 노출 전략은 어떻게 바뀌나요?">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .trend-meta { display: flex; flex-wrap: wrap; gap: .6rem 1rem; font-size: .8rem; color: #666; margin: .75rem 0 1.25rem 0; padding-bottom: 1rem; border-bottom: 1px solid var(--border, #e5e5e5); align-items: center; }
+    .trend-meta span { display: inline-flex; align-items: center; gap: .3rem; line-height: 1.4; }
+    .trend-meta .meta-cat { background: var(--red, #e53935); color: #fff; padding: .2rem .7rem; border-radius: 999px; font-weight: 700; font-size: .7rem; letter-spacing: .02em; }
+    .lang-switch { font-size: .82rem; color: #666; padding: .6rem 0; text-align: right; border-bottom: 1px dashed #ddd; margin-bottom: 1.25rem; }
+    .lang-switch a { color: #666; text-decoration: none; padding: 0 .35rem; }
+    .lang-switch a.active { color: var(--red, #e53935); font-weight: 800; text-decoration: underline; }
+    .lang-switch a:hover { color: var(--red, #e53935); }
+    .lead-para { font-size: 1.02rem; line-height: 1.85; color: var(--text, #222); padding: 1.1rem 1.25rem; background: #fff7f6; border-left: 4px solid var(--red, #e53935); border-radius: 0 8px 8px 0; margin: 1.25rem 0 2rem 0; }
+    .lead-para strong { color: #c62828; }
+    .feature-grid { display: grid; grid-template-columns: 1fr; gap: .9rem; margin: 1.5rem 0; }
+    @media (min-width: 700px) { .feature-grid { grid-template-columns: 1fr 1fr; gap: 1rem; } }
+    .feature-card { border: 1px solid var(--border, #e5e5e5); border-radius: 10px; padding: 1.1rem 1.25rem; background: #fafafa; transition: border-color .15s; }
+    .feature-card:hover { border-color: var(--red, #e53935); }
+    .feature-card-num { display: inline-block; background: var(--red, #e53935); color: #fff; width: 1.6rem; height: 1.6rem; line-height: 1.6rem; text-align: center; border-radius: 50%; font-weight: 800; font-size: .85rem; margin-right: .5rem; }
+    .feature-card-title { font-size: 1rem; font-weight: 800; color: var(--text, #222); margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .feature-card-desc { font-size: .92rem; line-height: 1.75; color: #444; margin: 0; }
+    .compare-box { display: grid; grid-template-columns: 1fr; gap: .75rem; margin: 1.5rem 0; }
+    @media (min-width: 700px) { .compare-box { grid-template-columns: 1fr 1fr; gap: 1rem; } }
+    .compare-side { padding: 1rem 1.1rem; border-radius: 10px; font-size: .92rem; line-height: 1.7; }
+    .compare-before { background: #f5f5f5; border: 1px solid #e0e0e0; }
+    .compare-after { background: #fff5f5; border: 1px solid #ffcdd2; }
+    .compare-label { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .08em; margin-bottom: .5rem; text-transform: uppercase; }
+    .compare-before .compare-label { color: #757575; }
+    .compare-after .compare-label { color: var(--red, #e53935); }
+    .callout { margin: 1.75rem 0; padding: 1.1rem 1.25rem; border-radius: 10px; border-left: 4px solid; font-size: .93rem; line-height: 1.75; }
+    .callout.tip { background: #f0fdf4; border-color: #22c55e; }
+    .callout.info { background: #eff6ff; border-color: #3b82f6; }
+    .callout.warn { background: #fffbeb; border-color: #f59e0b; }
+    .callout-label { font-weight: 800; font-size: .85rem; margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .callout.tip .callout-label { color: #16a34a; }
+    .callout.info .callout-label { color: #2563eb; }
+    .callout.warn .callout-label { color: #d97706; }
+    .callout ul { margin: .4rem 0 0 1.1rem; padding: 0; }
+    .callout li { margin-bottom: .3rem; }
+    .callout a { color: inherit; text-decoration: underline; word-break: break-all; }
+    @media (max-width: 480px) {
+      .post-title { font-size: 1.55rem !important; line-height: 1.4 !important; }
+      .lead-para { font-size: .95rem; padding: 1rem; }
+      .trend-meta { font-size: .75rem; gap: .5rem .75rem; }
+      .feature-card { padding: 1rem; }
+      .feature-card-title { font-size: .95rem; }
+      .feature-card-desc { font-size: .88rem; }
+      .compare-side { font-size: .88rem; }
+      .callout { padding: 1rem; font-size: .88rem; }
+    }
+    .post-body strong { color: #111; font-weight: 800; }
+    .post-body h2 { margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.4rem; line-height: 1.4; }
+    @media (max-width: 480px) { .post-body h2 { font-size: 1.2rem; margin-top: 2rem; } }
+    .post-body p { line-height: 1.85; font-size: .98rem; }
+    @media (max-width: 480px) { .post-body p { font-size: .95rem; line-height: 1.8; } }
+    .post-body ul { line-height: 1.85; }
+    .post-body ul li { margin-bottom: .35rem; }
+    .page-wrap { justify-content: center; }
+    .post-thumbnail { width: 100%; height: auto; border-radius: 12px; margin: 0 0 1.5rem 0; display: block; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    @media (max-width: 480px) { .post-thumbnail { border-radius: 8px; margin-bottom: 1rem; } }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="크리에이터 완전정복">
+  <meta property="og:title" content="X, Grok 기반 Custom Timelines 출시 — 크리에이터 발견 경로의 재편">
+  <meta property="og:description" content="2026년 4월 22일, X가 Grok AI로 큐레이션된 75개+ 주제 피드 기능을 공개했습니다. 크리에이터의 노출 전략은 어떻게 바뀌나요?">
+  <meta property="og:url" content="https://creatorjungbok.co.kr/trends/2026-04-25-x-grok-custom-timelines.html">
+  <meta property="og:image" content="https://creatorjungbok.co.kr/trends/images/2026-04-25-x-grok-custom-timelines.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="article:published_time" content="2026-04-25T07:00:00+09:00">
+  <meta property="article:section" content="AI 트렌드">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://creatorjungbok.co.kr/trends/images/2026-04-25-x-grok-custom-timelines.png">
+  <link rel="alternate" hreflang="ko" href="https://creatorjungbok.co.kr/trends/2026-04-25-x-grok-custom-timelines.html">
+  <link rel="alternate" hreflang="en" href="https://creatorjungbok.co.kr/en/trends/2026-04-25-x-grok-custom-timelines.html">
+  <link rel="alternate" hreflang="x-default" href="https://creatorjungbok.co.kr/trends/2026-04-25-x-grok-custom-timelines.html">
+  <!-- Google Analytics 4 (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6B72N2BV55"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6B72N2BV55');
+  </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <button class="mobile-back" onclick="history.back()" aria-label="뒤로가기">&#8592;</button>
+    <a href="/" class="site-logo">크리에이터 <span>완전정복</span></a>
+    <button class="nav-toggle" aria-label="메뉴" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+    <nav class="header-nav">
+      <a href="/">홈</a>
+      <a href="/basics/">유튜브 기초</a>
+      <a href="/practice/"><span class="nav-ai-red">AI</span> 유튜브 실전</a>
+      <a href="/trends/" class="nav-active">AI 트렌드</a>
+      <a href="/course/">강의실</a>
+      <a href="/community/">커뮤니티</a>
+      <a href="/about/">소개</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+  <main class="main-content">
+    <article>
+      <header class="post-header">
+        <img src="/trends/images/2026-04-25-x-grok-custom-timelines.png" alt="X, Grok 기반 Custom Timelines 출시 — 크리에이터 완전정복" class="post-thumbnail" width="1200" height="630" loading="eager" />
+        <p class="post-chap">AI 트렌드</p>
+        <h1 class="post-title">X, Grok 기반 'Custom Timelines' 출시 — 크리에이터 발견 경로의 재편</h1>
+        <div class="lang-switch">
+          <a href="/trends/2026-04-25-x-grok-custom-timelines.html" class="active" onclick="try{localStorage.setItem('cj-lang-pref','ko');}catch(e){}">한국어</a> /
+          <a href="/en/trends/2026-04-25-x-grok-custom-timelines.html" onclick="try{localStorage.setItem('cj-lang-pref','en');}catch(e){}">English</a>
+        </div>
+        <div class="trend-meta">
+          <span class="meta-cat">AI 트렌드</span>
+          <span>🗓 2026-04-25</span>
+          <span>⏱ 약 4분 읽기</span>
+          <span>📎 출처: TechCrunch, MacRumors, Business Standard</span>
+        </div>
+      </header>
+
+      <hr class="divider">
+
+      <div class="post-body">
+
+        <p class="lead-para">
+          X(구 트위터)가 <strong>2026년 4월 22일</strong>, Grok AI가 큐레이션한 <strong>75개+ 주제별 피드 'Custom Timelines'</strong>를 공개했습니다. 사용자가 원하는 주제를 홈 탭에 핀(pin)으로 고정하면 Grok이 모든 게시물을 읽고 주제 라벨을 붙여 자동으로 채워주는 구조입니다. 해시태그·키워드 매칭이 아니라 <strong>AI가 게시물 의미를 이해</strong>해서 분류한다는 점이 핵심입니다. 출시 시점에는 iOS Premium 사용자 한정으로 배포 중입니다. 크리에이터에게 어떤 의미인지 정리했습니다.
+        </p>
+
+        <h2>무엇이 공개됐나</h2>
+        <p>X 측은 이 기능을 <strong>"앱 역사상 가장 큰 변화 중 하나"</strong>라고 발표했습니다. 비즈니스·금융, 스포츠, 테크, 정치, 주식, 뉴스, 사이언스, 영화·TV, 음식, 아트, 부동산, 뷰티, 교육, 게임 등 <strong>75개 이상</strong>의 주제 카테고리가 기본 제공되며, 사용자는 이 중 원하는 주제를 골라 홈 탭에 별도 피드로 고정할 수 있습니다(출처: TechCrunch, 2026-04-22).</p>
+
+        <p>같은 시기 X는 <strong>'For You' 탭의 주제 스누즈(snooze)</strong> 기능도 확대 배포 중입니다. 보고 싶지 않은 주제를 일정 기간 가릴 수 있는 옵션이 함께 들어왔습니다.</p>
+
+        <div class="compare-box">
+          <div class="compare-side compare-before">
+            <span class="compare-label">📅 이전 발견 방식</span>
+            해시태그·키워드 매칭 + 팔로우 기반<br>
+            → 같은 단어 안 쓰면 묻힘
+          </div>
+          <div class="compare-side compare-after">
+            <span class="compare-label">✨ 2026-04-22 이후</span>
+            <strong>Grok AI가 게시물 의미 파악</strong><br>
+            → 주제 라벨로 분류, 핀 가능한 새 피드
+          </div>
+        </div>
+
+        <h2>Custom Timelines, 정확히 어떻게 동작하나</h2>
+        <p>X가 공식 발표 자료에서 강조한 동작 원리는 네 가지입니다.</p>
+
+        <div class="feature-grid">
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">1</span>Grok이 모든 게시물 분석</div>
+            <p class="feature-card-desc">키워드·해시태그가 아니라 <strong>Grok이 게시물 본문을 읽고 의미를 이해</strong>한 뒤 주제 라벨을 자동 부여합니다. 작성자가 해당 키워드를 쓰지 않아도 분류 가능합니다.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">2</span>홈 탭에 핀 고정</div>
+            <p class="feature-card-desc">선택한 주제 피드를 <strong>홈 탭에 추가 탭</strong>으로 핀 고정할 수 있습니다. 'For You'와 별개로 새 탭이 생기는 구조입니다.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">3</span>개인 맞춤 큐레이션</div>
+            <p class="feature-card-desc">같은 'Tech' 주제라도 <strong>사용자 별로 게시물 순서·노출이 다릅니다.</strong> Grok이 개인의 과거 활동을 반영합니다.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">4</span>Premium iOS 우선</div>
+            <p class="feature-card-desc">출시 시점에는 <strong>X Premium 구독자, iOS 앱 한정</strong>입니다. 안드로이드 지원은 개발 중이라고 X가 공지했습니다.</p>
+          </div>
+
+        </div>
+
+        <h2>크리에이터에게 주는 실무 영향</h2>
+        <p>여러 매체가 공통으로 짚는 포인트는 <strong>"발견 경로의 재정의"</strong>입니다. 그동안 X에서는 해시태그·트렌드 키워드를 정확히 맞춰야 노출 기회가 생기는 구조였습니다. Grok 큐레이션은 이 가정을 바꿉니다.</p>
+
+        <p><strong>① 키워드 강박은 약해지지만, 주제 일관성은 더 중요해집니다.</strong><br>
+        Grok이 의미를 본다면 <strong>"이 계정이 어떤 주제를 다루는가"</strong>가 라벨링에 영향을 줄 가능성이 큽니다. 한 계정에서 게임 글, 부동산 글, 뷰티 글이 섞이면 Grok이 어디로 분류할지 흔들립니다. 니치 일관성이 핵심 자산이 됩니다.</p>
+
+        <p><strong>② 본문 품질이 다시 무기가 됩니다.</strong><br>
+        Grok은 게시물 본문을 읽습니다. 짧은 한 줄에 해시태그만 박은 게시물보다 <strong>맥락이 살아있는 본문</strong>이 분류 정확도와 노출에 유리할 수 있습니다. <a href="/practice/">AI 유튜브 실전</a>에서 다룬 "스토리 1분 + 핵심 한 줄" 구조가 X에서도 통할 가능성이 높아졌습니다.</p>
+
+        <p><strong>③ Premium 사용자 도달이 우선 변합니다.</strong><br>
+        Custom Timelines는 Premium·iOS 우선 배포입니다. <strong>Premium 사용자 비중이 높은 영어권 테크·금융 니치</strong>는 즉시 영향권이며, 일반 사용자 중심 콘텐츠는 안드로이드·웹 확장까지 시차가 있습니다.</p>
+
+        <div class="callout warn">
+          <div class="callout-label">⚠ 오해하지 말 것</div>
+          "Custom Timelines가 For You를 대체한다"는 해석은 아직 이른 추정입니다. X는 두 피드를 병행 운영한다고 발표했고, 사용자 채택률·체류시간 데이터는 공개되지 않았습니다. 단, X가 같은 발표에서 <strong>Communities 기능을 정리한다</strong>고 공지한 점은 주목할 만한 신호입니다(출처: webpronews, 2026-04-23).
+        </div>
+
+        <h2>지금 해야 할 3가지</h2>
+        <p><strong>1. 주제 일관성 점검.</strong> 발표일 기준 직전 30일 X 게시물을 보고 한 가지 핵심 주제로 명확히 묶이는지 확인합니다. 안 묶인다면 보조 주제용 별도 계정 분리를 검토합니다. 한 계정의 주제 폭이 좁을수록 Grok 라벨 정확도가 올라갑니다.</p>
+
+        <p><strong>2. 본문 길이·맥락 강화.</strong> 한 줄 게시물 비중을 줄이고 <strong>2~3문장의 맥락 있는 본문</strong>을 늘립니다. Grok이 의미를 읽도록 핵심 키워드를 자연스럽게 본문에 녹여 씁니다. 해시태그 의존도는 낮춰도 됩니다.</p>
+
+        <p><strong>3. Premium 채널 한 번 진단.</strong> 영어권 Premium 사용자 비중이 높은 니치(테크·금융·AI)에 콘텐츠가 닿는다면 우선 적용 효과가 큽니다. 관련해서 <a href="/trends/2026-04-23-tiktok-symphony-expansion.html">TikTok Symphony 글</a>에서 다룬 멀티플랫폼 분산 전략과 함께 보면 됩니다.</p>
+
+        <h2>앞으로의 관전 포인트</h2>
+        <p>X는 안드로이드 배포 시점, 일반(비Premium) 사용자 적용 시점, <strong>크리에이터가 직접 새로운 주제를 제안할 수 있는지 여부</strong>는 공개하지 않았습니다. 또한 같은 콘텐츠가 여러 주제에 동시 라벨링되는지(중복 노출), 라벨 결과를 크리에이터가 확인할 수 있는지도 미공개입니다. 향후 1~2개월 내 공식 가이드 문서가 나오는지 모니터링이 필요합니다.</p>
+
+        <div class="callout tip">
+          <div class="callout-label">💡 핵심만 다시</div>
+          <ul>
+            <li>X가 <strong>2026-04-22</strong> Grok 기반 <strong>Custom Timelines</strong> 공개, 75개+ 주제 핀 고정</li>
+            <li>해시태그가 아닌 <strong>AI 의미 분석</strong> 기반 분류, Premium·iOS 우선</li>
+            <li>크리에이터 전략: <strong>주제 일관성 + 본문 맥락 강화 + Premium 니치 진단</strong></li>
+            <li>For You 대체 여부·안드로이드 확장 일정은 미공개 — 1~2개월 모니터링 필요</li>
+          </ul>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-label">📎 출처</div>
+          <ul>
+            <li>TechCrunch (2026-04-22) — <a href="https://techcrunch.com/2026/04/22/hands-on-with-xs-new-ai-powered-custom-feeds/" target="_blank" rel="noopener">Hands on with X's new AI-powered custom feeds</a></li>
+            <li>MacRumors (2026-04-22) — <a href="https://www.macrumors.com/2026/04/22/x-custom-timelines-for-premium-users/" target="_blank" rel="noopener">X Rolls Out AI-Powered Custom Timelines for Premium Users</a></li>
+            <li>Business Standard (2026-04-23) — <a href="https://www.business-standard.com/technology/tech-news/x-introduces-grok-ai-powered-custom-timelines-feature-for-personalised-feeds-126042300672_1.html" target="_blank" rel="noopener">X introduces Grok AI-powered 'Custom Timelines' for personalised feeds</a></li>
+          </ul>
+        </div>
+
+        <nav class="trends-nav" aria-label="AI 트렌드 글 네비게이션">
+          <a href="2026-04-24-youtube-shorts-zero-minutes.html" class="trends-nav-item prev">
+            <span class="trends-nav-label">&larr; 이전 글</span>
+            <span class="trends-nav-title">YouTube Shorts, 0분 설정으로 완전 차단 가능 — 크리에이터 전략은?</span>
+          </a>
+          <a href="/trends/" class="trends-nav-item index">
+            <span class="trends-nav-index-icon">&#9783;</span>
+            <span>AI 트렌드 전체 목록</span>
+          </a>
+          <span class="trends-nav-item empty"></span>
+        </nav>
+
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">크리에이터 <span>완전정복</span></div>
+    <p class="footer-desc">AI로 유튜브 만들기 — 실제 경험 기반 무료 공개</p>
+    <div class="footer-links">
+      <a href="/">홈</a>
+      <a href="/basics/">유튜브 기초</a>
+      <a href="/practice/"><span class="nav-ai-red">AI</span> 유튜브 실전</a>
+      <a href="/trends/">AI 트렌드</a>
+      <a href="/course/">강의실</a>
+      <a href="/community/">커뮤니티</a>
+      <a href="/about/">소개</a>
+    </div>
+    <div class="footer-legal">
+      <a href="/privacy/">개인정보처리방침</a>
+    </div>
+    <p class="footer-copy">© 크리에이터 완전정복. 무단 복제 및 배포를 금합니다.</p>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+
+<button id="btn-top" aria-label="맨 위로">↑</button>
+<script>
+  var b=document.getElementById('btn-top');
+  window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+
+<!-- 브라우저 언어 자동 감지 (영어권 첫 방문자만 영어 페이지로) -->
+<script>
+(function(){
+  try {
+    if (localStorage.getItem('cj-lang-pref')) return;
+    if (sessionStorage.getItem('cj-auto-redirect-done')) return;
+    var ul = (navigator.language || '').toLowerCase();
+    if (ul.indexOf('en') === 0) {
+      sessionStorage.setItem('cj-auto-redirect-done','1');
+      location.href = location.pathname.replace('/trends/','/en/trends/');
+    }
+  } catch(e){}
+})();
+</script>
+
+</body>
+</html>

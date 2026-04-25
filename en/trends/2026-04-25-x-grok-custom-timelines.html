@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>X Launches Grok-Powered Custom Timelines — How Creators Should Adapt | Creator Jungbok</title>
+  <meta name="description" content="On April 22, 2026, X rolled out 75+ AI-curated topic feeds powered by Grok. Here's what every creator needs to know.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    .trend-meta { display: flex; flex-wrap: wrap; gap: .6rem 1rem; font-size: .8rem; color: #666; margin: .75rem 0 1.25rem 0; padding-bottom: 1rem; border-bottom: 1px solid var(--border, #e5e5e5); align-items: center; }
+    .trend-meta span { display: inline-flex; align-items: center; gap: .3rem; line-height: 1.4; }
+    .trend-meta .meta-cat { background: var(--red, #e53935); color: #fff; padding: .2rem .7rem; border-radius: 999px; font-weight: 700; font-size: .7rem; letter-spacing: .02em; }
+    .lang-switch { font-size: .82rem; color: #666; padding: .6rem 0; text-align: right; border-bottom: 1px dashed #ddd; margin-bottom: 1.25rem; }
+    .lang-switch a { color: #666; text-decoration: none; padding: 0 .35rem; }
+    .lang-switch a.active { color: var(--red, #e53935); font-weight: 800; text-decoration: underline; }
+    .lang-switch a:hover { color: var(--red, #e53935); }
+    .lead-para { font-size: 1.02rem; line-height: 1.85; color: var(--text, #222); padding: 1.1rem 1.25rem; background: #fff7f6; border-left: 4px solid var(--red, #e53935); border-radius: 0 8px 8px 0; margin: 1.25rem 0 2rem 0; }
+    .lead-para strong { color: #c62828; }
+    .feature-grid { display: grid; grid-template-columns: 1fr; gap: .9rem; margin: 1.5rem 0; }
+    @media (min-width: 700px) { .feature-grid { grid-template-columns: 1fr 1fr; gap: 1rem; } }
+    .feature-card { border: 1px solid var(--border, #e5e5e5); border-radius: 10px; padding: 1.1rem 1.25rem; background: #fafafa; transition: border-color .15s; }
+    .feature-card:hover { border-color: var(--red, #e53935); }
+    .feature-card-num { display: inline-block; background: var(--red, #e53935); color: #fff; width: 1.6rem; height: 1.6rem; line-height: 1.6rem; text-align: center; border-radius: 50%; font-weight: 800; font-size: .85rem; margin-right: .5rem; }
+    .feature-card-title { font-size: 1rem; font-weight: 800; color: var(--text, #222); margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .feature-card-desc { font-size: .92rem; line-height: 1.75; color: #444; margin: 0; }
+    .compare-box { display: grid; grid-template-columns: 1fr; gap: .75rem; margin: 1.5rem 0; }
+    @media (min-width: 700px) { .compare-box { grid-template-columns: 1fr 1fr; gap: 1rem; } }
+    .compare-side { padding: 1rem 1.1rem; border-radius: 10px; font-size: .92rem; line-height: 1.7; }
+    .compare-before { background: #f5f5f5; border: 1px solid #e0e0e0; }
+    .compare-after { background: #fff5f5; border: 1px solid #ffcdd2; }
+    .compare-label { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .08em; margin-bottom: .5rem; text-transform: uppercase; }
+    .compare-before .compare-label { color: #757575; }
+    .compare-after .compare-label { color: var(--red, #e53935); }
+    .callout { margin: 1.75rem 0; padding: 1.1rem 1.25rem; border-radius: 10px; border-left: 4px solid; font-size: .93rem; line-height: 1.75; }
+    .callout.tip { background: #f0fdf4; border-color: #22c55e; }
+    .callout.info { background: #eff6ff; border-color: #3b82f6; }
+    .callout.warn { background: #fffbeb; border-color: #f59e0b; }
+    .callout-label { font-weight: 800; font-size: .85rem; margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .callout.tip .callout-label { color: #16a34a; }
+    .callout.info .callout-label { color: #2563eb; }
+    .callout.warn .callout-label { color: #d97706; }
+    .callout ul { margin: .4rem 0 0 1.1rem; padding: 0; }
+    .callout li { margin-bottom: .3rem; }
+    .callout a { color: inherit; text-decoration: underline; word-break: break-all; }
+    @media (max-width: 480px) { .post-title { font-size: 1.55rem !important; line-height: 1.4 !important; } .lead-para { font-size: .95rem; padding: 1rem; } .trend-meta { font-size: .75rem; gap: .5rem .75rem; } .feature-card { padding: 1rem; } .callout { padding: 1rem; font-size: .88rem; } }
+    .post-body strong { color: #111; font-weight: 800; }
+    .post-body h2 { margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.4rem; line-height: 1.4; }
+    @media (max-width: 480px) { .post-body h2 { font-size: 1.2rem; margin-top: 2rem; } }
+    .post-body p { line-height: 1.85; font-size: .98rem; }
+    @media (max-width: 480px) { .post-body p { font-size: .95rem; line-height: 1.8; } }
+    .page-wrap { justify-content: center; }
+    .post-thumbnail { width: 100%; height: auto; border-radius: 12px; margin: 0 0 1.5rem 0; display: block; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    @media (max-width: 480px) { .post-thumbnail { border-radius: 8px; margin-bottom: 1rem; } }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Creator Jungbok">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="X Launches Grok-Powered Custom Timelines — How Creators Should Adapt">
+  <meta property="og:description" content="On April 22, 2026, X rolled out 75+ AI-curated topic feeds powered by Grok. Here's what every creator needs to know.">
+  <meta property="og:url" content="https://creatorjungbok.co.kr/en/trends/2026-04-25-x-grok-custom-timelines.html">
+  <meta property="og:image" content="https://creatorjungbok.co.kr/trends/images/2026-04-25-x-grok-custom-timelines-en.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="article:published_time" content="2026-04-25T07:00:00+09:00">
+  <meta property="article:section" content="AI Trends">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://creatorjungbok.co.kr/trends/images/2026-04-25-x-grok-custom-timelines-en.png">
+  <link rel="alternate" hreflang="ko" href="https://creatorjungbok.co.kr/trends/2026-04-25-x-grok-custom-timelines.html">
+  <link rel="alternate" hreflang="en" href="https://creatorjungbok.co.kr/en/trends/2026-04-25-x-grok-custom-timelines.html">
+  <link rel="alternate" hreflang="x-default" href="https://creatorjungbok.co.kr/trends/2026-04-25-x-grok-custom-timelines.html">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6B72N2BV55"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6B72N2BV55');
+  </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <button class="mobile-back" onclick="history.back()" aria-label="back">&#8592;</button>
+    <a href="/en/" class="site-logo">Creator <span>Jungbok</span></a>
+    <button class="nav-toggle" aria-label="menu" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+    <nav class="header-nav">
+      <a href="/en/">Home</a>
+      <a href="/en/trends/" class="nav-active">AI Trends</a>
+      <a href="/about/">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+  <main class="main-content">
+    <article>
+      <header class="post-header">
+        <img src="/trends/images/2026-04-25-x-grok-custom-timelines-en.png" alt="X Launches Grok-Powered Custom Timelines — Creator Jungbok" class="post-thumbnail" width="1200" height="630" loading="eager" />
+        <p class="post-chap">AI Trends</p>
+        <h1 class="post-title">X Launches Grok-Powered Custom Timelines — How Creators Should Adapt</h1>
+        <div class="lang-switch">
+          <a href="/trends/2026-04-25-x-grok-custom-timelines.html" onclick="try{localStorage.setItem('cj-lang-pref','ko');}catch(e){}">한국어</a> /
+          <a href="/en/trends/2026-04-25-x-grok-custom-timelines.html" class="active" onclick="try{localStorage.setItem('cj-lang-pref','en');}catch(e){}">English</a>
+        </div>
+        <div class="trend-meta">
+          <span class="meta-cat">AI Trends</span>
+          <span>🗓 April 25, 2026</span>
+          <span>⏱ 4-min read</span>
+          <span>📎 Sources: TechCrunch, MacRumors, Business Standard</span>
+        </div>
+      </header>
+
+      <hr class="divider">
+
+      <div class="post-body">
+
+        <p class="lead-para">
+          On <strong>April 22, 2026</strong>, X (formerly Twitter) rolled out <strong>Custom Timelines</strong> — more than 75 topic-based feeds curated by Grok AI that users can pin directly to their home tab. Unlike the old hashtag-and-keyword model, Grok actually <strong>reads each post and assigns topic labels based on meaning</strong>. The feature went live for X Premium subscribers on iOS, with Android support reportedly in development. Here is what creators need to do about it.
+        </p>
+
+        <h2>What X Just Shipped</h2>
+        <p>X is positioning Custom Timelines as <strong>"one of the biggest changes ever made to the app."</strong> The launch covers 75+ default categories — Business &amp; Finance, Sports, Tech, Politics, Stocks, News, Science, Movies &amp; TV, Food, Art, Real Estate, Beauty, Education, Gaming and more — that users can pin as additional tabs alongside the For You feed (source: TechCrunch, April 22, 2026).</p>
+
+        <p>The same release expanded a second feature: <strong>topic snooze on For You</strong>, letting users mute specific subjects from the main feed for a chosen duration.</p>
+
+        <div class="compare-box">
+          <div class="compare-side compare-before">
+            <span class="compare-label">📅 The Old Model</span>
+            Hashtag + keyword matching plus follower graph<br>
+            → Posts without the right words got buried
+          </div>
+          <div class="compare-side compare-after">
+            <span class="compare-label">✨ Since April 22, 2026</span>
+            <strong>Grok reads and understands every post</strong><br>
+            → AI assigns topic labels, users pin custom feeds
+          </div>
+        </div>
+
+        <h2>How Custom Timelines Actually Work</h2>
+        <p>Four mechanics define the new behavior, based on X's official rollout messaging.</p>
+
+        <div class="feature-grid">
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">1</span>Grok Parses Every Post</div>
+            <p class="feature-card-desc">Instead of relying on keywords or hashtags, <strong>Grok reads the content of each post and assigns topic labels based on meaning.</strong> Posts can match a topic without ever using the topic word.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">2</span>Pinned to Home</div>
+            <p class="feature-card-desc">Selected topics show up as <strong>extra tabs pinned to the home screen</strong>, sitting alongside For You and Following rather than replacing them.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">3</span>Personalized Per User</div>
+            <p class="feature-card-desc">Two users opening the same "Tech" timeline see <strong>different ordering and weighting.</strong> Grok layers personal activity history on top of topic labeling.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">4</span>Premium iOS First</div>
+            <p class="feature-card-desc">At launch the feature is restricted to <strong>X Premium subscribers on iOS.</strong> Android support is in development; no public ETA has been shared.</p>
+          </div>
+
+        </div>
+
+        <h2>What This Means for Creators</h2>
+        <p>The recurring theme across coverage is that <strong>discovery on X is being redefined.</strong> For years, creators chased the right hashtag or trending phrase to break through. Grok-led labeling weakens that lever — and elevates a different one.</p>
+
+        <p><strong>1. Niche consistency becomes a real asset.</strong><br>
+        If Grok is grouping accounts by meaning, an account that posts about gaming, real estate and beauty all in one week sends scrambled signals. Tight, single-topic accounts likely get cleaner labeling and stronger placement inside their topic timelines.</p>
+
+        <p><strong>2. Substantive copy starts to matter again.</strong><br>
+        One-line posts stuffed with hashtags lose their advantage when an LLM is parsing the body text. Posts with two to three sentences of context — a setup, a take, and a payoff — give Grok more signal to work with. The "story plus sharp line" structure covered in <a href="/practice/">AI YouTube Practice</a> translates directly to X.</p>
+
+        <p><strong>3. Premium-heavy niches get the first wave.</strong><br>
+        Because the rollout is iOS Premium first, English-speaking <strong>tech, finance and AI niches</strong> — where Premium adoption is highest — feel the change immediately. Creators outside those niches have a window to prepare before broader rollout.</p>
+
+        <div class="callout warn">
+          <div class="callout-label">⚠ Don't Overread It</div>
+          The claim that Custom Timelines will replace For You is premature. X has stated both will run in parallel, and no usage or retention data has been published. That said, the simultaneous quiet wind-down of the Communities feature suggests X is consolidating its discovery surface (source: webpronews, April 23, 2026).
+        </div>
+
+        <h2>Three Moves to Make Now</h2>
+        <p><strong>1. Audit your topic consistency.</strong> Pull the 30 days of posts ending April 22, 2026 and ask whether they map to a single niche. If not, consider splitting secondary topics into a separate handle. Narrower beats broader for label accuracy.</p>
+
+        <p><strong>2. Lengthen and contextualize.</strong> Cut the share of one-line posts. Aim for two to three sentences with the keyword woven naturally into the body. Hashtag dependency can come down. Let Grok read meaning, not metadata.</p>
+
+        <p><strong>3. Map your Premium exposure.</strong> If your audience leans English-speaking Premium subscribers in tech, finance or AI, expect early impact — and double down on body-copy quality before broader rollout. Pair this with the multi-platform discipline covered in the <a href="/en/trends/2026-04-23-tiktok-symphony-expansion.html">TikTok Symphony piece</a>.</p>
+
+        <h2>Open Questions to Watch</h2>
+        <p>X has not detailed the Android timeline, the path for non-Premium users, or whether <strong>creators can suggest new topic categories</strong>. There is also no transparency yet on whether a single post can carry multiple topic labels, or whether creators will see how their content has been classified. Expect a more detailed creator guide within the next one to two months.</p>
+
+        <div class="callout tip">
+          <div class="callout-label">💡 Quick Recap</div>
+          <ul>
+            <li>X launched <strong>Grok-powered Custom Timelines on April 22, 2026</strong> — 75+ pinnable topic feeds.</li>
+            <li>Discovery shifts from hashtags to <strong>AI semantic labeling</strong>; Premium iOS first.</li>
+            <li>Creator playbook: <strong>tighten niche, strengthen body copy, map Premium exposure.</strong></li>
+            <li>Open questions: Android timing, non-Premium access, multi-label behavior.</li>
+          </ul>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-label">📎 Sources</div>
+          <ul>
+            <li>TechCrunch (April 22, 2026) — <a href="https://techcrunch.com/2026/04/22/hands-on-with-xs-new-ai-powered-custom-feeds/" target="_blank" rel="noopener">Hands on with X's new AI-powered custom feeds</a></li>
+            <li>MacRumors (April 22, 2026) — <a href="https://www.macrumors.com/2026/04/22/x-custom-timelines-for-premium-users/" target="_blank" rel="noopener">X Rolls Out AI-Powered Custom Timelines for Premium Users</a></li>
+            <li>Business Standard (April 23, 2026) — <a href="https://www.business-standard.com/technology/tech-news/x-introduces-grok-ai-powered-custom-timelines-feature-for-personalised-feeds-126042300672_1.html" target="_blank" rel="noopener">X introduces Grok AI-powered 'Custom Timelines' for personalised feeds</a></li>
+          </ul>
+        </div>
+
+        <nav class="trends-nav" aria-label="AI Trends navigation">
+          <a href="2026-04-24-youtube-shorts-zero-minutes.html" class="trends-nav-item prev">
+            <span class="trends-nav-label">&larr; Previous</span>
+            <span class="trends-nav-title">YouTube Lets Users Turn Shorts Off Completely — What Creators Should Do</span>
+          </a>
+          <a href="/en/trends/" class="trends-nav-item index">
+            <span class="trends-nav-index-icon">&#9783;</span>
+            <span>All AI Trends</span>
+          </a>
+          <span class="trends-nav-item empty"></span>
+        </nav>
+
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Creator <span>Jungbok</span></div>
+    <p class="footer-desc">AI-powered YouTube creation — based on real creator experience.</p>
+    <div class="footer-links">
+      <a href="/en/">Home</a>
+      <a href="/en/trends/">AI Trends</a>
+      <a href="/about/">About</a>
+    </div>
+    <div class="footer-legal">
+      <a href="/privacy/">Privacy Policy</a>
+    </div>
+    <p class="footer-copy">© Creator Jungbok. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="../../js/main.js"></script>
+
+<button id="btn-top" aria-label="top">↑</button>
+<script>
+  var b=document.getElementById('btn-top');
+  window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+
+</body>
+</html>
