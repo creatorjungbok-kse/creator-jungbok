@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>실전 플레이북 | 크리에이터 정복</title>
+  <meta name="description" content="AI × SNS 크리에이터를 위한 실전 가이드. 알고리즘·콘텐츠 공식·수익화·자동화 — 매일 업데이트.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&family=Source+Serif+Pro:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="크리에이터 정복">
+  <meta property="og:title" content="실전 플레이북 | 크리에이터 정복">
+  <meta property="og:description" content="AI × SNS 크리에이터를 위한 실전 가이드. 매일 업데이트.">
+  <meta property="og:url" content="https://creatorjungbok.co.kr/playbook/">
+  <link rel="alternate" hreflang="ko" href="https://creatorjungbok.co.kr/playbook/">
+  <link rel="alternate" hreflang="en" href="https://creatorjungbok.co.kr/en/playbook/">
+  <link rel="canonical" href="https://creatorjungbok.co.kr/playbook/">
+  <style>
+    .playbook-hero { padding: 60px 1.5rem 30px; text-align: center; max-width: 760px; margin: 0 auto; }
+    .playbook-hero .eyebrow { color: var(--red, #e53935); font-weight: 700; font-size: .85rem; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 1rem; }
+    .playbook-hero h1 { font-family: 'Source Serif Pro', 'Noto Sans KR', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.2; margin: 0 0 1rem; }
+    .playbook-hero h1 span { color: var(--red, #e53935); }
+    .playbook-hero p { font-size: 1.05rem; color: var(--text-sub, #555); line-height: 1.7; margin-bottom: 0; }
+
+    .lang-switch-bar { max-width: 760px; margin: 1rem auto 0; padding: 0 1.5rem; font-size: .82rem; color: var(--text-sub, #666); text-align: right; }
+    .lang-switch-bar a { color: var(--text-sub, #666); text-decoration: none; padding: 0 .35rem; }
+    .lang-switch-bar a.active { color: var(--red, #e53935); font-weight: 800; text-decoration: underline; }
+    .lang-switch-bar a:hover { color: var(--red, #e53935); }
+
+    .coming-soon { max-width: 760px; margin: 40px auto 80px; padding: 0 1.5rem; text-align: center; }
+    .coming-soon-card { border: 1px solid #e8e8e8; border-radius: 12px; padding: 60px 30px; background: #fafafa; }
+    .coming-soon-card h2 { font-family: 'Source Serif Pro', 'Noto Sans KR', serif; font-size: 1.6rem; font-weight: 700; margin: 0 0 1rem; }
+    .coming-soon-card p { color: var(--text-sub, #555); line-height: 1.7; margin: 0 0 1.5rem; }
+    .coming-soon-card .cta { display: inline-block; background: var(--red, #e53935); color: #fff; padding: .8rem 1.6rem; border-radius: 8px; text-decoration: none; font-weight: 700; }
+
+    @media (max-width: 700px) {
+      .playbook-hero { padding: 40px 1.25rem 20px; }
+      .playbook-hero h1 { font-size: 2rem; }
+      .coming-soon-card { padding: 40px 20px; }
+    }
+  </style>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6B72N2BV55"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6B72N2BV55');
+  </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <button class="mobile-back" onclick="history.back()" aria-label="back">&#8592;</button>
+    <a href="/" class="site-logo">크리에이터 <span>정복</span></a>
+    <button class="nav-toggle" aria-label="menu" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+    <nav class="header-nav">
+      <a href="/">홈</a>
+      <a href="/basics/">유튜브 기초</a>
+      <a href="/practice/"><span class="nav-ai-red">AI</span> 유튜브 실전</a>
+      <a href="/trends/">AI 트렌드</a>
+      <a href="/playbook/" class="nav-active">실전 플레이북</a>
+      <a href="/community/">커뮤니티</a>
+      <a href="/about/">소개</a>
+    </nav>
+  </div>
+</header>
+
+<div class="lang-switch-bar">
+  <a href="/playbook/" class="active" onclick="try{localStorage.setItem('cj-lang-pref','ko');}catch(e){}">한국어</a> /
+  <a href="/en/playbook/" onclick="try{localStorage.setItem('cj-lang-pref','en');}catch(e){}">English</a>
+</div>
+
+<section class="playbook-hero">
+  <p class="eyebrow">PLAYBOOK</p>
+  <h1>AI × SNS 크리에이터를 위한<br><span>실전 플레이북</span></h1>
+  <p>알고리즘 작동 원리, 콘텐츠 공식, 수익화 전략, 자동화 워크플로 —<br>한 번 익히면 1년이 지나도 쓸 수 있는 글들.</p>
+</section>
+
+<section class="coming-soon">
+  <div class="coming-soon-card">
+    <h2>곧 첫 글이 올라옵니다</h2>
+    <p>매일 검증된 플레이북 1개씩 누적됩니다.<br>먼저 AI 트렌드부터 살펴보시겠어요?</p>
+    <a href="/trends/" class="cta">AI 트렌드 보기 →</a>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">크리에이터 <span>정복</span></div>
+    <p class="footer-desc">AI × SNS 크리에이터를 위한 실전 가이드 · 매일 업데이트</p>
+    <div class="footer-links">
+      <a href="/">홈</a>
+      <a href="/basics/">유튜브 기초</a>
+      <a href="/practice/"><span class="nav-ai-red">AI</span> 유튜브 실전</a>
+      <a href="/trends/">AI 트렌드</a>
+      <a href="/playbook/">실전 플레이북</a>
+      <a href="/community/">커뮤니티</a>
+      <a href="/about/">소개</a>
+    </div>
+    <div class="footer-legal">
+      <a href="/privacy/">개인정보처리방침</a>
+    </div>
+    <p class="footer-copy">© 크리에이터 정복. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="/js/main.js"></script>
+</body>
+</html>

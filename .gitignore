@@ -4,6 +4,12 @@
 .env.*.local
 *.key
 *.pem
+ga4-service-account.json
+*-service-account.json
+*.serviceaccount.json
+oauth-client.json
+oauth-token.json
+*-oauth.json
 
 # 시스템 파일
 .DS_Store

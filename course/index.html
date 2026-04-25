@@ -2,129 +2,16 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>강의실 | 크리에이터 완전정복</title>
-  <meta name="description" content="단계별로 따라할 수 있는 영상 강의. 곧 공개됩니다.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css">
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="크리에이터 완전정복">
-  <meta property="og:title" content="강의실 | 크리에이터 완전정복">
-  <meta property="og:description" content="단계별로 따라할 수 있는 영상 강의. 곧 공개됩니다.">
-  <meta property="og:url" content="https://creatorjungbok.co.kr/course/">
-  <!-- Google Analytics 4 (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6B72N2BV55"></script>
+  <title>크리에이터 정복</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="canonical" href="https://creatorjungbok.co.kr/playbook/">
+  <meta http-equiv="refresh" content="0; url=/playbook/">
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-6B72N2BV55');
+    // /course/ → /playbook/ 영구 이전 (강의실 → 실전 플레이북)
+    location.replace('/playbook/');
   </script>
 </head>
 <body>
-
-<!-- 헤더 -->
-<header class="site-header">
-  <div class="header-inner">
-    <button class="mobile-back" onclick="history.back()" aria-label="뒤로가기">&#8592;</button>
-    <a href="../" class="site-logo">크리에이터 <span>완전정복</span></a>
-    <button class="nav-toggle" aria-label="메뉴" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
-    <button class="toc-toggle" id="toc-toggle" aria-label="목차 열기">목차</button>
-    <nav class="header-nav">
-      <a href="../">홈</a>
-      <a href="../basics/">유튜브 기초</a>
-      <a href="../practice/" ><span class="nav-ai-red">AI</span> 유튜브 실전</a>
-      <a href="../trends/">AI 트렌드</a>
-      <a href="../course/" class="nav-active">강의실</a>
-      <a href="../community/">커뮤니티</a>
-      <a href="../about/">소개</a>
-    </nav>
-  </div>
-</header>
-
-<!-- 페이지 히어로 -->
-<div class="page-hero">
-  <div class="page-hero-inner">
-    <span class="page-eyebrow">강의실</span>
-    <h1>단계별 영상 강의</h1>
-  </div>
-</div>
-
-<!-- 준비중 -->
-<div class="coming-page">
-  <div class="coming-inner">
-    <span class="coming-icon">🎓</span>
-    <p class="coming-subtitle">
-      텍스트만으로는 부족한 내용을<br>영상으로 단계별 설명하는 강의를 준비하고 있습니다.<br><br>
-      <strong>곧 공개됩니다.</strong>
-    </p>
-    <div style="margin-top:2rem;">
-      <a href="../" style="font-size:.9rem; font-weight:700; color:var(--red);">← 홈으로 돌아가기</a>
-    </div>
-  </div>
-</div>
-
-<!-- 푸터 -->
-<footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-logo">크리에이터 <span>완전정복</span></div>
-    <p class="footer-desc">AI로 유튜브·틱톡 만들기 — 실제 경험 기반 무료 공개</p>
-    <div class="footer-links">
-      <a href="../">홈</a>
-      <a href="../basics/">유튜브 기초</a>
-      <a href="../practice/" ><span class="nav-ai-red">AI</span> 유튜브 실전</a>
-      <a href="../trends/">AI 트렌드</a>
-      <a href="../course/">강의실</a>
-      <a href="../community/">커뮤니티</a>
-      <a href="../about/">소개</a>
-    </div>
-    <div class="footer-legal">
-      <a href="../privacy/">개인정보처리방침</a>
-    </div>
-    <p class="footer-copy">© 크리에이터 완전정복. 무단 복제 및 배포를 금합니다.</p>
-  </div>
-</footer>
-
-<button id="btn-top" aria-label="맨 위로">↑</button>
-<script>
-  var b=document.getElementById('btn-top');
-  window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
-  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
-</script>
-<script>
-(function(){
-  var toc=document.getElementById('toc-toggle');
-  var sidebar=document.querySelector('.sidebar');
-  var back=document.querySelector('.mobile-back');
-  var path=location.pathname;
-  var isIndex=/index\.html$/.test(path)||path==='/'||/\/$/.test(path);
-  if(toc&&!sidebar)toc.style.display='none';
-  if(back&&isIndex)back.style.display='none';
-  if(!toc||!sidebar)return;
-  var ov=document.createElement('div');
-  ov.className='sidebar-overlay';
-  document.body.appendChild(ov);
-  function closeDrawer(){document.body.classList.remove('sidebar-open');}
-  toc.addEventListener('click',function(){document.body.classList.toggle('sidebar-open');});
-  ov.addEventListener('click',closeDrawer);
-})();
-</script>
-
-<!-- Google Translate -->
-<div id="google_translate_element" style="position:fixed; bottom:70px; right:1.2rem; z-index:999;"></div>
-<script type="text/javascript">
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({
-    pageLanguage: 'ko',
-    includedLanguages: 'en,ja,zh-CN,zh-TW,es,de,fr,pt',
-    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-    autoDisplay: false
-  }, 'google_translate_element');
-}
-</script>
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <p>이 페이지는 <a href="/playbook/">실전 플레이북</a>으로 이동합니다…</p>
 </body>
 </html>
