@@ -3160,3 +3160,47 @@ strong { font-weight: 700; }
     font-size: .85rem;
   }
 }
+
+/* 썸네일 placeholder SVG (글 자동 생성됐지만 OG 이미지 없을 때) */
+.trend-grid-thumb-placeholder {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 6px;
+}
+
+/* ============================================================
+   모바일 lang-toggle (햄버거 밖, 헤더 우측에 노출)
+   ============================================================ */
+.lang-toggle-mobile { display: none; }
+@media (max-width: 700px) {
+  .lang-toggle-mobile {
+    display: inline-flex !important;
+    align-items: center;
+    gap: .25rem;
+    font-size: .72rem;
+    color: var(--text-sub);
+    margin-right: .5rem;
+    z-index: 103;
+    position: relative;
+  }
+  .lang-toggle-mobile a {
+    color: var(--text-sub);
+    font-weight: 500;
+    text-decoration: none;
+    padding: 0 .15rem;
+  }
+  .lang-toggle-mobile a.lang-active {
+    color: var(--color-terracotta);
+    font-weight: 700;
+    text-decoration: underline;
+  }
+  .lang-toggle-mobile .lang-sep {
+    color: rgba(26,36,56,.3);
+    font-size: .7rem;
+  }
+  /* 풀스크린 nav 안의 lang-toggle은 모바일에서 숨김 (밖에 있는 게 보이니까) */
+  .site-header .header-inner .header-nav .lang-toggle {
+    display: none !important;
+  }
+}
