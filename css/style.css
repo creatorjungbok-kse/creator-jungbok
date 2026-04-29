@@ -532,7 +532,8 @@ strong { font-weight: 700; }
   overflow: hidden;
   text-decoration: none;
   transition: border-color .2s ease, transform .15s ease, box-shadow .2s ease;
-  min-height: 120px;
+  min-height: 110px;
+  max-height: 140px;
 }
 .trend-grid-list .trend-grid-card:hover {
   border-color: var(--color-terracotta);
@@ -541,11 +542,11 @@ strong { font-weight: 700; }
   text-decoration: none;
 }
 .trend-grid-list .trend-grid-thumb {
-  flex: 0 0 180px;
-  width: 180px;
+  flex: 0 0 160px;
+  width: 160px;
   aspect-ratio: 40 / 21;
   align-self: center;
-  margin-left: 1rem;
+  margin: .65rem 0 .65rem .85rem;
   position: relative;
   overflow: hidden;
   background: var(--color-beige);
@@ -580,12 +581,12 @@ strong { font-weight: 700; }
 }
 .trend-grid-list .trend-grid-title {
   font-family: var(--font-display);
-  font-size: 1.02rem;
+  font-size: .95rem;
   font-weight: 800;
-  line-height: 1.4;
+  line-height: 1.35;
   letter-spacing: -.01em;
   color: #1A2438;
-  margin: 0 0 .5rem;
+  margin: 0 0 .35rem;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -594,13 +595,13 @@ strong { font-weight: 700; }
 }
 .trend-grid-list .trend-grid-desc {
   display: -webkit-box !important;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  font-size: .85rem;
+  font-size: .8rem;
   color: var(--text-sub);
-  line-height: 1.55;
-  margin: 0 0 .65rem;
+  line-height: 1.5;
+  margin: 0 0 .4rem;
   word-break: keep-all;
 }
 .trend-grid-list .trend-grid-meta {
@@ -2437,12 +2438,6 @@ strong { font-weight: 700; }
 }
 /* 모바일에서 6개 링크 가로 스크롤 */
 @media (max-width: 700px) {
-  .header-nav {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 2px;
-  }
-  .header-nav a { white-space: nowrap; }
 }
 
 /* 새 푸터 — 개인정보 링크 */
@@ -2969,7 +2964,7 @@ strong { font-weight: 700; }
   margin: 0;
 }
 .legal-content {
-  max-width: 720px;
+  max-width: 560px;
   margin: 0 auto;
   padding: 1.5rem 1.5rem 4rem;
   background: var(--color-beige);
@@ -2992,12 +2987,12 @@ strong { font-weight: 700; }
   font-size: 1.2rem;
   font-weight: 700;
   color: var(--color-navy);
-  margin: 2.25rem 0 .75rem;
+  margin: 2.25rem auto .75rem;
   padding-top: 1.5rem;
   border-top: 1px solid rgba(26,36,56,.1);
   letter-spacing: -.01em;
   width: 100%;
-  max-width: 600px;
+  max-width: 480px;
   text-align: center;
 }
 .legal-content h2:first-of-type { border-top: none; padding-top: 0; margin-top: 1rem; }
@@ -3038,21 +3033,26 @@ strong { font-weight: 700; }
   color: var(--color-terracotta);
 }
 
+
 /* ============================================================
-   모바일 헤더 + 풀스크린 햄버거 메뉴 (Day 3)
+   AI 트렌드/SNS 인사이트 썸네일 — aspect 40/21로 잘림 최소화
+   ============================================================ */
+
+/* ============================================================
+   모바일 풀스크린 햄버거 nav — 강제 적용 (Day 3 v2)
    ============================================================ */
 @media (max-width: 700px) {
-  /* 사이트 로고 — 모바일에서 깨지지 않게 사이즈 조정 */
-  .site-logo {
-    font-size: 1rem;
-    letter-spacing: -.01em;
+  .site-header .header-inner .site-logo {
+    font-size: .95rem !important;
+    font-weight: 800;
+    letter-spacing: -.02em;
+    white-space: nowrap;
   }
-  .site-logo span {
-    color: var(--color-terracotta);
+  .site-header .header-inner .site-logo span {
+    color: var(--color-terracotta) !important;
   }
   
-  /* 햄버거 토글 — 보이게 */
-  .nav-toggle {
+  .site-header .header-inner .nav-toggle {
     display: flex !important;
     flex-direction: column;
     justify-content: center;
@@ -3066,93 +3066,97 @@ strong { font-weight: 700; }
     padding: 0;
     z-index: 102;
   }
-  .nav-toggle span {
+  .site-header .header-inner .nav-toggle span {
     display: block;
     width: 22px;
     height: 2px;
     background: var(--color-navy);
     transition: transform .25s ease, opacity .2s ease;
   }
-  .nav-toggle.open span:nth-child(1) {
+  .site-header .header-inner .nav-toggle.open span:nth-child(1) {
     transform: translateY(6px) rotate(45deg);
   }
-  .nav-toggle.open span:nth-child(2) {
+  .site-header .header-inner .nav-toggle.open span:nth-child(2) {
     opacity: 0;
   }
-  .nav-toggle.open span:nth-child(3) {
+  .site-header .header-inner .nav-toggle.open span:nth-child(3) {
     transform: translateY(-6px) rotate(-45deg);
   }
   
-  /* 헤더 nav 풀스크린 메뉴 */
-  .header-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100vh;
-    background: var(--color-beige);
+  .site-header .header-inner .header-nav {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: var(--color-beige) !important;
     display: flex !important;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
     gap: 2rem !important;
-    overflow-x: hidden;
-    overflow-y: auto;
-    padding: 5rem 1.5rem 3rem;
+    overflow: hidden auto !important;
+    padding: 5rem 1.5rem 3rem !important;
     transform: translateX(100%);
     transition: transform .3s ease;
     z-index: 101;
   }
-  .header-nav.nav-open {
-    transform: translateX(0);
+  .site-header .header-inner .header-nav.nav-open {
+    transform: translateX(0) !important;
   }
-  .header-nav a {
-    font-family: var(--font-display);
+  .site-header .header-inner .header-nav a {
+    font-family: var(--font-display) !important;
     font-size: 1.5rem !important;
     font-weight: 700 !important;
     color: var(--color-navy) !important;
-    letter-spacing: -.01em;
-    white-space: normal;
+    letter-spacing: -.01em !important;
+    white-space: normal !important;
+    padding: .35rem 0;
   }
-  .header-nav a.nav-active {
+  .site-header .header-inner .header-nav a.nav-active {
     color: var(--color-terracotta) !important;
   }
-  .header-nav .lang-toggle {
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(26,36,56,.15);
-    display: flex;
-    gap: .5rem;
-    align-items: center;
-    font-size: .9rem;
+  .site-header .header-inner .header-nav .lang-toggle {
+    margin-top: 2rem !important;
+    padding-top: 2rem !important;
+    border-top: 1px solid rgba(26,36,56,.15) !important;
+    display: flex !important;
+    gap: .5rem !important;
+    align-items: center !important;
+    font-size: .9rem !important;
   }
-  .header-nav .lang-toggle a {
+  .site-header .header-inner .header-nav .lang-toggle a {
     font-size: .9rem !important;
     font-weight: 500 !important;
-  }
-  .header-nav .lang-toggle a.lang-active {
-    color: var(--color-terracotta) !important;
-    text-decoration: underline;
+    padding: 0;
   }
   
-  /* 본문 스크롤 잠금 — nav 열렸을 때 */
-  body.has-nav-open {
-    overflow: hidden;
-  }
-  
-  /* 사이트 헤더 자체는 위에 떠있음 */
   .site-header {
     position: relative;
     z-index: 100;
   }
-  .header-inner {
+  .site-header .header-inner {
     position: relative;
     z-index: 102;
   }
 }
 
 /* ============================================================
-   AI 트렌드/SNS 인사이트 썸네일 — aspect 40/21로 잘림 최소화
+   Footer — 링크 균등 wrap (Day 3 v2)
    ============================================================ */
+.footer-links {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  gap: 1rem 1.5rem !important;
+  max-width: 720px;
+  margin: 0 auto !important;
+}
+@media (max-width: 700px) {
+  .footer-links {
+    gap: .5rem 1.25rem !important;
+    font-size: .85rem;
+  }
+}
