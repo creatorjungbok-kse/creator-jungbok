@@ -7,52 +7,77 @@
   <meta name="description" content="2026년 4월, YouTube가 Shorts 시청시간을 0분으로 제한하는 기능을 공개했습니다. 크리에이터가 지금 해야 할 것은?">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
   <style>
-    /* ========== 트렌드 글 전용 스타일 (모바일 우선) ========== */
-    .trend-meta { display: flex; flex-wrap: wrap; gap: .6rem 1rem; font-size: .8rem; color: #666; margin: .75rem 0 1.25rem 0; padding-bottom: 1rem; border-bottom: 1px solid var(--border, #e5e5e5); align-items: center; }
+    /* AI 트렌드 글 페이지 - 펜 일러스트 에디토리얼 톤 */
+    .trend-meta { display: flex; flex-wrap: wrap; gap: .6rem 1rem; font-size: .82rem; color: #666; margin: .75rem 0 1.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border, #e8d9ca); align-items: center; }
     .trend-meta span { display: inline-flex; align-items: center; gap: .3rem; line-height: 1.4; }
-    .trend-meta .meta-cat { background: var(--red, #e53935); color: #fff; padding: .2rem .7rem; border-radius: 999px; font-weight: 700; font-size: .7rem; letter-spacing: .02em; }
+    .trend-meta .meta-cat { background: var(--color-terracotta, #D4825C); color: #fff; padding: .2rem .7rem; border-radius: 999px; font-weight: 700; font-size: .7rem; letter-spacing: .03em; }
 
-    .lang-switch { font-size: .82rem; color: #666; padding: .6rem 0; text-align: right; border-bottom: 1px dashed #ddd; margin-bottom: 1.25rem; }
+    .lang-switch { font-size: .82rem; color: #666; padding: .6rem 0; text-align: right; border-bottom: 1px dashed var(--border, #e8d9ca); margin-bottom: 1.25rem; }
     .lang-switch a { color: #666; text-decoration: none; padding: 0 .35rem; }
-    .lang-switch a.active { color: var(--red, #e53935); font-weight: 800; text-decoration: underline; }
-    .lang-switch a:hover { color: var(--red, #e53935); }
+    .lang-switch a.active { color: var(--color-terracotta, #D4825C); font-weight: 800; text-decoration: underline; }
+    .lang-switch a:hover { color: var(--color-terracotta, #D4825C); }
 
-    .lead-para { font-size: 1.02rem; line-height: 1.85; color: var(--text, #222); padding: 1.1rem 1.25rem; background: #fff7f6; border-left: 4px solid var(--red, #e53935); border-radius: 0 8px 8px 0; margin: 1.25rem 0 2rem 0; }
-    .lead-para strong { color: #c62828; }
+    .lead-para { font-size: 1.02rem; line-height: 1.85; color: var(--text, #1A2438); padding: 1.1rem 1.25rem; background: #FFFDF9; border-left: 4px solid var(--color-terracotta, #D4825C); border-radius: 0 8px 8px 0; margin: 1.25rem 0 2rem; }
+    .lead-para strong { color: var(--color-terracotta, #D4825C); }
 
-    .big-date { display: inline-block; padding: .35rem .8rem; background: var(--dark, #1a1a1a); color: #fff; border-radius: 6px; font-weight: 800; font-size: .85rem; letter-spacing: .02em; margin: 0 .2rem; }
+    .big-date { display: inline-block; padding: .35rem .8rem; background: var(--color-navy, #1A2438); color: #fff; border-radius: 6px; font-weight: 800; font-size: .85rem; letter-spacing: .02em; margin: 0 .2rem; }
 
     .feature-grid { display: grid; grid-template-columns: 1fr; gap: .9rem; margin: 1.5rem 0; }
     @media (min-width: 700px) { .feature-grid { grid-template-columns: 1fr 1fr; gap: 1rem; } }
-    .feature-card { border: 1px solid var(--border, #e5e5e5); border-radius: 10px; padding: 1.1rem 1.25rem; background: #fafafa; transition: border-color .15s, transform .15s; }
-    .feature-card:hover { border-color: var(--red, #e53935); }
-    .feature-card-num { display: inline-block; background: var(--red, #e53935); color: #fff; width: 1.6rem; height: 1.6rem; line-height: 1.6rem; text-align: center; border-radius: 50%; font-weight: 800; font-size: .85rem; margin-right: .5rem; }
-    .feature-card-title { font-size: 1rem; font-weight: 800; color: var(--text, #222); margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .feature-card { border: 1px solid var(--border, #e8d9ca); border-radius: 12px; padding: 1.1rem 1.25rem; background: #FFFDF9; transition: border-color .2s, transform .2s; }
+    .feature-card:hover { border-color: var(--color-terracotta, #D4825C); transform: translateY(-2px); }
+    .feature-card-num { display: inline-block; background: var(--color-terracotta, #D4825C); color: #fff; width: 1.6rem; height: 1.6rem; line-height: 1.6rem; text-align: center; border-radius: 50%; font-weight: 800; font-size: .85rem; margin-right: .5rem; }
+    .feature-card-title { font-size: 1rem; font-weight: 800; color: var(--text, #1A2438); margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
     .feature-card-desc { font-size: .92rem; line-height: 1.75; color: #444; margin: 0; }
 
     .compare-box { display: grid; grid-template-columns: 1fr; gap: .75rem; margin: 1.5rem 0; }
     @media (min-width: 700px) { .compare-box { grid-template-columns: 1fr 1fr; gap: 1rem; } }
     .compare-side { padding: 1rem 1.1rem; border-radius: 10px; font-size: .92rem; line-height: 1.7; }
-    .compare-before { background: #f5f5f5; border: 1px solid #e0e0e0; }
-    .compare-after { background: #fff5f5; border: 1px solid #ffcdd2; }
+    .compare-before { background: #F5EBDC; border: 1px solid #E8D9CA; }
+    .compare-after { background: #FFFDF9; border: 1px solid #D4825C; }
     .compare-label { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .08em; margin-bottom: .5rem; text-transform: uppercase; }
-    .compare-before .compare-label { color: #757575; }
-    .compare-after .compare-label { color: var(--red, #e53935); }
+    .compare-before .compare-label { color: #7A8B7A; }
+    .compare-after .compare-label { color: var(--color-terracotta, #D4825C); }
 
-    .callout { margin: 1.75rem 0; padding: 1.1rem 1.25rem; border-radius: 10px; border-left: 4px solid; font-size: .93rem; line-height: 1.75; }
-    .callout.tip { background: #f0fdf4; border-color: #22c55e; }
-    .callout.info { background: #eff6ff; border-color: #3b82f6; }
-    .callout.warn { background: #fffbeb; border-color: #f59e0b; }
+    .callout { margin: 1.75rem 0; padding: 1.1rem 1.25rem; border-radius: 10px; border-left: 4px solid; font-size: .93rem; line-height: 1.75; background: #FFFDF9; }
+    .callout.tip { border-color: var(--color-sage, #7A8B7A); }
+    .callout.info { border-color: var(--color-teal, #2C5F6F); }
+    .callout.warn { border-color: var(--color-terracotta, #D4825C); }
     .callout-label { font-weight: 800; font-size: .85rem; margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
-    .callout.tip .callout-label { color: #16a34a; }
-    .callout.info .callout-label { color: #2563eb; }
-    .callout.warn .callout-label { color: #d97706; }
+    .callout.tip .callout-label { color: var(--color-sage, #7A8B7A); }
+    .callout.info .callout-label { color: var(--color-teal, #2C5F6F); }
+    .callout.warn .callout-label { color: var(--color-terracotta, #D4825C); }
     .callout ul { margin: .4rem 0 0 1.1rem; padding: 0; }
     .callout li { margin-bottom: .3rem; }
     .callout a { color: inherit; text-decoration: underline; word-break: break-all; }
+
+    .post-body strong { color: var(--text, #1A2438); font-weight: 800; }
+    .post-body h2 { margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.4rem; line-height: 1.4; font-family: 'Source Serif Pro', Georgia, serif; color: var(--text, #1A2438); font-weight: 700; }
+    .post-body p { line-height: 1.85; font-size: .98rem; color: var(--text, #1A2438); }
+    .post-body ul { line-height: 1.85; }
+    .post-body ul li { margin-bottom: .35rem; }
+    .post-body a { color: var(--color-terracotta, #D4825C); }
+
+    .page-wrap { justify-content: center; }
+    .post-thumbnail { width: 100%; height: auto; border-radius: 12px; margin: 0 0 1.5rem; display: block; box-shadow: 0 4px 20px rgba(26,36,56,0.08); }
+    .post-chap { color: var(--color-terracotta, #D4825C); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: .78rem; margin-bottom: .5rem; }
+    .post-title { font-family: 'Source Serif Pro', Georgia, serif; font-weight: 700; line-height: 1.3; color: var(--text, #1A2438); }
+
+    .trends-nav { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin: 2.5rem 0 1rem; padding-top: 1.5rem; border-top: 1px solid var(--border, #e8d9ca); }
+    .trends-nav-item { display: block; padding: 1rem 1.1rem; border: 1px solid var(--border, #e8d9ca); border-radius: 10px; background: #FFFDF9; text-decoration: none; color: var(--text, #1A2438); transition: border-color .2s, transform .2s; }
+    .trends-nav-item:hover { border-color: var(--color-terracotta, #D4825C); transform: translateY(-2px); }
+    .trends-nav-item.empty { background: transparent; border: 1px dashed var(--border, #e8d9ca); pointer-events: none; }
+    .trends-nav-item.index { text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .trends-nav-label { display: block; font-size: .72rem; font-weight: 700; color: var(--color-terracotta, #D4825C); letter-spacing: .05em; margin-bottom: .35rem; text-transform: uppercase; }
+    .trends-nav-title { display: block; font-size: .92rem; font-weight: 600; line-height: 1.4; }
+    .trends-nav-index-icon { font-size: 1.2rem; color: var(--color-terracotta, #D4825C); margin-bottom: .35rem; }
+
+    @media (max-width: 700px) {
+      .trends-nav { grid-template-columns: 1fr; }
+      .trends-nav-item.empty { display: none; }
+    }
 
     @media (max-width: 480px) {
       .post-title { font-size: 1.55rem !important; line-height: 1.4 !important; }
@@ -63,19 +88,10 @@
       .feature-card-desc { font-size: .88rem; }
       .compare-side { font-size: .88rem; }
       .callout { padding: 1rem; font-size: .88rem; }
+      .post-body h2 { font-size: 1.2rem; margin-top: 2rem; }
+      .post-body p { font-size: .95rem; line-height: 1.8; }
+      .post-thumbnail { border-radius: 8px; margin-bottom: 1rem; }
     }
-
-    .post-body strong { color: #111; font-weight: 800; }
-    .post-body h2 { margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.4rem; line-height: 1.4; }
-    @media (max-width: 480px) { .post-body h2 { font-size: 1.2rem; margin-top: 2rem; } }
-    .post-body p { line-height: 1.85; font-size: .98rem; }
-    @media (max-width: 480px) { .post-body p { font-size: .95rem; line-height: 1.8; } }
-    .post-body ul { line-height: 1.85; }
-    .post-body ul li { margin-bottom: .35rem; }
-
-    .page-wrap { justify-content: center; }
-    .post-thumbnail { width: 100%; height: auto; border-radius: 12px; margin: 0 0 1.5rem 0; display: block; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-    @media (max-width: 480px) { .post-thumbnail { border-radius: 8px; margin-bottom: 1rem; } }
   </style>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <meta property="og:type" content="article">
@@ -106,17 +122,19 @@
 
 <header class="site-header">
   <div class="header-inner">
-    <button class="mobile-back" onclick="history.back()" aria-label="뒤로가기">&#8592;</button>
     <a href="/" class="site-logo">크리에이터 <span>완전정복</span></a>
     <button class="nav-toggle" aria-label="메뉴" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
-    <nav class="header-nav">
+        <nav class="header-nav">
       <a href="/">홈</a>
-      <a href="/basics/">유튜브 기초</a>
-      <a href="/practice/"><span class="nav-ai-red">AI</span> 유튜브 실전</a>
+      <a href="/learning/">학습</a>
       <a href="/trends/" class="nav-active">AI 트렌드</a>
-      <a href="/playbook/">실전 플레이북</a>
-      <a href="/community/">커뮤니티</a>
+      <a href="/playbook/">SNS 인사이트</a>
       <a href="/about/">소개</a>
+      <span class="lang-toggle">
+        <a href="#" class="lang-active" data-lang="ko">한국어</a>
+        <span class="lang-sep">/</span>
+        <a href="#" data-lang="en">English</a>
+      </span>
     </nav>
   </div>
 </header>
@@ -137,7 +155,7 @@
         <div class="trend-meta">
           <span class="meta-cat">AI 트렌드</span>
           <span>🗓 2026-04-24</span>
-          <span>⏱ 약 4분 읽기</span>
+          
           <span>📎 출처: 9to5Google, MediaPost</span>
         </div>
       </header>
@@ -205,7 +223,7 @@
         0분 설정 사용자도 구독 피드의 Shorts는 봅니다. 즉, <strong>처음 시청자를 구독자로 전환시키는 퍼널</strong>이 그 어느 때보다 중요해집니다. "영상 끝에 구독 유도" 같은 기본기가 다시 부각됩니다.</p>
 
         <p><strong>③ 니치별 영향은 다릅니다.</strong><br>
-        엔터테인먼트·밈 중심 채널은 타격이 큰 반면, 교육·튜토리얼·리뷰처럼 장기 시청(long-form) 수요가 있는 니치는 영향이 작습니다. <a href="/practice/">AI 유튜브 실전</a> 섹션의 롱폼 전략이 재조명되는 흐름입니다.</p>
+        엔터테인먼트·밈 중심 채널은 타격이 큰 반면, 교육·튜토리얼·리뷰처럼 장기 시청(long-form) 수요가 있는 니치는 영향이 작습니다. <a href="/learning/">학습 가이드</a> 섹션의 롱폼 전략이 재조명되는 흐름입니다.</p>
 
         <div class="callout warn">
           <div class="callout-label">⚠ 오해하지 말 것</div>
@@ -217,7 +235,7 @@
 
         <p><strong>2. 구독 유도 강화.</strong> Shorts 첫 3초 훅 → 끝 3초 "채널 구독해두면 이런 거 놓치지 않아요" 멘트를 모든 Shorts에 표준 삽입. 구독 전환율이 낮은 채널은 이번 변화에서 불리합니다.</p>
 
-        <p><strong>3. 플랫폼 분산.</strong> YouTube Shorts에만 올리지 말고 <strong>TikTok·Instagram Reels</strong>에 동시 배포하세요. <a href="/basics/">유튜브 기초</a>에서 다룬 멀티플랫폼 전략이 선택이 아닌 필수가 되는 국면입니다.</p>
+        <p><strong>3. 플랫폼 분산.</strong> YouTube Shorts에만 올리지 말고 <strong>TikTok·Instagram Reels</strong>에 동시 배포하세요. <a href="/learning/">학습 가이드</a>에서 다룬 멀티플랫폼 전략이 선택이 아닌 필수가 되는 국면입니다.</p>
 
         <h2>앞으로의 관전 포인트</h2>
         <p>YouTube는 아직 <strong>데스크톱용 0분 옵션</strong>은 공개하지 않았습니다. 모바일에만 우선 적용된 상황입니다. 또한 실제로 <strong>얼마나 많은 사용자가 0분을 선택할지</strong>에 대한 공식 데이터는 공개되지 않았습니다. 향후 1~2분기 동안 크리에이터 분석 도구(Social Blade, VidIQ 등)의 조회수 변화 패턴을 지켜보는 것이 필요합니다.</p>
@@ -265,24 +283,18 @@
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-logo">크리에이터 <span>완전정복</span></div>
-    <p class="footer-desc">AI로 유튜브 만들기 — 실제 경험 기반 무료 공개</p>
     <div class="footer-links">
-      <a href="/">홈</a>
-      <a href="/basics/">유튜브 기초</a>
-      <a href="/practice/"><span class="nav-ai-red">AI</span> 유튜브 실전</a>
+      <a href="/learning/">학습</a>
       <a href="/trends/">AI 트렌드</a>
-      <a href="/playbook/">실전 플레이북</a>
-      <a href="/community/">커뮤니티</a>
+      <a href="/playbook/">SNS 인사이트</a>
       <a href="/about/">소개</a>
+      <a href="/privacy/">개인정보</a>
     </div>
-    <div class="footer-legal">
-      <a href="/privacy/">개인정보처리방침</a>
-    </div>
-    <p class="footer-copy">© 크리에이터 완전정복. 무단 복제 및 배포를 금합니다.</p>
+    <p class="footer-copy">© 2026 크리에이터 완전정복</p>
   </div>
 </footer>
 
-<script src="../js/main.js"></script>
+<script src="/js/main.js"></script>
 
 <button id="btn-top" aria-label="맨 위로">↑</button>
 <script>
@@ -306,5 +318,6 @@
 })();
 </script>
 
+    <script src="/js/lang-toggle.js"></script>
 </body>
 </html>

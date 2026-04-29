@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 유튜브란? | 크리에이터 완전정복</title>
+  <meta name="description" content="AI 유튜브가 무엇인지, 쇼츠 vs 롱폼, 수익화 가능 여부까지 한 번에 정리합니다.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .intro-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .92rem;
+      margin: 1.25rem 0;
+    }
+    .intro-table th {
+      background: var(--dark);
+      color: #fff;
+      font-weight: 700;
+      padding: .75rem 1rem;
+      text-align: center;
+      border: 1px solid #333;
+    }
+    .intro-table th:first-child { text-align: left; }
+    .intro-table td {
+      padding: .7rem 1rem;
+      border: 1px solid var(--border);
+      vertical-align: middle;
+      text-align: center;
+    }
+    .intro-table td:first-child {
+      font-weight: 700;
+      text-align: left;
+      background: var(--bg-soft);
+      white-space: nowrap;
+    }
+    .intro-table tr:hover td { background: var(--red-light); }
+    .intro-table tr:hover td:first-child { background: var(--red-light); }
+
+    .qa-block {
+      border-left: 3px solid var(--red);
+      padding: 1.25rem 1.5rem;
+      background: var(--bg-soft);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 1.75rem 0;
+    }
+    .qa-q {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: .65rem;
+      color: var(--text);
+    }
+    .qa-a { font-size: .93rem; color: var(--text); line-height: 1.85; margin: 0; }
+
+    .next-cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: var(--dark);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 2rem;
+      margin-top: 3rem;
+      text-decoration: none;
+      transition: opacity .2s;
+    }
+    .next-cta:hover { opacity: .85; text-decoration: none; }
+    .next-cta-label { font-size: .72rem; font-weight: 800; color: rgba(255,255,255,.4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .3rem; }
+    .next-cta-title { font-size: 1.1rem; font-weight: 800; color: #fff; }
+    .next-cta-arrow { font-size: 1.5rem; color: var(--red); flex-shrink: 0; }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="크리에이터 완전정복">
+  <meta property="og:title" content="AI 유튜브란? | 크리에이터 완전정복">
+  <meta property="og:description" content="AI 유튜브가 무엇인지, 쇼츠 vs 롱폼, 수익화 가능 여부까지 한 번에 정리합니다.">
+  <meta property="og:url" content="https://creatorjungbok.co.kr/posts/00-AI유튜브란.html">
+  <!-- Google Analytics 4 (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6B72N2BV55"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6B72N2BV55');
+  </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="site-logo">크리에이터 <span>완전정복</span></a>
+    <button class="nav-toggle" aria-label="메뉴" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+    <button class="toc-toggle" id="toc-toggle" aria-label="목차 열기">목차</button>
+    <nav class="header-nav">
+      <a href="/">홈</a>
+      <a href="/learning/" class="nav-active">학습</a>
+      <a href="/trends/">AI 트렌드</a>
+      <a href="/playbook/">SNS 인사이트</a>
+      <a href="/about/">소개</a>
+      <span class="lang-toggle">
+        <a href="#" class="lang-active" data-lang="ko">한국어</a>
+        <span class="lang-sep">/</span>
+        <a href="#" data-lang="en">English</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-title">유튜브 시작하기</div>
+    <ul class="sidebar-list" id="sidebar-list"></ul>
+  </aside>
+
+  <main class="main-content">
+
+    <article>
+      <header class="post-header">
+        <p class="post-chap">시작 전에</p>
+        <h1 class="post-title">AI 유튜브란?</h1>
+      </header>
+
+      <hr class="divider">
+
+      <div class="post-body">
+
+        <p>AI 유튜브는 내 얼굴을 드러내지 않고도, AI 툴을 활용해 콘텐츠를 만드는 유튜브 채널 운영 방식입니다. 글쓰기, 이미지 제작, 영상 편집, 더빙까지 모든 과정을 AI로 처리할 수 있어요. 카메라 앞에 서지 않아도, 목소리를 직접 녹음하지 않아도 됩니다.</p>
+
+        <!-- 쇼츠 vs 롱폼 -->
+        <h2>쇼츠 vs 롱폼</h2>
+        <p>유튜브에는 크게 두 가지 형식의 영상이 있습니다. 어떤 형식으로 시작할지 미리 알고 있으면 채널 방향을 잡는 데 도움이 됩니다.</p>
+
+        <div style="overflow-x:auto;">
+          <table class="intro-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>쇼츠</th>
+                <th>롱폼</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>영상 비율</td>
+                <td>9:16 (세로)</td>
+                <td>16:9 (가로)</td>
+              </tr>
+              <tr>
+                <td>영상 길이</td>
+                <td>3분 이하</td>
+                <td>제한 없음</td>
+              </tr>
+              <tr>
+                <td>구독자</td>
+                <td>비교적 빠르게 모임</td>
+                <td>비교적 느리게 모임</td>
+              </tr>
+              <tr>
+                <td>조회수</td>
+                <td>비교적 높게 나옴</td>
+                <td>비교적 낮게 나옴</td>
+              </tr>
+              <tr>
+                <td>조회수당 수익</td>
+                <td>낮음</td>
+                <td>높음</td>
+              </tr>
+              <tr>
+                <td>제작 시간</td>
+                <td>비교적 짧음</td>
+                <td>비교적 오래 걸림</td>
+              </tr>
+              <tr>
+                <td>알고리즘</td>
+                <td>랜덤 노출 강함</td>
+                <td>검색 유입 강함</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Q&A -->
+        <div class="qa-block">
+          <p class="qa-q">컴퓨터가 필요한가요?</p>
+          <p class="qa-a">AI 유튜브는 AI 툴로 콘텐츠를 제작하는 작업이기 때문에 컴퓨터가 필요합니다. 업로드는 컴퓨터와 스마트폰 모두 가능해요.</p>
+        </div>
+
+        <div class="qa-block">
+          <p class="qa-q">AI 유튜브로 수익화가 실제로 될까요?</p>
+          <p class="qa-a">이 사이트에서 <strong>알려주는 대로</strong> 따라하면 가능하다고 생각합니다.<br><br>
+          "최근 유튜브 정책이 바뀌어서 AI 영상은 안되는 거 아니냐" — 이미 알고 계신 분들이 많을 겁니다. 결론부터 말하면 절대 아닙니다. 실제로 저도 AI로 만든 채널을 수익화했고, 정지를 당한 채널도, 수익이 계속 나오고 있는 채널도 모두 가지고 있습니다. 정책 변화에 따라 어떻게 만들어야 하는지를 이 사이트에서 그대로 공개합니다.</p>
+        </div>
+
+        <div class="qa-block">
+          <p class="qa-q">AI 툴이 필요한가요?</p>
+          <p class="qa-a">네, 필요합니다. 무료로 시작할 수 있는 툴도 있지만 퀄리티에 한계가 있어요. 어떤 툴을 어떻게 쓰는지는 <a href="/learning/" ><span class="nav-ai-red">AI</span> 유튜브 실전</a>에서 자세히 다룹니다.</p>
+        </div>
+
+        <!-- 마무리 -->
+        <h2>그럼 시작해볼까요?</h2>
+        <p>구글 계정 만드는 법을 모르는 분도, 유튜브를 한 번도 써본 적 없는 분도 괜찮아요. 그런 분들을 위해 가장 기초부터 준비했습니다. 첫 번째 순서는 유튜브 전용 구글 계정 만들기입니다.</p>
+
+        <!-- 다음 글 CTA -->
+        <a href="01-계정만들기.html" class="next-cta">
+          <div>
+            <div class="next-cta-label">다음 글</div>
+            <div class="next-cta-title">구글 계정 만들기 →</div>
+          </div>
+          <span class="next-cta-arrow">→</span>
+        </a>
+
+      </div>
+    </article>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">크리에이터 <span>완전정복</span></div>
+    <div class="footer-links">
+      <a href="/learning/">학습</a>
+      <a href="/trends/">AI 트렌드</a>
+      <a href="/playbook/">SNS 인사이트</a>
+      <a href="/about/">소개</a>
+      <a href="/privacy/">개인정보</a>
+    </div>
+    <p class="footer-copy">© 2026 크리에이터 완전정복</p>
+  </div>
+</footer>
+
+<script src="/js/main.js"></script>
+<script src="/js/lang-toggle.js"></script>
+
+<button id="btn-top" aria-label="맨 위로">↑</button>
+<script>
+  var b=document.getElementById('btn-top');
+  window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+<script>
+(function(){
+  var toc=document.getElementById('toc-toggle');
+  var sidebar=document.querySelector('.sidebar');
+  var path=location.pathname;
+  var isIndex=/index\.html$/.test(path)||path==='/'||/\/$/.test(path);
+  if(toc&&!sidebar)toc.style.display='none';
+  if(!toc||!sidebar)return;
+  var ov=document.createElement('div');
+  ov.className='sidebar-overlay';
+  document.body.appendChild(ov);
+  function closeDrawer(){document.body.classList.remove('sidebar-open');}
+  toc.addEventListener('click',function(){document.body.classList.toggle('sidebar-open');});
+  ov.addEventListener('click',closeDrawer);
+})();
+</script>
+
+
+</body>
+</html>

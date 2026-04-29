@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>마무리 | 유튜브 기초 | 크리에이터 완전정복</title>
+  <meta name="description" content="유튜브 기초 마무리. 이제 진짜 실전입니다.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .closing-cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: var(--dark);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 2rem;
+      margin-top: 3rem;
+      text-decoration: none;
+      transition: opacity .2s;
+    }
+    .closing-cta:hover { opacity: .85; text-decoration: none; }
+    .closing-cta-label {
+      font-size: .72rem; font-weight: 800;
+      color: rgba(255,255,255,.4);
+      text-transform: uppercase; letter-spacing: .1em;
+      margin-bottom: .3rem;
+    }
+    .closing-cta-title { font-size: 1.1rem; font-weight: 800; color: #fff; }
+    .closing-cta-arrow { font-size: 1.5rem; color: var(--red); flex-shrink: 0; }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="크리에이터 완전정복">
+  <meta property="og:title" content="마무리 | 유튜브 기초 | 크리에이터 완전정복">
+  <meta property="og:description" content="유튜브 기초 마무리. 이제 진짜 실전입니다.">
+  <meta property="og:url" content="https://creatorjungbok.co.kr/posts/마무리.html">
+  <!-- Google Analytics 4 (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6B72N2BV55"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6B72N2BV55');
+  </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="site-logo">크리에이터 <span>완전정복</span></a>
+    <button class="nav-toggle" aria-label="메뉴" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+    <button class="toc-toggle" id="toc-toggle" aria-label="목차 열기">목차</button>
+    <nav class="header-nav">
+      <a href="/">홈</a>
+      <a href="/learning/" class="nav-active">학습</a>
+      <a href="/trends/">AI 트렌드</a>
+      <a href="/playbook/">SNS 인사이트</a>
+      <a href="/about/">소개</a>
+      <span class="lang-toggle">
+        <a href="#" class="lang-active" data-lang="ko">한국어</a>
+        <span class="lang-sep">/</span>
+        <a href="#" data-lang="en">English</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-title">유튜브 시작하기</div>
+    <ul class="sidebar-list" id="sidebar-list"></ul>
+  </aside>
+
+  <main class="main-content">
+
+    <article>
+      <header class="post-header">
+        <p class="post-chap">유튜브 기초 · 마무리</p>
+        <h1 class="post-title">여기까지가 유튜브 기초였습니다.</h1>
+      </header>
+
+      <hr class="divider">
+
+      <div class="post-body">
+
+        <p>구글 계정 만들기부터 유튜브 스튜디오까지 — 사실 이 내용은 AI 유튜브가 아닌 일반 유튜브 채널을 만들 때도 똑같이 사용되는 가장 첫 번째 단계예요. 어떤 채널을 만들든 이 기초는 동일합니다.</p>
+        <p>이제 기초는 끝났어요. 다음은 진짜 실전입니다. AI로 어떤 콘텐츠를 만드는지, 어떻게 수익화하는지, 실제로 해보면서 겪은 것들을 유튜브 실전에서 모두 풀어드릴게요.</p>
+
+      </div>
+    </article>
+
+    <nav class="post-nav" id="post-nav"></nav>
+
+        <a href="/learning/" class="closing-cta">
+          <div>
+            <div class="closing-cta-label">다음 단계</div>
+            <div class="closing-cta-title">유튜브 실전 보러 가기 →</div>
+          </div>
+          <span class="closing-cta-arrow">→</span>
+        </a>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">크리에이터 <span>완전정복</span></div>
+    <div class="footer-links">
+      <a href="/learning/">학습</a>
+      <a href="/trends/">AI 트렌드</a>
+      <a href="/playbook/">SNS 인사이트</a>
+      <a href="/about/">소개</a>
+      <a href="/privacy/">개인정보</a>
+    </div>
+    <p class="footer-copy">© 2026 크리에이터 완전정복</p>
+  </div>
+</footer>
+
+<script src="/js/main.js"></script>
+<script src="/js/lang-toggle.js"></script>
+
+<button id="btn-top" aria-label="맨 위로">↑</button>
+<script>
+  var b=document.getElementById('btn-top');
+  window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+<script>
+(function(){
+  var toc=document.getElementById('toc-toggle');
+  var sidebar=document.querySelector('.sidebar');
+  var path=location.pathname;
+  var isIndex=/index\.html$/.test(path)||path==='/'||/\/$/.test(path);
+  if(toc&&!sidebar)toc.style.display='none';
+  if(!toc||!sidebar)return;
+  var ov=document.createElement('div');
+  ov.className='sidebar-overlay';
+  document.body.appendChild(ov);
+  function closeDrawer(){document.body.classList.remove('sidebar-open');}
+  toc.addEventListener('click',function(){document.body.classList.toggle('sidebar-open');});
+  ov.addEventListener('click',closeDrawer);
+})();
+</script>
+
+
+</body>
+</html>

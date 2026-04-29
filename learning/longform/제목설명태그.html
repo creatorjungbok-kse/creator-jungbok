@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>제목 · 설명 · 태그 작성하기 | 업로드하기 | 크리에이터 완전정복</title>
+  <meta name="description" content="유튜브 영상 제목, 설명글, 해시태그, 태그 작성하는 방법. SEO 최적화 제목 만들기부터 VidIQ 태그 복사까지.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .warn-box {
+      border: 2px solid var(--red);
+      background: var(--red-light);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.4rem;
+      margin: 1.75rem 0;
+      font-size: .93rem;
+      line-height: 1.8;
+      color: var(--text);
+    }
+    .warn-box-label {
+      font-size: .78rem;
+      font-weight: 800;
+      color: var(--red);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: .5rem;
+    }
+    .prompt-box {
+      background: #1e1e2e;
+      border-radius: var(--radius);
+      margin: 1.75rem 0;
+      overflow: hidden;
+    }
+    .prompt-box-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: .6rem 1rem;
+      background: #2a2a3e;
+    }
+    .prompt-box-label {
+      font-size: .75rem;
+      font-weight: 700;
+      color: rgba(255,255,255,.45);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .prompt-copy-btn {
+      font-size: .75rem;
+      font-weight: 700;
+      color: rgba(255,255,255,.55);
+      background: transparent;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 4px;
+      padding: .25rem .65rem;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .prompt-copy-btn:hover { color: #fff; border-color: rgba(255,255,255,.5); }
+    .prompt-copy-btn.copied { color: #4ade80; border-color: #4ade80; }
+    .prompt-box-body {
+      padding: 1.1rem 1.25rem;
+      font-size: .9rem;
+      line-height: 1.95;
+      color: #e2e8f0;
+      white-space: pre-wrap;
+      font-family: inherit;
+    }
+    .prompt-box-body mark {
+      background: rgba(251,191,36,.2);
+      color: #fbbf24;
+      border-radius: 3px;
+      padding: 0 .2rem;
+      font-style: normal;
+    }
+    .sub-heading {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text);
+      margin: 2rem 0 .75rem;
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="크리에이터 완전정복">
+  <meta property="og:title" content="제목 · 설명 · 태그 작성하기 | 업로드하기 | 크리에이터 완전정복">
+  <meta property="og:description" content="유튜브 영상 제목, 설명글, 해시태그, 태그 작성하는 방법. SEO 최적화 제목 만들기부터 VidIQ 태그 복사까지.">
+  <meta property="og:url" content="https://creatorjungbok.co.kr/practice/longform/제목설명태그.html">
+  <!-- Google Analytics 4 (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6B72N2BV55"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6B72N2BV55');
+  </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../../" class="site-logo">크리에이터 <span>완전정복</span></a>
+    <button class="nav-toggle" aria-label="메뉴" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+    <button class="toc-toggle" id="toc-toggle" aria-label="목차 열기">목차</button>
+    <nav class="header-nav">
+      <a href="/">홈</a>
+      <a href="/learning/" class="nav-active">학습</a>
+      <a href="/trends/">AI 트렌드</a>
+      <a href="/playbook/">SNS 인사이트</a>
+      <a href="/about/">소개</a>
+      <span class="lang-toggle">
+        <a href="#" class="lang-active" data-lang="ko">한국어</a>
+        <span class="lang-sep">/</span>
+        <a href="#" data-lang="en">English</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-title">AI 유튜브 실전</div>
+    <ul class="sidebar-list" id="practice-nav-list"></ul>
+  </aside>
+
+  <main class="main-content">
+    <article>
+      <header class="post-header">
+        <p class="post-chap">업로드하기</p>
+        <h1 class="post-title">제목 · 설명 · 태그 작성하기</h1>
+      </header>
+
+      <hr class="divider">
+
+      <div class="post-body">
+
+        <!-- 1. 제목 -->
+        <h2 id="title">1. 제목</h2>
+
+        <p>유튜브는 공식적으로 동영상의 제목, 썸네일, 설명란 및 시청자 참여도를 통해 특정 검색어에 대한 동영상의 연관성을 판단하고 노출 순위를 매깁니다. 즉, 제목에 어떤 키워드를 넣느냐에 따라 내 영상이 얼마나 많은 사람들에게 노출되는지가 달라집니다.</p>
+
+        <p>상위권 영상의 90% 이상이 제목에 최소한 타깃 키워드의 일부를 포함한다는 연구 결과가 있습니다. 최근 인기 있는 키워드를 찾아서 제목에 넣는 것이 중요한 이유입니다.</p>
+
+        <p>제목은 국문 기준으로 <strong>30자 이하</strong>로 작성하는 것이 권고됩니다. 가장 중요한 타깃 키워드는 <strong>제목 앞부분</strong>에 배치해야 더욱 효과적으로 노출됩니다.</p>
+
+        <hr class="divider">
+
+        <p class="sub-heading">제목 만드는 방법</p>
+
+        <p>벤치마킹한 영상의 제목을 분석해서 핵심 키워드만 뽑아낸 후, 내 영상 대본에 맞게 재창작합니다.</p>
+
+        <p>잘 모르겠다면 Claude, ChatGPT, Gemini에게 물어봐도 좋습니다. 벤치마킹한 영상의 제목을 복사한 후 아래 프롬프트를 입력해보세요.</p>
+
+        <div class="prompt-box">
+          <div class="prompt-box-header">
+            <span class="prompt-box-label">프롬프트</span>
+            <button class="prompt-copy-btn" onclick="copyPrompt(this)">복사하기</button>
+          </div>
+          <div class="prompt-box-body">이 제목은 현재 유튜브에서 조회수가 급증하고 있는 영상의 제목입니다.
+
+<mark>[벤치마킹한 영상 제목 붙여넣기]</mark>
+
+핵심 키워드는 <mark>[키워드1, 키워드2]</mark>입니다.
+이 핵심 키워드를 반드시 포함해서 유튜브 검색 SEO에 최적화된 제목을 3개 만들어 주세요.
+
+조건:
+- 국문 기준 30자 이하
+- 핵심 키워드는 제목 앞부분에 배치
+- 시청자가 클릭하고 싶게 만드는 문구 사용
+- 내 영상 주제: <mark>[내 영상 주제 입력]</mark></div>
+        </div>
+
+        <p>제목이 완성되면 메모장에 저장해둡니다.</p>
+
+        <hr class="divider">
+
+        <!-- 2. 설명글 -->
+        <h2 id="description">2. 설명글</h2>
+
+        <p>설명글은 Claude에게 써달라고 하면 됩니다. 대본을 만들었던 Claude 대화창에 다시 들어가서 아래 프롬프트를 입력합니다.</p>
+
+        <div class="prompt-box">
+          <div class="prompt-box-header">
+            <span class="prompt-box-label">프롬프트</span>
+            <button class="prompt-copy-btn" onclick="copyPrompt(this)">복사하기</button>
+          </div>
+          <div class="prompt-box-body">위에서 작성한 대본을 바탕으로 유튜브 영상 설명글을 작성해주세요.
+
+조건:
+- 첫 2~3줄은 핵심 내용 요약 (검색 결과에서 바로 보이는 부분)
+- 영상에서 다루는 주요 내용을 간략하게 정리
+- 시청자가 이 영상을 봐야 하는 이유를 자연스럽게 포함
+- 길이: 200~300자 내외
+- 아티팩트 사용하지 말고 본문에 바로 작성할 것</div>
+        </div>
+
+        <p>설명글이 완성되면 메모장에 저장해둡니다.</p>
+
+        <hr class="divider">
+
+        <!-- 3. 해시태그 -->
+        <h2 id="hashtag">3. 해시태그</h2>
+
+        <p>해시태그는 주로 설명글 하단에 위치합니다. 벤치마킹한 영상의 설명글에 있는 해시태그를 그대로 복사해서 메모장에 저장합니다.</p>
+
+        <div class="warn-box">
+          <div class="warn-box-label">주의사항</div>
+          복사한 해시태그 중 채널 이름이나 내 영상과 전혀 관련 없는 해시태그가 있다면 삭제하고 사용하세요.
+        </div>
+
+        <hr class="divider">
+
+        <!-- 4. 태그 -->
+        <h2 id="tag">4. 태그</h2>
+
+        <p>VidIQ가 설치되어 있다면 벤치마킹한 영상을 클릭했을 때 오른쪽에 분석 창이 뜹니다. <strong>Overview</strong>를 클릭합니다.</p>
+
+        <div class="step-img">
+          <img loading="lazy" src="../../images/practice/6.title-description/1.png" alt="VidIQ Overview 클릭">
+          <div class="img-caption">▲ VidIQ Overview 클릭</div>
+        </div>
+
+        <p>아래로 스크롤하면 <strong>Video Tags</strong>가 보입니다. 전체 복사해서 메모장에 저장해둡니다.</p>
+
+        <div class="step-img">
+          <img loading="lazy" src="../../images/practice/6.title-description/2.png" alt="Video Tags 복사 화면">
+          <div class="img-caption">▲ Video Tags 복사 화면</div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- 마무리 -->
+        <h2 id="closing">마무리</h2>
+
+        <p>이렇게 제목, 설명글, 해시태그, 태그까지 모두 메모장에 저장해두었다면 업로드 준비가 완료된 것입니다. 다음 단계에서 유튜브 스튜디오에 업로드하면서 하나씩 넣어주면 됩니다.</p>
+
+        <p>위에서 제공한 프롬프트는 기본 틀일 뿐입니다. 언제든지 변경해서 사용하셔도 됩니다. 다양하게 테스트해보면서 나만의 프롬프트로 업그레이드시켜 보세요.</p>
+
+        <!-- 이전 / 다음 글 -->
+        <div style="display:flex; align-items:stretch; background:var(--dark); border-radius:var(--radius-lg); overflow:hidden; margin-top:3rem;">
+          <a href="썸네일-건강.html" style="flex:1; display:flex; align-items:center; gap:.75rem; padding:1.5rem 1.75rem; text-decoration:none; transition:opacity .2s; border-right:1px solid rgba(255,255,255,.1);" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">
+            <span style="font-size:1.3rem; color:var(--red); flex-shrink:0;">←</span>
+            <div>
+              <div style="font-size:.7rem; font-weight:800; color:rgba(255,255,255,.4); text-transform:uppercase; letter-spacing:.1em; margin-bottom:.25rem;">이전 글</div>
+              <div style="font-size:1rem; font-weight:800; color:#fff;">AI 건강 채널 썸네일 만들기</div>
+            </div>
+          </a>
+          <a href="업로드하기.html" style="flex:1; display:flex; align-items:center; justify-content:flex-end; gap:.75rem; padding:1.5rem 1.75rem; text-decoration:none; transition:opacity .2s;" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">
+            <div style="text-align:right;">
+              <div style="font-size:.7rem; font-weight:800; color:rgba(255,255,255,.4); text-transform:uppercase; letter-spacing:.1em; margin-bottom:.25rem;">다음 글</div>
+              <div style="font-size:1rem; font-weight:800; color:#fff;">업로드하기</div>
+            </div>
+            <span style="font-size:1.3rem; color:var(--red); flex-shrink:0;">→</span>
+          </a>
+        </div>
+
+      </div>
+    </article>
+  </main>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">크리에이터 <span>완전정복</span></div>
+    <div class="footer-links">
+      <a href="/learning/">학습</a>
+      <a href="/trends/">AI 트렌드</a>
+      <a href="/playbook/">SNS 인사이트</a>
+      <a href="/about/">소개</a>
+      <a href="/privacy/">개인정보</a>
+    </div>
+    <p class="footer-copy">© 2026 크리에이터 완전정복</p>
+  </div>
+</footer>
+
+<script>
+  const overlay = document.createElement('div');
+  overlay.className = 'lightbox-overlay';
+  overlay.innerHTML = '<span class="lightbox-close">✕</span><img loading="lazy" id="lightbox-img" src="" alt="">';
+  document.body.appendChild(overlay);
+  document.querySelectorAll('.step-img img').forEach(img => {
+    img.addEventListener('click', () => {
+      document.getElementById('lightbox-img').src = img.src;
+      overlay.classList.add('active');
+    });
+  });
+  overlay.addEventListener('click', () => overlay.classList.remove('active'));
+
+  function copyPrompt(btn) {
+    var body = btn.closest('.prompt-box').querySelector('.prompt-box-body');
+    var text = body.innerText;
+    navigator.clipboard.writeText(text).then(function() {
+      btn.textContent = '복사됨 ✓';
+      btn.classList.add('copied');
+      setTimeout(function() {
+        btn.textContent = '복사하기';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+</script>
+
+<script src="/js/practice-nav.js"></script>
+<button id="btn-top" aria-label="맨 위로">↑</button>
+<script>
+  var b=document.getElementById('btn-top');
+  window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+
+<script>
+(function(){
+  var toc=document.getElementById('toc-toggle');
+  var sidebar=document.querySelector('.sidebar');
+  var path=location.pathname;
+  var isIndex=/index\.html$/.test(path)||path==='/'||/\/$/.test(path);
+  if(toc&&!sidebar)toc.style.display='none';
+  if(!toc||!sidebar)return;
+  var ov=document.createElement('div');
+  ov.className='sidebar-overlay';
+  document.body.appendChild(ov);
+  function closeDrawer(){document.body.classList.remove('sidebar-open');}
+  toc.addEventListener('click',function(){document.body.classList.toggle('sidebar-open');});
+  ov.addEventListener('click',closeDrawer);
+})();
+</script>
+
+
+<script src="/js/lang-toggle.js"></script>
+</body>
+</html>

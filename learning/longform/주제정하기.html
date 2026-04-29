@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>주제 정하기 | 일반 영상 (롱폼) | 크리에이터 완전정복</title>
+  <meta name="description" content="AI 유튜브 채널 주제를 어떻게 정해야 할까. 벤치마킹부터 유튜브 정책, 직접 수익화 정지를 당한 경험까지.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .warn-box {
+      border-left: 3px solid var(--red);
+      padding: 1.1rem 1.4rem;
+      background: var(--red-light);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 1.75rem 0;
+      font-size: .93rem;
+      line-height: 1.8;
+      color: var(--text);
+    }
+    .recommend-list {
+      list-style: none;
+      padding: 0;
+      margin: 1.25rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+    }
+    .recommend-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: .75rem;
+      padding: 1rem 1.25rem;
+      background: var(--bg-soft);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      font-size: .95rem;
+      line-height: 1.6;
+    }
+    .recommend-list li::before {
+      content: '✓';
+      color: var(--red);
+      font-weight: 900;
+      flex-shrink: 0;
+      margin-top: .05rem;
+    }
+    .next-cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: var(--dark);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 2rem;
+      margin-top: 3rem;
+      text-decoration: none;
+      transition: opacity .2s;
+    }
+    .next-cta:hover { opacity: .85; text-decoration: none; }
+    .next-cta-label { font-size: .72rem; font-weight: 800; color: rgba(255,255,255,.4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .3rem; }
+    .next-cta-title { font-size: 1.1rem; font-weight: 800; color: #fff; }
+    .next-cta-arrow { font-size: 1.5rem; color: var(--red); flex-shrink: 0; }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="크리에이터 완전정복">
+  <meta property="og:title" content="주제 정하기 | 일반 영상 (롱폼) | 크리에이터 완전정복">
+  <meta property="og:description" content="AI 유튜브 채널 주제를 어떻게 정해야 할까. 벤치마킹부터 유튜브 정책, 직접 수익화 정지를 당한 경험까지.">
+  <meta property="og:url" content="https://creatorjungbok.co.kr/practice/longform/주제정하기.html">
+  <!-- Google Analytics 4 (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6B72N2BV55"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6B72N2BV55');
+  </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../../" class="site-logo">크리에이터 <span>완전정복</span></a>
+    <button class="nav-toggle" aria-label="메뉴" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+    <button class="toc-toggle" id="toc-toggle" aria-label="목차 열기">목차</button>
+    <nav class="header-nav">
+      <a href="/">홈</a>
+      <a href="/learning/" class="nav-active">학습</a>
+      <a href="/trends/">AI 트렌드</a>
+      <a href="/playbook/">SNS 인사이트</a>
+      <a href="/about/">소개</a>
+      <span class="lang-toggle">
+        <a href="#" class="lang-active" data-lang="ko">한국어</a>
+        <span class="lang-sep">/</span>
+        <a href="#" data-lang="en">English</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-title">AI 유튜브 실전</div>
+    <ul class="sidebar-list" id="practice-nav-list"></ul>
+  </aside>
+
+  <main class="main-content">
+    <article>
+      <header class="post-header">
+        <p class="post-chap">채널 준비</p>
+        <h1 class="post-title">주제 정하기</h1>
+        <a href="#recommend"
+           style="display:inline-block; margin-top:.75rem; padding:.55rem 1.1rem; background:var(--red); color:#fff; font-size:.88rem; font-weight:700; border-radius:6px; text-decoration:none; transition:opacity .2s;"
+           onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+          추천 주제 바로보기 →
+        </a>
+      </header>
+
+      <hr class="divider">
+
+      <div class="post-body">
+
+        <!-- 섹션 1 -->
+        <h2 id="intro">AI 유튜브 채널, 어떤 주제로 시작해야 할까?</h2>
+
+        <p>유튜브를 하고 싶어도 시작하지 못하는 이유 중 하나가 바로 <strong>"어떤 채널을 해야 할까?"</strong> 하는 고민 때문이 아닌가요? 결론부터 말하면, 처음부터 완벽한 주제를 찾으려고 하지 않아도 됩니다.</p>
+
+        <p>유튜브 수익화를 빠르게 하는 방법 중 하나는 <strong>벤치마킹</strong>을 잘하는 것입니다.</p>
+
+        <p><strong>"유튜브를 잘한다 = 벤치마킹을 잘한다"</strong></p>
+
+        <p>내 채널을 빠르게 키우고 싶다면, 이미 조회수가 터지고 있는 영상과 주제를 벤치마킹하는 것이 가장 빠른 방법입니다. 특히 AI 유튜브라면 더욱 그렇습니다.</p>
+
+        <p>주제는 자신이 관심 있는 분야로 정하는 것이 좋습니다. 수익화가 목적이라면 관심 없는 주제도 AI로 만들 수 있지만, 관심 있는 분야가 유리한 이유는 <strong>지속성</strong> 때문입니다. 내가 흥미를 느끼는 분야의 콘텐츠를 만들어야 지치지 않고 꾸준히 할 수 있지 않을까요?</p>
+
+        <!-- 섹션 2 -->
+        <h2 id="survive">살아남는 AI 콘텐츠의 조건</h2>
+
+        <p><strong>"딸깍" 한 번으로 유튜브 수익화를 할 수 있다?</strong><br>
+        옛날에는 그랬을지 모르지만, 2025년 하반기부터 AI 영상에 대한 유튜브 정책이 크게 강화됐습니다.</p>
+
+        <div class="warn-box">
+          혹시 "딸깍" 한 번으로 월 천을 번다는 강의나 광고를 본다면 절대 믿지 마시기 바랍니다.
+        </div>
+
+        <p>하지만 중요한 것은, <strong>더 이상 AI를 사용하지 말라는 정책이 절대 아닙니다.</strong></p>
+
+        <p>유튜브가 제재하는 콘텐츠는 크게 두 가지입니다.</p>
+        <ul>
+          <li><strong>양산형 콘텐츠</strong> — 사람이 개입하지 않고 AI로만 찍어낸 저품질 콘텐츠</li>
+          <li><strong>가치 없는 콘텐츠</strong> — 정보성, 교육적 목적이 없는 의미 없는 콘텐츠</li>
+        </ul>
+
+        <p>사실 가장 좋은 건 얼굴 노출, 적어도 목소리 노출이 있는 콘텐츠입니다. 하지만 AI 콘텐츠를 만들려는 이유가 바로 얼굴과 목소리 노출이 부담스럽고, 조금 더 쉽게 영상을 만들기 위함이 아닌가요?</p>
+
+        <p>그렇다면 답은 하나입니다. <strong>AI로 고품질의 정보성, 교육적 가치가 있는 영상을 만들면 됩니다.</strong> 채널 삭제나 수익화 정지를 당할 이유가 없습니다.</p>
+
+        <div class="warn-box">
+          단, 전문가 사칭이나 허위 정보는 절대 피해야 합니다.
+        </div>
+
+        <p>쉽게 말해, <strong>"~학"이 들어가는 콘텐츠가 해당된다고 생각하는데요.</strong> 경제학, 심리학, 건강 정보처럼 정보를 주거나 교육적 가치가 있는 콘텐츠들이 이에 해당합니다.</p>
+
+        <p>하지만 뜨는 주제와 트렌드는 계속 바뀌기 때문에, 새로운 주제의 채널이 생기면 이 사이트에 수시로 업데이트할 예정입니다.</p>
+
+        <!-- 섹션 3 -->
+        <h2 id="experience">직접 수익화 정지를 당해봤습니다</h2>
+
+        <p>저는 AI로 수많은 주제의 콘텐츠를 만들어봤습니다. 그중 수익화 정지를 당한 채널이 2개 있습니다.</p>
+
+        <h3><strong>첫 번째 — 약 15만 구독자 AI 숏츠 채널</strong></h3>
+
+        <p>2024년부터 약 1년간 매일같이 영상 하나에 4~5시간씩 공을 들여 만든 채널이었습니다. 그 당시 미국의 한 인기 채널을 벤치마킹한 시각적 콘텐츠였습니다. 하지만 정지를 당한 이유는, 이 콘텐츠는 교육적 가치도 없고 어떤 정보를 전달하는 콘텐츠도 아니라는 것이었습니다.</p>
+
+        <p>2026년 4월 초, 결국 수익화 정지 통보를 받았습니다.</p>
+
+        <div class="step-img">
+          <img loading="lazy" src="../../images/practice/1.topic/1.png" alt="수익화 정지 통보 메일">
+          <div class="img-caption">수익화 정지 통보 메일</div>
+        </div>
+
+        <h3><strong>두 번째 — 시니어 사연 채널</strong></h3>
+
+        <p>한국 시니어를 타겟으로 막장 드라마, 고부갈등, 사이다 이야기 등을 AI 대본으로 만들어 이미지와 함께 올리는 라디오 형식 채널이었습니다. 이런 콘텐츠를 만드는 사람들이 굉장히 많았는데, 2026년 초부터 이러한 채널들이 대거 수익화 정지를 당했습니다. 유튜브가 정보성, 교육적 목적이 없는 양산형 콘텐츠로 판단한 것입니다.</p>
+
+        <p><strong>저는 현재 2개의 건강 채널을 운영하고 있으며, 수익화 정지 없이 지금도 수익이 나오고 있습니다. 그리고 유튜브에서 심리학 채널, 경제학 채널을 검색해보시면 조회수와 구독자가 높은 AI 생성 채널들이 활발하게 운영되고 있는 것을 직접 확인하실 수 있습니다.</strong></p>
+
+        <p>결국 살아남은 채널들의 공통점은 하나입니다. 정보성과 교육적 가치가 있는 콘텐츠였습니다.</p>
+
+        <!-- 섹션 4 -->
+        <h2 id="recommend">추천하는 콘텐츠 주제</h2>
+
+        <p>현재 AI 유튜브에서 살아남고 있는 채널들을 바탕으로 추천하는 주제는 다음 3가지입니다.</p>
+
+        <ul class="recommend-list">
+          <li><div><strong>건강 채널</strong> — 질병 예방, 영양, 운동 정보 등</div></li>
+          <li><div><strong>심리학 채널</strong> — 인간 관계, 감정, 행동 심리 등</div></li>
+          <li><div><strong>경제학 채널</strong> — 재테크, 투자, 경제 상식 등</div></li>
+        </ul>
+
+        <p>물론 꼭 이 3가지일 필요는 없습니다. 최근 AI로 만들어졌지만 조회수와 구독자가 빠르게 오르고 있는 채널이 있다면, 그것으로 시작해도 상관없습니다. 중요한 건 정보성과 교육적 가치를 갖추는 것입니다.</p>
+
+        <!-- 다음 글 -->
+        <a href="알고리즘세팅.html" class="next-cta">
+          <div>
+            <div class="next-cta-label">다음 글</div>
+            <div class="next-cta-title">알고리즘 세팅 →</div>
+          </div>
+          <span class="next-cta-arrow">→</span>
+        </a>
+
+      </div>
+    </article>
+  </main>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">크리에이터 <span>완전정복</span></div>
+    <div class="footer-links">
+      <a href="/learning/">학습</a>
+      <a href="/trends/">AI 트렌드</a>
+      <a href="/playbook/">SNS 인사이트</a>
+      <a href="/about/">소개</a>
+      <a href="/privacy/">개인정보</a>
+    </div>
+    <p class="footer-copy">© 2026 크리에이터 완전정복</p>
+  </div>
+</footer>
+
+<script>
+  // 라이트박스
+  const overlay = document.createElement('div');
+  overlay.className = 'lightbox-overlay';
+  overlay.innerHTML = '<span class="lightbox-close">✕</span><img loading="lazy" id="lightbox-img" src="" alt="">';
+  document.body.appendChild(overlay);
+  document.querySelectorAll('.step-img img').forEach(img => {
+    img.addEventListener('click', () => {
+      document.getElementById('lightbox-img').src = img.src;
+      overlay.classList.add('active');
+    });
+  });
+  overlay.addEventListener('click', () => overlay.classList.remove('active'));
+</script>
+
+<script src="/js/practice-nav.js"></script>
+<button id="btn-top" aria-label="맨 위로">↑</button>
+<script>
+  var b=document.getElementById('btn-top');
+  window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+
+<script>
+(function(){
+  var toc=document.getElementById('toc-toggle');
+  var sidebar=document.querySelector('.sidebar');
+  var path=location.pathname;
+  var isIndex=/index\.html$/.test(path)||path==='/'||/\/$/.test(path);
+  if(toc&&!sidebar)toc.style.display='none';
+  if(!toc||!sidebar)return;
+  var ov=document.createElement('div');
+  ov.className='sidebar-overlay';
+  document.body.appendChild(ov);
+  function closeDrawer(){document.body.classList.remove('sidebar-open');}
+  toc.addEventListener('click',function(){document.body.classList.toggle('sidebar-open');});
+  ov.addEventListener('click',closeDrawer);
+})();
+</script>
+
+
+<script src="/js/lang-toggle.js"></script>
+</body>
+</html>

@@ -29,18 +29,20 @@
 <!-- 헤더 -->
 <header class="site-header">
   <div class="header-inner">
-    <button class="mobile-back" onclick="history.back()" aria-label="뒤로가기">&#8592;</button>
     <a href="../" class="site-logo">크리에이터 <span>완전정복</span></a>
     <button class="nav-toggle" aria-label="메뉴" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
     <button class="toc-toggle" id="toc-toggle" aria-label="목차 열기">목차</button>
-    <nav class="header-nav">
-      <a href="../">홈</a>
-      <a href="../basics/">유튜브 기초</a>
-      <a href="../practice/" ><span class="nav-ai-red">AI</span> 유튜브 실전</a>
-      <a href="../trends/">AI 트렌드</a>
-      <a href="../playbook/">실전 플레이북</a>
-      <a href="../community/">커뮤니티</a>
-      <a href="../about/">소개</a>
+        <nav class="header-nav">
+      <a href="/">홈</a>
+      <a href="/learning/">학습</a>
+      <a href="/trends/">AI 트렌드</a>
+      <a href="/playbook/">SNS 인사이트</a>
+      <a href="/about/">소개</a>
+      <span class="lang-toggle">
+        <a href="#" class="lang-active" data-lang="ko">한국어</a>
+        <span class="lang-sep">/</span>
+        <a href="#" data-lang="en">English</a>
+      </span>
     </nav>
   </div>
 </header>
@@ -92,7 +94,7 @@
       <a href="../basics/">유튜브 기초</a>
       <a href="../practice/" ><span class="nav-ai-red">AI</span> 유튜브 실전</a>
       <a href="../trends/">AI 트렌드</a>
-      <a href="../playbook/">실전 플레이북</a>
+      <a href="../playbook/">SNS 인사이트</a>
       <a href="../community/">커뮤니티</a>
       <a href="../about/">소개</a>
     </div>
@@ -113,11 +115,9 @@
 (function(){
   var toc=document.getElementById('toc-toggle');
   var sidebar=document.querySelector('.sidebar');
-  var back=document.querySelector('.mobile-back');
   var path=location.pathname;
   var isIndex=/index\.html$/.test(path)||path==='/'||/\/$/.test(path);
   if(toc&&!sidebar)toc.style.display='none';
-  if(back&&isIndex)back.style.display='none';
   if(!toc||!sidebar)return;
   var ov=document.createElement('div');
   ov.className='sidebar-overlay';
@@ -129,17 +129,9 @@
 </script>
 
 <!-- Google Translate -->
-<div id="google_translate_element" style="position:fixed; bottom:70px; right:1.2rem; z-index:999;"></div>
-<script type="text/javascript">
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({
-    pageLanguage: 'ko',
-    includedLanguages: 'en,ja,zh-CN,zh-TW,es,de,fr,pt',
-    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-    autoDisplay: false
-  }, 'google_translate_element');
-}
-</script>
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+
+    <script src="/js/lang-toggle.js"></script>
 </body>
 </html>

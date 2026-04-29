@@ -3,47 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PlayBook | Creator Jungbok</title>
-  <meta name="description" content="The AI x SNS creator playbook. Algorithms, content formulas, monetization, automation — evergreen plays you can run on day 1 or year 3.">
+  <title>SNS Insights — Creator Jungbok</title>
+  <meta name="description" content="SNS insights for creators. Platform algorithms, content formulas, monetization strategy — deep analysis.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Source+Serif+Pro:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Creator Jungbok">
-  <meta property="og:title" content="PlayBook | Creator Jungbok">
-  <meta property="og:description" content="The AI x SNS creator playbook. Evergreen plays for creators worldwide.">
-  <meta property="og:url" content="https://creatorjungbok.co.kr/en/playbook/">
-  <meta property="og:locale" content="en_US">
-  <link rel="alternate" hreflang="ko" href="https://creatorjungbok.co.kr/playbook/">
+  <meta property="og:title" content="SNS Insights — deep analysis for creators">
+  <meta property="og:description" content="Platform algorithms, content formulas, monetization.">
+  <meta property="og:url" content="https://creatorjungbok.co.kr/playbook/">
+  <link rel="alternate" hreflang="en" href="https://creatorjungbok.co.kr/playbook/">
   <link rel="alternate" hreflang="en" href="https://creatorjungbok.co.kr/en/playbook/">
-  <link rel="canonical" href="https://creatorjungbok.co.kr/en/playbook/">
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-    .playbook-hero { padding: 60px 1.5rem 30px; text-align: center; max-width: 760px; margin: 0 auto; }
-    .playbook-hero .eyebrow { color: var(--red, #e53935); font-weight: 700; font-size: .85rem; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 1rem; }
-    .playbook-hero h1 { font-family: 'Source Serif Pro', serif; font-size: 2.6rem; font-weight: 900; line-height: 1.2; margin: 0 0 1rem; }
-    .playbook-hero h1 span { color: var(--red, #e53935); }
-    .playbook-hero p { font-size: 1.05rem; color: var(--text-sub, #555); line-height: 1.7; margin-bottom: 0; }
-
-    .lang-switch-bar { max-width: 760px; margin: 1rem auto 0; padding: 0 1.5rem; font-size: .82rem; color: var(--text-sub, #666); text-align: right; }
-    .lang-switch-bar a { color: var(--text-sub, #666); text-decoration: none; padding: 0 .35rem; }
-    .lang-switch-bar a.active { color: var(--red, #e53935); font-weight: 800; text-decoration: underline; }
-    .lang-switch-bar a:hover { color: var(--red, #e53935); }
-
-    .coming-soon { max-width: 760px; margin: 40px auto 80px; padding: 0 1.5rem; text-align: center; }
-    .coming-soon-card { border: 1px solid #e8e8e8; border-radius: 12px; padding: 60px 30px; background: #fafafa; }
-    .coming-soon-card h2 { font-family: 'Source Serif Pro', serif; font-size: 1.6rem; font-weight: 700; margin: 0 0 1rem; }
-    .coming-soon-card p { color: var(--text-sub, #555); line-height: 1.7; margin: 0 0 1.5rem; }
-    .coming-soon-card .cta { display: inline-block; background: var(--red, #e53935); color: #fff; padding: .8rem 1.6rem; border-radius: 8px; text-decoration: none; font-weight: 700; }
-
-    @media (max-width: 700px) {
-      .playbook-hero { padding: 40px 1.25rem 20px; }
-      .playbook-hero h1 { font-size: 2rem; }
-      .coming-soon-card { padding: 40px 20px; }
-    }
-  </style>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-6B72N2BV55"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -56,60 +28,105 @@
 
 <header class="site-header">
   <div class="header-inner">
-    <button class="mobile-back" onclick="history.back()" aria-label="Back" style="display:none;">&#8592;</button>
-    <a href="/" class="site-logo">Creator <span>Jungbok</span></a>
+    <a href="/en/" class="site-logo">Creator <span>Jungbok</span></a>
     <button class="nav-toggle" aria-label="Menu" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
     <nav class="header-nav">
-      <a href="/">Home</a>
-      <a href="/basics/">YouTube Basics</a>
-      <a href="/practice/">Practice</a>
-      <a href="/en/trends/">AI Trends</a>
-      <a href="/en/playbook/" class="nav-active">PlayBook</a>
-      <a href="/community/">Community</a>
-      <a href="/about/">About</a>
+      <a href="/">홈</a>
+      <a href="/learning/">학습</a>
+      <a href="/trends/">AI 트렌드</a>
+      <a href="/en/playbook/" class="nav-active">SNS 인사이트</a>
+      <a href="/about/">소개</a>
+      <span class="lang-toggle">
+        <a href="#" class="lang-active" data-lang="en">한국어</a>
+        <span class="lang-sep">/</span>
+        <a href="#" data-lang="en">English</a>
+      </span>
     </nav>
   </div>
 </header>
 
-<div class="lang-switch-bar">
-  <a href="/playbook/" onclick="try{localStorage.setItem('cj-lang-pref','ko');}catch(e){}">한국어</a> /
-  <a href="/en/playbook/" class="active" onclick="try{localStorage.setItem('cj-lang-pref','en');}catch(e){}">English</a>
-</div>
+<div class="trends-page-bg is-mirror" style="--cat-bg: url('/images/playbook-hero.png'); --cat-bg-pos: left bottom; --cat-bg-size: auto 78%;">
 
-<section class="playbook-hero">
-  <p class="eyebrow">PLAYBOOK</p>
-  <h1>The AI × SNS<br><span>Creator PlayBook</span></h1>
-  <p>Algorithms. Formulas. Monetization. Automation.</p>
+<!-- 학습형 hero — 가운데 정렬 + 배너 -->
+<section class="trends-top-hero">
+  <div class="trends-top-hero-banner">
+    <img src="/images/playbook-hero-banner.png" alt="SNS Insights — analysis motif pen illustration banner" loading="eager" />
+  </div>
+  <h1 class="trends-top-hero-title">SNS insights <em>at a glance</em></h1>
+  <p class="trends-top-hero-desc">Deep analysis for creators</p>
 </section>
 
-<section class="coming-soon">
-  <div class="coming-soon-card">
-    <h2>In progress.</h2>
-    <p>Catch up with AI trends in the meantime.</p>
-    <a href="/en/trends/" class="cta">View AI Trends →</a>
+<!-- 분할: 카드 + 좌측 wallpaper -->
+<section class="trends-wallpaper">
+  <div class="trends-wallpaper-inner">
+    <div class="trend-grid trend-grid-list">
+
+      <a href="#" class="trend-grid-card" style="opacity:.6;cursor:default;" onclick="event.preventDefault()">
+        <div class="trend-grid-thumb" style="background:#FFFDF9; display:flex; align-items:center; justify-content:center; color:#999; font-size:.8rem;">Coming soon</div>
+        <div class="trend-grid-body">
+          <div class="trend-grid-title">X algorithm — April 2026 changes</div>
+          <p class="trend-grid-desc">Data-driven algorithm analysis. Coming soon.</p>
+          <div class="trend-grid-meta">
+            <span class="meta-date">2026-05 planned</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="trend-grid-card" style="opacity:.6;cursor:default;" onclick="event.preventDefault()">
+        <div class="trend-grid-thumb" style="background:#FFFDF9; display:flex; align-items:center; justify-content:center; color:#999; font-size:.8rem;">Coming soon</div>
+        <div class="trend-grid-body">
+          <div class="trend-grid-title">Instagram Reels reach formula</div>
+          <p class="trend-grid-desc">Top 5 ranking signals for 2026.</p>
+          <div class="trend-grid-meta">
+            <span class="meta-date">2026-05 planned</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="trend-grid-card" style="opacity:.6;cursor:default;" onclick="event.preventDefault()">
+        <div class="trend-grid-thumb" style="background:#FFFDF9; display:flex; align-items:center; justify-content:center; color:#999; font-size:.8rem;">Coming soon</div>
+        <div class="trend-grid-body">
+          <div class="trend-grid-title">TikTok FYP — new signal analysis</div>
+          <p class="trend-grid-desc">New variables shaping FYP exposure.</p>
+          <div class="trend-grid-meta">
+            <span class="meta-date">2026-05 planned</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="trend-grid-card" style="opacity:.6;cursor:default;" onclick="event.preventDefault()">
+        <div class="trend-grid-thumb" style="background:#FFFDF9; display:flex; align-items:center; justify-content:center; color:#999; font-size:.8rem;">Coming soon</div>
+        <div class="trend-grid-body">
+          <div class="trend-grid-title">YouTube Shorts vs long-form</div>
+          <p class="trend-grid-desc">Ratio and strategy for 2026 channel growth.</p>
+          <div class="trend-grid-meta">
+            <span class="meta-date">2026-05 planned</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
   </div>
 </section>
 
+</div>
+
 <footer class="site-footer">
   <div class="footer-inner">
-    <div class="footer-logo">Creator <span>Jungbok</span></div>
-    <p class="footer-desc">AI x SNS creator playbook · daily evergreen plays</p>
+    <div class="footer-logo">크리에이터 <span>완전정복</span></div>
     <div class="footer-links">
-      <a href="/">Home</a>
-      <a href="/basics/">YouTube Basics</a>
-      <a href="/practice/">Practice</a>
-      <a href="/en/trends/">AI Trends</a>
-      <a href="/en/playbook/">PlayBook</a>
-      <a href="/community/">Community</a>
-      <a href="/about/">About</a>
+      <a href="/learning/">학습</a>
+      <a href="/trends/">AI 트렌드</a>
+      <a href="/en/playbook/">SNS 인사이트</a>
+      <a href="/about/">소개</a>
+      <a href="/privacy/">개인정보</a>
     </div>
-    <div class="footer-legal">
-      <a href="/privacy/">Privacy Policy</a>
-    </div>
-    <p class="footer-copy">© Creator Jungbok. All rights reserved.</p>
+    <p class="footer-copy">© 2026 Creator Jungbok</p>
   </div>
 </footer>
 
 <script src="/js/main.js"></script>
+<script src="/js/lang-toggle.js"></script>
+
 </body>
 </html>
