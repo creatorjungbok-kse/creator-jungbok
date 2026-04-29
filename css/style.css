@@ -3218,3 +3218,70 @@ strong { font-weight: 700; }
 .lang-toggle-mobile .lang-sep {
   display: none !important;
 }
+
+/* ============================================================
+   글 본문 step-card / feature-card 통일 사이즈 (모든 글 공통)
+   ============================================================ */
+.post-body .step-grid,
+.post-body .feature-grid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  grid-auto-rows: 1fr !important;
+  gap: 1rem !important;
+  margin: 1.5rem 0 !important;
+}
+@media (min-width: 700px) {
+  .post-body .step-grid,
+  .post-body .feature-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+.post-body .step-card,
+.post-body .feature-card {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  border: 1px solid rgba(26,36,56,.1) !important;
+  border-radius: 10px !important;
+  padding: 1.25rem 1.4rem !important;
+  background: #FFFDF9 !important;
+  transition: border-color .2s ease, transform .15s ease;
+}
+.post-body .step-card:hover,
+.post-body .feature-card:hover {
+  border-color: var(--color-terracotta) !important;
+  transform: translateY(-2px) !important;
+}
+.post-body .step-card-title,
+.post-body .feature-card-title {
+  font-family: var(--font-display) !important;
+  font-size: 1rem !important;
+  font-weight: 800 !important;
+  color: var(--color-navy) !important;
+  margin: 0 0 .65rem !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: .5rem !important;
+}
+.post-body .step-card-num,
+.post-body .feature-card-num {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: var(--color-terracotta) !important;
+  color: #fff !important;
+  width: 1.75rem !important;
+  height: 1.75rem !important;
+  border-radius: 50% !important;
+  font-weight: 800 !important;
+  font-size: .85rem !important;
+  flex-shrink: 0 !important;
+}
+.post-body .step-card-desc,
+.post-body .feature-card-desc {
+  font-size: .92rem !important;
+  line-height: 1.7 !important;
+  color: var(--color-navy) !important;
+  margin: 0 !important;
+  flex: 1 !important;
+}
