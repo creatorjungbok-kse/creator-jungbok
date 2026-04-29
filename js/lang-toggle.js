@@ -40,7 +40,7 @@
 
   // === 2. 토글 클릭 핸들러 ===
   function setupToggle() {
-    var toggleLinks = document.querySelectorAll('.lang-toggle a[data-lang]');
+    var toggleLinks = document.querySelectorAll('.lang-toggle a[data-lang], .lang-toggle-mobile a[data-lang]');
     if (!toggleLinks.length) return;
 
     toggleLinks.forEach(function(link) {
