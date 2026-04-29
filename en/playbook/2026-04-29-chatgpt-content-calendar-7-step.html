@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Blog Content Calendar With ChatGPT — A 7-Step Weekly Workflow | Creator Jungbok</title>
+  <meta name="description" content="Plan a full week of AI blog and social content in one ChatGPT session. A 7-step weekly workflow for solo creators across blog, YouTube, X, Instagram, and TikTok.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    .trend-meta { display: flex; flex-wrap: wrap; gap: .6rem 1rem; font-size: .8rem; color: #666; margin: .75rem 0 1.25rem 0; padding-bottom: 1rem; border-bottom: 1px solid var(--border, #e5e5e5); align-items: center; }
+    .trend-meta span { display: inline-flex; align-items: center; gap: .3rem; line-height: 1.4; }
+    .trend-meta .meta-cat { background: #1A2438; color: #fff; padding: .2rem .7rem; border-radius: 999px; font-weight: 700; font-size: .7rem; letter-spacing: .02em; }
+    .lang-switch { font-size: .82rem; color: #666; padding: .6rem 0; text-align: right; border-bottom: 1px dashed #ddd; margin-bottom: 1.25rem; }
+    .lang-switch a { color: #666; text-decoration: none; padding: 0 .35rem; }
+    .lang-switch a.active { color: #1A2438; font-weight: 800; text-decoration: underline; }
+    .lang-switch a:hover { color: #1A2438; }
+    .subhead { font-size: 1.05rem; line-height: 1.7; color: #444; margin: .25rem 0 1.5rem 0; font-weight: 500; letter-spacing: -.005em; }
+    .lead-para { font-size: 1.02rem; line-height: 1.85; color: var(--text, #222); padding: 1.1rem 1.25rem; background: #f5ebdc; border-left: 4px solid #1A2438; border-radius: 0 8px 8px 0; margin: 1.25rem 0 2rem 0; }
+    .lead-para strong { color: #1A2438; }
+    .step-grid { display: grid; grid-template-columns: 1fr; gap: .9rem; margin: 1.5rem 0; }
+    .step-card { border: 1px solid var(--border, #e5e5e5); border-radius: 10px; padding: 1.1rem 1.25rem; background: #fafafa; }
+    .step-card-num { display: inline-block; background: #1A2438; color: #fff; width: 1.6rem; height: 1.6rem; line-height: 1.6rem; text-align: center; border-radius: 50%; font-weight: 800; font-size: .85rem; margin-right: .5rem; }
+    .step-card-title { font-size: 1rem; font-weight: 800; color: var(--text, #222); margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .step-card-desc { font-size: .92rem; line-height: 1.75; color: #444; margin: 0; }
+    .callout { margin: 1.75rem 0; padding: 1.1rem 1.25rem; border-radius: 10px; border-left: 4px solid; font-size: .93rem; line-height: 1.75; }
+    .callout.tip { background: #f0fdf4; border-color: #22c55e; }
+    .callout.info { background: #eff6ff; border-color: #3b82f6; }
+    .callout.warn { background: #fffbeb; border-color: #f59e0b; }
+    .callout-label { font-weight: 800; font-size: .85rem; margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .callout.tip .callout-label { color: #16a34a; }
+    .callout.info .callout-label { color: #2563eb; }
+    .callout.warn .callout-label { color: #d97706; }
+    .callout ul { margin: .4rem 0 0 1.1rem; padding: 0; }
+    .callout li { margin-bottom: .3rem; }
+    .callout a { color: inherit; text-decoration: underline; word-break: break-all; }
+    .checklist { background: #fff; border: 1px solid #e0e0e0; border-radius: 10px; padding: 1.1rem 1.25rem; margin: 1.5rem 0; }
+    .checklist h3 { margin: 0 0 .75rem 0; font-size: 1rem; color: #1A2438; }
+    .checklist label { display: block; padding: .35rem 0; font-size: .95rem; line-height: 1.6; cursor: pointer; }
+    .checklist input { margin-right: .5rem; }
+    @media (max-width: 480px) {
+      .post-title { font-size: 1.55rem !important; line-height: 1.4 !important; }
+      .subhead { font-size: .95rem; }
+      .lead-para { font-size: .95rem; padding: 1rem; }
+      .trend-meta { font-size: .75rem; gap: .5rem .75rem; }
+      .step-card { padding: 1rem; }
+      .step-card-title { font-size: .95rem; }
+      .step-card-desc { font-size: .88rem; }
+      .callout { padding: 1rem; font-size: .88rem; }
+    }
+    .post-body strong { color: #111; font-weight: 800; }
+    .post-body h2 { margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.4rem; line-height: 1.4; }
+    @media (max-width: 480px) { .post-body h2 { font-size: 1.2rem; margin-top: 2rem; } }
+    .post-body h3 { margin-top: 1.5rem; margin-bottom: .5rem; font-size: 1.1rem; }
+    .post-body p { line-height: 1.85; font-size: .98rem; }
+    @media (max-width: 480px) { .post-body p { font-size: .95rem; line-height: 1.8; } }
+    .post-body ul { line-height: 1.85; }
+    .post-body ul li { margin-bottom: .35rem; }
+    .post-body figure { margin: 1.75rem 0; text-align: center; }
+    .post-body figure img { width: 100%; height: auto; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+    .post-body figure figcaption { font-size: .82rem; color: #777; margin-top: .5rem; font-style: italic; }
+    .page-wrap { justify-content: center; }
+    .post-thumbnail { width: 100%; height: auto; border-radius: 12px; margin: 0 0 1.5rem 0; display: block; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    @media (max-width: 480px) { .post-thumbnail { border-radius: 8px; margin-bottom: 1rem; } }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Creator Jungbok">
+  <meta property="og:title" content="AI Blog Content Calendar With ChatGPT — A 7-Step Weekly Workflow">
+  <meta property="og:description" content="Plan a full week of AI blog and social content in one ChatGPT session. A 7-step weekly workflow for solo creators across blog, YouTube, X, Instagram, and TikTok.">
+  <meta property="og:url" content="https://creatorjungbok.co.kr/en/playbook/2026-04-29-chatgpt-content-calendar-7-step.html">
+  <meta property="og:image" content="https://creatorjungbok.co.kr/playbook/images/2026-04-29-chatgpt-content-calendar-7-step.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="article:published_time" content="2026-04-29T07:00:00+09:00">
+  <meta property="article:section" content="Playbook">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://creatorjungbok.co.kr/playbook/images/2026-04-29-chatgpt-content-calendar-7-step.png">
+  <link rel="alternate" hreflang="ko" href="https://creatorjungbok.co.kr/playbook/2026-04-29-chatgpt-content-calendar-7-step.html">
+  <link rel="alternate" hreflang="en" href="https://creatorjungbok.co.kr/en/playbook/2026-04-29-chatgpt-content-calendar-7-step.html">
+  <link rel="alternate" hreflang="x-default" href="https://creatorjungbok.co.kr/playbook/2026-04-29-chatgpt-content-calendar-7-step.html">
+  <!-- Google Analytics 4 (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6B72N2BV55"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6B72N2BV55');
+  </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/en/" class="site-logo">Creator <span>Jungbok</span></a>
+    <button class="nav-toggle" aria-label="Menu" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+    <nav class="header-nav">
+      <a href="/en/">Home</a>
+      <a href="/en/trends/">AI Trends</a>
+      <a href="/en/playbook/">SNS Insights</a>
+      <a href="/en/about/">About</a>
+      <span class="lang-toggle">
+        <a href="#" data-lang="ko">한국어</a>
+        <span class="lang-sep">/</span>
+        <a href="#" class="lang-active" data-lang="en">English</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+  <main class="main-content">
+    <article>
+      <header class="post-header">
+        <!-- IMAGE_PROMPT_1 (Hero) — Insert at top of article body -->
+        <!-- Theme: workflow-desk-multi-tool (from reference-library/INDEX.md) -->
+        <!-- Alt: AI blog content calendar workflow — a weekly grid on a wooden desk -->
+        <!-- Prompt:
+        Editorial pen and ink illustration in the style of opinion-section
+        magazine art (every.to, New York Times opinion).
+        Hand-drawn line work with intentional imperfections.
+        Background: warm beige #F5EBDC.
+        Lines: black ink, slightly varied weight (1-3px).
+        Selective color fills (very sparingly): terracotta #D4825C accent on a single coffee mug, sage green #7A8B7A accent on one wall calendar block. Most of the image is line-only.
+
+        Subject: A solo creator's wooden desk seen slightly from above. Open laptop screen shows a simple 7-column weekly calendar grid with hand-drawn boxes and short text marks (no readable letters). To the right: a paper notebook with seven small numbered circles connected by an arrow path, suggesting a 7-step workflow. A coffee mug with terracotta fill, a fountain pen resting on the notebook, a small wall calendar pinned in the background with a sage green accent on one block.
+
+        Composition: off-center focal point on the laptop calendar grid, generous whitespace on the upper-left, magazine layout. Cross-hatching for shadows, not gradients.
+        NOT photorealistic. NOT 3D render. NOT digital painting.
+        Pure pen-and-ink editorial illustration.
+        Do NOT include text, watermarks, logos, "BREAKING" labels, or date badges.
+        Format: 1200x630 horizontal.
+        -->
+        <img src="/playbook/images/2026-04-29-chatgpt-content-calendar-7-step.png" alt="AI blog content calendar workflow — Creator Jungbok" class="post-thumbnail" width="1200" height="630" loading="eager" />
+        <p class="post-chap">Playbook</p>
+        <h1 class="post-title">AI Blog Content Calendar With ChatGPT — A 7-Step Weekly Workflow</h1>
+        <p class="subhead">Plan. Theme. Slot. Tone. Consistency.</p>
+        <div class="lang-switch">
+          <a href="/playbook/2026-04-29-chatgpt-content-calendar-7-step.html" onclick="try{localStorage.setItem('cj-lang-pref','ko');}catch(e){}">한국어</a> /
+          <a href="/en/playbook/2026-04-29-chatgpt-content-calendar-7-step.html" class="active" onclick="try{localStorage.setItem('cj-lang-pref','en');}catch(e){}">English</a>
+        </div>
+        <div class="trend-meta">
+          <span class="meta-cat">SNS Insights</span>
+          <span>🗓 2026-04-29</span>
+          <span>⏱ ~6 min read</span>
+          <span>📎 Sources: InfluenceFlow, AirOps, Sprout Social</span>
+        </div>
+      </header>
+
+      <hr class="divider">
+
+      <div class="post-body">
+
+        <p class="lead-para">
+          The most expensive minutes in a solo creator's week are the ones spent each morning asking, "what am I posting today?" That thirty-minute decision used to happen once a week. Now it happens daily. With one ChatGPT session, a solo <strong>AI blog</strong> operator can build the next seven days of content in about an hour. Mornings turn into review and publish, nothing more. This is the seven-step weekly workflow, written down so you can run it once and keep running it.
+        </p>
+
+        <h2>Why plan a week, not a day, at a time</h2>
+        <p>Content batching has come back into focus in 2026. Creator guides this year are explicit: dedicate one focused afternoon, build everything you need for the cycle, and queue it for automatic delivery (source: <a href="https://influenceflow.io/resources/content-calendar-strategy-the-complete-2026-guide-to-planning-and-optimizing-your-content/" target="_blank" rel="noopener">InfluenceFlow, 2026</a>). Short-form platforms now expect daily posting. The only sustainable way to feed them without burning out is to plan and produce in batches.</p>
+
+        <p>For an <strong>AI blog</strong> that also funnels into <strong>AI Instagram</strong>, <strong>AI TikTok</strong>, and X, weekly batching solves a second problem: tone drift. When a single person plans Monday and Friday separately, the voice slips. The blog reads more careful than the X post. The TikTok caption sounds like a different writer altogether. A single ChatGPT session sees all seven days at once and lines up the voice naturally.</p>
+
+        <h2>Seven steps inside one ChatGPT session</h2>
+        <p>Run the steps in order, in the same chat. Don't open a new conversation between steps. The context is what makes the calendar feel like one writer instead of seven.</p>
+
+        <div class="step-grid">
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">1</span>Pick a one-line theme for the week</div>
+            <p class="step-card-desc">Sunday evening or Monday morning, write one sentence: <strong>the single thing you want a reader to remember by Sunday</strong>. Too narrow and you'll run out of angles by Wednesday. Too wide and the voice splits. Prompt: "Suggest five weekly theme candidates for a solo creator AI blog. Each broad enough for seven different angles, narrow enough to feel like one voice. One line each, English and Korean." Pick one. The rest of the week hangs from this line.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">2</span>Generate seven sub-topics</div>
+            <p class="step-card-desc">Feed the theme back. Prompt: "From this weekly theme, write seven sub-topics, one per day. Monday is the big picture. Tuesday and Wednesday are practical steps. Thursday is tools or sources. Friday is common mistakes. Saturday and Sunday are case studies and recap. One line each." Giving ChatGPT the weekly arc up front keeps the sub-topics from collapsing into seven near-duplicates. Treat the result as a mini-series, not seven standalone posts.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">3</span>Map a five-channel format matrix</div>
+            <p class="step-card-desc">Now distribute. Five channels: <strong>blog, YouTube Shorts, X, Instagram, TikTok</strong>. Not every sub-topic needs every channel. Prompt: "For each sub-topic, suggest one primary channel and one secondary channel. Long explanation goes to blog. One-line and thread go to X. Visual summary goes to Instagram. Strong-hook 30–60 seconds goes to YouTube Shorts and <strong>AI TikTok</strong>." Ask for a table. Save it. This matrix is the spine of the week.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">4</span>Lock dates and time slots</div>
+            <p class="step-card-desc">Assign each row a posting day and a posting time. Prompt: "Convert this matrix into a Monday-through-Sunday schedule. Use each platform's stronger publishing windows. Pair blog plus Shorts on Mon, Wed, Fri. Pair X plus <strong>AI Instagram</strong> on Tue and Thu. Use weekends for recap and case studies." The moment a slot has a time, it stops being optional. Empty cells in a calendar pull a writer toward filling them.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">5</span>Write one day at a time, in bundles</div>
+            <p class="step-card-desc">Calendar locked, now write. But not seven days at once. <strong>Bundle one day's outputs together</strong> — blog, shorts, X, carousel — and ask for them in one prompt. "Today's bundle: [date], sub-topic [X]. Write a 1500-word blog draft, a 60-second shorts script, one X post plus a five-tweet thread, and an eight-slide carousel. English and Korean side by side." Repeat seven times. Each bundle takes 7–10 minutes. Seven bundles fit inside one hour.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">6</span>Add a human layer to every bundle</div>
+            <p class="step-card-desc">ChatGPT output is clean and a little flat. Shipped raw, your seven days look mass-produced. Add three things to each bundle: a one-line first-person observation from this week, one personal opinion, and one phrase only you use. Two minutes per bundle. The piece reads like you afterward, not like the model. 2026 search and social ranking signals increasingly weight <strong>"who wrote this"</strong> evidence, so this layer is also SEO work.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">7</span>Schedule and store next week's seeds</div>
+            <p class="step-card-desc">Push the seven days into your scheduling tools — site queue for the blog, scheduler for X, Instagram, and TikTok, native scheduling for YouTube. Then one last thing: ask the same session for <strong>five seeds for next week</strong>. "Five angles you didn't develop this week but could open the next theme." Save them. They become Step 1 of next Monday in under a minute. This is the small connector that keeps the calendar from breaking.</p>
+          </div>
+
+        </div>
+
+        <!-- IMAGE_PROMPT_2 (Mid) — Insert before "Three common traps" section -->
+        <!-- Theme: workflow-desk-multi-tool (from reference-library/INDEX.md) -->
+        <!-- Alt: Five-channel content matrix — blog, YouTube, X, Instagram, TikTok on a single desk -->
+        <!-- Prompt:
+        Editorial pen and ink illustration in the style of opinion-section
+        magazine art (every.to, New York Times opinion).
+        Hand-drawn line work with intentional imperfections.
+        Background: warm beige #F5EBDC.
+        Lines: black ink, slightly varied weight (1-3px).
+        Selective color fills (very sparingly): terracotta #D4825C accent on one notebook page, sage green #7A8B7A accent on one small sticky note. Most of the image is line-only.
+
+        Subject: An overhead view of a wooden desk with five small abstract objects representing five content channels — a long rectangular paper (blog post), a phone outline showing a vertical video frame (shorts), a tiny chat bubble (X post), a stack of square cards (carousel), a square video frame (TikTok). Hand-drawn arrows connect them in a circular flow. A weekly grid sketched at the center of a notebook ties them together. A pen rests across the notebook diagonally.
+
+        Composition: top-down flat lay, off-center focal point on the central notebook, generous whitespace, magazine layout. Cross-hatching for shadows, not gradients.
+        NOT photorealistic. NOT 3D render. NOT digital painting.
+        Pure pen-and-ink editorial illustration.
+        Do NOT include text, watermarks, logos, "BREAKING" labels, or date badges.
+        Format: 1200x630 horizontal.
+        -->
+        <figure>
+          <img src="/playbook/images/2026-04-29-chatgpt-content-calendar-7-step-02-mid.png" alt="Five-channel content matrix — blog, YouTube, X, Instagram, TikTok on a single desk" loading="lazy" />
+        </figure>
+
+        <h2>Three common traps</h2>
+
+        <h3>Trap 1. Planning and writing in the same sitting</h3>
+        <p>The most frequent failure. You finish step 1, get excited, and start drafting Monday's blog inside the same chat. By the time you stop, the next six days are a blur. Keep steps 1–4 strictly as planning, steps 5–7 strictly as writing. Thirty minutes of planning, thirty of writing. Same chair, two modes — but explicitly two.</p>
+
+        <h3>Trap 2. Pasting the same draft to all five channels</h3>
+        <p>Search engines mark duplicate content down. <strong>X AI</strong> ranking and Instagram's automated detection do similar things. In step 5, tell ChatGPT explicitly: "different tone, length, and CTA per channel." A single one-line theme should produce five distinct expressions. The first time I forced 40% wording variation across channels, reach behavior on each platform shifted noticeably within two weeks.</p>
+
+        <h3>Trap 3. Closing the session without next week's seeds</h3>
+        <p>Most creators skip step 7. The next Monday they sit down empty-headed and step 1 takes thirty minutes again. Asking for five seeds at the end of this week's session costs about ninety seconds and saves about thirty minutes seven days later. It is the smallest piece of the workflow and the one that compounds.</p>
+
+        <div class="callout warn">
+          <div class="callout-label">⚠ Don't fully automate publishing</div>
+          AirOps's 2026 guide to AI content workflows is explicit: every pipeline ends in <strong>human review</strong> (source: <a href="https://www.airops.com/blog/ai-workflows-content-planning" target="_blank" rel="noopener">AirOps, 2026</a>). The calendar can run on rails. The minute before each post goes live should not. <strong>AI automation</strong> handles drafting, scheduling, and queueing — a human handles the last read for fact errors, off-tone phrasing, and stale references.
+        </div>
+
+        <h2>Seven-item checklist for today</h2>
+        <div class="checklist">
+          <h3>One ChatGPT session, one hour, seven days</h3>
+          <label><input type="checkbox"> Pick a one-line weekly theme from five candidates</label>
+          <label><input type="checkbox"> Generate seven sub-topics with a Mon–Sun arc</label>
+          <label><input type="checkbox"> Build a five-channel format matrix (blog / Shorts / X / IG / TikTok)</label>
+          <label><input type="checkbox"> Lock dates and posting time slots</label>
+          <label><input type="checkbox"> Write seven daily bundles (10 min each)</label>
+          <label><input type="checkbox"> Add a first-person line and one signature phrase per bundle</label>
+          <label><input type="checkbox"> Schedule everything plus save five seeds for next week</label>
+        </div>
+
+        <p>If you want adjacent workflows in the same family, see <a href="/en/playbook/2026-04-27-x-ai-multiplatform-workflow.html">X AI Content Workflow — Five Channels in 30 Minutes</a> for the lateral version (one message, five formats), and <a href="/en/playbook/2026-04-28-x-ai-thread-hook-formulas.html">X AI Thread Hooks — Five First-Line Formulas</a> for the hook engineering layer. Both fit inside this calendar at different steps. The full library lives at <a href="/en/playbook/">the Playbook index</a>.</p>
+
+        <div class="callout tip">
+          <div class="callout-label">💡 Recap</div>
+          <ul>
+            <li>One ChatGPT session, one hour, seven days of <strong>AI blog</strong> and social content</li>
+            <li>Steps 1–4 are <strong>planning</strong>; steps 5–7 are <strong>writing</strong>. Don't mix</li>
+            <li>Five channels — blog, Shorts, <strong>X AI</strong>, <strong>AI Instagram</strong>, <strong>AI TikTok</strong> — each in its own tone</li>
+            <li>End every session by saving five seeds for the following week</li>
+            <li><strong>AI automation</strong> handles drafting and scheduling. Humans handle the last review</li>
+          </ul>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-label">📎 Sources</div>
+          <ul>
+            <li>InfluenceFlow (2026) — <a href="https://influenceflow.io/resources/content-calendar-strategy-the-complete-2026-guide-to-planning-and-optimizing-your-content/" target="_blank" rel="noopener">Content Calendar Strategy: The Complete 2026 Guide</a></li>
+            <li>AirOps (2026) — <a href="https://www.airops.com/blog/ai-workflows-content-planning" target="_blank" rel="noopener">How to Build AI Workflows for Content Planning in 2026</a></li>
+            <li>Sprout Social (2026) — <a href="https://sproutsocial.com/insights/social-media-calendar/" target="_blank" rel="noopener">How to Build a Social Media Content Calendar</a></li>
+          </ul>
+        </div>
+
+        <nav class="trends-nav" aria-label="Playbook navigation">
+          <a href="/en/playbook/" class="trends-nav-item index">
+            <span class="trends-nav-index-icon">&#9783;</span>
+            <span>All Playbook posts</span>
+          </a>
+          <span class="trends-nav-item empty"></span>
+        </nav>
+
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Creator <span>Jungbok</span></div>
+    <div class="footer-links">
+      <a href="/en/trends/">AI Trends</a>
+      <a href="/en/playbook/">SNS Insights</a>
+      <a href="/en/about/">About</a>
+      <a href="/en/privacy/">Privacy</a>
+      <a href="/en/contact/">Contact</a>
+    </div>
+    <p class="footer-copy">© 2026 Creator Jungbok</p>
+  </div>
+</footer>
+
+<script src="../../js/main.js"></script>
+
+<button id="btn-top" aria-label="Top">↑</button>
+<script>
+  var b=document.getElementById('btn-top');
+  window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+
+</body>
+</html>

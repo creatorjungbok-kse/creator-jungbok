@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatGPT Workspace Agents — A New Layer for AI Blog Automation | Creator Jungbok</title>
+  <meta name="description" content="On April 22, 2026, OpenAI rolled out ChatGPT Workspace Agents. Here is how the launch reshapes AI blog automation and multi-platform creator workflows.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .trend-meta { display: flex; flex-wrap: wrap; gap: .6rem 1rem; font-size: .8rem; color: #666; margin: .75rem 0 1.25rem 0; padding-bottom: 1rem; border-bottom: 1px solid var(--border, #e5e5e5); align-items: center; }
+    .trend-meta span { display: inline-flex; align-items: center; gap: .3rem; line-height: 1.4; }
+    .trend-meta .meta-cat { background: var(--red, #e53935); color: #fff; padding: .2rem .7rem; border-radius: 999px; font-weight: 700; font-size: .7rem; letter-spacing: .02em; }
+    .lang-switch { font-size: .82rem; color: #666; padding: .6rem 0; text-align: right; border-bottom: 1px dashed #ddd; margin-bottom: 1.25rem; }
+    .lang-switch a { color: #666; text-decoration: none; padding: 0 .35rem; }
+    .lang-switch a.active { color: var(--red, #e53935); font-weight: 800; text-decoration: underline; }
+    .lang-switch a:hover { color: var(--red, #e53935); }
+    .lead-para { font-size: 1.02rem; line-height: 1.85; color: var(--text, #222); padding: 1.1rem 1.25rem; background: #fff7f6; border-left: 4px solid var(--red, #e53935); border-radius: 0 8px 8px 0; margin: 1.25rem 0 2rem 0; }
+    .lead-para strong { color: #c62828; }
+    .feature-grid { display: grid; grid-template-columns: 1fr; gap: .9rem; margin: 1.5rem 0; }
+    @media (min-width: 700px) { .feature-grid { grid-template-columns: 1fr 1fr; gap: 1rem; } }
+    .feature-card { border: 1px solid var(--border, #e5e5e5); border-radius: 10px; padding: 1.1rem 1.25rem; background: #fafafa; transition: border-color .15s; }
+    .feature-card:hover { border-color: var(--red, #e53935); }
+    .feature-card-num { display: inline-block; background: var(--red, #e53935); color: #fff; width: 1.6rem; height: 1.6rem; line-height: 1.6rem; text-align: center; border-radius: 50%; font-weight: 800; font-size: .85rem; margin-right: .5rem; }
+    .feature-card-title { font-size: 1rem; font-weight: 800; color: var(--text, #222); margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .feature-card-desc { font-size: .92rem; line-height: 1.75; color: #444; margin: 0; }
+    .compare-box { display: grid; grid-template-columns: 1fr; gap: .75rem; margin: 1.5rem 0; }
+    @media (min-width: 700px) { .compare-box { grid-template-columns: 1fr 1fr; gap: 1rem; } }
+    .compare-side { padding: 1rem 1.1rem; border-radius: 10px; font-size: .92rem; line-height: 1.7; }
+    .compare-before { background: #f5f5f5; border: 1px solid #e0e0e0; }
+    .compare-after { background: #fff5f5; border: 1px solid #ffcdd2; }
+    .compare-label { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .08em; margin-bottom: .5rem; text-transform: uppercase; }
+    .compare-before .compare-label { color: #757575; }
+    .compare-after .compare-label { color: var(--red, #e53935); }
+    .callout { margin: 1.75rem 0; padding: 1.1rem 1.25rem; border-radius: 10px; border-left: 4px solid; font-size: .93rem; line-height: 1.75; }
+    .callout.tip { background: #f0fdf4; border-color: #22c55e; }
+    .callout.info { background: #eff6ff; border-color: #3b82f6; }
+    .callout.warn { background: #fffbeb; border-color: #f59e0b; }
+    .callout-label { font-weight: 800; font-size: .85rem; margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .callout.tip .callout-label { color: #16a34a; }
+    .callout.info .callout-label { color: #2563eb; }
+    .callout.warn .callout-label { color: #d97706; }
+    .callout ul { margin: .4rem 0 0 1.1rem; padding: 0; }
+    .callout li { margin-bottom: .3rem; }
+    .callout a { color: inherit; text-decoration: underline; word-break: break-all; }
+    @media (max-width: 480px) { .post-title { font-size: 1.55rem !important; line-height: 1.4 !important; } .lead-para { font-size: .95rem; padding: 1rem; } .trend-meta { font-size: .75rem; gap: .5rem .75rem; } .feature-card { padding: 1rem; } .callout { padding: 1rem; font-size: .88rem; } }
+    .post-body strong { color: #111; font-weight: 800; }
+    .post-body h2 { margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.4rem; line-height: 1.4; }
+    @media (max-width: 480px) { .post-body h2 { font-size: 1.2rem; margin-top: 2rem; } }
+    .post-body p { line-height: 1.85; font-size: .98rem; }
+    @media (max-width: 480px) { .post-body p { font-size: .95rem; line-height: 1.8; } }
+    .post-body ul { line-height: 1.85; }
+    .post-body ul li { margin-bottom: .35rem; }
+    .page-wrap { justify-content: center; }
+    .post-thumbnail { width: 100%; height: auto; border-radius: 12px; margin: 0 0 1.5rem 0; display: block; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    @media (max-width: 480px) { .post-thumbnail { border-radius: 8px; margin-bottom: 1rem; } }
+    .body-figure { margin: 2rem 0; }
+    .body-figure img { width: 100%; height: auto; border-radius: 10px; display: block; }
+    .body-figure figcaption { font-size: .82rem; color: #777; margin-top: .55rem; text-align: center; line-height: 1.5; }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Creator Jungbok">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="ChatGPT Workspace Agents — A New Layer for AI Blog Automation">
+  <meta property="og:description" content="On April 22, 2026, OpenAI rolled out ChatGPT Workspace Agents. Here is how the launch reshapes AI blog automation and multi-platform creator workflows.">
+  <meta property="og:url" content="https://creatorjungbok.co.kr/en/trends/2026-04-29-chatgpt-workspace-agents-blog-automation.html">
+  <meta property="og:image" content="https://creatorjungbok.co.kr/trends/images/2026-04-29-chatgpt-workspace-agents-blog-automation-en.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="article:published_time" content="2026-04-29T07:00:00+09:00">
+  <meta property="article:section" content="AI Trends">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://creatorjungbok.co.kr/trends/images/2026-04-29-chatgpt-workspace-agents-blog-automation-en.png">
+  <link rel="alternate" hreflang="ko" href="https://creatorjungbok.co.kr/trends/2026-04-29-chatgpt-workspace-agents-blog-automation.html">
+  <link rel="alternate" hreflang="en" href="https://creatorjungbok.co.kr/en/trends/2026-04-29-chatgpt-workspace-agents-blog-automation.html">
+  <link rel="alternate" hreflang="x-default" href="https://creatorjungbok.co.kr/trends/2026-04-29-chatgpt-workspace-agents-blog-automation.html">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6B72N2BV55"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6B72N2BV55');
+  </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="site-logo">Creator <span>Jungbok</span></a>
+    <button class="nav-toggle" aria-label="menu" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+    <nav class="header-nav">
+      <a href="/en/">Home</a>
+      <a href="/en/trends/">AI Trends</a>
+      <a href="/en/playbook/">SNS Insights</a>
+      <a href="/en/about/">About</a>
+      <span class="lang-toggle">
+        <a href="#" data-lang="ko">한국어</a>
+        <span class="lang-sep">/</span>
+        <a href="#" class="lang-active" data-lang="en">English</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+  <main class="main-content">
+    <article>
+      <header class="post-header">
+        <img src="/trends/images/2026-04-29-chatgpt-workspace-agents-blog-automation-en.png" alt="ChatGPT Workspace Agents — Creator Jungbok" class="post-thumbnail" width="1200" height="630" loading="eager" />
+        <p class="post-chap">AI Trends</p>
+        <h1 class="post-title">ChatGPT Workspace Agents — A New Layer for AI Blog Automation</h1>
+        <div class="lang-switch">
+          <a href="/trends/2026-04-29-chatgpt-workspace-agents-blog-automation.html" onclick="try{localStorage.setItem('cj-lang-pref','ko');}catch(e){}">한국어</a> /
+          <a href="/en/trends/2026-04-29-chatgpt-workspace-agents-blog-automation.html" class="active" onclick="try{localStorage.setItem('cj-lang-pref','en');}catch(e){}">English</a>
+        </div>
+        <div class="trend-meta">
+          <span class="meta-cat">AI Trends</span>
+          <span>🗓 April 29, 2026</span>
+          <span>⏱ 4-min read</span>
+          <span>📎 Sources: OpenAI, VentureBeat, TechCrunch</span>
+        </div>
+      </header>
+
+      <hr class="divider">
+
+      <div class="post-body">
+
+        <!-- IMAGE_PROMPT_1 (Hero) — same canon as KO -->
+        <!-- Theme: hero-creator-with-new-tool -->
+        <!-- Alt: ChatGPT Workspace Agents — solo creator meeting a new tool -->
+
+        <figure class="body-figure">
+          <img src="/trends/images/2026-04-29-chatgpt-workspace-agents-blog-automation-01-hero.png" alt="ChatGPT Workspace Agents — solo creator meeting a new tool" />
+          <figcaption>April 2026: OpenAI's Workspace Agents reframe what a solo creator's content pipeline looks like.</figcaption>
+        </figure>
+
+        <p class="lead-para">
+          On <strong>April 22, 2026</strong>, OpenAI rolled out <strong>ChatGPT Workspace Agents</strong> in research preview (sources: OpenAI blog; VentureBeat). The release is a class of semi-autonomous agents that connect natively to Slack, Google Workspace and Salesforce, designed to run repeatable workflows without a human in the middle. The feature is <strong>free until May 6, 2026</strong> in ChatGPT Business, Enterprise, Edu and Teachers, then shifts to credit-based pricing (source: OpenAI). For creators using ChatGPT to power an <strong>AI blog</strong>, the launch matters for one reason — it points at where the standard for "what comes after Custom GPTs" is heading.
+        </p>
+
+        <h2>What Workspace Agents Actually Ship With</h2>
+        <p>Cross-referencing the OpenAI announcement with VentureBeat and UC Today, the launch lands on four mechanics — <strong>connectors, scheduled runs, shared deployment, and a no-code builder</strong> (sources: OpenAI, April 22, 2026; VentureBeat). Coverage frames this as the successor to Custom GPTs and the first time team-deployable agents have been productized at this scale inside ChatGPT.</p>
+
+        <div class="feature-grid">
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">1</span>Native Connectors</div>
+            <p class="feature-card-desc">Direct integrations to <strong>Slack, Google Workspace (Gmail, Drive, Calendar, Docs, Sheets) and Salesforce</strong>. Agents read and write across those apps from inside ChatGPT, no third-party orchestrator needed.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">2</span>Scheduled Runs</div>
+            <p class="feature-card-desc">Agents can be set to <strong>run on a schedule</strong>. A morning trend digest, a weekly content recap, or a daily blog brief all execute without a separate cron stack.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">3</span>Lives in Slack</div>
+            <p class="feature-card-desc">Deploy an agent into a Slack workspace and it <strong>picks up requests as they arrive</strong>. For solo operators, even a one-person Slack becomes a command line for the agent.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">4</span>Templates and No-Code Builder</div>
+            <p class="feature-card-desc">Pre-built templates plus a conversational builder. Multi-step workflows can be defined without code, lowering the entry cost of <strong>AI blog</strong> and newsletter automation.</p>
+          </div>
+
+        </div>
+
+        <h2>Why It Matters Now — The Post-Custom-GPT Standard</h2>
+        <p>VentureBeat called the release "a successor to Custom GPTs for enterprises" (source: VentureBeat, April 22, 2026). UC Today flagged that five major vendors — OpenAI, Microsoft Copilot Studio, Anthropic Claude Managed Agents, Google Gemini Enterprise and Salesforce Agentforce — pushed enterprise agent products in the same week. <strong>Agents as the next SaaS surface</strong> is no longer a forecast; it is the working assumption.</p>
+
+        <p>Two things follow for creators. First, <strong>AI automation</strong> moves a notch deeper into ChatGPT itself. For light pipelines, the n8n / Zapier layer is no longer required to wire Slack, Google Docs and Sheets together. Second, the operating heuristic gets product-level endorsement: <strong>if a task happens twice or more daily, it is a candidate for an agent</strong>.</p>
+
+        <!-- IMAGE_PROMPT_2 (Mid) — same canon as KO -->
+        <!-- Theme: workflow-desk-multi-tool -->
+        <!-- Alt: AI automation pipeline — Slack, Google Workspace, X, blog on one desk -->
+
+        <figure class="body-figure">
+          <img src="/trends/images/2026-04-29-chatgpt-workspace-agents-blog-automation-02-mid.png" alt="AI automation pipeline — Slack, Google Workspace, X, blog on one desk" />
+          <figcaption>"Twice or more daily" — the candidates for an agent, laid out on one desk.</figcaption>
+        </figure>
+
+        <h2>The AI Blog + Multi-Platform Workflow</h2>
+        <p>The substance of the change shows when <strong>AI automation</strong> reaches into the content pipeline itself. Trend research → draft → multi-platform distribution can collapse inside a single ChatGPT workspace, removing the copy-paste seams between tools.</p>
+
+        <div class="compare-box">
+          <div class="compare-side compare-before">
+            <span class="compare-label">📅 Before Workspace Agents</span>
+            ChatGPT draft → copy into Google Docs → upload to blog → cross-post to <strong>X AI</strong> account, Instagram, TikTok<br>
+            → Five tools, the human is the bridge
+          </div>
+          <div class="compare-side compare-after">
+            <span class="compare-label">✨ Since April 22, 2026</span>
+            <strong>Workspace Agent gathers trends 7am → drafts in Google Docs → pings Slack</strong> → human reviews and publishes<br>
+            → Two tools, the human only judges
+          </div>
+        </div>
+
+        <p>The shift hits <strong>AI blog</strong> operations first. Daily category-based trend gathering, post-publication compression into SNS cards, and link harvesting are repeatable by definition. <a href="/en/trends/2026-04-27-openai-gpt-5-5-launch.html">The multi-step reasoning bump from GPT-5.5</a> is the engine behind the reliability of these agent-run loops.</p>
+
+        <p>Cross-platform distribution follows the same shape. The <strong>X AI</strong> assistant + Slack trigger + Google Sheets log layout discussed in <a href="/en/trends/2026-04-27-x-ai-multiplatform-workflow.html">the X AI multi-platform piece</a> can fold into a single Workspace Agent. The agent then outputs the AI Instagram caption, the AI TikTok hook draft and the Shorts memo from one shared brief — three platforms, one input.</p>
+
+        <div class="callout warn">
+          <div class="callout-label">⚠ Don't Overrate It</div>
+          Workspace Agents is in research preview. <strong>Credit-based pricing kicks in after May 6, 2026</strong>, and the per-run cost, failure rate and learning curve are still being measured by the market. Solo operators should <strong>start with a single light workflow</strong>, log success and failure for at least seven days, then expand only after the cost-of-failure floor is clear.
+        </div>
+
+        <h2>Three Moves to Make Now</h2>
+        <p><strong>1. Write down one workflow.</strong> Pick one task that runs twice or more daily, and put input → process → output on a single page. The person who can describe the task in writing becomes the first useful operator of <strong>AI automation</strong>.</p>
+
+        <p><strong>2. Use the free window before May 6, 2026.</strong> Workspace Agents is open at no charge inside ChatGPT Business, Enterprise, Edu and Teachers until that date (source: OpenAI). Even a solo creator can build one end-to-end agent during the window — that single round-trip is the fastest learning path.</p>
+
+        <p><strong>3. Keep a one-week failure log.</strong> Note where the agent stalled, where the output drifted. After seven days the boundary becomes visible: which tasks deserve a human, and which can move to the agent. The <a href="/practice/">Practice</a> section's "publish what works and what doesn't, as fact" stance maps directly onto agent ops.</p>
+
+        <div class="callout tip">
+          <div class="callout-label">💡 Quick Recap</div>
+          <ul>
+            <li><strong>April 22, 2026</strong> — OpenAI shipped <strong>ChatGPT Workspace Agents</strong> in research preview.</li>
+            <li>Mechanics: <strong>direct Slack / Google Workspace / Salesforce connectors, scheduled runs, no-code builder</strong>.</li>
+            <li>Move: <strong>pick one twice-daily task, build a single agent, log seven days</strong> before expanding.</li>
+            <li>Caveat: <strong>credit pricing begins May 6, 2026</strong> — model the per-run cost first.</li>
+          </ul>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-label">📎 Sources</div>
+          <ul>
+            <li>OpenAI — <a href="https://openai.com/index/introducing-workspace-agents-in-chatgpt/" target="_blank" rel="noopener">Introducing workspace agents in ChatGPT</a> (April 22, 2026)</li>
+            <li>VentureBeat — <a href="https://venturebeat.com/orchestration/openai-unveils-workspace-agents-a-successor-to-custom-gpts-for-enterprises-that-can-plug-directly-into-slack-salesforce-and-more" target="_blank" rel="noopener">OpenAI unveils Workspace Agents, a successor to Custom GPTs</a></li>
+            <li>UC Today — <a href="https://www.uctoday.com/productivity-automation/openai-workspace-agents-chatgpt-enterprise-workflows/" target="_blank" rel="noopener">OpenAI Workspace Agents Launch in ChatGPT</a></li>
+            <li>OpenAI Academy — <a href="https://openai.com/academy/workspace-agents/" target="_blank" rel="noopener">Workspace agents</a></li>
+          </ul>
+        </div>
+
+        <nav class="trends-nav" aria-label="AI Trends navigation">
+          <a href="/en/trends/2026-04-28-instagram-reels-teleprompter.html" class="trends-nav-item prev">
+            <span class="trends-nav-label">&larr; Previous</span>
+            <span class="trends-nav-title">Instagram Reels Teleprompter (April 28, 2026)</span>
+          </a>
+          <a href="/en/trends/" class="trends-nav-item index">
+            <span class="trends-nav-index-icon">&#9783;</span>
+            <span>All AI Trends</span>
+          </a>
+          <span class="trends-nav-item empty"></span>
+        </nav>
+
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Creator <span>Jungbok</span></div>
+    <div class="footer-links">
+      <a href="/en/trends/">AI Trends</a>
+      <a href="/en/playbook/">SNS Insights</a>
+      <a href="/en/about/">About</a>
+      <a href="/en/privacy/">Privacy</a>
+      <a href="/en/contact/">Contact</a>
+    </div>
+    <p class="footer-copy">© 2026 Creator Jungbok</p>
+  </div>
+</footer>
+
+<script src="/js/main.js"></script>
+
+<button id="btn-top" aria-label="top">↑</button>
+<script>
+  var b=document.getElementById('btn-top');
+  window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+
+</body>
+</html>

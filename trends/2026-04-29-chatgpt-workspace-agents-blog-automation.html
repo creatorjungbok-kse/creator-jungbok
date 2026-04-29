@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatGPT Workspace Agents 출시 — AI 자동화의 새 분기점 (2026-04-29) | 크리에이터 완전정복</title>
+  <meta name="description" content="2026년 4월 OpenAI가 ChatGPT Workspace Agents를 정식 공개했습니다. AI 자동화·AI 블로그 운영 흐름이 어떻게 바뀌는지 정리합니다.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .trend-meta { display: flex; flex-wrap: wrap; gap: .6rem 1rem; font-size: .8rem; color: #666; margin: .75rem 0 1.25rem 0; padding-bottom: 1rem; border-bottom: 1px solid var(--border, #e5e5e5); align-items: center; }
+    .trend-meta span { display: inline-flex; align-items: center; gap: .3rem; line-height: 1.4; }
+    .trend-meta .meta-cat { background: var(--red, #e53935); color: #fff; padding: .2rem .7rem; border-radius: 999px; font-weight: 700; font-size: .7rem; letter-spacing: .02em; }
+    .lang-switch { font-size: .82rem; color: #666; padding: .6rem 0; text-align: right; border-bottom: 1px dashed #ddd; margin-bottom: 1.25rem; }
+    .lang-switch a { color: #666; text-decoration: none; padding: 0 .35rem; }
+    .lang-switch a.active { color: var(--red, #e53935); font-weight: 800; text-decoration: underline; }
+    .lang-switch a:hover { color: var(--red, #e53935); }
+    .lead-para { font-size: 1.02rem; line-height: 1.85; color: var(--text, #222); padding: 1.1rem 1.25rem; background: #fff7f6; border-left: 4px solid var(--red, #e53935); border-radius: 0 8px 8px 0; margin: 1.25rem 0 2rem 0; }
+    .lead-para strong { color: #c62828; }
+    .feature-grid { display: grid; grid-template-columns: 1fr; gap: .9rem; margin: 1.5rem 0; }
+    @media (min-width: 700px) { .feature-grid { grid-template-columns: 1fr 1fr; gap: 1rem; } }
+    .feature-card { border: 1px solid var(--border, #e5e5e5); border-radius: 10px; padding: 1.1rem 1.25rem; background: #fafafa; transition: border-color .15s; }
+    .feature-card:hover { border-color: var(--red, #e53935); }
+    .feature-card-num { display: inline-block; background: var(--red, #e53935); color: #fff; width: 1.6rem; height: 1.6rem; line-height: 1.6rem; text-align: center; border-radius: 50%; font-weight: 800; font-size: .85rem; margin-right: .5rem; }
+    .feature-card-title { font-size: 1rem; font-weight: 800; color: var(--text, #222); margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .feature-card-desc { font-size: .92rem; line-height: 1.75; color: #444; margin: 0; }
+    .compare-box { display: grid; grid-template-columns: 1fr; gap: .75rem; margin: 1.5rem 0; }
+    @media (min-width: 700px) { .compare-box { grid-template-columns: 1fr 1fr; gap: 1rem; } }
+    .compare-side { padding: 1rem 1.1rem; border-radius: 10px; font-size: .92rem; line-height: 1.7; }
+    .compare-before { background: #f5f5f5; border: 1px solid #e0e0e0; }
+    .compare-after { background: #fff5f5; border: 1px solid #ffcdd2; }
+    .compare-label { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .08em; margin-bottom: .5rem; text-transform: uppercase; }
+    .compare-before .compare-label { color: #757575; }
+    .compare-after .compare-label { color: var(--red, #e53935); }
+    .callout { margin: 1.75rem 0; padding: 1.1rem 1.25rem; border-radius: 10px; border-left: 4px solid; font-size: .93rem; line-height: 1.75; }
+    .callout.tip { background: #f0fdf4; border-color: #22c55e; }
+    .callout.info { background: #eff6ff; border-color: #3b82f6; }
+    .callout.warn { background: #fffbeb; border-color: #f59e0b; }
+    .callout-label { font-weight: 800; font-size: .85rem; margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .callout.tip .callout-label { color: #16a34a; }
+    .callout.info .callout-label { color: #2563eb; }
+    .callout.warn .callout-label { color: #d97706; }
+    .callout ul { margin: .4rem 0 0 1.1rem; padding: 0; }
+    .callout li { margin-bottom: .3rem; }
+    .callout a { color: inherit; text-decoration: underline; word-break: break-all; }
+    @media (max-width: 480px) {
+      .post-title { font-size: 1.55rem !important; line-height: 1.4 !important; }
+      .lead-para { font-size: .95rem; padding: 1rem; }
+      .trend-meta { font-size: .75rem; gap: .5rem .75rem; }
+      .feature-card { padding: 1rem; }
+      .feature-card-title { font-size: .95rem; }
+      .feature-card-desc { font-size: .88rem; }
+      .compare-side { font-size: .88rem; }
+      .callout { padding: 1rem; font-size: .88rem; }
+    }
+    .post-body strong { color: #111; font-weight: 800; }
+    .post-body h2 { margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.4rem; line-height: 1.4; }
+    @media (max-width: 480px) { .post-body h2 { font-size: 1.2rem; margin-top: 2rem; } }
+    .post-body p { line-height: 1.85; font-size: .98rem; }
+    @media (max-width: 480px) { .post-body p { font-size: .95rem; line-height: 1.8; } }
+    .post-body ul { line-height: 1.85; }
+    .post-body ul li { margin-bottom: .35rem; }
+    .page-wrap { justify-content: center; }
+    .post-thumbnail { width: 100%; height: auto; border-radius: 12px; margin: 0 0 1.5rem 0; display: block; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    @media (max-width: 480px) { .post-thumbnail { border-radius: 8px; margin-bottom: 1rem; } }
+    .body-figure { margin: 2rem 0; }
+    .body-figure img { width: 100%; height: auto; border-radius: 10px; display: block; }
+    .body-figure figcaption { font-size: .82rem; color: #777; margin-top: .55rem; text-align: center; line-height: 1.5; }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="크리에이터 완전정복">
+  <meta property="og:title" content="ChatGPT Workspace Agents 출시 — AI 자동화의 새 분기점 (2026-04-29)">
+  <meta property="og:description" content="2026년 4월 OpenAI가 ChatGPT Workspace Agents를 정식 공개했습니다. AI 자동화·AI 블로그 운영 흐름이 어떻게 바뀌는지 정리합니다.">
+  <meta property="og:url" content="https://creatorjungbok.co.kr/trends/2026-04-29-chatgpt-workspace-agents-blog-automation.html">
+  <meta property="og:image" content="https://creatorjungbok.co.kr/trends/images/2026-04-29-chatgpt-workspace-agents-blog-automation.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="article:published_time" content="2026-04-29T07:00:00+09:00">
+  <meta property="article:section" content="AI 트렌드">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://creatorjungbok.co.kr/trends/images/2026-04-29-chatgpt-workspace-agents-blog-automation.png">
+  <link rel="alternate" hreflang="ko" href="https://creatorjungbok.co.kr/trends/2026-04-29-chatgpt-workspace-agents-blog-automation.html">
+  <link rel="alternate" hreflang="en" href="https://creatorjungbok.co.kr/en/trends/2026-04-29-chatgpt-workspace-agents-blog-automation.html">
+  <link rel="alternate" hreflang="x-default" href="https://creatorjungbok.co.kr/trends/2026-04-29-chatgpt-workspace-agents-blog-automation.html">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6B72N2BV55"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6B72N2BV55');
+  </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="site-logo">크리에이터 <span>완전정복</span></a>
+    <button class="nav-toggle" aria-label="메뉴" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+    <nav class="header-nav">
+      <a href="/">홈</a>
+      <a href="/learning/">학습</a>
+      <a href="/trends/">AI 트렌드</a>
+      <a href="/playbook/">SNS 인사이트</a>
+      <a href="/about/">소개</a>
+      <span class="lang-toggle">
+        <a href="#" class="lang-active" data-lang="ko">한국어</a>
+        <span class="lang-sep">/</span>
+        <a href="#" data-lang="en">English</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+  <main class="main-content">
+    <article>
+      <header class="post-header">
+        <img src="/trends/images/2026-04-29-chatgpt-workspace-agents-blog-automation.png" alt="ChatGPT Workspace Agents — 크리에이터 완전정복" class="post-thumbnail" width="1200" height="630" loading="eager" />
+        <p class="post-chap">AI 트렌드</p>
+        <h1 class="post-title">ChatGPT Workspace Agents 출시 — AI 자동화의 새 분기점</h1>
+        <div class="lang-switch">
+          <a href="/trends/2026-04-29-chatgpt-workspace-agents-blog-automation.html" class="active" onclick="try{localStorage.setItem('cj-lang-pref','ko');}catch(e){}">한국어</a> /
+          <a href="/en/trends/2026-04-29-chatgpt-workspace-agents-blog-automation.html" onclick="try{localStorage.setItem('cj-lang-pref','en');}catch(e){}">English</a>
+        </div>
+        <div class="trend-meta">
+          <span class="meta-cat">AI 트렌드</span>
+          <span>🗓 2026-04-29</span>
+          <span>⏱ 약 4분 읽기</span>
+          <span>📎 출처: OpenAI, VentureBeat, TechCrunch</span>
+        </div>
+      </header>
+
+      <hr class="divider">
+
+      <div class="post-body">
+
+        <!-- IMAGE_PROMPT_1 (Hero) — Insert at top of article body -->
+        <!-- Theme: hero-creator-with-new-tool (from reference-library/INDEX.md) -->
+        <!-- Alt: ChatGPT Workspace Agents 출시 — 새 도구를 마주한 1인 크리에이터 -->
+        <!-- Prompt:
+        Editorial pen and ink illustration in the style of opinion-section
+        magazine art (every.to, New York Times opinion).
+        Hand-drawn line work with intentional imperfections.
+        Background: warm beige #F5EBDC.
+        Lines: black ink, slightly varied weight (1-3px).
+        Selective color fills (very sparingly): terracotta #D4825C accent,
+        sage green #7A8B7A accent. Most of the image is line-only.
+
+        Subject: A solo creator at a wooden desk gazing thoughtfully at a tablet showing
+        three small abstract agent figures (concentric waveforms with arms) standing in a
+        row, suggesting autonomous workspace agents. Open notebook, terracotta mug,
+        single sage green potted plant. Soft side light suggested through line shading.
+
+        Composition: off-center focal point, generous whitespace, magazine layout.
+        Cross-hatching for shadows, not gradients.
+        NOT photorealistic. NOT 3D render. NOT digital painting.
+        Pure pen-and-ink editorial illustration.
+        Do NOT include text, watermarks, logos, "BREAKING" labels, or date badges.
+        Format: 1200x630 horizontal.
+        -->
+
+        <figure class="body-figure">
+          <img src="/trends/images/2026-04-29-chatgpt-workspace-agents-blog-automation-01-hero.png" alt="ChatGPT Workspace Agents 출시 — 새 도구를 마주한 1인 크리에이터" />
+          <figcaption>2026년 4월 OpenAI가 공개한 Workspace Agents — 1인 크리에이터의 콘텐츠 파이프라인이 어떻게 바뀌는가.</figcaption>
+        </figure>
+
+        <p class="lead-para">
+          <strong>2026년 4월 22일</strong>, OpenAI가 <strong>ChatGPT Workspace Agents</strong>를 리서치 프리뷰로 공개했어요(출처: OpenAI 공식 블로그, VentureBeat). Slack·Google Workspace·Salesforce 같은 외부 도구와 직접 연결되는 반자율 에이전트로, 반복 워크플로를 사람 손 없이 굴리는 데 초점이 맞춰졌습니다. 기업용 ChatGPT Business·Enterprise·Edu·Teachers 플랜에서 <strong>2026년 5월 6일까지 무료</strong>, 이후 크레딧 기반 요금제로 전환됩니다(출처: OpenAI). <strong>AI 자동화</strong>를 콘텐츠·블로그 운영 안쪽으로 끌어오려는 1인 크리에이터에게는 <strong>"맞춤 GPT 그 다음"</strong>의 표준이 어디로 향하는지 보여주는 신호입니다.
+        </p>
+
+        <h2>무엇이 공개됐나 — Workspace Agents 4가지 축</h2>
+        <p>OpenAI 공식 블로그와 VentureBeat·UC Today의 보도를 종합하면, 이번 발표의 핵심은 <strong>커넥터·스케줄·공유·에이전트 빌더</strong> 네 갈래로 정리됩니다(출처: OpenAI, 2026-04-22; VentureBeat). 기존 Custom GPTs의 후속이자 "팀 단위로 굴리는 에이전트"를 처음 표준화했다는 평가가 따라붙었어요.</p>
+
+        <div class="feature-grid">
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">1</span>외부 도구 직접 연결</div>
+            <p class="feature-card-desc">Slack, Google Workspace(Gmail·Drive·Calendar·Docs·Sheets), Salesforce와 <strong>네이티브 커넥터</strong>로 연결됩니다. 외부 자동화 툴 없이 ChatGPT 안에서 데이터를 읽고 쓰는 흐름이 가능해요.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">2</span>스케줄 실행</div>
+            <p class="feature-card-desc">에이전트를 <strong>정해진 시간에 자동 실행</strong>하도록 등록할 수 있어요. 매일 아침 트렌드 요약, 주간 콘텐츠 리포트 같은 반복 작업이 별도 cron 없이도 돌아갑니다.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">3</span>Slack에 상주</div>
+            <p class="feature-card-desc">에이전트를 Slack 워크스페이스에 배포하면, 채널에 들어오는 요청을 <strong>즉시 처리</strong>합니다. 1인 운영이라면 1인 Slack도 명령 줄(命令줄) 역할을 하게 돼요.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">4</span>템플릿·노코드 제작</div>
+            <p class="feature-card-desc">사전 제작 템플릿과 <strong>대화형 빌더</strong>로 에이전트를 만듭니다. 코드 없이도 다단계 워크플로 정의가 가능해 <strong>AI 블로그</strong>·뉴스레터 자동화 진입 장벽이 낮아졌어요.</p>
+          </div>
+
+        </div>
+
+        <h2>왜 지금 이게 중요한가 — Custom GPT 다음 표준</h2>
+        <p>VentureBeat은 이번 발표를 "엔터프라이즈를 향한 Custom GPTs의 후속"으로 정리했습니다(출처: VentureBeat, 2026-04-22). UC Today는 같은 날 Microsoft Copilot Studio, Anthropic Claude Managed Agents, Google Gemini Enterprise까지 다섯 개 빅테크가 거의 동시에 에이전트 제품을 발표한 점을 짚었어요. <strong>"에이전트 = 차세대 SaaS 표면"</strong>이라는 합의가 시장에서 굳어지는 흐름입니다.</p>
+
+        <p>크리에이터에게 의미는 두 가지로 압축됩니다. 첫째, ChatGPT 안에서 외부 도구를 직접 부리는 시대가 본격화됐어요. n8n, Zapier 같은 별도 자동화 플랫폼 없이도 가벼운 파이프라인은 ChatGPT 한 화면에서 굴립니다. 둘째, <strong>"매일 같은 작업을 두 번 이상 한다면 에이전트화 후보"</strong>라는 운영 철학이 상품 차원에서 권장되기 시작했습니다.</p>
+
+        <!-- IMAGE_PROMPT_2 (Mid) — Insert before "AI 자동화 + 멀티플랫폼" H2 -->
+        <!-- Theme: workflow-desk-multi-tool (from reference-library/INDEX.md) -->
+        <!-- Alt: AI 자동화 워크플로 — Slack, Google Workspace, X, 블로그가 한 책상 위에 -->
+        <!-- Prompt:
+        Editorial pen and ink illustration in the style of opinion-section
+        magazine art (every.to, New York Times opinion).
+        Hand-drawn line work with intentional imperfections.
+        Background: warm beige #F5EBDC.
+        Lines: black ink, slightly varied weight (1-3px).
+        Selective color fills (very sparingly): terracotta #D4825C accent,
+        sage green #7A8B7A accent. Most of the image is line-only.
+
+        Subject: A creator's workspace from above — laptop open with three small windows
+        suggesting Slack, a calendar, and a document. Sticky notes in a row labeled with
+        small abstract icons (no text). A coffee mug (terracotta), scattered notebooks,
+        a small sage green plant on the corner. A pen mid-stroke connecting three of the
+        items with hand-drawn arrows, suggesting an automated pipeline.
+
+        Composition: top-down flat lay, off-center, generous whitespace, magazine layout.
+        Cross-hatching for shadows, not gradients.
+        NOT photorealistic. NOT 3D render. NOT digital painting.
+        Pure pen-and-ink editorial illustration.
+        Do NOT include text, watermarks, logos, "BREAKING" labels, or date badges.
+        Format: 1200x630 horizontal.
+        -->
+
+        <figure class="body-figure">
+          <img src="/trends/images/2026-04-29-chatgpt-workspace-agents-blog-automation-02-mid.png" alt="AI 자동화 워크플로 — Slack, Google Workspace, X, 블로그가 한 책상 위에" />
+          <figcaption>"매일 같은 작업을 두 번 이상" — 자동화 후보를 한 책상 위에 놓고 보는 시점.</figcaption>
+        </figure>
+
+        <h2>AI 자동화 + 멀티플랫폼 — 1인 크리에이터의 새 워크플로</h2>
+        <p>이번 변화의 진짜 가치는 <strong>AI 자동화</strong>를 콘텐츠 파이프라인 안쪽까지 끌고 들어올 때 드러납니다. 트렌드 리서치 → 초안 작성 → 멀티플랫폼 분배까지의 단계를 ChatGPT 워크스페이스 안에서 묶으면, 도구 사이 복사·붙여넣기 단계가 사라져요.</p>
+
+        <div class="compare-box">
+          <div class="compare-side compare-before">
+            <span class="compare-label">📅 Workspace Agents 도입 전</span>
+            ChatGPT에서 초안 → 구글 문서로 복사 → 브런치/티스토리 업로드 → X·인스타에 직접 게시<br>
+            → 도구 5단계, 사람이 다리 역할
+          </div>
+          <div class="compare-side compare-after">
+            <span class="compare-label">✨ 2026년 4월 22일 이후</span>
+            <strong>Workspace Agent가 매일 07시 트렌드 수집 → Google Docs 초안 → Slack 알림</strong> → 사람은 검수·게시만<br>
+            → 도구 2단계, 사람은 판단만
+          </div>
+        </div>
+
+        <p>이 흐름은 <strong>AI 블로그</strong> 운영에 가장 직접적으로 닿습니다. 매일 같은 카테고리 트렌드를 찾아 글감으로 정리하는 작업, 발행 후 SNS 카드로 압축해 분배하는 작업이 모두 반복형이에요. <a href="/trends/2026-04-27-openai-gpt-5-5-launch.html">GPT-5.5에서 강화된 다단계 추론</a>은 Workspace Agents의 작업 신뢰도를 떠받치는 엔진 역할을 합니다.</p>
+
+        <p>플랫폼 다리도 같은 원리로 묶입니다. <a href="/trends/2026-04-27-x-ai-multiplatform-workflow.html">X AI 멀티플랫폼 워크플로</a>에서 다룬 <strong>X AI</strong> 보조 + Slack 트리거 + Google Sheets 로그 구조가 Workspace Agent로 합쳐지면, <strong>AI 유튜브</strong> 쇼츠 메모와 인스타·X 게시 메모를 같은 에이전트에서 산출할 수 있어요.</p>
+
+        <div class="callout warn">
+          <div class="callout-label">⚠ 과신 금지</div>
+          Workspace Agents는 리서치 프리뷰 단계입니다. <strong>2026년 5월 6일</strong> 이후 크레딧 기반 과금이 시작되며, 시간당 비용·실패율·러닝 코스트가 아직 시장에서 검증되는 중이에요. <strong>1인 운영이라면 가벼운 단일 워크플로 1개부터</strong> 시험하고, 성공·실패 로그를 7일 이상 누적한 뒤 확장하는 절차를 권장합니다.
+        </div>
+
+        <h2>지금 적용할 3가지</h2>
+        <p><strong>1. 워크플로 1개를 글로 정리한다.</strong> "매일 두 번 이상" 하는 작업 중 하나를 골라 입력 → 처리 → 출력 흐름을 한 페이지로 적습니다. 에이전트화 후보를 글로 만든 사람이 곧 <strong>AI 자동화</strong>의 첫 사용자가 됩니다.</p>
+
+        <p><strong>2. ChatGPT Business 14일 평가판으로 무료 구간 활용.</strong> Workspace Agents는 <strong>2026년 5월 6일까지 Business·Enterprise·Edu·Teachers 플랜에서 무료</strong>로 열려 있습니다(출처: OpenAI). 1인이라도 평가판 구간을 활용해 단일 에이전트 1개를 끝까지 만들어보는 절차가 가장 빠른 학습 경로입니다.</p>
+
+        <p><strong>3. 실패 로그를 일주일 모은다.</strong> 에이전트가 멈춘 지점, 출력이 어긋난 단계를 매일 짧게 기록합니다. 일주일치만 모여도 "어떤 작업은 사람이 남고, 어떤 작업은 에이전트로 옮긴다"의 경계가 분명해져요. <a href="/practice/">AI 유튜브 실전</a>에서 다룬 <strong>"되는 것·안 되는 것을 팩트로 공개"</strong>의 운영 철학이 그대로 작동합니다.</p>
+
+        <div class="callout tip">
+          <div class="callout-label">💡 핵심만 다시</div>
+          <ul>
+            <li><strong>2026-04-22</strong> OpenAI, ChatGPT <strong>Workspace Agents</strong> 리서치 프리뷰 공개</li>
+            <li>핵심: <strong>Slack·Google Workspace·Salesforce 직접 연결 · 스케줄 실행 · 노코드 빌더</strong></li>
+            <li>전략: <strong>매일 두 번 이상 반복하는 작업 1개 → 단일 에이전트로 시험 → 7일 로그 누적</strong></li>
+            <li>주의: <strong>2026년 5월 6일</strong> 이후 크레딧 과금 시작, 1인 비용 한계 사전 점검</li>
+          </ul>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-label">📎 출처</div>
+          <ul>
+            <li>OpenAI — <a href="https://openai.com/index/introducing-workspace-agents-in-chatgpt/" target="_blank" rel="noopener">Introducing workspace agents in ChatGPT</a> (2026-04-22)</li>
+            <li>VentureBeat — <a href="https://venturebeat.com/orchestration/openai-unveils-workspace-agents-a-successor-to-custom-gpts-for-enterprises-that-can-plug-directly-into-slack-salesforce-and-more" target="_blank" rel="noopener">OpenAI unveils Workspace Agents, a successor to Custom GPTs</a></li>
+            <li>UC Today — <a href="https://www.uctoday.com/productivity-automation/openai-workspace-agents-chatgpt-enterprise-workflows/" target="_blank" rel="noopener">OpenAI Workspace Agents Launch in ChatGPT</a></li>
+            <li>OpenAI Academy — <a href="https://openai.com/academy/workspace-agents/" target="_blank" rel="noopener">Workspace agents</a></li>
+          </ul>
+        </div>
+
+        <nav class="trends-nav" aria-label="AI 트렌드 글 네비게이션">
+          <a href="/trends/2026-04-28-instagram-reels-teleprompter.html" class="trends-nav-item prev">
+            <span class="trends-nav-label">&larr; 이전 글</span>
+            <span class="trends-nav-title">인스타 릴스 텔레프롬프터 (2026-04-28)</span>
+          </a>
+          <a href="/trends/" class="trends-nav-item index">
+            <span class="trends-nav-index-icon">&#9783;</span>
+            <span>AI 트렌드 전체 목록</span>
+          </a>
+          <span class="trends-nav-item empty"></span>
+        </nav>
+
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">크리에이터 <span>완전정복</span></div>
+    <div class="footer-links">
+      <a href="/learning/">학습</a>
+      <a href="/trends/">AI 트렌드</a>
+      <a href="/playbook/">SNS 인사이트</a>
+      <a href="/about/">소개</a>
+      <a href="/privacy/">개인정보</a>
+      <a href="/contact/">연락처</a>
+    </div>
+    <p class="footer-copy">© 2026 크리에이터 완전정복</p>
+  </div>
+</footer>
+
+<script src="/js/main.js"></script>
+
+<button id="btn-top" aria-label="맨 위로">↑</button>
+<script>
+  var b=document.getElementById('btn-top');
+  window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+
+<script>
+(function(){
+  try {
+    if (localStorage.getItem('cj-lang-pref')) return;
+    if (sessionStorage.getItem('cj-auto-redirect-done')) return;
+    var ul = (navigator.language || '').toLowerCase();
+    if (ul.indexOf('en') === 0) {
+      sessionStorage.setItem('cj-auto-redirect-done','1');
+      location.href = location.pathname.replace('/trends/','/en/trends/');
+    }
+  } catch(e){}
+})();
+</script>
+
+</body>
+</html>
