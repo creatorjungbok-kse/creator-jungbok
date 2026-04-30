@@ -526,30 +526,32 @@ strong { font-weight: 700; }
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  background: #FFFDF9;
-  border-radius: var(--radius);
-  border: 1px solid rgba(26,36,56,.08);
+  background: #FFFFFF;
+  border-radius: 10px;
+  border: 1px solid rgba(26,36,56,.10);
   overflow: hidden;
   text-decoration: none;
   transition: border-color .2s ease, transform .15s ease, box-shadow .2s ease;
-  min-height: 110px;
-  max-height: 140px;
+  min-height: 96px;
+  max-height: 116px;
+  box-shadow: 0 1px 3px rgba(26,36,56,.04);
 }
 .trend-grid-list .trend-grid-card:hover {
   border-color: var(--color-terracotta);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(26,36,56,.08);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(26,36,56,.10);
   text-decoration: none;
 }
 .trend-grid-list .trend-grid-thumb {
-  flex: 0 0 160px;
-  width: 160px;
+  flex: 0 0 145px;
+  width: 145px;
   aspect-ratio: 40 / 21;
   align-self: center;
-  margin: .65rem 0 .65rem .85rem;
+  margin: .55rem 0 .55rem .65rem;
   position: relative;
   overflow: hidden;
-  background: var(--color-beige);
+  background: #F5EBDC;
+  border: 1px solid rgba(26,36,56,.12);
   border-radius: 6px;
 }
 .trend-grid-list .trend-grid-thumb img {
@@ -574,7 +576,7 @@ strong { font-weight: 700; }
 }
 .trend-grid-list .trend-grid-body {
   flex: 1;
-  padding: 1rem 1.25rem 1rem 1.25rem;
+  padding: .75rem 1rem .75rem 1rem;
   display: flex;
   flex-direction: column;
   min-width: 0;
@@ -3300,4 +3302,90 @@ strong { font-weight: 700; }
   color: var(--color-navy) !important;
   margin: 0 !important;
   flex: 1 !important;
+}
+
+/* ============================================================
+   글 페이지 이전글/다음글 네비게이션 — 컴팩트 + 세련 (2026-04-29 락)
+   ============================================================ */
+.trends-nav {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: .65rem;
+  margin: 2.5rem 0 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(26,36,56,.10);
+  align-items: stretch;
+}
+.trends-nav-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: .7rem .9rem;
+  border: 1px solid rgba(26,36,56,.10);
+  border-radius: 8px;
+  background: #FFFFFF;
+  text-decoration: none;
+  color: #1A2438;
+  transition: border-color .2s ease, transform .15s ease, box-shadow .2s ease;
+  min-height: 56px;
+  box-shadow: 0 1px 3px rgba(26,36,56,.04);
+}
+.trends-nav-item:hover {
+  border-color: var(--color-terracotta);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(26,36,56,.08);
+  text-decoration: none;
+}
+.trends-nav-item.empty {
+  background: transparent;
+  border: 1px dashed rgba(26,36,56,.10);
+  pointer-events: none;
+  box-shadow: none;
+  min-height: 56px;
+}
+.trends-nav-item.next { text-align: right; }
+.trends-nav-item.index {
+  text-align: center;
+  align-items: center;
+  padding: .7rem 1rem;
+  flex: 0 0 auto;
+  min-width: 110px;
+}
+.trends-nav-label {
+  display: block;
+  font-size: .68rem;
+  font-weight: 700;
+  color: var(--color-terracotta);
+  letter-spacing: .08em;
+  margin-bottom: .25rem;
+  text-transform: uppercase;
+}
+.trends-nav-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: .82rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #1A2438;
+  word-break: keep-all;
+}
+.trends-nav-index-icon {
+  font-size: 1rem;
+  color: var(--color-terracotta);
+  margin-bottom: .15rem;
+}
+.trends-nav-item.index span:not(.trends-nav-index-icon) {
+  font-size: .78rem;
+  font-weight: 700;
+  color: #1A2438;
+  letter-spacing: .02em;
+}
+
+@media (max-width: 700px) {
+  .trends-nav { grid-template-columns: 1fr; gap: .5rem; }
+  .trends-nav-item.empty { display: none; }
+  .trends-nav-item.next { text-align: left; }
+  .trends-nav-item.index { order: 99; min-width: 0; }
 }

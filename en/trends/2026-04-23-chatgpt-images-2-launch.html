@@ -61,19 +61,8 @@
     .post-chap { color: var(--color-terracotta, #D4825C); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: .78rem; margin-bottom: .5rem; }
     .post-title { font-family: 'Source Serif Pro', Georgia, serif; font-weight: 700; line-height: 1.3; color: var(--text, #1A2438); }
 
-    .trends-nav { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin: 2.5rem 0 1rem; padding-top: 1.5rem; border-top: 1px solid var(--border, #e8d9ca); }
-    .trends-nav-item { display: block; padding: 1rem 1.1rem; border: 1px solid var(--border, #e8d9ca); border-radius: 10px; background: #FFFDF9; text-decoration: none; color: var(--text, #1A2438); transition: border-color .2s, transform .2s; }
-    .trends-nav-item:hover { border-color: var(--color-terracotta, #D4825C); transform: translateY(-2px); }
-    .trends-nav-item.empty { background: transparent; border: 1px dashed var(--border, #e8d9ca); pointer-events: none; }
-    .trends-nav-item.index { text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    .trends-nav-label { display: block; font-size: .72rem; font-weight: 700; color: var(--color-terracotta, #D4825C); letter-spacing: .05em; margin-bottom: .35rem; text-transform: uppercase; }
-    .trends-nav-title { display: block; font-size: .92rem; font-weight: 600; line-height: 1.4; }
-    .trends-nav-index-icon { font-size: 1.2rem; color: var(--color-terracotta, #D4825C); margin-bottom: .35rem; }
-
     @media (max-width: 700px) {
-      .trends-nav { grid-template-columns: 1fr; }
-      .trends-nav-item.empty { display: none; }
-    }
+        }
 
     @media (max-width: 480px) {
       .post-title { font-size: 1.55rem !important; line-height: 1.4 !important; }
@@ -273,18 +262,15 @@
           </ul>
         </div>
 
-        <nav class="trends-nav" aria-label="AI Trends navigation">
-          <a href="2026-04-23-tiktok-symphony-expansion.html" class="trends-nav-item prev">
-            <span class="trends-nav-label">&larr; Previous</span>
-            <span class="trends-nav-title">TikTok Opens Symphony AI Video Tools to Creators — What Actually Changed</span>
-          </a>
+        <nav class="trends-nav" aria-label="AI Trends 글 네비게이션">
+          <span class="trends-nav-item empty"></span>
           <a href="/en/trends/" class="trends-nav-item index">
             <span class="trends-nav-index-icon">&#9783;</span>
-            <span>All AI Trends</span>
+            <span>AI Trends 전체</span>
           </a>
-          <a href="2026-04-24-youtube-shorts-zero-minutes.html" class="trends-nav-item next">
-            <span class="trends-nav-label">Next &rarr;</span>
-            <span class="trends-nav-title">YouTube Lets Users Turn Shorts Off Completely — What Creators Should Do</span>
+          <a href="/en/trends/2026-04-23-tiktok-symphony-expansion.html" class="trends-nav-item next">
+            <span class="trends-nav-label">다음 글 &rarr;</span>
+            <span class="trends-nav-title">TikTok Opens Symphony AI Video Tools to Creators — What Actu…</span>
           </a>
         </nav>
       </div>
