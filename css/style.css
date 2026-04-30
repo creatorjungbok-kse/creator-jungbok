@@ -1511,6 +1511,8 @@ strong { font-weight: 700; }
   display: flex; align-items: flex-start; gap: 2rem;
   padding: 2.5rem 1.5rem;
 }
+/* sidebar 없는 학습 글 — main 가운데 정렬 (2026-04-30) */
+.page-wrap > .main-content:only-child { margin: 0 auto; }
 
 /* ============================================================
    사이드바
@@ -3323,14 +3325,16 @@ strong { font-weight: 700; }
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: .7rem .9rem;
+  align-items: center;          /* 모두 가운데 정렬 (2026-04-30) */
+  text-align: center;
+  padding: 1rem .9rem;
   border: 1px solid rgba(26,36,56,.10);
-  border-radius: 8px;
+  border-radius: 10px;
   background: #FFFFFF;
   text-decoration: none;
   color: #1A2438;
   transition: border-color .2s ease, transform .15s ease, box-shadow .2s ease;
-  min-height: 56px;
+  min-height: 76px;
   box-shadow: 0 1px 3px rgba(26,36,56,.04);
 }
 .trends-nav-item:hover {
@@ -3347,23 +3351,19 @@ strong { font-weight: 700; }
   box-shadow: none;
 }
 .trends-nav-item.next {
-  text-align: right;
-  align-items: flex-end;
+  /* 가운데 정렬 (2026-04-30) — 기존 right 정렬 폐지 */
 }
 .trends-nav-item.index {
-  flex: 0 0 auto;
-  text-align: center;
-  align-items: center;
-  padding: .7rem 1.2rem;
-  min-width: 130px;
+  flex: 1 1 0;                  /* 균등 분배 (2026-04-30) */
+  padding: 1rem .9rem;
 }
 .trends-nav-label {
   display: block;
-  font-size: .68rem;
+  font-size: .72rem;
   font-weight: 700;
   color: var(--color-terracotta);
   letter-spacing: .08em;
-  margin-bottom: .25rem;
+  margin-bottom: .35rem;
   text-transform: uppercase;
 }
 .trends-nav-title {
@@ -3371,9 +3371,9 @@ strong { font-weight: 700; }
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  font-size: .82rem;
+  font-size: .9rem;
   font-weight: 600;
-  line-height: 1.35;
+  line-height: 1.4;
   color: #1A2438;
   word-break: keep-all;
 }
