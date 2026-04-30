@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Blog Engine — One Long-Form Post Into 5 Platforms (6-Step ChatGPT Workflow) | Creator Jungbok</title>
+  <meta name="description" content="A 6-step ChatGPT workflow that turns one AI blog long-form post into AI YouTube Shorts, AI TikTok, AI Instagram carousel, and X thread — all in a single session.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    .trend-meta { display: flex; flex-wrap: wrap; gap: .6rem 1rem; font-size: .8rem; color: #666; margin: .75rem 0 1.25rem 0; padding-bottom: 1rem; border-bottom: 1px solid var(--border, #e5e5e5); align-items: center; }
+    .trend-meta span { display: inline-flex; align-items: center; gap: .3rem; line-height: 1.4; }
+    .trend-meta .meta-cat { background: #1A2438; color: #fff; padding: .2rem .7rem; border-radius: 999px; font-weight: 700; font-size: .7rem; letter-spacing: .02em; }
+    .subhead { font-size: 1.05rem; line-height: 1.7; color: #444; margin: .25rem 0 1.5rem 0; font-weight: 500; letter-spacing: -.005em; }
+    .lead-para { font-size: 1.02rem; line-height: 1.85; color: var(--text, #222); padding: 1.1rem 1.25rem; background: #f5ebdc; border-left: 4px solid #1A2438; border-radius: 0 8px 8px 0; margin: 1.25rem 0 2rem 0; }
+    .lead-para strong { color: #1A2438; }
+    .step-grid { display: grid; grid-template-columns: 1fr; gap: .9rem; margin: 1.5rem 0; }
+    .step-card { border: 1px solid var(--border, #e5e5e5); border-radius: 10px; padding: 1.1rem 1.25rem; background: #fafafa; }
+    .step-card-num { display: inline-block; background: #1A2438; color: #fff; width: 1.6rem; height: 1.6rem; line-height: 1.6rem; text-align: center; border-radius: 50%; font-weight: 800; font-size: .85rem; margin-right: .5rem; }
+    .step-card-title { font-size: 1rem; font-weight: 800; color: var(--text, #222); margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .step-card-desc { font-size: .92rem; line-height: 1.75; color: #444; margin: 0; }
+    .callout { margin: 1.75rem 0; padding: 1.1rem 1.25rem; border-radius: 10px; border-left: 4px solid; font-size: .93rem; line-height: 1.75; }
+    .callout.tip { background: #f0fdf4; border-color: #22c55e; }
+    .callout.info { background: #eff6ff; border-color: #3b82f6; }
+    .callout.warn { background: #fffbeb; border-color: #f59e0b; }
+    .callout-label { font-weight: 800; font-size: .85rem; margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .callout.tip .callout-label { color: #16a34a; }
+    .callout.info .callout-label { color: #2563eb; }
+    .callout.warn .callout-label { color: #d97706; }
+    .callout ul { margin: .4rem 0 0 1.1rem; padding: 0; }
+    .callout li { margin-bottom: .3rem; }
+    .callout a { color: inherit; text-decoration: underline; word-break: break-all; }
+    .checklist { background: #fff; border: 1px solid #e0e0e0; border-radius: 10px; padding: 1.1rem 1.25rem; margin: 1.5rem 0; }
+    .checklist h3 { margin: 0 0 .75rem 0; font-size: 1rem; color: #1A2438; }
+    .checklist label { display: block; padding: .35rem 0; font-size: .95rem; line-height: 1.6; cursor: pointer; }
+    .checklist input { margin-right: .5rem; }
+    @media (max-width: 480px) {
+      .post-title { font-size: 1.55rem !important; line-height: 1.4 !important; }
+      .subhead { font-size: .95rem; }
+      .lead-para { font-size: .95rem; padding: 1rem; }
+      .trend-meta { font-size: .75rem; gap: .5rem .75rem; }
+      .step-card { padding: 1rem; }
+      .step-card-title { font-size: .95rem; }
+      .step-card-desc { font-size: .88rem; }
+      .callout { padding: 1rem; font-size: .88rem; }
+    }
+    .post-body strong { color: #111; font-weight: 800; }
+    .post-body h2 { margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.4rem; line-height: 1.4; }
+    @media (max-width: 480px) { .post-body h2 { font-size: 1.2rem; margin-top: 2rem; } }
+    .post-body h3 { margin-top: 1.5rem; margin-bottom: .5rem; font-size: 1.1rem; }
+    .post-body p { line-height: 1.85; font-size: .98rem; }
+    @media (max-width: 480px) { .post-body p { font-size: .95rem; line-height: 1.8; } }
+    .post-body ul { line-height: 1.85; }
+    .post-body ul li { margin-bottom: .35rem; }
+    .post-body figure { margin: 1.75rem 0; text-align: center; }
+    .post-body figure img { width: 100%; height: auto; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+    .post-body figure figcaption { font-size: .82rem; color: #777; margin-top: .5rem; font-style: italic; }
+    .page-wrap { justify-content: center; }
+    .post-thumbnail { width: 100%; height: auto; border-radius: 12px; margin: 0 0 1.5rem 0; display: block; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    @media (max-width: 480px) { .post-thumbnail { border-radius: 8px; margin-bottom: 1rem; } }
+  </style>
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Creator Jungbok">
+  <meta property="og:title" content="AI Blog Engine — One Long-Form Post Into 5 Platforms (6-Step ChatGPT Workflow)">
+  <meta property="og:description" content="A 6-step ChatGPT workflow that turns one AI blog long-form post into AI YouTube Shorts, AI TikTok, AI Instagram carousel, and X thread — all in a single session.">
+  <meta property="og:url" content="https://creatorjungbok.co.kr/en/playbook/2026-04-30-chatgpt-blog-engine-5-platforms.html">
+  <meta property="og:image" content="https://creatorjungbok.co.kr/playbook/images/2026-04-30-chatgpt-blog-engine-5-platforms-en.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="article:published_time" content="2026-04-30T07:00:00+09:00">
+  <meta property="article:section" content="Playbook">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://creatorjungbok.co.kr/playbook/images/2026-04-30-chatgpt-blog-engine-5-platforms-en.png">
+  <link rel="alternate" hreflang="ko" href="https://creatorjungbok.co.kr/playbook/2026-04-30-chatgpt-blog-engine-5-platforms.html">
+  <link rel="alternate" hreflang="en" href="https://creatorjungbok.co.kr/en/playbook/2026-04-30-chatgpt-blog-engine-5-platforms.html">
+  <link rel="alternate" hreflang="x-default" href="https://creatorjungbok.co.kr/playbook/2026-04-30-chatgpt-blog-engine-5-platforms.html">
+  <!-- Google Analytics 4 (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6B72N2BV55"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6B72N2BV55');
+  </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/en/" class="site-logo">Creator <span>Jungbok</span></a>
+    <span class="lang-toggle-mobile"><a href="#" data-lang="ko">한국어</a><span class="lang-sep">/</span><a href="#" class="lang-active" data-lang="en">English</a></span>
+    <button class="nav-toggle" aria-label="Menu" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+    <nav class="header-nav">
+      <a href="/en/">Home</a>
+      <a href="/en/trends/">AI Trends</a>
+      <a href="/en/playbook/">SNS Insights</a>
+      <a href="/en/about/">About</a>
+      <span class="lang-toggle">
+        <a href="#" data-lang="ko">한국어</a>
+        <span class="lang-sep">/</span>
+        <a href="#" class="lang-active" data-lang="en">English</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+  <main class="main-content">
+    <article>
+      <header class="post-header">
+        <!-- IMAGE_PROMPT_1 (Hero) — Insert at top of article body -->
+        <!-- Theme: workflow-desk-multi-tool (from reference-library/INDEX.md) -->
+        <!-- Alt: AI blog engine — one long article fanning out into five platform shapes on a desk -->
+        <!-- Prompt:
+        Editorial pen and ink illustration in the style of opinion-section
+        magazine art (every.to, New York Times opinion).
+        Hand-drawn line work with intentional imperfections.
+        Background: warm beige #F5EBDC.
+        Lines: black ink, slightly varied weight (1-3px).
+        Selective color fills (very sparingly): terracotta #D4825C accent on a single ink bottle, sage green #7A8B7A accent on one of the five output cards. Most of the image is line-only.
+
+        Subject: An overhead view of a wooden desk. At the center, one long rectangular paper sheet representing a long-form blog article, with hand-drawn paragraphs as squiggly horizontal lines (no readable letters). From the bottom of the article, five thin pen-drawn arrows fan outward to five small output shapes: a vertical phone frame (Shorts), a square video frame (TikTok), a stack of square cards (Instagram carousel), a small chat bubble with three short lines (X thread), and a smaller blog post card. A fountain pen rests diagonally across the article. A small ink bottle on the upper-left with terracotta fill.
+
+        Composition: top-down flat lay, off-center focal point on the central article paper, generous whitespace on the upper-right, magazine layout. Cross-hatching for shadows, not gradients.
+        NOT photorealistic. NOT 3D render. NOT digital painting.
+        Pure pen-and-ink editorial illustration.
+        Do NOT include text, watermarks, logos, "BREAKING" labels, or date badges.
+        Format: 1200x630 horizontal.
+        -->
+        <img src="/playbook/images/2026-04-30-chatgpt-blog-engine-5-platforms-en.png" alt="AI blog engine workflow — Creator Jungbok" class="post-thumbnail" width="1200" height="630" loading="eager" />
+        <p class="post-chap">Playbook</p>
+        <h1 class="post-title">AI Blog Engine — One Long-Form Post Into 5 Platforms (6-Step ChatGPT Workflow)</h1>
+        <p class="subhead">Anchor. Extract. Map. Branch. Color. Queue.</p>
+        <div class="lang-switch">
+          <a href="#" data-lang="ko">한국어</a>
+          <span class="lang-sep">/</span>
+          <a href="#" class="lang-active" data-lang="en">English</a>
+        </div>
+        <div class="trend-meta">
+          <span class="meta-cat">Playbook</span>
+          <span>🗓 2026-04-30</span>
+          <span>⏱ 8 min read</span>
+          <span>📎 Sources: MarTech, Stratabeat, InfluenceFlow, Buffer</span>
+        </div>
+      </header>
+
+      <hr class="divider">
+
+      <div class="post-body">
+
+        <p class="lead-para">
+          One long-form post lands. It stays there. That is the most common picture for a solo creator who claims to run five channels but writes from scratch each day. Used as an engine, an <strong>AI blog</strong> post becomes one Shorts script, one TikTok, one carousel, one X thread, and one short summary — all in the same ChatGPT session. This piece walks through the six-step branching workflow. Same hour, five times the output.
+        </p>
+
+        <figure class="body-figure">
+          <img src="/playbook/images/2026-04-30-chatgpt-blog-engine-5-platforms-01-hero.png" alt="One blog post fanning out into five platform formats on a desk" loading="lazy" />
+          <figcaption>One long article on the desk — five platform shapes fanning out.</figcaption>
+        </figure>
+
+        <h2>Why the AI blog post is the engine</h2>
+        <p>A long-form post already contains every seed: the claim, the numbers, the steps, the quotes, the personal note. A short video pulls a slice. A carousel pulls only the steps. A thread pulls one sentence at a time. Going the other way is much harder — short content first, long content second, almost never works. Same thirty minutes, very different output count.</p>
+
+        <p>The 2026 marketing term for this is <strong>content atomization</strong>. Build a single anchor asset, then break it into platform-native pieces with the fragmentation planned before the original is written (source: <a href="https://stratabeat.com/content-atomization/" target="_blank" rel="noopener">Stratabeat</a>). On the reach side, Buffer reports a roughly 400% increase across new platforms after introducing systematic repurposing, and the often-quoted figure is that one post that reaches 500 people on a single channel reaches 5,000–15,000 across five (source: <a href="https://heropost.io/how-to-repurpose-content-across-social-media-2026/" target="_blank" rel="noopener">Heropost</a>). Multiplier, not addition.</p>
+
+        <p>Doing this by hand takes five times the work, though. ChatGPT collapses that conversion cost. The trick is staying in one session so all five outputs share context, voice, and references. New chats break tone. This is where light <strong>automation</strong> earns its keep — fast conversion, steady voice, one human review at the end.</p>
+
+        <h2>Six-step workflow inside one ChatGPT session</h2>
+        <p>Run the six steps in order, in the same chat. Do not start a new conversation between steps. Lose context, and the five branches start to look like five different people.</p>
+
+        <div class="step-grid">
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">1</span>Anchor pick — choose one long-form post</div>
+            <p class="step-card-desc">Start by picking the article you'll branch. A new draft works, but pulling a 1,500–3,000 word post that's already on your <strong>AI blog</strong> works just as well. Two conditions. The piece must show your point of view, not pure summary. And it must contain at least two of: steps, statistics, quotes, anecdotes. Pure fact lists branch into five flat outputs. I picked one earlier this week with seven steps, two stats, and one personal note — that combination branches the cleanest.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">2</span>Extract — pull five card types</div>
+            <p class="step-card-desc">Paste the full anchor into ChatGPT and ask for batch extraction. Prompt: "From this article, extract five cards: one core claim, three statistics or numbers, five to seven action steps, two direct quotes or memorable phrases, and one first-person anecdote. Each card: one-line summary plus original excerpt." Those five cards are the raw material every later branch will pull from. Save them — you'll reuse the structure for the next anchor too. A small library forms over weeks.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">3</span>Map — five-channel format matrix</div>
+            <p class="step-card-desc">Map five cards onto five platforms. Prompt: "Map each card to a primary and a secondary platform across blog (long-form, the original), <strong>AI YouTube</strong> Shorts (30–60s, hook-led), <strong>AI TikTok</strong> (short, scene-led), <strong>AI Instagram</strong> carousel (8 slides, one insight per slide), and X thread (one-line opener plus 6–8 supporting lines)." Statistics tend to land on X. Steps land on carousels and Shorts. Anecdotes land hardest on TikTok. Receive the output as a table and store it.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">4</span>Branch — five outputs in one pass</div>
+            <p class="step-card-desc">With the matrix locked, ask for all five outputs in a single response. Prompt: "Based on the matrix above, produce these five at once. (1) Shorts script, 60 seconds, hook + body + CTA. (2) TikTok script, 30 seconds, first-second hook emphasized. (3) Instagram carousel, 8 slides, headline plus one line each. (4) X thread, 7 posts, hook in the first. (5) Blog summary, 200 words, for the index. Different tone and length per channel." First pass will read flat. Color comes in step five.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">5</span>Color — one human line per channel</div>
+            <p class="step-card-desc">Ship the raw output and all five channels feel the same. Add one human line per platform. The Shorts gets a personal one-line hook. The TikTok gets a real anecdote sentence. The carousel gets your opinion on the last slide. The <strong>X AI</strong> thread gets a single odd word at the end of the first post. The blog summary gets one phrase that only you write. One to two minutes per channel, ten minutes for the whole batch. 2026 algorithms increasingly read for "who wrote this" — this is where that signal lives.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">6</span>Queue + seed the next anchor</div>
+            <p class="step-card-desc">Drop all five into their schedulers — site queue for blog, native scheduler for YouTube and TikTok, third-party tool for Instagram, native for X. Before closing the session, ask one more thing: "List five angles this article didn't cover, and five candidate anchors for next week." Those five become step one of the next cycle. The engine never fully cools — restart cost drops to one minute.</p>
+          </div>
+
+        </div>
+
+        <!-- IMAGE_PROMPT_2 (Mid) — Insert before "Three common traps" section -->
+        <!-- Theme: models-comparison-ecosystem (from reference-library/INDEX.md) -->
+        <!-- Alt: Five-card to five-platform mapping matrix — pen-and-ink illustration -->
+        <!-- Prompt:
+        Editorial pen and ink illustration in the style of opinion-section
+        magazine art (every.to, New York Times opinion).
+        Hand-drawn line work with intentional imperfections.
+        Background: warm beige #F5EBDC.
+        Lines: black ink, slightly varied weight (1-3px).
+        Selective color fills (very sparingly): terracotta #D4825C accent on one card with a tiny chart shape, sage green #7A8B7A accent on one card with a small quote mark. Most of the image is line-only.
+
+        Subject: A clean two-column matrix layout drawn by hand. Left column: five small horizontal cards stacked vertically, each card showing an abstract icon — a chart bar (statistic), a numbered list (steps), a quote mark (quote), a small running figure (anecdote), a star (claim). Right column: five small platform shapes — a long rectangle (blog), a vertical phone frame (Shorts), a square video frame (TikTok), a stack of square slides (Instagram carousel), a chat bubble (X thread). Hand-drawn diagonal arrows connect cards on the left to platforms on the right, showing many-to-many mapping.
+
+        Composition: balanced two-column matrix, off-center focal point on the central crossing arrows, generous whitespace at the top and bottom, magazine layout. Cross-hatching for shadows, not gradients.
+        NOT photorealistic. NOT 3D render. NOT digital painting.
+        Pure pen-and-ink editorial illustration.
+        Do NOT include text, watermarks, logos, "BREAKING" labels, or date badges.
+        Format: 1200x630 horizontal.
+        -->
+        <figure>
+          <img src="/playbook/images/2026-04-30-chatgpt-blog-engine-5-platforms-02-mid.png" alt="Five-card to five-platform mapping matrix — pen-and-ink illustration" loading="lazy" />
+        </figure>
+
+        <h2>Three common traps</h2>
+
+        <h3>Trap 1. Copy-paste the blog body into every channel</h3>
+        <p>The most frequent failure. The blog body lands on the X thread, the same text fills eight carousel slides, the same paragraphs sit under the YouTube description. Every major algorithm — Google, Naver, <strong>X AI</strong>, Instagram — discounts duplicate text. In step four, ask explicitly for "different tone, length, and CTA per channel." One sentence becomes five expressions. Five channels stay alive together.</p>
+
+        <h3>Trap 2. Skip the extraction step</h3>
+        <p>Many people jump from step one to step four and skip the five-card extraction in step two. ChatGPT then re-reads the article every time it converts, and tone drifts between channels. Hand it the five cards once and the same raw material flows into five formats — same person, five faces. Tried it both ways. The five-minute extraction step changes the output more than any other tweak.</p>
+
+        <h3>Trap 3. Close the session without next-anchor seeds</h3>
+        <p>The second most-skipped step. Without seeds, next week's step one starts cold. With five seeds in pocket, step one finishes in a minute. Tiny ritual, big compounding effect.</p>
+
+        <div class="callout warn">
+          <div class="callout-label">⚠ Human review at the publish line</div>
+          The most-cited 2026 warning is that low-effort AI content no longer lands the way it used to (source: <a href="https://www.descript.com/blog/article/100-chatgpt-prompts-for-creators-speed-up-your-workflow-with-ai" target="_blank" rel="noopener">Descript</a>). Automate steps one through four. Keep the one-minute review before publish manual. Three things to scan: factual mistakes, phrases that read wrong out of context, dated examples. Catch those, almost everything else can ship.
+        </div>
+
+        <h2>Today's six-item checklist</h2>
+        <div class="checklist">
+          <h3>One ChatGPT session, six steps</h3>
+          <label><input type="checkbox"> Pick the anchor blog post (1,500–3,000 words)</label>
+          <label><input type="checkbox"> Extract five cards (claim, stats, steps, quotes, anecdote)</label>
+          <label><input type="checkbox"> Build the five-channel format matrix</label>
+          <label><input type="checkbox"> Branch all five outputs in one pass (KO + EN)</label>
+          <label><input type="checkbox"> Add one human line per channel</label>
+          <label><input type="checkbox"> Queue the five and capture five next-anchor seeds</label>
+        </div>
+
+        <p>The weekly planning version of this same engine lives in <a href="/en/playbook/2026-04-29-chatgpt-content-calendar-7-step.html">AI Blog Content Calendar With ChatGPT — A 7-Step Weekly Workflow</a>. Related platform-shift coverage sits on the <a href="/en/trends/">AI Trends index</a>. This piece is the single-anchor atomization version of the same idea.</p>
+
+        <div class="callout tip">
+          <div class="callout-label">💡 Core in one breath</div>
+          <ul>
+            <li>One ChatGPT session, six steps, one post → five channels. Reach multiplier 5–30×.</li>
+            <li>Step two — five-card extraction — drives most of the branch quality.</li>
+            <li>Five channels: <strong>AI blog</strong>, <strong>AI YouTube</strong> Shorts, <strong>AI TikTok</strong>, <strong>AI Instagram</strong> carousel, X thread.</li>
+            <li>Step five adds one human line per platform. That single touch separates five faces.</li>
+            <li>Automate through step four. Keep step five and the publish-line review human.</li>
+          </ul>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-label">📎 Sources</div>
+          <ul>
+            <li>Stratabeat (2026) — <a href="https://stratabeat.com/content-atomization/" target="_blank" rel="noopener">Boost Your 2026 Marketing ROI with Content Atomization</a></li>
+            <li>Heropost (2026) — <a href="https://heropost.io/how-to-repurpose-content-across-social-media-2026/" target="_blank" rel="noopener">How to Repurpose Content Across Social Media (Save 10+ Hours/Week)</a></li>
+            <li>InfluenceFlow (2026) — <a href="https://influenceflow.io/resources/repurposing-content-across-multiple-platforms-the-complete-2026-guide/" target="_blank" rel="noopener">Repurposing Content Across Multiple Platforms: The Complete 2026 Guide</a></li>
+            <li>Descript (2026) — <a href="https://www.descript.com/blog/article/100-chatgpt-prompts-for-creators-speed-up-your-workflow-with-ai" target="_blank" rel="noopener">100+ ChatGPT Prompts for Creators</a></li>
+            <li>Buffer (2026) — <a href="https://buffer.com/resources/instagram-algorithms/" target="_blank" rel="noopener">How the Instagram Algorithm Works: Your 2026 Guide</a></li>
+          </ul>
+        </div>
+
+        <nav class="trends-nav" aria-label="Playbook navigation">
+          <a href="/en/playbook/" class="trends-nav-item index">
+            <span class="trends-nav-index-icon">&#9783;</span>
+            <span>All Playbook posts</span>
+          </a>
+          <span class="trends-nav-item empty"></span>
+        </nav>
+
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>&copy; 2026 Creator Jungbok. All rights reserved.</p>
+    <p><a href="/en/privacy/">Privacy</a> · <a href="/en/contact/">Contact</a></p>
+  </div>
+</footer>
+
+<script src="/js/lang-toggle.js"></script>
+</body>
+</html>

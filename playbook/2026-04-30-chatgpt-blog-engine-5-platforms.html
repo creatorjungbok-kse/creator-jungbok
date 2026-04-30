@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatGPT 블로그 엔진 — 글 1개로 5채널 분기 6단계 | 크리에이터 완전정복</title>
+  <meta name="description" content="ChatGPT 한 세션으로 블로그 long-form 1편을 AI 유튜브·X·인스타·틱톡 5채널 콘텐츠로 분기하는 6단계 워크플로. 1편이 5채널로 늘어나는 atomization 프레임.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .trend-meta { display: flex; flex-wrap: wrap; gap: .6rem 1rem; font-size: .8rem; color: #666; margin: .75rem 0 1.25rem 0; padding-bottom: 1rem; border-bottom: 1px solid var(--border, #e5e5e5); align-items: center; }
+    .trend-meta span { display: inline-flex; align-items: center; gap: .3rem; line-height: 1.4; }
+    .trend-meta .meta-cat { background: #1A2438; color: #fff; padding: .2rem .7rem; border-radius: 999px; font-weight: 700; font-size: .7rem; letter-spacing: .02em; }
+    .subhead { font-size: 1.05rem; line-height: 1.7; color: #444; margin: .25rem 0 1.5rem 0; font-weight: 500; letter-spacing: -.005em; }
+    .lead-para { font-size: 1.02rem; line-height: 1.85; color: var(--text, #222); padding: 1.1rem 1.25rem; background: #f5ebdc; border-left: 4px solid #1A2438; border-radius: 0 8px 8px 0; margin: 1.25rem 0 2rem 0; }
+    .lead-para strong { color: #1A2438; }
+    .step-grid { display: grid; grid-template-columns: 1fr; gap: .9rem; margin: 1.5rem 0; }
+    .step-card { border: 1px solid var(--border, #e5e5e5); border-radius: 10px; padding: 1.1rem 1.25rem; background: #fafafa; }
+    .step-card-num { display: inline-block; background: #1A2438; color: #fff; width: 1.6rem; height: 1.6rem; line-height: 1.6rem; text-align: center; border-radius: 50%; font-weight: 800; font-size: .85rem; margin-right: .5rem; }
+    .step-card-title { font-size: 1rem; font-weight: 800; color: var(--text, #222); margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .step-card-desc { font-size: .92rem; line-height: 1.75; color: #444; margin: 0; }
+    .callout { margin: 1.75rem 0; padding: 1.1rem 1.25rem; border-radius: 10px; border-left: 4px solid; font-size: .93rem; line-height: 1.75; }
+    .callout.tip { background: #f0fdf4; border-color: #22c55e; }
+    .callout.info { background: #eff6ff; border-color: #3b82f6; }
+    .callout.warn { background: #fffbeb; border-color: #f59e0b; }
+    .callout-label { font-weight: 800; font-size: .85rem; margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .callout.tip .callout-label { color: #16a34a; }
+    .callout.info .callout-label { color: #2563eb; }
+    .callout.warn .callout-label { color: #d97706; }
+    .callout ul { margin: .4rem 0 0 1.1rem; padding: 0; }
+    .callout li { margin-bottom: .3rem; }
+    .callout a { color: inherit; text-decoration: underline; word-break: break-all; }
+    .checklist { background: #fff; border: 1px solid #e0e0e0; border-radius: 10px; padding: 1.1rem 1.25rem; margin: 1.5rem 0; }
+    .checklist h3 { margin: 0 0 .75rem 0; font-size: 1rem; color: #1A2438; }
+    .checklist label { display: block; padding: .35rem 0; font-size: .95rem; line-height: 1.6; cursor: pointer; }
+    .checklist input { margin-right: .5rem; }
+    @media (max-width: 480px) {
+      .post-title { font-size: 1.55rem !important; line-height: 1.4 !important; }
+      .subhead { font-size: .95rem; }
+      .lead-para { font-size: .95rem; padding: 1rem; }
+      .trend-meta { font-size: .75rem; gap: .5rem .75rem; }
+      .step-card { padding: 1rem; }
+      .step-card-title { font-size: .95rem; }
+      .step-card-desc { font-size: .88rem; }
+      .callout { padding: 1rem; font-size: .88rem; }
+    }
+    .post-body strong { color: #111; font-weight: 800; }
+    .post-body h2 { margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.4rem; line-height: 1.4; }
+    @media (max-width: 480px) { .post-body h2 { font-size: 1.2rem; margin-top: 2rem; } }
+    .post-body h3 { margin-top: 1.5rem; margin-bottom: .5rem; font-size: 1.1rem; }
+    .post-body p { line-height: 1.85; font-size: .98rem; }
+    @media (max-width: 480px) { .post-body p { font-size: .95rem; line-height: 1.8; } }
+    .post-body ul { line-height: 1.85; }
+    .post-body ul li { margin-bottom: .35rem; }
+    .post-body figure { margin: 1.75rem 0; text-align: center; }
+    .post-body figure img { width: 100%; height: auto; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+    .post-body figure figcaption { font-size: .82rem; color: #777; margin-top: .5rem; font-style: italic; }
+    .page-wrap { justify-content: center; }
+    .post-thumbnail { width: 100%; height: auto; border-radius: 12px; margin: 0 0 1.5rem 0; display: block; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    @media (max-width: 480px) { .post-thumbnail { border-radius: 8px; margin-bottom: 1rem; } }
+  </style>
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="크리에이터 완전정복">
+  <meta property="og:title" content="ChatGPT 블로그 엔진 — 글 1개로 5채널 분기 6단계">
+  <meta property="og:description" content="ChatGPT 한 세션으로 블로그 long-form 1편을 AI 유튜브·X·인스타·틱톡 5채널 콘텐츠로 분기하는 6단계 워크플로. 1편이 5채널로 늘어나는 atomization 프레임.">
+  <meta property="og:url" content="https://creatorjungbok.co.kr/playbook/2026-04-30-chatgpt-blog-engine-5-platforms.html">
+  <meta property="og:image" content="https://creatorjungbok.co.kr/playbook/images/2026-04-30-chatgpt-blog-engine-5-platforms.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="article:published_time" content="2026-04-30T07:00:00+09:00">
+  <meta property="article:section" content="SNS 인사이트">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://creatorjungbok.co.kr/playbook/images/2026-04-30-chatgpt-blog-engine-5-platforms.png">
+  <link rel="alternate" hreflang="ko" href="https://creatorjungbok.co.kr/playbook/2026-04-30-chatgpt-blog-engine-5-platforms.html">
+  <link rel="alternate" hreflang="en" href="https://creatorjungbok.co.kr/en/playbook/2026-04-30-chatgpt-blog-engine-5-platforms.html">
+  <link rel="alternate" hreflang="x-default" href="https://creatorjungbok.co.kr/playbook/2026-04-30-chatgpt-blog-engine-5-platforms.html">
+  <!-- Google Analytics 4 (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6B72N2BV55"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6B72N2BV55');
+  </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="site-logo">크리에이터 <span>완전정복</span></a>
+    <span class="lang-toggle-mobile"><a href="#" class="lang-active" data-lang="ko">한국어</a><span class="lang-sep">/</span><a href="#" data-lang="en">English</a></span>
+    <button class="nav-toggle" aria-label="메뉴" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+    <nav class="header-nav">
+      <a href="/">홈</a>
+      <a href="/learning/">학습</a>
+      <a href="/trends/">AI 트렌드</a>
+      <a href="/playbook/">SNS 인사이트</a>
+      <a href="/about/">소개</a>
+      <span class="lang-toggle">
+        <a href="#" class="lang-active" data-lang="ko">한국어</a>
+        <span class="lang-sep">/</span>
+        <a href="#" data-lang="en">English</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+  <main class="main-content">
+    <article>
+      <header class="post-header">
+        <!-- IMAGE_PROMPT_1 (Hero) — Insert at top of article body -->
+        <!-- Theme: workflow-desk-multi-tool (from reference-library/INDEX.md) -->
+        <!-- Alt: ChatGPT 블로그 엔진 — 책상 위 긴 종이 1장에서 5개 채널로 갈라지는 분기 흐름 -->
+        <!-- Prompt:
+        Editorial pen and ink illustration in the style of opinion-section
+        magazine art (every.to, New York Times opinion).
+        Hand-drawn line work with intentional imperfections.
+        Background: warm beige #F5EBDC.
+        Lines: black ink, slightly varied weight (1-3px).
+        Selective color fills (very sparingly): terracotta #D4825C accent on a single ink bottle, sage green #7A8B7A accent on one of the five output cards. Most of the image is line-only.
+
+        Subject: An overhead view of a wooden desk. At the center, one long rectangular paper sheet representing a long-form blog article, with hand-drawn paragraphs as squiggly horizontal lines (no readable letters). From the bottom of the article, five thin pen-drawn arrows fan outward to five small output shapes: a vertical phone frame (short video), a square video frame (TikTok), a stack of square cards (Instagram carousel), a small chat bubble with three short lines (X thread), and a smaller blog post card. A fountain pen rests diagonally across the article. A small ink bottle on the upper-left with terracotta fill.
+
+        Composition: top-down flat lay, off-center focal point on the central article paper, generous whitespace on the upper-right, magazine layout. Cross-hatching for shadows, not gradients.
+        NOT photorealistic. NOT 3D render. NOT digital painting.
+        Pure pen-and-ink editorial illustration.
+        Do NOT include text, watermarks, logos, "BREAKING" labels, or date badges.
+        Format: 1200x630 horizontal.
+        -->
+        <img src="/playbook/images/2026-04-30-chatgpt-blog-engine-5-platforms.png" alt="ChatGPT 블로그 엔진 워크플로 — 크리에이터 완전정복" class="post-thumbnail" width="1200" height="630" loading="eager" />
+        <p class="post-chap">SNS 인사이트</p>
+        <h1 class="post-title">ChatGPT 블로그 엔진 — 글 1개로 5채널 분기 6단계</h1>
+        <p class="subhead">앵커. 추출. 매핑. 분기. 색깔. 큐.</p>
+        <div class="lang-switch">
+          <a href="#" class="lang-active" data-lang="ko">한국어</a>
+          <span class="lang-sep">/</span>
+          <a href="#" data-lang="en">English</a>
+        </div>
+        <div class="trend-meta">
+          <span class="meta-cat">SNS 인사이트</span>
+          <span>🗓 2026-04-30</span>
+          <span>⏱ 약 8분 읽기</span>
+          <span>📎 출처: MarTech, Stratabeat, InfluenceFlow, Buffer</span>
+        </div>
+      </header>
+
+      <hr class="divider">
+
+      <div class="post-body">
+
+        <p class="lead-para">
+          블로그 글 한 편을 쓰고, 그 한 편이 거기서 끝납니다. 5채널을 같이 운영한다면서 매일 새로 쓰는 사람의 가장 흔한 풍경입니다. <strong>ChatGPT</strong>를 한 세션 안에서 엔진처럼 쓰면 이야기가 달라집니다. 긴 글 1편이 <strong>유튜브 숏츠 1개, 틱톡 영상 1개, 인스타 캐럿셀 1개, X 스레드 1개</strong>로 같은 자리에서 갈라집니다. 이 글은 그 분기 6단계를 정리합니다. 한 번 익히면 같은 시간에 콘텐츠가 다섯 배로 늘어납니다.
+        </p>
+
+        <figure class="body-figure">
+          <img src="/playbook/images/2026-04-30-chatgpt-blog-engine-5-platforms-01-hero.png" alt="블로그 1편이 5채널로 갈라지는 분기 흐름" loading="lazy" />
+          <figcaption>책상 위 긴 글 1편 — 5채널로 갈라지는 분기 흐름.</figcaption>
+        </figure>
+
+        <h2>왜 블로그가 엔진이 되는가</h2>
+        <p>긴 글에는 모든 형식의 씨앗이 다 들어 있습니다. 핵심 주장, 통계, 단계, 인용, 일화. 짧은 영상은 거기서 한 조각만 잘라냅니다. 캐럿셀은 단계만 떼어냅니다. X 스레드는 핵심만 1줄씩 나눕니다. 거꾸로 짧은 콘텐츠를 먼저 만들면 거기서 long-form을 다시 짜기가 어렵습니다. 같은 30분, 결과물 수가 다릅니다.</p>
+
+        <p>2026년 들어 마케팅 업계는 이걸 <strong>"콘텐츠 atomization"</strong>이라는 이름으로 정리했습니다. 한 덩어리의 앵커 자산을 먼저 만들고, 그걸 작은 조각들로 분해해 각 플랫폼 형식에 맞게 재포장하는 방식입니다(출처: <a href="https://stratabeat.com/content-atomization/" target="_blank" rel="noopener">Stratabeat</a>). 도달 측면에서는 <strong>Buffer가 체계적 리퍼포징 도입 후 도달 +400%</strong>를 보고했고, 일반적으로 블로그 1편이 단일 채널에서 500명에 닿을 때 5채널 분기 시 5,000~15,000명에 닿는다는 수치가 같이 인용됩니다(출처: <a href="https://heropost.io/how-to-repurpose-content-across-social-media-2026/" target="_blank" rel="noopener">Heropost</a>). 다섯 배가 아니라 열 배 단위로 반응이 늘어납니다.</p>
+
+        <p>그런데 이걸 사람이 손으로 다 변환하면 시간이 또 다섯 배 듭니다. 변환의 비용을 ChatGPT가 내려줍니다. 같은 세션, 같은 컨텍스트 안에서 5채널 형식을 동시에 받는 게 핵심입니다. <strong>AI 자동화</strong>가 가장 크게 작동하는 자리가 바로 여기입니다. 새 채팅을 열거나 새 메시지를 처음부터 짜면 이야기 톤이 흔들립니다.</p>
+
+        <h2>6단계 워크플로 — ChatGPT 한 세션 안에서</h2>
+        <p>아래 여섯 단계를 같은 채팅창 안에서 순서대로 돌립니다. 새 채팅 X. 컨텍스트가 끊기면 분기 결과가 따로 노는 다섯 사람이 됩니다.</p>
+
+        <div class="step-grid">
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">1</span>앵커 픽 — 블로그 long-form 1편 정하기</div>
+            <p class="step-card-desc">먼저 분기시킬 글을 고릅니다. 새 글이어도 좋고, <strong>AI 블로그</strong>에 이미 올라간 1500~3000자짜리 글을 다시 꺼내 와도 좋습니다. 조건은 두 가지. 첫째, 자기 의견·관점이 분명히 들어 있을 것. 둘째, 단계·통계·일화 중 최소 두 종류는 있을 것. 사실 나열만 있으면 5채널로 갈라도 다 평평합니다. 저는 어제 한 편을 골랐는데, 단계 7개 + 자기 일화 1개 + 통계 2개. 이 정도가 가장 잘 갈라집니다.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">2</span>핵심 추출 — 5종 카드로 분리</div>
+            <p class="step-card-desc">앵커 글을 ChatGPT에 통째로 붙여넣고 묶음 추출을 요청합니다. 프롬프트: "이 글에서 다음 5종을 분리해 카드로 정리해줘. 핵심 주장 1개, 통계·수치 3개, 실전 단계 5~7개, 직접 인용·문구 2개, 1인칭 일화 1개. 각 카드 한 줄 요약 + 원문 발췌". 이 다섯 카드가 이후 4단계 분기 모두의 원자재입니다. 카드 자체를 메모로 보관해두면, 다음 글 분기에서도 비슷한 형태로 재사용할 수 있는 자기 라이브러리가 됩니다.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">3</span>채널 매핑 — 5채널 형식 매트릭스</div>
+            <p class="step-card-desc">5종 카드를 5채널 형식에 매핑합니다. 프롬프트: "각 카드를 다음 5채널 중 가장 어울리는 1차 채널과 2차 채널에 매핑. 블로그(긴 설명형 — 원본), <strong>AI 유튜브</strong> 숏츠(후크 강한 30~60초), 틱톡(짧은 사례 영상), 인스타 캐럿셀(단계 시각 요약 8장), X 스레드(1줄+근거 6~8개)". 통계는 보통 X에 잘 붙고, 단계는 인스타와 유튜브에 잘 붙습니다. 일화는 틱톡에서 가장 강합니다. 매트릭스를 표로 받아 저장합니다.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">4</span>분기 작성 — 같은 세션 5채널 동시 출력</div>
+            <p class="step-card-desc">매트릭스가 정해졌으면 5채널 본문을 같은 세션에서 한 번에 받습니다. 프롬프트: "위 매트릭스 기반으로 다음 5종을 동시에 출력. ① 유튜브 숏츠 60초 대본(후크·바디·CTA), ② 틱톡 30초 대본(첫 1초 후크 강조), ③ 인스타 캐럿셀 8장(슬라이드별 헤드라인+한 줄), ④ X 스레드 7개(첫 트윗 후크), ⑤ 블로그 요약문 200자(메인 글 인덱스용). 한국어와 영어 동시 출력. 각 채널 톤·길이 다르게". 1차 출력은 평평합니다. 색깔은 5단계에서 입힙니다.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">5</span>인간 손길 — 채널마다 1줄씩</div>
+            <p class="step-card-desc">ChatGPT 출력 그대로 발행하면 5채널이 같은 결로 나옵니다. 채널마다 한 줄을 직접 추가합니다. 유튜브 숏츠는 직접 한 마디(1초 후크), 틱톡은 자기 일화 한 문장, 인스타 캐럿셀은 마지막 슬라이드에 자기 의견, X 스레드는 첫 트윗 끝에 한 단어, 블로그 요약은 자기 표현 한 줄. 채널당 1~2분, 다섯 채널 합쳐서 10분 안쪽입니다. 2026년 알고리즘이 점점 <strong>"누가 썼는지 흔적"</strong>을 본다는 점에서 이 단계가 가장 결정적입니다.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">6</span>발행 큐 + 다음 앵커 시드</div>
+            <p class="step-card-desc">완성된 5채널을 각자 예약 큐에 넣습니다. 블로그는 사이트 자체 큐, 유튜브·틱톡은 채널 예약, 인스타는 스케줄러, X는 자체 예약. 마지막 1분에 같은 ChatGPT 세션에서 한 가지 더 받습니다. "이번 글에서 다루지 못한 각도 5개. 다음 앵커 글 후보 5개". 이 5개가 다음 주 1단계의 출발점이 됩니다. 엔진을 끄지 않고 다음 시동을 미리 걸어두는 작업입니다.</p>
+          </div>
+
+        </div>
+
+        <!-- IMAGE_PROMPT_2 (Mid) — Insert before "흔한 함정 3가지" section -->
+        <!-- Theme: models-comparison-ecosystem (from reference-library/INDEX.md) -->
+        <!-- Alt: 5채널 형식 매트릭스 — 블로그 1편이 5종 카드로 분해되어 각 채널 형식에 매핑되는 모습 -->
+        <!-- Prompt:
+        Editorial pen and ink illustration in the style of opinion-section
+        magazine art (every.to, New York Times opinion).
+        Hand-drawn line work with intentional imperfections.
+        Background: warm beige #F5EBDC.
+        Lines: black ink, slightly varied weight (1-3px).
+        Selective color fills (very sparingly): terracotta #D4825C accent on one card labeled with a tiny chart shape, sage green #7A8B7A accent on one card labeled with a tiny quote mark. Most of the image is line-only.
+
+        Subject: A clean two-column matrix layout drawn by hand. Left column: five small horizontal cards stacked vertically, each card showing an abstract icon — a chart bar (statistic), a numbered list (steps), a quote mark (quote), a small running figure (anecdote), a star (claim). Right column: five small platform shapes — a long rectangle (blog), a vertical phone frame (Shorts), a square video frame (TikTok), a stack of square slides (Instagram carousel), a chat bubble (X thread). Hand-drawn diagonal arrows connect cards on the left to platforms on the right, showing many-to-many mapping.
+
+        Composition: balanced two-column matrix, off-center focal point on the central crossing arrows, generous whitespace at the top and bottom, magazine layout. Cross-hatching for shadows, not gradients.
+        NOT photorealistic. NOT 3D render. NOT digital painting.
+        Pure pen-and-ink editorial illustration.
+        Do NOT include text, watermarks, logos, "BREAKING" labels, or date badges.
+        Format: 1200x630 horizontal.
+        -->
+        <figure>
+          <img src="/playbook/images/2026-04-30-chatgpt-blog-engine-5-platforms-02-mid.png" alt="5채널 형식 매트릭스 — 블로그 1편이 5종 카드로 분해되어 각 채널 형식에 매핑되는 모습" loading="lazy" />
+        </figure>
+
+        <h2>흔한 함정 3가지</h2>
+
+        <h3>함정 1. 블로그 글을 그대로 복붙</h3>
+        <p>가장 자주 무너지는 지점입니다. 블로그 본문을 그대로 X 스레드에 붙이고, 같은 텍스트를 인스타 캐럿셀 8장에 다시 붙이고, 유튜브 설명에도 같은 글을 또 붙입니다. 네이버·티스토리·구글·<strong>X AI</strong> 알고리즘 모두 중복 콘텐츠를 깎습니다. <strong>4단계 분기 작성에서 "채널별 톤·길이·CTA 다르게"를 명시적으로 요청</strong>해야 합니다. 같은 한 줄에서 다섯 표현이 나와야 다섯 채널이 같이 살아남습니다.</p>
+
+        <h3>함정 2. 핵심 추출 단계를 건너뛴다</h3>
+        <p>2단계 5종 카드 추출을 안 하고 바로 4단계 분기 작성으로 넘어가는 사람이 가장 많습니다. 그러면 ChatGPT가 매번 처음부터 글을 다시 읽어가며 변환합니다. 결과물 톤이 채널마다 따로 노는 이유가 여기입니다. 카드 5종을 먼저 쥐어주면 같은 원자재로 다섯 형식이 나오기 때문에, 같은 사람의 다섯 모습으로 보입니다. 한 번 해봤더니 카드 단계 5분이 분기 결과 품질을 가장 크게 바꿨습니다.</p>
+
+        <h3>함정 3. 다음 앵커 시드를 받지 않고 세션을 닫는다</h3>
+        <p>6단계 마지막을 빼먹는 사람이 두 번째로 많습니다. 그 결과 다음 글 한 편을 정하느라 또 머리를 쓰고, 결국 매주 첫날이 가장 느립니다. 다음 앵커 후보 5개를 같은 세션 마지막에 받아두면, 다음 주 1단계가 1분 안에 끝납니다. 엔진을 다시 켜는 시동 비용이 사라집니다.</p>
+
+        <div class="callout warn">
+          <div class="callout-label">⚠ 사람 검수는 발행 직전 1분</div>
+          2026년 들어 가장 자주 인용되는 경고는 "저노력 AI 콘텐츠는 더 이상 예전처럼 통하지 않는다"는 것입니다(출처: <a href="https://www.descript.com/blog/article/100-chatgpt-prompts-for-creators-speed-up-your-workflow-with-ai" target="_blank" rel="noopener">Descript</a>). <strong>AI 자동화</strong>는 4단계까지. 5·6단계, 특히 발행 직전 1분의 사람 검수는 자동화하지 않습니다. 사실 오류, 오해 살 표현, 시점 안 맞는 사례 — 이 셋만 잡아도 큰 사고는 없습니다.
+        </div>
+
+        <h2>오늘 바로 할 6가지 체크리스트</h2>
+        <div class="checklist">
+          <h3>ChatGPT 블로그 엔진 1세션 6단계</h3>
+          <label><input type="checkbox"> 분기시킬 앵커 블로그 글 1편 픽 (1500~3000자)</label>
+          <label><input type="checkbox"> 5종 카드 추출 (주장·통계·단계·인용·일화)</label>
+          <label><input type="checkbox"> 5채널 형식 매핑 매트릭스 표로 정리</label>
+          <label><input type="checkbox"> 5채널 본문 동시 출력 (한국어+영어)</label>
+          <label><input type="checkbox"> 채널마다 1줄씩 사람 손길 추가</label>
+          <label><input type="checkbox"> 5채널 예약 큐 입력 + 다음 앵커 시드 5개 받기</label>
+        </div>
+
+        <p>같은 흐름의 1주일 단위 계획판은 <a href="/playbook/2026-04-29-chatgpt-content-calendar-7-step.html">ChatGPT 콘텐츠 캘린더 7단계</a>에서 보실 수 있고, X를 시작점으로 잡는 다른 각도의 5채널 분기는 <a href="/trends/">AI 트렌드 인덱스</a>에 정리된 글들과 같이 보면 보완이 됩니다. 본 글은 블로그를 시작점으로 잡는 atomization 버전입니다.</p>
+
+        <div class="callout tip">
+          <div class="callout-label">💡 핵심만 다시</div>
+          <ul>
+            <li><strong>ChatGPT</strong> 한 세션, 6단계, 1편 → 5채널 — 도달 5~30배</li>
+            <li>2단계 카드 추출 5종 (주장·통계·단계·인용·일화)이 분기 품질의 80%</li>
+            <li>5채널 — <strong>AI 블로그</strong>·<strong>AI 유튜브</strong> 숏츠·틱톡·인스타·<strong>X AI</strong> — 모두 다른 톤으로</li>
+            <li>5단계 사람 손길 1줄씩 — 평평한 5채널이 자기 색깔로 살아남</li>
+            <li><strong>AI 자동화</strong>는 4단계까지. 5·6은 사람</li>
+          </ul>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-label">📎 출처</div>
+          <ul>
+            <li>Stratabeat (2026) — <a href="https://stratabeat.com/content-atomization/" target="_blank" rel="noopener">Boost Your 2026 Marketing ROI with Content Atomization</a></li>
+            <li>Heropost (2026) — <a href="https://heropost.io/how-to-repurpose-content-across-social-media-2026/" target="_blank" rel="noopener">How to Repurpose Content Across Social Media (Save 10+ Hours/Week)</a></li>
+            <li>InfluenceFlow (2026) — <a href="https://influenceflow.io/resources/repurposing-content-across-multiple-platforms-the-complete-2026-guide/" target="_blank" rel="noopener">Repurposing Content Across Multiple Platforms: The Complete 2026 Guide</a></li>
+            <li>Descript (2026) — <a href="https://www.descript.com/blog/article/100-chatgpt-prompts-for-creators-speed-up-your-workflow-with-ai" target="_blank" rel="noopener">100+ ChatGPT Prompts for Creators</a></li>
+            <li>Buffer (2026) — <a href="https://buffer.com/resources/instagram-algorithms/" target="_blank" rel="noopener">How the Instagram Algorithm Works: Your 2026 Guide</a></li>
+          </ul>
+        </div>
+
+        <nav class="trends-nav" aria-label="실전 플레이북 글 네비게이션">
+          <a href="/playbook/" class="trends-nav-item index">
+            <span class="trends-nav-index-icon">&#9783;</span>
+            <span>실전 플레이북 전체 목록</span>
+          </a>
+          <span class="trends-nav-item empty"></span>
+        </nav>
+
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>&copy; 2026 크리에이터 완전정복. All rights reserved.</p>
+    <p><a href="/privacy/">개인정보처리방침</a> · <a href="/contact/">문의</a></p>
+  </div>
+</footer>
+
+<script src="/js/lang-toggle.js"></script>
+</body>
+</html>
