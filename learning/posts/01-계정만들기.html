@@ -90,11 +90,6 @@
 
 <div class="page-wrap">
 
-  <aside class="sidebar">
-    <div class="sidebar-title">유튜브 시작하기</div>
-    <ul class="sidebar-list" id="sidebar-list"></ul>
-  </aside>
-
   <main class="main-content">
 
     <!-- 진행 바 -->
@@ -340,17 +335,23 @@
       </div>
     </article>
 
-    <hr class="divider">
-
-    <!-- 다음 챕터 버튼 -->
-    <div style="text-align:center; margin: 2rem 0;">
-      <a href="02-채널완성.html" class="next-chapter-btn">
-        다음 챕터로 →
+    <!-- 이전/다음 내비 (2026-04-30 통일) -->
+    <nav class="trends-nav" aria-label="학습 글 네비게이션">
+      <a href="/learning/posts/00-AI유튜브란.html" class="trends-nav-item prev">
+        <span class="trends-nav-label">&larr; 이전 글</span>
+        <span class="trends-nav-title">AI 유튜브란?</span>
       </a>
-    </div>
+      <a href="/learning/" class="trends-nav-item index">
+        <span class="trends-nav-index-icon">&#9783;</span>
+        <span>학습 전체</span>
+      </a>
+      <a href="/learning/posts/02-채널완성.html" class="trends-nav-item next">
+        <span class="trends-nav-label">다음 글 &rarr;</span>
+        <span class="trends-nav-title">채널 만들기</span>
+      </a>
+    </nav>
 
-    <!-- 이전/다음 내비 -->
-    <nav class="post-nav" id="post-nav"></nav>
+    <hr class="divider">
 
     <!-- 피드백 -->
     <div class="feedback-section">
