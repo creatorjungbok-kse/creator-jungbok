@@ -3389,11 +3389,11 @@ strong { font-weight: 700; }
   letter-spacing: .02em;
 }
 
-/* 모바일 (≤700px) — 가로 3개 유지, 폰트·패딩 축소 (2026-04-30 — CEO 요청) */
+/* 모바일 (≤700px) — 가로 3개 유지, 모두 가운데 정렬 (2026-04-30 v2 — CEO 요청) */
 @media (max-width: 700px) {
   .trends-nav { flex-direction: row; gap: .4rem; }
-  .trends-nav-item { padding: .55rem .5rem; min-height: 50px; flex: 1 1 0; }
-  .trends-nav-item.next { text-align: right; align-items: flex-end; }
+  .trends-nav-item { padding: .55rem .5rem; min-height: 50px; flex: 1 1 0; align-items: center; text-align: center; }
+  .trends-nav-item.next { text-align: center; align-items: center; }   /* 가운데 정렬 — 우측 쏠림 폐지 */
   .trends-nav-item.index { order: 0; min-width: 0; flex: 1 1 0; padding: .55rem .4rem; }
   .trends-nav-label { font-size: .6rem; margin-bottom: .15rem; letter-spacing: .05em; }
   .trends-nav-title { font-size: .7rem; -webkit-line-clamp: 1; line-height: 1.3; }
