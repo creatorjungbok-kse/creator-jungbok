@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatGPT 유튜브 숏츠 후크 — 첫 3초 6단계 알고리즘 공략 | 크리에이터 완전정복</title>
+  <meta name="description" content="ChatGPT로 AI 유튜브 숏츠 첫 3초 후크를 만드는 6단계 워크플로. 스와이프 어웨이 30% 이하·시청 완료율 75% 이상으로 가는 알고리즘 친화 후크 엔지니어링.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .trend-meta { display: flex; flex-wrap: wrap; gap: .6rem 1rem; font-size: .8rem; color: #666; margin: .75rem 0 1.25rem 0; padding-bottom: 1rem; border-bottom: 1px solid var(--border, #e5e5e5); align-items: center; }
+    .trend-meta span { display: inline-flex; align-items: center; gap: .3rem; line-height: 1.4; }
+    .trend-meta .meta-cat { background: #1A2438; color: #fff; padding: .2rem .7rem; border-radius: 999px; font-weight: 700; font-size: .7rem; letter-spacing: .02em; }
+    .subhead { font-size: 1.05rem; line-height: 1.7; color: #444; margin: .25rem 0 1.5rem 0; font-weight: 500; letter-spacing: -.005em; }
+    .lead-para { font-size: 1.02rem; line-height: 1.85; color: var(--text, #222); padding: 1.1rem 1.25rem; background: #f5ebdc; border-left: 4px solid #1A2438; border-radius: 0 8px 8px 0; margin: 1.25rem 0 2rem 0; }
+    .lead-para strong { color: #1A2438; }
+    .step-grid { display: grid; grid-template-columns: 1fr; gap: .9rem; margin: 1.5rem 0; }
+    .step-card { border: 1px solid var(--border, #e5e5e5); border-radius: 10px; padding: 1.1rem 1.25rem; background: #fafafa; }
+    .step-card-num { display: inline-block; background: #1A2438; color: #fff; width: 1.6rem; height: 1.6rem; line-height: 1.6rem; text-align: center; border-radius: 50%; font-weight: 800; font-size: .85rem; margin-right: .5rem; }
+    .step-card-title { font-size: 1rem; font-weight: 800; color: var(--text, #222); margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .step-card-desc { font-size: .92rem; line-height: 1.75; color: #444; margin: 0; }
+    .callout { margin: 1.75rem 0; padding: 1.1rem 1.25rem; border-radius: 10px; border-left: 4px solid; font-size: .93rem; line-height: 1.75; }
+    .callout.tip { background: #f0fdf4; border-color: #22c55e; }
+    .callout.info { background: #eff6ff; border-color: #3b82f6; }
+    .callout.warn { background: #fffbeb; border-color: #f59e0b; }
+    .callout-label { font-weight: 800; font-size: .85rem; margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .callout.tip .callout-label { color: #16a34a; }
+    .callout.info .callout-label { color: #2563eb; }
+    .callout.warn .callout-label { color: #d97706; }
+    .callout ul { margin: .4rem 0 0 1.1rem; padding: 0; }
+    .callout li { margin-bottom: .3rem; }
+    .callout a { color: inherit; text-decoration: underline; word-break: break-all; }
+    .checklist { background: #fff; border: 1px solid #e0e0e0; border-radius: 10px; padding: 1.1rem 1.25rem; margin: 1.5rem 0; }
+    .checklist h3 { margin: 0 0 .75rem 0; font-size: 1rem; color: #1A2438; }
+    .checklist label { display: block; padding: .35rem 0; font-size: .95rem; line-height: 1.6; cursor: pointer; }
+    .checklist input { margin-right: .5rem; }
+    @media (max-width: 480px) {
+      .post-title { font-size: 1.55rem !important; line-height: 1.4 !important; }
+      .subhead { font-size: .95rem; }
+      .lead-para { font-size: .95rem; padding: 1rem; }
+      .trend-meta { font-size: .75rem; gap: .5rem .75rem; }
+      .step-card { padding: 1rem; }
+      .step-card-title { font-size: .95rem; }
+      .step-card-desc { font-size: .88rem; }
+      .callout { padding: 1rem; font-size: .88rem; }
+    }
+    .post-body strong { color: #111; font-weight: 800; }
+    .post-body h2 { margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.4rem; line-height: 1.4; }
+    @media (max-width: 480px) { .post-body h2 { font-size: 1.2rem; margin-top: 2rem; } }
+    .post-body h3 { margin-top: 1.5rem; margin-bottom: .5rem; font-size: 1.1rem; }
+    .post-body p { line-height: 1.85; font-size: .98rem; }
+    @media (max-width: 480px) { .post-body p { font-size: .95rem; line-height: 1.8; } }
+    .post-body ul { line-height: 1.85; }
+    .post-body ul li { margin-bottom: .35rem; }
+    .post-body figure { margin: 1.75rem 0; text-align: center; }
+    .post-body figure img { width: 100%; height: auto; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+    .post-body figure figcaption { font-size: .82rem; color: #777; margin-top: .5rem; font-style: italic; }
+    .page-wrap { justify-content: center; }
+    .post-thumbnail { width: 100%; height: auto; border-radius: 12px; margin: 0 0 1.5rem 0; display: block; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    @media (max-width: 480px) { .post-thumbnail { border-radius: 8px; margin-bottom: 1rem; } }
+  </style>
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="크리에이터 완전정복">
+  <meta property="og:title" content="ChatGPT 유튜브 숏츠 후크 — 첫 3초 6단계 알고리즘 공략">
+  <meta property="og:description" content="ChatGPT로 AI 유튜브 숏츠 첫 3초 후크를 만드는 6단계 워크플로. 스와이프 어웨이 30% 이하·시청 완료율 75% 이상으로 가는 알고리즘 친화 후크 엔지니어링.">
+  <meta property="og:url" content="https://creatorjungbok.co.kr/playbook/2026-05-01-chatgpt-shorts-hook-6step.html">
+  <meta property="og:image" content="https://creatorjungbok.co.kr/playbook/images/2026-05-01-chatgpt-shorts-hook-6step.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="article:published_time" content="2026-05-01T07:00:00+09:00">
+  <meta property="article:section" content="SNS 인사이트">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://creatorjungbok.co.kr/playbook/images/2026-05-01-chatgpt-shorts-hook-6step.png">
+  <link rel="alternate" hreflang="ko" href="https://creatorjungbok.co.kr/playbook/2026-05-01-chatgpt-shorts-hook-6step.html">
+  <link rel="alternate" hreflang="en" href="https://creatorjungbok.co.kr/en/playbook/2026-05-01-chatgpt-shorts-hook-6step.html">
+  <link rel="alternate" hreflang="x-default" href="https://creatorjungbok.co.kr/playbook/2026-05-01-chatgpt-shorts-hook-6step.html">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6B72N2BV55"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6B72N2BV55');
+  </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="site-logo">크리에이터 <span>완전정복</span></a>
+    <span class="lang-toggle-mobile"><a href="#" class="lang-active" data-lang="ko">한국어</a><span class="lang-sep">/</span><a href="#" data-lang="en">English</a></span>
+    <button class="nav-toggle" aria-label="메뉴" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+    <nav class="header-nav">
+      <a href="/">홈</a>
+      <a href="/learning/">학습</a>
+      <a href="/trends/">AI 트렌드</a>
+      <a href="/playbook/">SNS 인사이트</a>
+      <a href="/about/">소개</a>
+      <span class="lang-toggle">
+        <a href="#" class="lang-active" data-lang="ko">한국어</a>
+        <span class="lang-sep">/</span>
+        <a href="#" data-lang="en">English</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+  <main class="main-content">
+    <article>
+      <header class="post-header">
+        <img src="/playbook/images/2026-05-01-chatgpt-shorts-hook-6step.png" alt="ChatGPT 유튜브 숏츠 후크 워크플로 — 크리에이터 완전정복" class="post-thumbnail" width="1200" height="630" loading="eager" />
+        <p class="post-chap">SNS 인사이트</p>
+        <h1 class="post-title">ChatGPT 유튜브 숏츠 후크 — 첫 3초 6단계 알고리즘 공략</h1>
+        <p class="subhead">앵커. 후크 5종. A·B·C 분기. 사람 손길. 발행 큐.</p>
+        <div class="lang-switch">
+          <a href="#" class="lang-active" data-lang="ko">한국어</a>
+          <span class="lang-sep">/</span>
+          <a href="#" data-lang="en">English</a>
+        </div>
+        <div class="trend-meta">
+          <span class="meta-cat">SNS 인사이트</span>
+          <span>🗓 2026-05-01</span>
+          <span>⏱ 약 8분 읽기</span>
+          <span>📎 출처: Shortimize, OpusClip, Conbersa, Vidiq, Metricool</span>
+        </div>
+      </header>
+
+      <hr class="divider">
+
+      <div class="post-body">
+
+        <p class="lead-para">
+          숏츠 1편을 올렸는데 조회수가 200에서 멈춥니다. 다음 날 또 200. 이럴 때 가장 먼저 손볼 자리는 영상 자체가 아니라 <strong>첫 3초 후크</strong>입니다. 2026년 유튜브 숏츠 알고리즘은 <strong>스와이프 어웨이율</strong>과 시청 완료율 두 신호를 가장 무겁게 봅니다. 첫 3초에서 70%가 손가락을 위로 밀면 거기서 분배가 멈춥니다. 이 글은 <strong>ChatGPT</strong>로 후크 5종 동시 생성·A·B·C 분기 테스트·사람 손길 1줄까지 가는 6단계 워크플로를 정리합니다. 같은 영상, 같은 30분. 후크만 바꿔서 200을 2,000으로 끌어올리는 자리입니다.
+        </p>
+
+        <figure class="body-figure">
+          <img src="/playbook/images/2026-05-01-chatgpt-shorts-hook-6step-01-hero.png" alt="첫 3초 후크 6단계 워크플로 — 책상 위 영상 한 편의 첫 프레임을 다시 짜는 흐름" loading="lazy" />
+          <figcaption>첫 3초 — 영상 한 편의 운명이 갈리는 자리.</figcaption>
+        </figure>
+
+        <h2>왜 첫 3초가 알고리즘을 흔드는가</h2>
+        <p>2026년 숏츠 알고리즘은 새로 올린 영상마다 작은 시드 청중에 먼저 노출시킵니다. 거기서 신호가 좋으면 다음 단계 청중으로, 또 좋으면 그다음으로, 단계별로 분배 폭이 늘어납니다. 시드 단계에서 가장 빨리 깎이는 자리가 <strong>스와이프 어웨이율</strong>입니다. 70% 이상이 첫 1~3초에서 빠져나가면 그 자리에서 분배가 멈춥니다(출처: <a href="https://vidiq.com/blog/post/youtube-shorts-algorithm/" target="_blank" rel="noopener">vidiq</a>).</p>
+
+        <p>같은 데이터의 다른 면. 75% 이상이 끝까지 본 영상은 구독자 0명이라도 공격적으로 밀어줍니다. 건강한 스와이프 어웨이 범위는 10~30%, 40%를 넘으면 빨간불입니다(출처: <a href="https://www.shortimize.com/blog/youtube-shorts-retention-rate" target="_blank" rel="noopener">Shortimize</a>). 그래서 본문·편집·BGM보다 첫 3초 후크 한 줄이 분배의 천장을 정합니다. 같은 본문이라도 후크가 다르면 다음 청중에 닿느냐 못 닿느냐가 갈립니다.</p>
+
+        <p>여기에 <strong>AI 자동화</strong>가 가장 잘 붙는 자리도 첫 3초입니다. 본문 60초를 AI로 다 만들기는 어렵지만, 후크 5~10개를 한 번에 받아 그중 하나를 고르는 일은 ChatGPT 한 세션에서 5분이면 끝납니다. 같은 영상 본문에 후크만 갈아 끼워 A·B·C 3편을 같은 주에 올리는 게 2026년 가장 안전한 성장 전략입니다.</p>
+
+        <h2>6단계 워크플로 — ChatGPT 한 세션 안에서</h2>
+        <p>아래 여섯 단계를 같은 채팅창 안에서 순서대로 돌립니다. 새 채팅 X. 컨텍스트가 끊기면 같은 영상에 다섯 후크가 따로 노는 결과가 나옵니다.</p>
+
+        <div class="step-grid">
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">1</span>앵커 픽 — 본문 영상 1편 정하기</div>
+            <p class="step-card-desc">먼저 후크를 갈아 끼울 본문 영상을 고릅니다. 새로 찍은 30~60초짜리도 좋고, 이미 올라간 <strong>AI 유튜브</strong> 숏츠 중 조회수 200~1,000에서 멈춘 영상도 좋습니다. 조건은 두 가지. 첫째, 본문이 한 가지 약속을 분명히 던질 것. 둘째, 그 약속이 결말부에서 닫힐 것. 본문이 평평하면 후크를 어떻게 바꿔도 시청 완료율이 안 올라갑니다. 저는 어제 조회수 187에서 멈춘 한 편을 골랐습니다. 본문은 그대로, 후크만 바꿔 다시 올렸습니다.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">2</span>본문 분석 — 핵심 약속 1줄 추출</div>
+            <p class="step-card-desc">앵커 영상의 자막·대본을 ChatGPT에 통째로 붙여넣고 묶음 추출을 요청합니다. 프롬프트: "이 숏츠 본문에서 다음 5가지를 분리해 카드로 정리. ① 시청자에게 던지는 한 가지 약속 1줄, ② 본문이 그 약속을 닫는 결말 1줄, ③ 충돌·반전 1개, ④ 시각적 패턴 인터럽트 1개, ⑤ 1인칭 일화 1개." 이 5가지 카드가 후크 5종 분기의 원자재입니다. 카드 자체를 메모로 보관해두면 다음 후크 작업에서 같은 형태로 재사용할 수 있는 자기 라이브러리가 됩니다.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">3</span>후크 5종 동시 생성 — 같은 세션 한 번에</div>
+            <p class="step-card-desc">5종 카드를 5종 후크 형식에 매핑합니다. 프롬프트: "위 5장 카드를 다음 5종 후크에 매핑해서 한국어와 영어 동시 출력. ① 호기심 갭 후크(미완 문장), ② 패턴 인터럽트 후크(예상 깨는 시각·문장), ③ 통계 후크(놀라운 숫자), ④ 문제 정의 후크(공감 한 줄), ⑤ 약속 후크(직접 결과 제시). 각 후크 10단어 이내, 첫 단어가 손가락을 멈추게 하는 단어." 1차 출력은 평평합니다. 색깔은 5단계에서 입힙니다.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">4</span>A·B·C 3종 픽 — 같은 본문, 다른 후크 3편</div>
+            <p class="step-card-desc">5종 후크 중 결이 가장 다른 3개를 고릅니다. 보통 호기심 갭 + 패턴 인터럽트 + 통계가 결이 가장 많이 갈라집니다. 같은 본문 영상에 3개 후크 버전을 만들어 같은 주에 월·수·금 같은 시간에 올립니다. 시드 청중이 다르게 잡히기 때문에 같은 본문이라도 분배 결과가 달라집니다. 한 번 해봤더니 같은 본문 + 후크 A는 200, 후크 C는 2,400. 본문이 아니라 후크가 결정한다는 게 거기서 처음 눈에 들어옵니다.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">5</span>인간 손길 — 후크마다 1단어씩</div>
+            <p class="step-card-desc">ChatGPT 출력 그대로 발행하면 3편이 같은 결로 나옵니다. 후크마다 자기 입버릇 한 단어를 끼웁니다. "근데", "한 번", "솔직히", "사실은" 같은. 같은 후크라도 첫 단어 한 음절이 자기 채널 결을 만들어줍니다. 채널마다 1~2분, 3편 합쳐서 5분 안쪽입니다. 2026년 알고리즘이 점점 <strong>"누가 만들었는지 흔적"</strong>을 본다는 점에서 이 단계가 가장 결정적입니다. <strong>AI 자동화</strong>가 4단계까지 가도, 5단계 사람 한 단어가 분배의 다음 단계를 정합니다.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">6</span>발행 큐 + 데이터 회수</div>
+            <p class="step-card-desc">3편을 같은 주 월·수·금 예약 큐에 넣습니다. 24시간 후 스튜디오에서 세 영상의 첫 30초 시청 비율과 시청 완료율을 비교합니다. 가장 좋은 후크 형식이 자기 채널의 다음 주 1순위 패턴이 됩니다. 같은 ChatGPT 세션 마지막에 한 가지 더 받습니다. "이번 본문에서 다루지 못한 약속 후보 5개. 다음 앵커 영상 5개." 이 5개가 다음 주 1단계 출발점입니다. 엔진을 끄지 않고 다음 시동을 미리 걸어두는 작업입니다.</p>
+          </div>
+
+        </div>
+
+        <figure>
+          <img src="/playbook/images/2026-05-01-chatgpt-shorts-hook-6step-02-mid.png" alt="후크 5종 형식 매트릭스 — 같은 본문에 5종 후크가 매핑되어 A·B·C 3편으로 갈라지는 모습" loading="lazy" />
+        </figure>
+
+        <h2>흔한 함정 3가지</h2>
+
+        <h3>함정 1. 본문을 그대로 두고 후크만 ChatGPT 첫 출력으로 발행</h3>
+        <p>가장 자주 무너지는 지점입니다. ChatGPT가 첫 출력으로 던지는 후크는 보통 영어 트위터에서 잘 통하는 결입니다. 한국어 숏츠에서는 그 결이 어색합니다. 5단계 사람 한 단어가 빠지면 같은 영상에 같은 결의 후크 3편이 발행됩니다. <strong>3단계에서 "한국어와 영어 동시 출력"을 명시</strong>하고, <strong>5단계에서 자기 입버릇 한 단어를 반드시 추가</strong>합니다. 같은 한 줄에서 세 표현이 나와야 세 채널이 같이 살아남습니다.</p>
+
+        <h3>함정 2. 한 영상에 후크 1개만 만들고 끝</h3>
+        <p>두 번째로 많은 실수입니다. 좋은 후크 1개를 찾았다고 거기서 멈추면 그 후크가 자기 채널 시드 청중과 어쩌다 맞았는지, 후크 형식 자체가 강한 건지 구분이 안 됩니다. 같은 본문에 결이 다른 3개를 같은 주에 올려야 데이터가 회수됩니다. 후크 형식 5종 중 어느 결이 자기 채널과 맞는지가 그 한 주 안에 잡힙니다. <strong>AI 블로그</strong> 글에서 같은 본문을 여러 제목으로 테스트하는 방식과 똑같이 작동합니다.</p>
+
+        <h3>함정 3. 다음 앵커 시드를 받지 않고 세션을 닫는다</h3>
+        <p>6단계 마지막을 빼먹는 사람이 세 번째로 많습니다. 그 결과 다음 영상 본문 1편을 정하느라 또 머리를 쓰고, 결국 매주 첫날이 가장 느립니다. 다음 앵커 후보 5개를 같은 세션 마지막에 받아두면 다음 주 1단계가 1분 안에 끝납니다. <strong>X AI</strong> 스레드 후크 작업을 같이 굴리는 사람은 X 후크 5개도 같이 받아둡니다. 두 채널 한 세션 — 시동 비용이 사라집니다.</p>
+
+        <div class="callout warn">
+          <div class="callout-label">⚠ 사람 검수는 발행 직전 1분</div>
+          2026년 들어 가장 자주 인용되는 경고는 "저노력 AI 후크는 더 이상 통하지 않는다"는 것입니다. 후크가 일반적인 영어 트위터 결로 나오면 한국어 숏츠 청중에는 어색하게 닿습니다(출처: <a href="https://www.opus.pro/blog/youtube-shorts-hook-formulas" target="_blank" rel="noopener">OpusClip</a>). <strong>AI 자동화</strong>는 4단계까지. 5·6단계, 특히 발행 직전 1분의 사람 검수는 자동화하지 않습니다. 사실 오류, 과장된 약속, 본문이 못 닫는 후크 — 이 셋만 잡아도 큰 사고는 없습니다.
+        </div>
+
+        <h2>오늘 바로 할 6가지 체크리스트</h2>
+        <div class="checklist">
+          <h3>ChatGPT 유튜브 숏츠 후크 1세션 6단계</h3>
+          <label><input type="checkbox"> 후크를 갈아 끼울 앵커 영상 1편 픽 (조회수 200~1,000에서 멈춘 본문)</label>
+          <label><input type="checkbox"> 본문 5종 카드 추출 (약속·결말·반전·시각 인터럽트·일화)</label>
+          <label><input type="checkbox"> 후크 5종 동시 생성 (호기심·패턴·통계·문제·약속, 한국어+영어)</label>
+          <label><input type="checkbox"> 결이 가장 다른 후크 A·B·C 3개 픽</label>
+          <label><input type="checkbox"> 후크마다 자기 입버릇 1단어 추가</label>
+          <label><input type="checkbox"> 월·수·금 예약 큐 + 다음 앵커 시드 5개 받기</label>
+        </div>
+
+        <p>같은 흐름의 1편 → 5채널 분기는 <a href="/playbook/2026-04-30-chatgpt-blog-engine-5-platforms.html">ChatGPT 블로그 엔진 — 글 1개로 5채널 분기 6단계</a>에서, 1주일 단위 계획판은 <a href="/playbook/2026-04-29-chatgpt-content-calendar-7-step.html">ChatGPT 콘텐츠 캘린더 7단계</a>에서 보실 수 있습니다. 본 글은 단일 채널(<strong>AI 유튜브</strong> 숏츠) 깊이 — 첫 3초 후크 엔지니어링 버전입니다.</p>
+
+        <div class="callout tip">
+          <div class="callout-label">💡 핵심만 다시</div>
+          <ul>
+            <li>2026년 숏츠 알고리즘 핵심 신호 = 첫 3초 스와이프 어웨이율 (10~30% 건강, 40% 빨간불, 70% 분배 정지)</li>
+            <li>같은 본문 영상에 결이 다른 후크 A·B·C 3편 — 같은 주 월·수·금</li>
+            <li><strong>ChatGPT</strong> 한 세션 6단계 — 후크 5종 동시 생성 후 3종 픽</li>
+            <li>5단계 사람 한 단어 (입버릇)가 알고리즘이 보는 "누가 만들었는지" 흔적</li>
+            <li><strong>AI 자동화</strong>는 4단계까지. 5·6은 사람</li>
+          </ul>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-label">📎 출처</div>
+          <ul>
+            <li>Shortimize (2026) — <a href="https://www.shortimize.com/blog/youtube-shorts-retention-rate" target="_blank" rel="noopener">YouTube Shorts Retention Rate (2026): What Works</a></li>
+            <li>vidiq (2026) — <a href="https://vidiq.com/blog/post/youtube-shorts-algorithm/" target="_blank" rel="noopener">How Does the YouTube Shorts Algorithm Work in 2026?</a></li>
+            <li>OpusClip (2026) — <a href="https://www.opus.pro/blog/youtube-shorts-hook-formulas" target="_blank" rel="noopener">YouTube Shorts Hook Formulas That Drive 3-Second Holds</a></li>
+            <li>Conbersa (2026) — <a href="https://www.conbersa.ai/learn/best-youtube-shorts-hooks" target="_blank" rel="noopener">Best YouTube Shorts Hooks and Formats in 2026</a></li>
+            <li>Metricool (2026) — <a href="https://metricool.com/youtube-shorts-algorithm/" target="_blank" rel="noopener">YouTube Shorts Algorithm Explained + Tips to Grow in 2026</a></li>
+          </ul>
+        </div>
+
+        <nav class="trends-nav" aria-label="SNS 인사이트 글 네비게이션">
+          <a href="/playbook/2026-04-30-chatgpt-blog-engine-5-platforms.html" class="trends-nav-item prev">
+            <span class="trends-nav-label">&larr; 이전 글</span>
+            <span class="trends-nav-title">ChatGPT 블로그 엔진 — 글 1개로 5채널 분기 6단계</span>
+          </a>
+          <a href="/playbook/" class="trends-nav-item index">
+            <span class="trends-nav-index-icon">&#9783;</span>
+            <span>SNS 인사이트 전체</span>
+          </a>
+          <span class="trends-nav-item empty"></span>
+        </nav>
+
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>&copy; 2026 크리에이터 완전정복. All rights reserved.</p>
+    <p><a href="/privacy/">개인정보처리방침</a> · <a href="/contact/">문의</a></p>
+  </div>
+</footer>
+
+<script src="/js/main.js"></script>
+<script src="/js/lang-toggle.js"></script>
+
+<button id="btn-top" aria-label="맨 위로">↑</button>
+<script>
+  var b=document.getElementById('btn-top');
+  window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+
+<script>
+(function(){
+  try {
+    if (localStorage.getItem('cj-lang-pref')) return;
+    if (sessionStorage.getItem('cj-auto-redirect-done')) return;
+    var ul = (navigator.language || '').toLowerCase();
+    if (ul.indexOf('en') === 0) {
+      sessionStorage.setItem('cj-auto-redirect-done','1');
+      location.href = location.pathname.replace('/playbook/','/en/playbook/');
+    }
+  } catch(e){}
+})();
+</script>
+
+</body>
+</html>
