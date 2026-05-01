@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Decoding YouTube's 2026 Algorithm with ChatGPT — Gemini, Satisfaction Signals, and the 30-Second Rule (2026-05-01) | Creator Jungbok</title>
+  <meta name="description" content="As of May 2026, YouTube's algorithm runs on Gemini, satisfaction signals, and a hard first-30-second retention floor. Here is how ChatGPT can be used to rebuild your AI YouTube workflow this week.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .trend-meta { display: flex; flex-wrap: wrap; gap: .6rem 1rem; font-size: .8rem; color: #666; margin: .75rem 0 1.25rem 0; padding-bottom: 1rem; border-bottom: 1px solid var(--border, #e5e5e5); align-items: center; }
+    .trend-meta span { display: inline-flex; align-items: center; gap: .3rem; line-height: 1.4; }
+    .trend-meta .meta-cat { background: var(--red, #e53935); color: #fff; padding: .2rem .7rem; border-radius: 999px; font-weight: 700; font-size: .7rem; letter-spacing: .02em; }
+    .lang-switch { font-size: .82rem; color: #666; padding: .6rem 0; text-align: right; border-bottom: 1px dashed #ddd; margin-bottom: 1.25rem; }
+    .lang-switch a { color: #666; text-decoration: none; padding: 0 .35rem; }
+    .lang-switch a.active { color: var(--red, #e53935); font-weight: 800; text-decoration: underline; }
+    .lang-switch a:hover { color: var(--red, #e53935); }
+    .lead-para { font-size: 1.02rem; line-height: 1.85; color: var(--text, #222); padding: 1.1rem 1.25rem; background: #fff7f6; border-left: 4px solid var(--red, #e53935); border-radius: 0 8px 8px 0; margin: 1.25rem 0 2rem 0; }
+    .lead-para strong { color: #c62828; }
+    .feature-grid { display: grid; grid-template-columns: 1fr; gap: .9rem; margin: 1.5rem 0; }
+    @media (min-width: 700px) { .feature-grid { grid-template-columns: 1fr 1fr; gap: 1rem; } }
+    .feature-card { border: 1px solid var(--border, #e5e5e5); border-radius: 10px; padding: 1.1rem 1.25rem; background: #fafafa; transition: border-color .15s; }
+    .feature-card:hover { border-color: var(--red, #e53935); }
+    .feature-card-num { display: inline-block; background: var(--red, #e53935); color: #fff; width: 1.6rem; height: 1.6rem; line-height: 1.6rem; text-align: center; border-radius: 50%; font-weight: 800; font-size: .85rem; margin-right: .5rem; }
+    .feature-card-title { font-size: 1rem; font-weight: 800; color: var(--text, #222); margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .feature-card-desc { font-size: .92rem; line-height: 1.75; color: #444; margin: 0; }
+    .compare-box { display: grid; grid-template-columns: 1fr; gap: .75rem; margin: 1.5rem 0; }
+    @media (min-width: 700px) { .compare-box { grid-template-columns: 1fr 1fr; gap: 1rem; } }
+    .compare-side { padding: 1rem 1.1rem; border-radius: 10px; font-size: .92rem; line-height: 1.7; }
+    .compare-before { background: #f5f5f5; border: 1px solid #e0e0e0; }
+    .compare-after { background: #fff5f5; border: 1px solid #ffcdd2; }
+    .compare-label { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .08em; margin-bottom: .5rem; text-transform: uppercase; }
+    .compare-before .compare-label { color: #757575; }
+    .compare-after .compare-label { color: var(--red, #e53935); }
+    .callout { margin: 1.75rem 0; padding: 1.1rem 1.25rem; border-radius: 10px; border-left: 4px solid; font-size: .93rem; line-height: 1.75; }
+    .callout.tip { background: #f0fdf4; border-color: #22c55e; }
+    .callout.info { background: #eff6ff; border-color: #3b82f6; }
+    .callout.warn { background: #fffbeb; border-color: #f59e0b; }
+    .callout-label { font-weight: 800; font-size: .85rem; margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .callout.tip .callout-label { color: #16a34a; }
+    .callout.info .callout-label { color: #2563eb; }
+    .callout.warn .callout-label { color: #d97706; }
+    .callout ul { margin: .4rem 0 0 1.1rem; padding: 0; }
+    .callout li { margin-bottom: .3rem; }
+    .callout a { color: inherit; text-decoration: underline; word-break: break-all; }
+    @media (max-width: 480px) {
+      .post-title { font-size: 1.55rem !important; line-height: 1.4 !important; }
+      .lead-para { font-size: .95rem; padding: 1rem; }
+      .trend-meta { font-size: .75rem; gap: .5rem .75rem; }
+      .feature-card { padding: 1rem; }
+      .feature-card-title { font-size: .95rem; }
+      .feature-card-desc { font-size: .88rem; }
+      .compare-side { font-size: .88rem; }
+      .callout { padding: 1rem; font-size: .88rem; }
+    }
+    .post-body strong { color: #111; font-weight: 800; }
+    .post-body h2 { margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.4rem; line-height: 1.4; }
+    @media (max-width: 480px) { .post-body h2 { font-size: 1.2rem; margin-top: 2rem; } }
+    .post-body p { line-height: 1.85; font-size: .98rem; }
+    @media (max-width: 480px) { .post-body p { font-size: .95rem; line-height: 1.8; } }
+    .post-body ul { line-height: 1.85; }
+    .post-body ul li { margin-bottom: .35rem; }
+    .page-wrap { justify-content: center; }
+    .post-thumbnail { width: 100%; height: auto; border-radius: 12px; margin: 0 0 1.5rem 0; display: block; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    @media (max-width: 480px) { .post-thumbnail { border-radius: 8px; margin-bottom: 1rem; } }
+    .body-figure { margin: 2rem 0; }
+    .body-figure img { width: 100%; height: auto; border-radius: 10px; display: block; }
+    .body-figure figcaption { font-size: .82rem; color: #777; margin-top: .55rem; text-align: center; line-height: 1.5; }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Creator Jungbok">
+  <meta property="og:title" content="Decoding YouTube's 2026 Algorithm with ChatGPT — Gemini, Satisfaction Signals, and the 30-Second Rule (2026-05-01)">
+  <meta property="og:description" content="As of May 2026, YouTube's algorithm runs on Gemini, satisfaction signals, and a hard first-30-second retention floor. Here is how ChatGPT can be used to rebuild your AI YouTube workflow this week.">
+  <meta property="og:url" content="https://creatorjungbok.co.kr/en/trends/2026-05-01-chatgpt-youtube-2026-algorithm.html">
+  <meta property="og:image" content="https://creatorjungbok.co.kr/trends/images/2026-05-01-chatgpt-youtube-2026-algorithm-en.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="article:published_time" content="2026-05-01T07:00:00+09:00">
+  <meta property="article:section" content="AI Trends">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://creatorjungbok.co.kr/trends/images/2026-05-01-chatgpt-youtube-2026-algorithm-en.png">
+  <link rel="alternate" hreflang="ko" href="https://creatorjungbok.co.kr/trends/2026-05-01-chatgpt-youtube-2026-algorithm.html">
+  <link rel="alternate" hreflang="en" href="https://creatorjungbok.co.kr/en/trends/2026-05-01-chatgpt-youtube-2026-algorithm.html">
+  <link rel="alternate" hreflang="x-default" href="https://creatorjungbok.co.kr/trends/2026-05-01-chatgpt-youtube-2026-algorithm.html">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6B72N2BV55"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6B72N2BV55');
+  </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/en/" class="site-logo">Creator <span>Jungbok</span></a>
+    <button class="nav-toggle" aria-label="Menu" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+    <nav class="header-nav">
+      <a href="/en/">Home</a>
+      <a href="/en/learning/">Learning</a>
+      <a href="/en/trends/">AI Trends</a>
+      <a href="/en/playbook/">Playbook</a>
+      <a href="/en/about/">About</a>
+      <span class="lang-toggle">
+        <a href="#" data-lang="ko">한국어</a>
+        <span class="lang-sep">/</span>
+        <a href="#" class="lang-active" data-lang="en">English</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+  <main class="main-content">
+    <article>
+      <header class="post-header">
+        <img src="/trends/images/2026-05-01-chatgpt-youtube-2026-algorithm-en.png" alt="Decoding YouTube 2026 Algorithm with ChatGPT — Creator Jungbok" class="post-thumbnail" width="1200" height="630" loading="eager" />
+        <p class="post-chap">AI Trends</p>
+        <h1 class="post-title">Decoding YouTube's 2026 Algorithm with ChatGPT — Gemini, Satisfaction Signals, and the 30-Second Rule</h1>
+        <div class="lang-switch">
+          <a href="/trends/2026-05-01-chatgpt-youtube-2026-algorithm.html" onclick="try{localStorage.setItem('cj-lang-pref','ko');}catch(e){}">한국어</a> /
+          <a href="/en/trends/2026-05-01-chatgpt-youtube-2026-algorithm.html" class="active" onclick="try{localStorage.setItem('cj-lang-pref','en');}catch(e){}">English</a>
+        </div>
+        <div class="trend-meta">
+          <span class="meta-cat">AI Trends</span>
+          <span>🗓 2026-05-01</span>
+          <span>⏱ 5 min read</span>
+          <span>📎 Sources: TechCrunch, YouTube Blog, vidiq, OutlierKit</span>
+        </div>
+      </header>
+
+      <hr class="divider">
+
+      <div class="post-body">
+
+        <figure class="body-figure">
+          <img src="/trends/images/2026-05-01-chatgpt-youtube-2026-algorithm-01-hero.png" alt="2026 YouTube algorithm — Gemini reading a video frame by frame" />
+          <figcaption>As of May 2026, YouTube's recommendation engine is a Gemini-driven system that reads frames, words, on-screen text and emotional tone to score satisfaction.</figcaption>
+        </figure>
+
+        <p class="lead-para">
+          As of <strong>May 1, 2026</strong>, the <strong>YouTube algorithm</strong> works very differently from the watch-time machine creators got used to (sources: vidiq, masculinesynergy). After the January 2026 Gemini integration, the model reads videos <strong>frame by frame</strong>, parses on-screen text and pacing, and weighs <strong>post-watch satisfaction surveys</strong> as a live signal (source: PostEverywhere). At the same time, the <strong>Hype button</strong> is now globally rolled out across 39 countries, opening a 7-day boost slot for channels with <strong>500 to 500,000 subscribers</strong> (sources: TechCrunch, YouTube Blog). For solo operators running an <strong>AI YouTube</strong> channel, <strong>ChatGPT</strong> is now the fastest way to redesign hooks, captions and CTAs around these signals — and an <strong>AI automation</strong> pipeline that ignores them gets penalised within days.
+        </p>
+
+        <h2>What changed — the four signals Gemini reads</h2>
+        <p>When Google rewired the recommendation engine onto Gemini in January 2026, ranking moved from a single watch-time score to a <strong>multi-layer signal stack</strong> evaluated together (source: masculinesynergy, 2026-04). Four of those signals now drive most of a video's reach.</p>
+
+        <div class="feature-grid">
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">1</span>Frame-level video understanding</div>
+            <p class="feature-card-desc">Gemini scores <strong>visual change rate, on-screen text, pacing and emotion</strong>. Cut frequency and speech density in the first 30 seconds feed straight into ranking (source: vidiq).</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">2</span>Satisfaction survey weight</div>
+            <p class="feature-card-desc">Post-watch <strong>"was this video worth your time?"</strong> surveys now sit above watch time in the ranking stack (source: PostEverywhere). Roughly 70% positive replies is the viral threshold.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">3</span>30-second retention floor</div>
+            <p class="feature-card-desc">If first-30-second retention is under <strong>70%</strong> in the test window, distribution stalls (sources: PostEverywhere, dataslayer). CTR under 4% also throttles reach.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">4</span>Comment sentiment scoring</div>
+            <p class="feature-card-desc">Comments full of complaint or argument now <strong>cost reach</strong>, even when engagement is high (source: masculinesynergy). Rage-bait strategies are effectively over.</p>
+          </div>
+
+        </div>
+
+        <h2>Hype button goes global — a new ramp for small channels</h2>
+        <p>The other half of the story is the <strong>Hype button</strong>. Globally launched on August 26, 2025 and live in 39 countries, Hype lets fans push new long-form videos into a 7-day leaderboard, with multipliers that favour channels between <strong>500 and 500,000 subscribers</strong> (sources: TechCrunch, YouTube Blog). For solo creators, that means external traffic from <strong>X AI</strong> threads or an <strong>AI Instagram</strong> push during the first 7 days now buys real ranking lift.</p>
+
+        <p>The <strong>AI automation</strong> angle is direct. <a href="/en/trends/2026-04-29-chatgpt-workspace-agents-blog-automation.html">ChatGPT Workspace Agents</a> can already produce hooks, captions and an <strong>AI blog</strong> companion piece in one pass — the new step is staging all of that to land inside the 7-day Hype window with a single launch day.</p>
+
+        <figure class="body-figure">
+          <img src="/trends/images/2026-05-01-chatgpt-youtube-2026-algorithm-02-mid.png" alt="Satisfaction signal and the 30-second rule — ChatGPT hook design workflow" />
+          <figcaption>With satisfaction and 30-second retention scored together, the ChatGPT hook-design loop has to change shape.</figcaption>
+        </figure>
+
+        <h2>How to rebuild the rules with ChatGPT — a 4-step workflow</h2>
+        <p>Solo operators do not need theory; they need a procedure. The cleanest way to keep ChatGPT useful under the new algorithm is to lock these four steps into every new video.</p>
+
+        <div class="compare-box">
+          <div class="compare-side compare-before">
+            <span class="compare-label">📅 Before Gemini integration</span>
+            Long intro, climax later<br>
+            Title and thumbnail first<br>
+            <strong>Single watch-time score</strong>
+          </div>
+          <div class="compare-side compare-after">
+            <span class="compare-label">✨ As of May 2026</span>
+            Conclusion, promise and CTA inside 30 seconds<br>
+            Visual cuts, on-screen text and emotion designed together<br>
+            <strong>Multi-layer satisfaction + session score</strong>
+          </div>
+        </div>
+
+        <p><strong>Step 1: 30-second hook script via ChatGPT.</strong> Feed the topic and the conclusion, and ask for a script that <strong>states the conclusion once and triggers four visual changes inside 30 seconds</strong>. Have ChatGPT return a small table of speech density and cut count so the hook is auditable.</p>
+
+        <p><strong>Step 2: Design on-screen captions separately.</strong> Gemini reads captions as a distinct signal, so the words on screen should add information that the spoken track does not repeat. <a href="/en/trends/2026-04-28-instagram-reels-teleprompter.html">Reels Teleprompter caption extracts</a> are a clean source to feed back into ChatGPT for repurposing.</p>
+
+        <p><strong>Step 3: Add a one-line satisfaction prompt.</strong> Replace generic "did this help?" lines with a verb-first ask such as <strong>"reply with the one thing you are taking away from this"</strong>. ChatGPT can produce five A/B variants from the video's conclusion in a single prompt.</p>
+
+        <p><strong>Step 4: Standardise the next-video handoff.</strong> Session time is now part of the ranking stack, so the last 5 seconds of every upload should send viewers to the same channel's next video. Even when an <strong>AI blog</strong>, Reels or Shorts version exists, the long-form ending stays inside YouTube.</p>
+
+        <div class="callout warn">
+          <div class="callout-label">⚠ AI slop penalty caution</div>
+          AI-assisted content is allowed, but <strong>repetitive uploads with no visible editorial intent</strong> have triggered demonetisation waves (sources: Teknoding, MilX). A pipeline that pipes a ChatGPT script straight into TTS without curation is the riskiest pattern. Keep visible human signals — own voice, on-screen variation, commentary frames.
+        </div>
+
+        <h2>Three things to apply this week</h2>
+        <p><strong>1. Lock a 30-second hook template.</strong> Conclusion in one line, promise in one line, one visual preview cut. Save it as a system prompt in ChatGPT so every new video starts from the same spine. Reels and Shorts inherit the same rule.</p>
+
+        <p><strong>2. Build a 7-day Hype runway on external channels.</strong> On launch day, share the long-form link from <strong>X AI</strong> threads, an <strong>AI Instagram</strong> caption stack and a newsletter blast. Hype multiplies smaller channels harder, so the external traffic must arrive inside the 7-day window.</p>
+
+        <p><strong>3. Operationalise satisfaction comments.</strong> Add a fixed "one-line takeaway" closer to every video, then have ChatGPT cluster those replies weekly to seed next week's topics. Plug that loop into the existing <a href="/en/trends/2026-04-29-chatgpt-workspace-agents-blog-automation.html">ChatGPT Workspace Agents</a> pipeline so the rule evolves with data, not guesses.</p>
+
+        <div class="callout tip">
+          <div class="callout-label">💡 The short version</div>
+          <ul>
+            <li>Since <strong>January 2026</strong> YouTube ranks on a <strong>multi-signal stack with satisfaction on top</strong></li>
+            <li>Floors to clear: <strong>70% retention at 30s, 4%+ CTR, positive comment ratio</strong></li>
+            <li>Workflow: ChatGPT for <strong>hook, captions, satisfaction line and next-video handoff</strong></li>
+            <li>Distribution: stack <strong>X AI and AI Instagram traffic inside the 7-day Hype window</strong></li>
+          </ul>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-label">📎 Sources</div>
+          <ul>
+            <li>TechCrunch — <a href="https://techcrunch.com/2025/08/26/youtubes-hype-feature-that-boosts-smaller-creators-launches-globally/" target="_blank" rel="noopener">YouTube's 'Hype' feature that boosts smaller creators launches globally</a></li>
+            <li>YouTube Blog — <a href="https://blog.youtube/news-and-events/youtube-hype/" target="_blank" rel="noopener">Hype: Giving fans a stake in boosting their favorite emerging creators</a></li>
+            <li>vidiq — <a href="https://vidiq.com/blog/post/understanding-youtube-algorithm/" target="_blank" rel="noopener">How the YouTube Algorithm Works in 2026: Updates &amp; Tips</a></li>
+            <li>OutlierKit — <a href="https://outlierkit.com/resources/youtube-algorithm-updates/" target="_blank" rel="noopener">YouTube Algorithm Updates 2026: Every Change Creators Need to Know</a></li>
+            <li>masculinesynergy — <a href="https://masculinesynergy.com/youtube-algorithm-2026-gemini-update-guide/" target="_blank" rel="noopener">The YouTube Algorithm Update: 2026 Gemini Update Guide</a></li>
+          </ul>
+        </div>
+
+        <nav class="trends-nav" aria-label="AI Trends navigation">
+          <a href="2026-04-30-tiktok-ai-overview-creator-control.html" class="trends-nav-item prev">
+            <span class="trends-nav-label">&larr; Previous</span>
+            <span class="trends-nav-title">TikTok AI Overview Backlash — Why Caption Control Now Matters for Every AI Blog Operator</span>
+          </a>
+          <a href="/en/trends/" class="trends-nav-item index">
+            <span class="trends-nav-index-icon">&#9783;</span>
+            <span>All AI Trends</span>
+          </a>
+          <span class="trends-nav-item empty"></span>
+        </nav>
+
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Creator <span>Jungbok</span></div>
+    <div class="footer-links">
+      <a href="/en/learning/">Learning</a>
+      <a href="/en/trends/">AI Trends</a>
+      <a href="/en/playbook/">Playbook</a>
+      <a href="/en/about/">About</a>
+      <a href="/en/privacy/">Privacy</a>
+      <a href="/en/contact/">Contact</a>
+    </div>
+    <p class="footer-copy">© 2026 Creator Jungbok</p>
+  </div>
+</footer>
+
+<script src="/js/main.js"></script>
+<script src="/js/lang-toggle.js"></script>
+
+<button id="btn-top" aria-label="Back to top">↑</button>
+<script>
+  var b=document.getElementById('btn-top');
+  window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+
+<script>
+(function(){
+  try {
+    if (localStorage.getItem('cj-lang-pref')) return;
+    if (sessionStorage.getItem('cj-auto-redirect-done')) return;
+    var ul = (navigator.language || '').toLowerCase();
+    if (ul.indexOf('ko') === 0) {
+      sessionStorage.setItem('cj-auto-redirect-done','1');
+      location.href = location.pathname.replace('/en/trends/','/trends/');
+    }
+  } catch(e){}
+})();
+</script>
+
+</body>
+</html>
