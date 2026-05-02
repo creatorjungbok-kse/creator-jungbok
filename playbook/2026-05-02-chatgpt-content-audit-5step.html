@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatGPT 콘텐츠 진단 — 트래픽 안 오는 진짜 이유 5단계 셀프 오딧 | 크리에이터 완전정복</title>
+  <meta name="description" content="ChatGPT로 블로그·유튜브 알고리즘이 안 밀어주는 진짜 이유를 5단계로 진단하는 셀프 오딧 워크플로. CTR·첫 30초 잔존·E-E-A-T·내부 링크·AI 가시성 — 다섯 자리 한 번에.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .trend-meta { display: flex; flex-wrap: wrap; gap: .6rem 1rem; font-size: .8rem; color: #666; margin: .75rem 0 1.25rem 0; padding-bottom: 1rem; border-bottom: 1px solid var(--border, #e5e5e5); align-items: center; }
+    .trend-meta span { display: inline-flex; align-items: center; gap: .3rem; line-height: 1.4; }
+    .trend-meta .meta-cat { background: #1A2438; color: #fff; padding: .2rem .7rem; border-radius: 999px; font-weight: 700; font-size: .7rem; letter-spacing: .02em; }
+    .subhead { font-size: 1.05rem; line-height: 1.7; color: #444; margin: .25rem 0 1.5rem 0; font-weight: 500; letter-spacing: -.005em; }
+    .lead-para { font-size: 1.02rem; line-height: 1.85; color: var(--text, #222); padding: 1.1rem 1.25rem; background: #f5ebdc; border-left: 4px solid #1A2438; border-radius: 0 8px 8px 0; margin: 1.25rem 0 2rem 0; }
+    .lead-para strong { color: #1A2438; }
+    .step-grid { display: grid; grid-template-columns: 1fr; gap: .9rem; margin: 1.5rem 0; }
+    .step-card { border: 1px solid var(--border, #e5e5e5); border-radius: 10px; padding: 1.1rem 1.25rem; background: #fafafa; }
+    .step-card-num { display: inline-block; background: #1A2438; color: #fff; width: 1.6rem; height: 1.6rem; line-height: 1.6rem; text-align: center; border-radius: 50%; font-weight: 800; font-size: .85rem; margin-right: .5rem; }
+    .step-card-title { font-size: 1rem; font-weight: 800; color: var(--text, #222); margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .step-card-desc { font-size: .92rem; line-height: 1.75; color: #444; margin: 0; }
+    .callout { margin: 1.75rem 0; padding: 1.1rem 1.25rem; border-radius: 10px; border-left: 4px solid; font-size: .93rem; line-height: 1.75; }
+    .callout.tip { background: #f0fdf4; border-color: #22c55e; }
+    .callout.info { background: #eff6ff; border-color: #3b82f6; }
+    .callout.warn { background: #fffbeb; border-color: #f59e0b; }
+    .callout-label { font-weight: 800; font-size: .85rem; margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .callout.tip .callout-label { color: #16a34a; }
+    .callout.info .callout-label { color: #2563eb; }
+    .callout.warn .callout-label { color: #d97706; }
+    .callout ul { margin: .4rem 0 0 1.1rem; padding: 0; }
+    .callout li { margin-bottom: .3rem; }
+    .callout a { color: inherit; text-decoration: underline; word-break: break-all; }
+    .checklist { background: #fff; border: 1px solid #e0e0e0; border-radius: 10px; padding: 1.1rem 1.25rem; margin: 1.5rem 0; }
+    .checklist h3 { margin: 0 0 .75rem 0; font-size: 1rem; color: #1A2438; }
+    .checklist label { display: block; padding: .35rem 0; font-size: .95rem; line-height: 1.6; cursor: pointer; }
+    .checklist input { margin-right: .5rem; }
+    @media (max-width: 480px) {
+      .post-title { font-size: 1.55rem !important; line-height: 1.4 !important; }
+      .subhead { font-size: .95rem; }
+      .lead-para { font-size: .95rem; padding: 1rem; }
+      .trend-meta { font-size: .75rem; gap: .5rem .75rem; }
+      .step-card { padding: 1rem; }
+      .step-card-title { font-size: .95rem; }
+      .step-card-desc { font-size: .88rem; }
+      .callout { padding: 1rem; font-size: .88rem; }
+    }
+    .post-body strong { color: #111; font-weight: 800; }
+    .post-body h2 { margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.4rem; line-height: 1.4; }
+    @media (max-width: 480px) { .post-body h2 { font-size: 1.2rem; margin-top: 2rem; } }
+    .post-body h3 { margin-top: 1.5rem; margin-bottom: .5rem; font-size: 1.1rem; }
+    .post-body p { line-height: 1.85; font-size: .98rem; }
+    @media (max-width: 480px) { .post-body p { font-size: .95rem; line-height: 1.8; } }
+    .post-body ul { line-height: 1.85; }
+    .post-body ul li { margin-bottom: .35rem; }
+    .post-body figure { margin: 1.75rem 0; text-align: center; }
+    .post-body figure img { width: 100%; height: auto; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+    .post-body figure figcaption { font-size: .82rem; color: #777; margin-top: .5rem; font-style: italic; }
+    .page-wrap { justify-content: center; }
+    .post-thumbnail { width: 100%; height: auto; border-radius: 12px; margin: 0 0 1.5rem 0; display: block; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    @media (max-width: 480px) { .post-thumbnail { border-radius: 8px; margin-bottom: 1rem; } }
+  </style>
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="크리에이터 완전정복">
+  <meta property="og:title" content="ChatGPT 콘텐츠 진단 — 트래픽 안 오는 진짜 이유 5단계 셀프 오딧">
+  <meta property="og:description" content="ChatGPT로 블로그·유튜브 알고리즘이 안 밀어주는 진짜 이유를 5단계로 진단하는 셀프 오딧 워크플로. CTR·첫 30초 잔존·E-E-A-T·내부 링크·AI 가시성 — 다섯 자리 한 번에.">
+  <meta property="og:url" content="https://creatorjungbok.co.kr/playbook/2026-05-02-chatgpt-content-audit-5step.html">
+  <meta property="og:image" content="https://creatorjungbok.co.kr/playbook/images/2026-05-02-chatgpt-content-audit-5step.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="article:published_time" content="2026-05-02T07:00:00+09:00">
+  <meta property="article:section" content="SNS 인사이트">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://creatorjungbok.co.kr/playbook/images/2026-05-02-chatgpt-content-audit-5step.png">
+  <link rel="alternate" hreflang="ko" href="https://creatorjungbok.co.kr/playbook/2026-05-02-chatgpt-content-audit-5step.html">
+  <link rel="alternate" hreflang="en" href="https://creatorjungbok.co.kr/en/playbook/2026-05-02-chatgpt-content-audit-5step.html">
+  <link rel="alternate" hreflang="x-default" href="https://creatorjungbok.co.kr/playbook/2026-05-02-chatgpt-content-audit-5step.html">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6B72N2BV55"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6B72N2BV55');
+  </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="site-logo">크리에이터 <span>완전정복</span></a>
+    <span class="lang-toggle-mobile"><a href="#" class="lang-active" data-lang="ko">한국어</a><span class="lang-sep">/</span><a href="#" data-lang="en">English</a></span>
+    <button class="nav-toggle" aria-label="메뉴" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+    <nav class="header-nav">
+      <a href="/">홈</a>
+      <a href="/learning/">학습</a>
+      <a href="/trends/">AI 트렌드</a>
+      <a href="/playbook/">SNS 인사이트</a>
+      <a href="/about/">소개</a>
+      <span class="lang-toggle">
+        <a href="#" class="lang-active" data-lang="ko">한국어</a>
+        <span class="lang-sep">/</span>
+        <a href="#" data-lang="en">English</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+  <main class="main-content">
+    <article>
+      <header class="post-header">
+        <img src="/playbook/images/2026-05-02-chatgpt-content-audit-5step.png" alt="ChatGPT 콘텐츠 진단 5단계 셀프 오딧 — 크리에이터 완전정복" class="post-thumbnail" width="1200" height="630" loading="eager" />
+        <p class="post-chap">SNS 인사이트</p>
+        <h1 class="post-title">ChatGPT 콘텐츠 진단 — 트래픽 안 오는 진짜 이유 5단계 셀프 오딧</h1>
+        <p class="subhead">데이터 수집. URL 카드. 의도 매칭. 5신호 점수. 다음 액션.</p>
+        <div class="lang-switch">
+          <a href="#" class="lang-active" data-lang="ko">한국어</a>
+          <span class="lang-sep">/</span>
+          <a href="#" data-lang="en">English</a>
+        </div>
+        <div class="trend-meta">
+          <span class="meta-cat">SNS 인사이트</span>
+          <span>🗓 2026-05-02</span>
+          <span>⏱ 약 9분 읽기</span>
+          <span>📎 출처: vidiq, Marketing Agent, AEO Engine, Search Engine Journal, Backlinko</span>
+        </div>
+      </header>
+
+      <hr class="divider">
+
+      <div class="post-body">
+
+        <p class="lead-para">
+          매일 <strong>ChatGPT</strong>로 글 4편 만들고 한 달이 지났는데 GA4 7일 사용자 17명. 검색 노출 0건. AdSense 거절. 그 자리에서 멈추는 이유는 콘텐츠 양이 아니라 <strong>다섯 신호 중 어디서 새는지</strong>를 진단하지 않은 채 같은 패턴으로 다시 쓰기 때문입니다. 이 글은 ChatGPT 한 세션 안에서 자기 사이트와 채널을 5단계로 진단하는 셀프 오딧 워크플로입니다. 30분이면 어디가 새는지 좌표가 잡힙니다. 더 쓰는 게 정답이 아닐 수 있습니다.
+        </p>
+
+        <figure class="body-figure">
+          <img src="/playbook/images/2026-05-02-chatgpt-content-audit-5step-01-hero.png" alt="콘텐츠 진단 5단계 셀프 오딧 워크플로 — 책상 위 진단 카드 다섯 장" loading="lazy" />
+          <figcaption>다섯 신호 — 트래픽이 막힌 자리는 보통 한두 곳뿐.</figcaption>
+        </figure>
+
+        <h2>왜 더 쓰는 게 아니라 진단이 먼저인가</h2>
+        <p>2026년 검색·추천 알고리즘은 더 정밀해졌습니다. <strong>유튜브 알고리즘</strong>은 클릭이 일어난 직후 30초 안에 무슨 일이 벌어지는지를 따로 가중치로 봅니다. 클릭률은 높은데 첫 30초 잔존이 낮으면 그 영상은 추천에서 적극적으로 빠집니다(출처: <a href="https://marketingagent.blog/2025/11/04/youtubes-recommendation-algorithm-satisfaction-signals-what-you-can-control/" target="_blank" rel="noopener">Marketing Agent</a>). 평균 시청 50~60%면 양호, 70% 이상이면 추천 큐에 우선 배치, 40% 아래면 가시성 자체가 깎입니다(출처: <a href="https://vidiq.com/blog/post/understanding-youtube-algorithm/" target="_blank" rel="noopener">vidiq</a>).</p>
+
+        <p>같은 결이 글에도 적용됩니다. 2026년 검색의 58%는 클릭 없이 끝납니다. AI 답변 안에서 인용되지 않으면 노출이 있어도 트래픽이 안 옵니다(출처: <a href="https://aeoengine.ai/blog/blog-seo-checklist" target="_blank" rel="noopener">AEO Engine</a>). 그래서 2026년 사이트 진단은 다섯 자리를 같이 봅니다. 기술 SEO, 본문 의도 일치, 사용자 경험, E-E-A-T 신호, AI 가시성. 다섯 중 어느 자리가 새는지 모른 채 글 한 편을 더 쓰면, 그 글도 같은 자리에서 같은 이유로 멈춥니다.</p>
+
+        <p><strong>ChatGPT</strong>가 이 자리에 잘 붙는 이유는 단순합니다. 사이트를 직접 크롤링하지는 못하지만, 우리가 export한 GA4·Search Console·YouTube Studio 표 세 장을 한 세션에 같이 붙여 놓으면, 다섯 신호를 5분 안에 교차 분석해 약점 좌표를 잡아줍니다. <a href="https://medium.com/@christianaistudio/stop-paying-for-seo-audits-ai-does-the-same-job-in-3-prompts-358d6046dd19" target="_blank" rel="noopener">2026년 들어 가장 많이 인용되는 워크플로</a>가 정확히 이 형태입니다.</p>
+
+        <h2>5단계 워크플로 — ChatGPT 한 세션 안에서</h2>
+        <p>아래 다섯 단계를 같은 채팅창 안에서 순서대로 돌립니다. 새 채팅 X. 단계마다 같은 사이트 컨텍스트를 ChatGPT가 머리에 들고 있어야 5단계 진단표가 일관됩니다.</p>
+
+        <div class="step-grid">
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">1</span>진단 데이터 3장 수집 — 30일 윈도</div>
+            <p class="step-card-desc">먼저 세 곳에서 30일치 표를 export합니다. 첫째, Search Console에서 페이지별 노출·클릭·평균 위치·CTR. 둘째, GA4에서 페이지별 사용자·평균 체류·이탈률. 셋째, 유튜브 채널이 있다면 Studio에서 영상별 노출 CTR·평균 시청 비율·첫 30초 잔존. 세 장을 CSV로 저장. 이 셋이 한 책상에 같이 올라가야 다섯 신호 진단이 시작됩니다. 한 곳만 보면 같은 함정에 다시 빠집니다.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">2</span>URL·영상 카드 분류 — 4가지 역할 태그</div>
+            <p class="step-card-desc">세 표를 ChatGPT에 통째로 붙이고 묶음 분류를 요청합니다. 프롬프트: "각 URL과 영상에 다음 4가지 역할 중 하나를 태그. ① 필러(주제 허브) ② 클러스터(필러를 받쳐주는 깊이 글) ③ 머니 페이지(전자책·강의·CTA 강한 글) ④ 일회성/뉴스." 2026년 진단의 첫 자리는 항상 역할 분류입니다(출처: <a href="https://quickseo.ai/blog/the-complete-seo-audit-checklist-for-2026" target="_blank" rel="noopener">QuickSEO</a>). 클러스터는 많은데 필러가 없으면 내부 링크가 모일 곳이 없어 트래픽이 흩어집니다.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">3</span>의도 매칭 — 검색 의도 vs 본문 일치 점수</div>
+            <p class="step-card-desc">분류된 표에서 노출은 있는데 CTR·잔존이 낮은 URL·영상을 픽합니다. 그 글의 메인 키워드를 ChatGPT에 던지고 묻습니다. "이 키워드를 검색하는 사람의 진짜 의도는 무엇인가? 어디서 막혀서 검색하는가? 페인 3개." 그다음 본문을 같이 붙이고 "이 본문이 페인 3개를 직접 긁어주는가, 일반 정의로 시작하는가?"를 묻습니다. 보통 노출은 되는데 클릭·잔존이 안 따라오는 글은 도입부 첫 100자가 페인을 긁어주지 못합니다(출처: <a href="https://backlinko.com/chatgpt-for-seo" target="_blank" rel="noopener">Backlinko</a>). <strong>AI 블로그</strong> 자동화가 가장 자주 무너지는 자리도 정확히 여기입니다.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">4</span>5신호 셀프 점수 — URL·영상 한 줄 평가</div>
+            <p class="step-card-desc">의도 매칭 결과를 들고 다섯 신호를 한 줄씩 점수 매깁니다. ① 클릭 신호(CTR — 검색 8~15%, 추천 5~10%, 홈 3~7%가 2026 기준), ② 첫 30초 잔존(40% 아래면 빨간불), ③ 클릭 후 만족(체류·다음 페이지 비율), ④ E-E-A-T 신호(저자 표기·일화·1차 데이터·외부 인용), ⑤ AI 가시성(필러에서 2~3문장 답을 먼저 던지고 그 아래 리스트·예시로 펴는 구조). 각 신호 0~5점. 다섯 점수가 다 5에 가까운 글은 보통 하나도 없습니다. 가장 낮은 한두 자리가 트래픽이 새는 진짜 좌표입니다.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">5</span>다음 액션 큐 — 리라이트·통합·폐기 셋 중 하나</div>
+            <p class="step-card-desc">5신호 점수를 들고 ChatGPT에 마지막 묶음 요청. "각 URL·영상을 셋 중 하나로 분류. ① 리라이트(점수 ≥ 12, 도입부·H2 두세 군데만 손보면 살아남는 글), ② 통합(비슷한 의도 두 글을 하나로 합쳐 필러로 승격), ③ 폐기·noindex(점수 ≤ 7, 트래픽도 의도 일치도 낮은 일회성)." 한 번 해봤더니 50개 글 중 리라이트 12, 통합 6쌍, 폐기 8. 새 글 1편 쓰기 전, 그 26개를 먼저 닫는 게 다음 한 주의 진짜 그림입니다. 같은 세션 끝에서 다음 주 리라이트 큐 5개를 시드로 받습니다.</p>
+          </div>
+
+        </div>
+
+        <figure class="body-figure">
+          <img src="/playbook/images/2026-05-02-chatgpt-content-audit-5step-02-mid.png" alt="다섯 신호 점수표 — 책상 위 진단 카드 다섯 장이 한 줄로 펴진 모습" loading="lazy" />
+          <figcaption>다섯 신호 — 가장 낮은 한 자리가 트래픽이 새는 좌표.</figcaption>
+        </figure>
+
+        <h2>흔히 무너지는 자리 3가지</h2>
+
+        <h3>함정 1. 진단 없이 같은 패턴으로 글을 더 쓴다</h3>
+        <p>가장 자주 빠지는 함정입니다. 트래픽이 안 오면 보통 "글을 더 쓰자"가 첫 반응입니다. 그러나 5신호 중 어디가 새는지 모르는 채 같은 패턴으로 10편을 더 쓰면, 새 글 10편도 정확히 같은 자리에서 같은 이유로 막힙니다. <strong>ChatGPT</strong> 자동화의 위험도 여기에 모입니다. 양은 늘고 진단은 안 됩니다. 한 주에 한 번은 새 글을 멈추고 30분 진단부터 깁니다. 그 30분이 다음 주 글 5편의 방향을 결정합니다.</p>
+
+        <h3>함정 2. CTR만 보고 클릭 후 신호를 못 본다</h3>
+        <p>두 번째로 많은 실수입니다. 썸네일·제목을 자극적으로 바꿔 CTR을 7%에서 11%로 올렸는데 첫 30초 잔존이 35%에서 22%로 떨어진 사례가 흔합니다. 2026년 알고리즘은 이 패턴을 정확히 잡아내 영상을 적극적으로 추천에서 뺍니다(출처: <a href="https://marketingagent.blog/2025/11/04/youtubes-recommendation-algorithm-satisfaction-signals-what-you-can-control/" target="_blank" rel="noopener">Marketing Agent</a>). 4단계 5신호 점수에서 ①과 ②를 같이 봐야 함정이 안 생깁니다. 글에서도 동일합니다. CTR 올라갔는데 평균 체류가 30초 아래로 내려가면 의도 불일치 신호로 잡혀 위치가 다음 달부터 깎입니다.</p>
+
+        <h3>함정 3. AI 가시성 자리(⑤)를 빼먹는다</h3>
+        <p>세 번째로 많은 실수입니다. 2026년 검색의 58%가 클릭 없이 끝납니다(출처: <a href="https://aeoengine.ai/blog/blog-seo-checklist" target="_blank" rel="noopener">AEO Engine</a>). 즉 노출은 있어도 AI Overview가 우리 글을 인용하지 않으면 트래픽이 안 옵니다. 5단계 ⑤번 신호가 이 자리입니다. 필러 글의 H2 바로 아래 2~3문장으로 핵심 답을 먼저 던지고, 그 아래 리스트·예시로 펴는 구조여야 인용 확률이 올라갑니다. <strong>X AI</strong> 스레드도 같은 결입니다. 첫 트윗 두 줄에 답이 다 닿아 있어야 다음 트윗이 펼쳐집니다. <strong>AI 틱톡</strong> 영상 자막도 첫 캡션 한 줄에 답을 박는 결이 같은 이유로 잘 작동합니다.</p>
+
+        <div class="callout warn">
+          <div class="callout-label">⚠ 진단표는 한 달에 한 번만</div>
+          매일 진단하면 5신호 점수가 오르내리는 게 노이즈인지 신호인지 구분이 안 됩니다. 30일 윈도로 한 달에 한 번이 적정 빈도(출처: <a href="https://www.searchenginejournal.com/technical-seo-audit-new-layer/571583/" target="_blank" rel="noopener">Search Engine Journal</a>). 매일 일은 글 1편 + 5단계 큐 안 액션 1개입니다. 분기 단위로는 위 5단계를 풀버전으로 다시 돌려 큐 자체를 갱신합니다. AI 자동화는 진단 데이터 수집·분류·점수까지. 마지막 결정(리라이트·통합·폐기)은 사람이 1분 안에 닫습니다.
+        </div>
+
+        <h2>오늘 바로 할 5가지 체크리스트</h2>
+        <div class="checklist">
+          <h3>ChatGPT 콘텐츠 진단 1세션 5단계</h3>
+          <label><input type="checkbox"> Search Console + GA4 + 유튜브 Studio 30일 표 3장 export</label>
+          <label><input type="checkbox"> 모든 URL·영상에 4가지 역할 태그 (필러·클러스터·머니·일회성)</label>
+          <label><input type="checkbox"> 노출 있는데 CTR·잔존 낮은 글 5개 의도 매칭</label>
+          <label><input type="checkbox"> 5신호 점수 (CTR·첫 30초 잔존·만족·E-E-A-T·AI 가시성) 0~5점</label>
+          <label><input type="checkbox"> 리라이트·통합·폐기 분류 + 다음 주 시드 5개</label>
+        </div>
+
+        <p>같은 세션에서 후크 5종을 동시에 받는 흐름은 <a href="/playbook/2026-05-01-chatgpt-shorts-hook-6step.html">ChatGPT 유튜브 숏츠 후크 6단계</a>에서, 1편을 5채널로 분기하는 흐름은 <a href="/playbook/2026-04-30-chatgpt-blog-engine-5-platforms.html">ChatGPT 블로그 엔진 5채널 분기 6단계</a>에서, 1주일 캘린더는 <a href="/playbook/2026-04-29-chatgpt-content-calendar-7-step.html">ChatGPT 콘텐츠 캘린더 7단계</a>에서 보실 수 있습니다. 본 글은 그 모든 자동 생성 글을 한 달에 한 번 닫는 진단 워크플로입니다.</p>
+
+        <div class="callout tip">
+          <div class="callout-label">💡 핵심만 다시</div>
+          <ul>
+            <li>2026년 진단 5신호 = CTR · 첫 30초 잔존 · 클릭 후 만족 · E-E-A-T · AI 가시성</li>
+            <li>유튜브 평균 시청 50~60% 양호 / 70% 이상 추천 우선 / 40% 아래 가시성 깎임</li>
+            <li>검색 58%가 클릭 없이 끝남 — AI 인용이 안 되면 노출만 있고 트래픽 0</li>
+            <li><strong>ChatGPT</strong> 한 세션 5단계 — 데이터 수집·분류·의도·점수·다음 액션</li>
+            <li>다음 주는 새 글 5편이 아니라 리라이트 12 + 통합 6쌍 + 폐기 8을 먼저 닫기</li>
+          </ul>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-label">🔁 더 깊이</div>
+          <ul>
+            <li>한국 본사이트 같은 결의 시작 — <a href="/playbook/">SNS 인사이트 전체</a> · <a href="/trends/">AI 트렌드 전체</a></li>
+            <li>티스토리 진단 페어 — 같은 워크플로를 80% 재작성한 티스토리 글이 같은 날 발행됩니다 (검색 유입 차이를 보고 한 달 뒤 같이 다시 진단)</li>
+            <li>영문 진단 페어 — <a href="/en/playbook/2026-05-02-chatgpt-content-audit-5step.html">ChatGPT AI Blog Audit (EN)</a> · 영문 환류는 Blogger에서 같은 결의 80% 재작성 발행</li>
+          </ul>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-label">📎 출처</div>
+          <ul>
+            <li>Marketing Agent (2025-11) — <a href="https://marketingagent.blog/2025/11/04/youtubes-recommendation-algorithm-satisfaction-signals-what-you-can-control/" target="_blank" rel="noopener">YouTube's Recommendation Algorithm: Satisfaction Signals & What You Can Control</a></li>
+            <li>vidiq (2026) — <a href="https://vidiq.com/blog/post/understanding-youtube-algorithm/" target="_blank" rel="noopener">How the YouTube Algorithm Works in 2026: Updates &amp; Tips</a></li>
+            <li>AEO Engine (2026) — <a href="https://aeoengine.ai/blog/blog-seo-checklist" target="_blank" rel="noopener">Blog SEO Checklist 2026: Rank &amp; Win AI Search</a></li>
+            <li>Search Engine Journal (2026) — <a href="https://www.searchenginejournal.com/technical-seo-audit-new-layer/571583/" target="_blank" rel="noopener">The Technical SEO Audit Needs A New Layer</a></li>
+            <li>Backlinko (2026) — <a href="https://backlinko.com/chatgpt-for-seo" target="_blank" rel="noopener">ChatGPT for SEO: Ultimate Guide, Tips &amp; Prompts for 2026</a></li>
+            <li>QuickSEO (2026) — <a href="https://quickseo.ai/blog/the-complete-seo-audit-checklist-for-2026" target="_blank" rel="noopener">The Complete SEO Audit Checklist for 2026</a></li>
+          </ul>
+        </div>
+
+        <nav class="trends-nav" aria-label="SNS 인사이트 글 네비게이션">
+          <a href="/playbook/2026-05-01-chatgpt-shorts-hook-6step.html" class="trends-nav-item prev">
+            <span class="trends-nav-label">&larr; 이전 글</span>
+            <span class="trends-nav-title">ChatGPT 유튜브 숏츠 후크 — 첫 3초 6단계 알고리즘 공략</span>
+          </a>
+          <a href="/playbook/" class="trends-nav-item index">
+            <span class="trends-nav-index-icon">&#9783;</span>
+            <span>SNS 인사이트 전체</span>
+          </a>
+          <span class="trends-nav-item empty"></span>
+        </nav>
+
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>&copy; 2026 크리에이터 완전정복. All rights reserved.</p>
+    <p><a href="/privacy/">개인정보처리방침</a> · <a href="/contact/">문의</a></p>
+  </div>
+</footer>
+
+<script src="/js/main.js"></script>
+<script src="/js/lang-toggle.js"></script>
+
+<button id="btn-top" aria-label="맨 위로">↑</button>
+<script>
+  var b=document.getElementById('btn-top');
+  window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+
+<script>
+(function(){
+  try {
+    if (localStorage.getItem('cj-lang-pref')) return;
+    if (sessionStorage.getItem('cj-auto-redirect-done')) return;
+    var ul = (navigator.language || '').toLowerCase();
+    if (ul.indexOf('en') === 0) {
+      sessionStorage.setItem('cj-auto-redirect-done','1');
+      location.href = location.pathname.replace('/playbook/','/en/playbook/');
+    }
+  } catch(e){}
+})();
+</script>
+
+</body>
+</html>

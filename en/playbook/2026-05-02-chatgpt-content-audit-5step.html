@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatGPT AI Blog Audit — 5-Step Self-Diagnostic for Traffic Stalls | Creator Jungbok</title>
+  <meta name="description" content="A 5-step ChatGPT workflow to diagnose why your AI blog and AI YouTube content is not pulling traffic. Five signals — CTR, first-30s retention, click-out satisfaction, E-E-A-T, AI visibility — in one session.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .trend-meta { display: flex; flex-wrap: wrap; gap: .6rem 1rem; font-size: .8rem; color: #666; margin: .75rem 0 1.25rem 0; padding-bottom: 1rem; border-bottom: 1px solid var(--border, #e5e5e5); align-items: center; }
+    .trend-meta span { display: inline-flex; align-items: center; gap: .3rem; line-height: 1.4; }
+    .trend-meta .meta-cat { background: #1A2438; color: #fff; padding: .2rem .7rem; border-radius: 999px; font-weight: 700; font-size: .7rem; letter-spacing: .02em; }
+    .subhead { font-size: 1.05rem; line-height: 1.7; color: #444; margin: .25rem 0 1.5rem 0; font-weight: 500; letter-spacing: -.005em; }
+    .lead-para { font-size: 1.02rem; line-height: 1.85; color: var(--text, #222); padding: 1.1rem 1.25rem; background: #f5ebdc; border-left: 4px solid #1A2438; border-radius: 0 8px 8px 0; margin: 1.25rem 0 2rem 0; }
+    .lead-para strong { color: #1A2438; }
+    .step-grid { display: grid; grid-template-columns: 1fr; gap: .9rem; margin: 1.5rem 0; }
+    .step-card { border: 1px solid var(--border, #e5e5e5); border-radius: 10px; padding: 1.1rem 1.25rem; background: #fafafa; }
+    .step-card-num { display: inline-block; background: #1A2438; color: #fff; width: 1.6rem; height: 1.6rem; line-height: 1.6rem; text-align: center; border-radius: 50%; font-weight: 800; font-size: .85rem; margin-right: .5rem; }
+    .step-card-title { font-size: 1rem; font-weight: 800; color: var(--text, #222); margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .step-card-desc { font-size: .92rem; line-height: 1.75; color: #444; margin: 0; }
+    .callout { margin: 1.75rem 0; padding: 1.1rem 1.25rem; border-radius: 10px; border-left: 4px solid; font-size: .93rem; line-height: 1.75; }
+    .callout.tip { background: #f0fdf4; border-color: #22c55e; }
+    .callout.info { background: #eff6ff; border-color: #3b82f6; }
+    .callout.warn { background: #fffbeb; border-color: #f59e0b; }
+    .callout-label { font-weight: 800; font-size: .85rem; margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .callout.tip .callout-label { color: #16a34a; }
+    .callout.info .callout-label { color: #2563eb; }
+    .callout.warn .callout-label { color: #d97706; }
+    .callout ul { margin: .4rem 0 0 1.1rem; padding: 0; }
+    .callout li { margin-bottom: .3rem; }
+    .callout a { color: inherit; text-decoration: underline; word-break: break-all; }
+    .checklist { background: #fff; border: 1px solid #e0e0e0; border-radius: 10px; padding: 1.1rem 1.25rem; margin: 1.5rem 0; }
+    .checklist h3 { margin: 0 0 .75rem 0; font-size: 1rem; color: #1A2438; }
+    .checklist label { display: block; padding: .35rem 0; font-size: .95rem; line-height: 1.6; cursor: pointer; }
+    .checklist input { margin-right: .5rem; }
+    @media (max-width: 480px) {
+      .post-title { font-size: 1.55rem !important; line-height: 1.4 !important; }
+      .subhead { font-size: .95rem; }
+      .lead-para { font-size: .95rem; padding: 1rem; }
+      .trend-meta { font-size: .75rem; gap: .5rem .75rem; }
+      .step-card { padding: 1rem; }
+      .step-card-title { font-size: .95rem; }
+      .step-card-desc { font-size: .88rem; }
+      .callout { padding: 1rem; font-size: .88rem; }
+    }
+    .post-body strong { color: #111; font-weight: 800; }
+    .post-body h2 { margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.4rem; line-height: 1.4; }
+    @media (max-width: 480px) { .post-body h2 { font-size: 1.2rem; margin-top: 2rem; } }
+    .post-body h3 { margin-top: 1.5rem; margin-bottom: .5rem; font-size: 1.1rem; }
+    .post-body p { line-height: 1.85; font-size: .98rem; }
+    @media (max-width: 480px) { .post-body p { font-size: .95rem; line-height: 1.8; } }
+    .post-body ul { line-height: 1.85; }
+    .post-body ul li { margin-bottom: .35rem; }
+    .post-body figure { margin: 1.75rem 0; text-align: center; }
+    .post-body figure img { width: 100%; height: auto; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+    .post-body figure figcaption { font-size: .82rem; color: #777; margin-top: .5rem; font-style: italic; }
+    .page-wrap { justify-content: center; }
+    .post-thumbnail { width: 100%; height: auto; border-radius: 12px; margin: 0 0 1.5rem 0; display: block; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    @media (max-width: 480px) { .post-thumbnail { border-radius: 8px; margin-bottom: 1rem; } }
+  </style>
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Creator Jungbok">
+  <meta property="og:title" content="ChatGPT AI Blog Audit — 5-Step Self-Diagnostic for Traffic Stalls">
+  <meta property="og:description" content="A 5-step ChatGPT workflow to diagnose why your AI blog and AI YouTube content is not pulling traffic. Five signals — CTR, first-30s retention, click-out satisfaction, E-E-A-T, AI visibility — in one session.">
+  <meta property="og:url" content="https://creatorjungbok.co.kr/en/playbook/2026-05-02-chatgpt-content-audit-5step.html">
+  <meta property="og:image" content="https://creatorjungbok.co.kr/playbook/images/2026-05-02-chatgpt-content-audit-5step-en.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="article:published_time" content="2026-05-02T07:00:00+09:00">
+  <meta property="article:section" content="Playbook">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://creatorjungbok.co.kr/playbook/images/2026-05-02-chatgpt-content-audit-5step-en.png">
+  <link rel="alternate" hreflang="ko" href="https://creatorjungbok.co.kr/playbook/2026-05-02-chatgpt-content-audit-5step.html">
+  <link rel="alternate" hreflang="en" href="https://creatorjungbok.co.kr/en/playbook/2026-05-02-chatgpt-content-audit-5step.html">
+  <link rel="alternate" hreflang="x-default" href="https://creatorjungbok.co.kr/playbook/2026-05-02-chatgpt-content-audit-5step.html">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6B72N2BV55"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6B72N2BV55');
+  </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/en/" class="site-logo">Creator <span>Jungbok</span></a>
+    <span class="lang-toggle-mobile"><a href="#" data-lang="ko">한국어</a><span class="lang-sep">/</span><a href="#" class="lang-active" data-lang="en">English</a></span>
+    <button class="nav-toggle" aria-label="Menu" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+    <nav class="header-nav">
+      <a href="/en/">Home</a>
+      <a href="/en/trends/">AI Trends</a>
+      <a href="/en/playbook/">SNS Insights</a>
+      <a href="/en/about/">About</a>
+      <span class="lang-toggle">
+        <a href="#" data-lang="ko">한국어</a>
+        <span class="lang-sep">/</span>
+        <a href="#" class="lang-active" data-lang="en">English</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+  <main class="main-content">
+    <article>
+      <header class="post-header">
+        <img src="/playbook/images/2026-05-02-chatgpt-content-audit-5step-en.png" alt="ChatGPT AI blog content audit — Creator Jungbok" class="post-thumbnail" width="1200" height="630" loading="eager" />
+        <p class="post-chap">Playbook</p>
+        <h1 class="post-title">ChatGPT AI Blog Audit — 5-Step Self-Diagnostic for Traffic Stalls</h1>
+        <p class="subhead">Pull data. Tag URLs. Match intent. Score five signals. Queue next.</p>
+        <div class="lang-switch">
+          <a href="#" data-lang="ko">한국어</a>
+          <span class="lang-sep">/</span>
+          <a href="#" class="lang-active" data-lang="en">English</a>
+        </div>
+        <div class="trend-meta">
+          <span class="meta-cat">Playbook</span>
+          <span>🗓 2026-05-02</span>
+          <span>⏱ 9 min read</span>
+          <span>📎 Sources: vidiq, Marketing Agent, AEO Engine, Search Engine Journal, Backlinko</span>
+        </div>
+      </header>
+
+      <hr class="divider">
+
+      <div class="post-body">
+
+        <p class="lead-para">
+          You ship four <strong>AI blog</strong> posts a day for a month, and the GA4 weekly active users still read 17. Search Console impressions: zero. AdSense application: rejected. The reason traffic stalls is rarely volume — it is that you have not diagnosed which of the <strong>five signals</strong> is leaking before you write the next post in the same shape. This piece walks a single ChatGPT session that audits your site and channel in five steps. Thirty minutes, and you have coordinates. Writing more is not always the right next move.
+        </p>
+
+        <figure class="body-figure">
+          <img src="/playbook/images/2026-05-02-chatgpt-content-audit-5step-01-hero.png" alt="Five-signal self-diagnostic — five small cards laid on a desk" loading="lazy" />
+          <figcaption>Five signals — the leak is usually one or two of them, not all five.</figcaption>
+        </figure>
+
+        <h2>Why diagnose before you write more</h2>
+        <p>2026 search and recommendation algorithms care about what happens after the click as much as the click itself. YouTube now applies a "Quality CTR" weight: high click-through with weak first-30-second retention demotes the video in recommendations rather than rewarding it (source: <a href="https://marketingagent.blog/2025/11/04/youtubes-recommendation-algorithm-satisfaction-signals-what-you-can-control/" target="_blank" rel="noopener">Marketing Agent</a>). Average view duration of 50–60% is healthy, 70%+ earns priority placement, below 40% the video is actively deprioritized (source: <a href="https://vidiq.com/blog/post/understanding-youtube-algorithm/" target="_blank" rel="noopener">vidiq</a>).</p>
+
+        <p>The same logic is reshaping written content. In 2026, 58% of Google searches end without a click, and a piece that does not get cited inside an AI Overview can sit at impression position 8 forever without traffic (source: <a href="https://aeoengine.ai/blog/blog-seo-checklist" target="_blank" rel="noopener">AEO Engine</a>). So a 2026 site audit looks at five places at once: technical SEO, on-page intent match, user experience, E-E-A-T signals, and AI visibility. Without knowing which of the five is leaking, the next ten posts will stall in the exact same place for the exact same reason.</p>
+
+        <p><strong>ChatGPT</strong> fits this seat for a simple reason. It cannot crawl your site, but if you paste three exports — Search Console, GA4, YouTube Studio — into one session, it can cross-reference five signals in five minutes and surface the weakest coordinate. The audit pattern documented across <a href="https://medium.com/@christianaistudio/stop-paying-for-seo-audits-ai-does-the-same-job-in-3-prompts-358d6046dd19" target="_blank" rel="noopener">2026 SEO walkthroughs</a> is exactly this shape.</p>
+
+        <h2>5-step workflow — one ChatGPT session</h2>
+        <p>Run all five steps inside a single chat. No new conversation. The model needs to hold the same site context across steps so the score table at the end stays consistent.</p>
+
+        <div class="step-grid">
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">1</span>Pull three data exports — 30-day window</div>
+            <p class="step-card-desc">Export 30 days from three places. First, Search Console: impressions, clicks, average position, CTR per page. Second, GA4: users, average session, bounce rate per page. Third, YouTube Studio if you have a channel: impression CTR, average view percentage, first-30s retention per video. Save the three as CSV. All three need to sit on the same desk before any signal is meaningful — looking at one in isolation is what keeps the same blind spot alive.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">2</span>Tag URLs and videos — four roles</div>
+            <p class="step-card-desc">Paste the three tables into ChatGPT and ask for a bulk classification. Prompt: "Tag every URL and video as one of four roles. ① Pillar (topic hub) ② Cluster (deep post supporting a pillar) ③ Money page (lead magnet, course, strong CTA) ④ One-off / news." Role classification is the first move every 2026 audit framework starts with (source: <a href="https://quickseo.ai/blog/the-complete-seo-audit-checklist-for-2026" target="_blank" rel="noopener">QuickSEO</a>). If you have many clusters but no pillar, the internal links have nothing to converge on, and traffic dissipates before it compounds.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">3</span>Match intent — search intent vs. body alignment</div>
+            <p class="step-card-desc">From the tagged table, pick URLs and videos that earn impressions but show low CTR or low retention. Take the main keyword and ask ChatGPT, "What is the real intent behind this query? Where is the searcher stuck? Three pains, named." Then paste the body and ask, "Does this body scratch those three pains in the first 100 characters, or does it open with a generic definition?" Pieces that sit at impression position 8 with low CTR almost always open with a definition rather than a pain (source: <a href="https://backlinko.com/chatgpt-for-seo" target="_blank" rel="noopener">Backlinko</a>). This is also where most automated <strong>AI blog</strong> pipelines collapse.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">4</span>Score five signals — one row per URL or video</div>
+            <p class="step-card-desc">Take the intent-match output and score each piece across five signals. ① Click signal (CTR — 8–15% on search, 5–10% on suggested, 3–7% on browse is healthy in 2026), ② First-30s retention (below 40% is a red flag), ③ Post-click satisfaction (session length, next-page rate), ④ E-E-A-T signal (named author, lived anecdote, first-party data, outside citations), ⑤ AI visibility (does the body answer the query in two or three sentences right under the H2 before the list expands?). Score each 0–5. Almost no piece scores 5/5/5/5/5. The lowest one or two cells are where traffic actually leaks.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-title"><span class="step-card-num">5</span>Queue next action — rewrite, merge, or retire</div>
+            <p class="step-card-desc">With five-signal scores in hand, ask one final bundled prompt. "Tag every URL and video as one of three actions. ① Rewrite (total ≥ 12, lead and one or two H2 sections need surgery), ② Merge (two pieces with the same intent — combine into one pillar), ③ Retire / noindex (total ≤ 7, low intent match, low traffic, one-off)." A single fifty-piece site might land on rewrite 12, merge 6 pairs, retire 8. Closing those 26 first beats writing one more new piece. End the session by asking for five seed angles for next week's rewrites.</p>
+          </div>
+
+        </div>
+
+        <figure class="body-figure">
+          <img src="/playbook/images/2026-05-02-chatgpt-content-audit-5step-02-mid.png" alt="Five-signal score table — five small cards lined up on a desk" loading="lazy" />
+          <figcaption>Five signals — the lowest cell is the coordinate where traffic leaks.</figcaption>
+        </figure>
+
+        <h2>Three traps that break the audit</h2>
+
+        <h3>Trap 1. Writing more in the same shape without diagnosing</h3>
+        <p>The most common one. When traffic stalls, the first instinct is "publish more." But if the leak is on signal ③ or ⑤, the next ten pieces fail in the exact same place. <strong>AI automation</strong> amplifies this trap — volume goes up, diagnosis stays at zero. Once a week, pause new posts and run a 30-minute audit. That half hour usually decides the direction of the next five posts.</p>
+
+        <h3>Trap 2. Watching CTR alone, missing the post-click signal</h3>
+        <p>The second most common. People raise CTR from 7% to 11% by sharpening titles and thumbnails, then watch first-30s retention collapse from 35% to 22%. The 2026 algorithm reads this pattern as title-and-thumbnail overpromise and demotes the video on purpose (source: <a href="https://marketingagent.blog/2025/11/04/youtubes-recommendation-algorithm-satisfaction-signals-what-you-can-control/" target="_blank" rel="noopener">Marketing Agent</a>). Step 4 forces you to score ① and ② together, which is the only way to keep this loop honest. The same shape applies to <strong>AI Instagram</strong> reels: a strong cover image with weak hold drops next-day reach in the same way.</p>
+
+        <h3>Trap 3. Skipping the AI-visibility signal (⑤)</h3>
+        <p>The third most common. With 58% of 2026 searches ending without a click (source: <a href="https://aeoengine.ai/blog/blog-seo-checklist" target="_blank" rel="noopener">AEO Engine</a>), an article that does not get cited inside the AI Overview can rank without earning traffic. Signal ⑤ is exactly this seat. Pillar pages should answer the query in two or three sentences right under each H2, then expand into lists, examples, and code blocks. <strong>AI YouTube</strong> descriptions follow the same logic — first two lines must answer the query before the chapter list opens. <strong>AI TikTok</strong> captions on the first frame work the same way: the line a thumb pauses on is the line that answers.</p>
+
+        <div class="callout warn">
+          <div class="callout-label">⚠ Run the audit monthly, not daily</div>
+          Daily audits turn into noise. The signal-to-noise ratio of a 30-day window is the right size for a recurring audit (source: <a href="https://www.searchenginejournal.com/technical-seo-audit-new-layer/571583/" target="_blank" rel="noopener">Search Engine Journal</a>). Daily work is one new piece plus one item from the queue. Quarterly, run the full five-step audit again to refresh the queue itself. Automate steps 1 through 4. Step 5 — rewrite, merge, retire — stays human and takes one minute per row.
+        </div>
+
+        <h2>Five-checkbox starter</h2>
+        <div class="checklist">
+          <h3>ChatGPT AI blog audit — one session, five steps</h3>
+          <label><input type="checkbox"> Export 30-day data from Search Console, GA4, YouTube Studio</label>
+          <label><input type="checkbox"> Tag every URL and video as pillar, cluster, money, or one-off</label>
+          <label><input type="checkbox"> Match intent for the top 5 impression-rich, low-CTR pieces</label>
+          <label><input type="checkbox"> Score five signals (CTR, first-30s, satisfaction, E-E-A-T, AI visibility) 0–5 each</label>
+          <label><input type="checkbox"> Tag rewrite / merge / retire and queue 5 seeds for next week</label>
+        </div>
+
+        <p>For the same engine on hooks, see <a href="/en/playbook/2026-05-01-chatgpt-shorts-hook-6step.html">YouTube Algorithm Cracked — 6-Step ChatGPT Hook Workflow for Shorts</a>. For one piece split across five channels, see <a href="/en/playbook/2026-04-30-chatgpt-blog-engine-5-platforms.html">ChatGPT Blog Engine — One Post, Five Channels in Six Steps</a>. For the weekly calendar shape, see <a href="/en/playbook/2026-04-29-chatgpt-content-calendar-7-step.html">ChatGPT Content Calendar — Seven Days, Seven Steps</a>. Today's piece is the monthly diagnostic that closes the loop on all of them.</p>
+
+        <div class="callout tip">
+          <div class="callout-label">💡 The five lines you keep</div>
+          <ul>
+            <li>2026 audit signals = CTR · first-30s retention · post-click satisfaction · E-E-A-T · AI visibility</li>
+            <li>YouTube AVD: 50–60% healthy, 70%+ priority, sub-40% deprioritized</li>
+            <li>58% of 2026 searches end without a click — uncited pieces sit at zero traffic</li>
+            <li>One <strong>ChatGPT</strong> session, five steps: pull → tag → match → score → queue</li>
+            <li>Next week is rewrite 12 + merge 6 + retire 8 before any new piece</li>
+          </ul>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-label">🔁 Go deeper</div>
+          <ul>
+            <li>Same lane, more pieces — <a href="/en/playbook/">Playbook (English)</a> · <a href="/en/trends/">AI Trends (English)</a></li>
+            <li>Korean pair — <a href="/playbook/2026-05-02-chatgpt-content-audit-5step.html">ChatGPT 콘텐츠 진단 5단계 셀프 오딧</a></li>
+            <li>Blogger reflux pair — an 80% rewrite of this post will publish on the Creator Jungbok Blogger feed the same day; one month from now both versions will be back in the audit queue and compared side by side.</li>
+          </ul>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-label">📎 Sources</div>
+          <ul>
+            <li>Marketing Agent (2025-11) — <a href="https://marketingagent.blog/2025/11/04/youtubes-recommendation-algorithm-satisfaction-signals-what-you-can-control/" target="_blank" rel="noopener">YouTube's Recommendation Algorithm: Satisfaction Signals &amp; What You Can Control</a></li>
+            <li>vidiq (2026) — <a href="https://vidiq.com/blog/post/understanding-youtube-algorithm/" target="_blank" rel="noopener">How the YouTube Algorithm Works in 2026</a></li>
+            <li>AEO Engine (2026) — <a href="https://aeoengine.ai/blog/blog-seo-checklist" target="_blank" rel="noopener">Blog SEO Checklist 2026: Rank &amp; Win AI Search</a></li>
+            <li>Search Engine Journal (2026) — <a href="https://www.searchenginejournal.com/technical-seo-audit-new-layer/571583/" target="_blank" rel="noopener">The Technical SEO Audit Needs A New Layer</a></li>
+            <li>Backlinko (2026) — <a href="https://backlinko.com/chatgpt-for-seo" target="_blank" rel="noopener">ChatGPT for SEO: Ultimate Guide for 2026</a></li>
+            <li>QuickSEO (2026) — <a href="https://quickseo.ai/blog/the-complete-seo-audit-checklist-for-2026" target="_blank" rel="noopener">The Complete SEO Audit Checklist for 2026</a></li>
+          </ul>
+        </div>
+
+        <nav class="trends-nav" aria-label="Playbook navigation">
+          <a href="/en/playbook/2026-05-01-chatgpt-shorts-hook-6step.html" class="trends-nav-item prev">
+            <span class="trends-nav-label">&larr; Previous</span>
+            <span class="trends-nav-title">YouTube Algorithm Cracked — 6-Step ChatGPT Hook Workflow</span>
+          </a>
+          <a href="/en/playbook/" class="trends-nav-item index">
+            <span class="trends-nav-index-icon">&#9783;</span>
+            <span>All Playbook</span>
+          </a>
+          <span class="trends-nav-item empty"></span>
+        </nav>
+
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>&copy; 2026 Creator Jungbok. All rights reserved.</p>
+    <p><a href="/privacy/">Privacy</a> · <a href="/contact/">Contact</a></p>
+  </div>
+</footer>
+
+<script src="/js/main.js"></script>
+<script src="/js/lang-toggle.js"></script>
+
+<button id="btn-top" aria-label="Top">↑</button>
+<script>
+  var b=document.getElementById('btn-top');
+  window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>300);});
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+
+</body>
+</html>
