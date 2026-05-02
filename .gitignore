@@ -9,7 +9,10 @@ ga4-service-account.json
 *.serviceaccount.json
 oauth-client.json
 oauth-token.json
+oauth-token.json.bak
+oauth-token*.json
 *-oauth.json
+*.bak
 
 # PowerShell 자동화 스크립트 — CEO 사유, 외부 공개 금지
 *.ps1
@@ -39,6 +42,9 @@ en/drafts/
 # 자동화 로그
 scripts/logs/
 *.automation.log
+
+# 자동화 작업 파일 — 로컬 전용 (Blogger·Instagram·기타 outputs)
+outputs/
 
 # 학습 축적 데이터 — CEO 사유 데이터, 공개 금지
 scripts/archive/
