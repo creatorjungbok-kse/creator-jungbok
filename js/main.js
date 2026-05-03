@@ -138,9 +138,60 @@ function buildNav() {
   document.addEventListener('DOMContentLoaded', buildLatestPosts);
 })();
 
+/* ---- 메뉴 nav-active 자동 적용 (URL 기반) ----
+   카테고리 페이지·글 페이지·홈 모두 적용. KO + EN 동일.
+   2026-05-03 박음 — 글 페이지에서 nav 색상 사라지는 버그 fix
+*/
+function applyNavActive() {
+  const path = location.pathname;
+  const navLinks = document.querySelectorAll('.header-nav > a');
+  if (!navLinks.length) return;
+
+  // 기존 nav-active 모두 제거 (안전)
+  navLinks.forEach(function(a) { a.classList.remove('nav-active'); });
+
+  // URL 경로 → 어떤 메뉴에 active 박을지 결정
+  var target = null;
+
+  if (path === '/' || path === '/index.html') {
+    target = '/';
+  } else if (path === '/en/' || path === '/en' || path === '/en/index.html') {
+    target = '/en/';
+  } else if (path.indexOf('/en/trends/') === 0) {
+    target = '/en/trends/';
+  } else if (path.indexOf('/trends/') === 0) {
+    target = '/trends/';
+  } else if (path.indexOf('/en/playbook/') === 0) {
+    target = '/en/playbook/';
+  } else if (path.indexOf('/playbook/') === 0) {
+    target = '/playbook/';
+  } else if (path.indexOf('/en/about/') === 0) {
+    target = '/en/about/';
+  } else if (path.indexOf('/about/') === 0) {
+    target = '/about/';
+  } else if (path.indexOf('/learning/') === 0) {
+    target = '/learning/';
+  } else if (path.indexOf('/contact/') === 0) {
+    target = '/contact/';
+  } else if (path.indexOf('/privacy/') === 0) {
+    target = '/privacy/';
+  }
+
+  if (!target) return;
+
+  // 매칭 링크에 nav-active 박기
+  navLinks.forEach(function(a) {
+    var href = a.getAttribute('href');
+    if (href === target) {
+      a.classList.add('nav-active');
+    }
+  });
+}
+
 /* ---- 초기화 ---- */
-document.addEventListener('DOMContentLoaded', () => {
-  buildSidebar();
-  buildProgress();
-  buildNav();
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof buildSidebar === 'function') buildSidebar();
+  if (typeof buildProgress === 'function') buildProgress();
+  if (typeof buildNav === 'function') buildNav();
+  applyNavActive();
 });
