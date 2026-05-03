@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>X AI와 AI 인스타가 모두 토픽 클러스터로 — 2026년 5월 크리에이터 5가지 대응 (2026-05-03) | 크리에이터 완전정복</title>
+  <meta name="description" content="2026년 5월 X와 Instagram이 동시에 토픽 클러스터 기반 AI 분배로 전환했습니다. X AI는 75개 토픽 라벨로 글을 분류하고, AI 인스타는 'Your Algorithm'으로 사용자에게 토픽 선택권을 줍니다. 크리에이터가 지금 바꿔야 할 5가지를 정리합니다.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .trend-meta { display: flex; flex-wrap: wrap; gap: .6rem 1rem; font-size: .8rem; color: #666; margin: .75rem 0 1.25rem 0; padding-bottom: 1rem; border-bottom: 1px solid var(--border, #e5e5e5); align-items: center; }
+    .trend-meta span { display: inline-flex; align-items: center; gap: .3rem; line-height: 1.4; }
+    .trend-meta .meta-cat { background: var(--red, #e53935); color: #fff; padding: .2rem .7rem; border-radius: 999px; font-weight: 700; font-size: .7rem; letter-spacing: .02em; }
+    .lang-switch { font-size: .82rem; color: #666; padding: .6rem 0; text-align: right; border-bottom: 1px dashed #ddd; margin-bottom: 1.25rem; }
+    .lang-switch a { color: #666; text-decoration: none; padding: 0 .35rem; }
+    .lang-switch a.active { color: var(--red, #e53935); font-weight: 800; text-decoration: underline; }
+    .lang-switch a:hover { color: var(--red, #e53935); }
+    .lead-para { font-size: 1.02rem; line-height: 1.85; color: var(--text, #222); padding: 1.1rem 1.25rem; background: #fff7f6; border-left: 4px solid var(--red, #e53935); border-radius: 0 8px 8px 0; margin: 1.25rem 0 2rem 0; }
+    .lead-para strong { color: #c62828; }
+    .feature-grid { display: grid; grid-template-columns: 1fr; gap: .9rem; margin: 1.5rem 0; }
+    @media (min-width: 700px) { .feature-grid { grid-template-columns: 1fr 1fr; gap: 1rem; } }
+    .feature-card { border: 1px solid var(--border, #e5e5e5); border-radius: 10px; padding: 1.1rem 1.25rem; background: #fafafa; transition: border-color .15s; }
+    .feature-card:hover { border-color: var(--red, #e53935); }
+    .feature-card-num { display: inline-block; background: var(--red, #e53935); color: #fff; width: 1.6rem; height: 1.6rem; line-height: 1.6rem; text-align: center; border-radius: 50%; font-weight: 800; font-size: .85rem; margin-right: .5rem; }
+    .feature-card-title { font-size: 1rem; font-weight: 800; color: var(--text, #222); margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .feature-card-desc { font-size: .92rem; line-height: 1.75; color: #444; margin: 0; }
+    .compare-box { display: grid; grid-template-columns: 1fr; gap: .75rem; margin: 1.5rem 0; }
+    @media (min-width: 700px) { .compare-box { grid-template-columns: 1fr 1fr; gap: 1rem; } }
+    .compare-side { padding: 1rem 1.1rem; border-radius: 10px; font-size: .92rem; line-height: 1.7; }
+    .compare-before { background: #f5f5f5; border: 1px solid #e0e0e0; }
+    .compare-after { background: #fff5f5; border: 1px solid #ffcdd2; }
+    .compare-label { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .08em; margin-bottom: .5rem; text-transform: uppercase; }
+    .compare-before .compare-label { color: #757575; }
+    .compare-after .compare-label { color: var(--red, #e53935); }
+    .callout { margin: 1.75rem 0; padding: 1.1rem 1.25rem; border-radius: 10px; border-left: 4px solid; font-size: .93rem; line-height: 1.75; }
+    .callout.tip { background: #f0fdf4; border-color: #22c55e; }
+    .callout.info { background: #eff6ff; border-color: #3b82f6; }
+    .callout.warn { background: #fffbeb; border-color: #f59e0b; }
+    .callout-label { font-weight: 800; font-size: .85rem; margin-bottom: .5rem; display: flex; align-items: center; gap: .35rem; }
+    .callout.tip .callout-label { color: #16a34a; }
+    .callout.info .callout-label { color: #2563eb; }
+    .callout.warn .callout-label { color: #d97706; }
+    .callout ul { margin: .4rem 0 0 1.1rem; padding: 0; }
+    .callout li { margin-bottom: .3rem; }
+    .callout a { color: inherit; text-decoration: underline; word-break: break-all; }
+    @media (max-width: 480px) {
+      .post-title { font-size: 1.55rem !important; line-height: 1.4 !important; }
+      .lead-para { font-size: .95rem; padding: 1rem; }
+      .trend-meta { font-size: .75rem; gap: .5rem .75rem; }
+      .feature-card { padding: 1rem; }
+      .feature-card-title { font-size: .95rem; }
+      .feature-card-desc { font-size: .88rem; }
+      .compare-side { font-size: .88rem; }
+      .callout { padding: 1rem; font-size: .88rem; }
+    }
+    .post-body strong { color: #111; font-weight: 800; }
+    .post-body h2 { margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.4rem; line-height: 1.4; }
+    @media (max-width: 480px) { .post-body h2 { font-size: 1.2rem; margin-top: 2rem; } }
+    .post-body p { line-height: 1.85; font-size: .98rem; }
+    @media (max-width: 480px) { .post-body p { font-size: .95rem; line-height: 1.8; } }
+    .post-body ul { line-height: 1.85; }
+    .post-body ul li { margin-bottom: .35rem; }
+    .page-wrap { justify-content: center; }
+    .post-thumbnail { width: 100%; height: auto; border-radius: 12px; margin: 0 0 1.5rem 0; display: block; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    @media (max-width: 480px) { .post-thumbnail { border-radius: 8px; margin-bottom: 1rem; } }
+    .body-figure { margin: 2rem 0; }
+    .body-figure img { width: 100%; height: auto; border-radius: 10px; display: block; }
+    .body-figure figcaption { font-size: .82rem; color: #777; margin-top: .55rem; text-align: center; line-height: 1.5; }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="크리에이터 완전정복">
+  <meta property="og:title" content="X AI와 AI 인스타가 모두 토픽 클러스터로 — 2026년 5월 크리에이터 5가지 대응 (2026-05-03)">
+  <meta property="og:description" content="2026년 5월 X와 Instagram이 동시에 토픽 클러스터 기반 AI 분배로 전환했습니다. X AI는 75개 토픽 라벨로 글을 분류하고, AI 인스타는 'Your Algorithm'으로 사용자에게 토픽 선택권을 줍니다. 크리에이터가 지금 바꿔야 할 5가지를 정리합니다.">
+  <meta property="og:url" content="https://creatorjungbok.co.kr/trends/2026-05-03-x-ai-instagram-topic-cluster-pivot.html">
+  <meta property="og:image" content="https://creatorjungbok.co.kr/trends/images/2026-05-03-x-ai-instagram-topic-cluster-pivot.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="article:published_time" content="2026-05-03T07:00:00+09:00">
+  <meta property="article:section" content="AI 트렌드">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://creatorjungbok.co.kr/trends/images/2026-05-03-x-ai-instagram-topic-cluster-pivot.png">
+  <link rel="alternate" hreflang="ko" href="https://creatorjungbok.co.kr/trends/2026-05-03-x-ai-instagram-topic-cluster-pivot.html">
+  <link rel="alternate" hreflang="en" href="https://creatorjungbok.co.kr/en/trends/2026-05-03-x-ai-instagram-topic-cluster-pivot.html">
+  <link rel="alternate" hreflang="x-default" href="https://creatorjungbok.co.kr/trends/2026-05-03-x-ai-instagram-topic-cluster-pivot.html">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6B72N2BV55"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6B72N2BV55');
+  </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="site-logo">크리에이터 <span>완전정복</span></a>
+    <button class="nav-toggle" aria-label="메뉴" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+    <nav class="header-nav">
+      <a href="/">홈</a>
+      <a href="/learning/">학습</a>
+      <a href="/trends/">AI 트렌드</a>
+      <a href="/playbook/">SNS 인사이트</a>
+      <a href="/about/">소개</a>
+      <span class="lang-toggle">
+        <a href="#" class="lang-active" data-lang="ko">한국어</a>
+        <span class="lang-sep">/</span>
+        <a href="#" data-lang="en">English</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+  <main class="main-content">
+    <article>
+      <header class="post-header">
+        <img src="/trends/images/2026-05-03-x-ai-instagram-topic-cluster-pivot.png" alt="X AI와 AI 인스타가 토픽 클러스터로 — 크리에이터 완전정복" class="post-thumbnail" width="1200" height="630" loading="eager" />
+        <p class="post-chap">AI 트렌드</p>
+        <h1 class="post-title">X AI와 AI 인스타가 모두 토픽 클러스터로 — 2026년 5월 크리에이터 5가지 대응</h1>
+        <div class="lang-switch">
+          <a href="/trends/2026-05-03-x-ai-instagram-topic-cluster-pivot.html" class="active" onclick="try{localStorage.setItem('cj-lang-pref','ko');}catch(e){}">한국어</a> /
+          <a href="/en/trends/2026-05-03-x-ai-instagram-topic-cluster-pivot.html" onclick="try{localStorage.setItem('cj-lang-pref','en');}catch(e){}">English</a>
+        </div>
+        <div class="trend-meta">
+          <span class="meta-cat">AI 트렌드</span>
+          <span>🗓 2026-05-03</span>
+          <span>⏱ 약 6분 읽기</span>
+          <span>📎 출처: TechCrunch, The AI Insider, Buffer, Net Influencer, EmbedSocial</span>
+        </div>
+      </header>
+
+      <hr class="divider">
+
+      <div class="post-body">
+
+        <figure class="body-figure">
+          <img src="/trends/images/2026-05-03-x-ai-instagram-topic-cluster-pivot-01-hero.png" alt="X AI와 AI 인스타 토픽 클러스터 전환 — 크리에이터 분배 변화 시각화" />
+          <figcaption>2026년 5월 X와 Instagram이 동시에 토픽 클러스터 기반 분배로 이동했습니다. 한 글이 어디로 흘러갈지가 키워드가 아닌 토픽 라벨로 결정됩니다.</figcaption>
+        </figure>
+
+        <p class="lead-para">
+          <strong>똑같이 올렸는데 도달이 1/3로 떨어졌고, 해시태그를 30개 박았는데도 안 먹히나요?</strong> <strong>2026년 5월</strong> 두 플랫폼이 동시에 룰을 바꿨습니다 — <strong>X AI</strong>는 4월 22일 <strong>Grok 기반 Custom Timelines</strong>를 75개 토픽 카테고리로 출시했고(출처: TechCrunch, 2026-04-22), 글 자체를 키워드가 아닌 <strong>토픽 라벨</strong>로 다시 분류합니다. <strong>AI 인스타</strong>는 2025년 12월 10일 발표한 <strong>"Your Algorithm"</strong>을 2026년에 영어권 글로벌로 확대하면서 사용자에게 <strong>Reels 토픽을 직접 추가·제거</strong>할 권한을 줬어요(출처: TechCrunch, 2025-12-10). 동시에 인스타는 2026년에 해시태그를 사실상 폐기하고 캡션과 alt 텍스트의 <strong>키워드</strong>로 분류 신호를 옮겼습니다(출처: Buffer 2026 가이드). 두 플랫폼 모두 같은 방향 — <strong>토픽 클러스터</strong>가 도달의 새 단위입니다. 1인 크리에이터가 이번 주에 바꿔야 할 5가지를 정리합니다.
+        </p>
+
+        <h2>X AI가 토픽 75개로 도달을 다시 짠 이유</h2>
+        <p>X는 2026년 4월 22일 Premium 구독자에게 <strong>Grok 기반 Custom Timelines</strong>를 공식 출시했습니다(출처: TechCrunch, 2026-04-22). 핵심 변화는 분배 단위입니다. 옛 X는 <strong>키워드·해시태그·팔로우</strong>로 글이 흘렀는데, 새 시스템은 xAI Grok이 <strong>모든 글을 75개 토픽 카테고리 중 하나로 라벨</strong>합니다. 사용자는 홈 탭 위에 토픽 피드를 직접 핀해 둘 수 있고, 그 피드는 사람의 큐레이션 + Grok의 토픽 분류로 채워집니다(출처: The AI Insider, 2026-04-24).</p>
+
+        <p>크리에이터에게 의미하는 것은 단순합니다. <strong>한 글이 어느 토픽 클러스터에 분류되느냐가 도달을 결정</strong>합니다. <a href="/trends/2026-04-25-x-grok-custom-timelines.html">X Grok Custom Timelines 분석 글</a>에서 본 대로, 한 계정이 토픽을 자주 바꾸면 Grok이 라벨을 안정적으로 못 박고, 그 결과 어느 Custom Timeline에도 안정적으로 들어가지 못해요.</p>
+
+        <div class="feature-grid">
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">1</span>X AI 75개 토픽 라벨</div>
+            <p class="feature-card-desc">Grok이 모든 글을 <strong>75개 토픽 카테고리</strong> 중 하나로 라벨하고, Premium 사용자가 그 토픽을 핀하면 자동으로 피드가 채워집니다(출처: TechCrunch). 키워드·해시태그가 아닌 <strong>주제 일관성</strong>이 새 신호.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">2</span>AI 인스타 Your Algorithm</div>
+            <p class="feature-card-desc">2025년 12월 10일 미국 출시 후 2026년 영어권 전체 확대. 사용자가 자기 Reels 추천 토픽을 <strong>직접 추가·제거</strong>합니다(출처: TechCrunch, Net Influencer). 도달은 더 이상 알고리즘 추측이 아닌 사용자의 토픽 선택입니다.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">3</span>해시태그 신호 폐기</div>
+            <p class="feature-card-desc">Instagram은 2026년 들어 <strong>해시태그 분류 비중을 사실상 0에 가깝게</strong> 낮추고, 캡션 첫 125자와 alt 텍스트 <strong>키워드</strong>로 토픽을 잡습니다(출처: Buffer, EmbedSocial 2026). 30개 해시태그는 이제 신호가 아닙니다.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-title"><span class="feature-card-num">4</span>토픽 일관성 = 클러스터 권위</div>
+            <p class="feature-card-desc">한 계정이 같은 토픽 클러스터 안에서 <strong>지속적으로 글·릴스를 발행</strong>하면, X·Instagram 모두 그 클러스터의 권위 점수를 누적합니다(출처: digiwebinsight 2026). 토픽 점프는 권위를 0으로 리셋합니다.</p>
+          </div>
+
+        </div>
+
+        <h2>두 플랫폼이 같은 방향으로 가는 이유</h2>
+        <p>X와 Instagram은 표면적으로 다른 업체지만, 2026년 5월 시점의 분배 룰은 <strong>토픽 클러스터</strong>로 수렴합니다. 이유는 둘 다 같은 문제를 풀고 있기 때문이에요. <a href="/trends/2026-04-30-tiktok-ai-overview-creator-control.html">TikTok AI 오버뷰 글</a>에서 본 흐름과 같습니다 — AI가 글·영상을 직접 읽고 분류할 수 있게 되면서, 키워드·해시태그·팔로우 같은 <strong>옛 신호의 신뢰도가 빠르게 떨어졌습니다</strong>.</p>
+
+        <p>그래서 두 플랫폼은 모두 사용자에게 토픽 선택권을 직접 주고, 알고리즘은 그 토픽 안에서 가장 적합한 글을 골라주는 구조로 이동했어요. 결과는 크리에이터에게 잔인합니다 — <strong>토픽이 흩어진 계정은 어느 클러스터에서도 1순위가 못 됩니다</strong>.</p>
+
+        <figure class="body-figure">
+          <img src="/trends/images/2026-05-03-x-ai-instagram-topic-cluster-pivot-02-mid.png" alt="크리에이터가 5월에 바꿔야 할 5가지 — 토픽 클러스터 전략 워크플로" />
+          <figcaption>X AI 75개 토픽과 AI 인스타 Your Algorithm 모두에 통하는 5가지 변화 — 한 토픽 클러스터에 깊이 자리잡는 운영입니다.</figcaption>
+        </figure>
+
+        <h2>2026년 5월 크리에이터 5가지 대응</h2>
+
+        <div class="compare-box">
+          <div class="compare-side compare-before">
+            <span class="compare-label">📅 2025년 룰</span>
+            해시태그 30개<br>
+            여러 토픽 골고루<br>
+            <strong>키워드 = 도달</strong>
+          </div>
+          <div class="compare-side compare-after">
+            <span class="compare-label">✨ 2026년 5월 룰</span>
+            캡션 첫 125자 키워드 1~2개<br>
+            한 토픽 클러스터 깊이<br>
+            <strong>토픽 일관성 = 도달</strong>
+          </div>
+        </div>
+
+        <p><strong>1. 한 토픽 클러스터를 정하고 90일 락한다.</strong> X와 Instagram 모두 같은 토픽 안에서 5~10편이 묶이면 클러스터 권위를 누적합니다(출처: Net Influencer). 90일 동안 <strong>같은 카테고리</strong>로 글·릴스를 묶고, 다른 토픽으로 점프하지 않는 게 출발점입니다. <a href="/trends/2026-05-02-chatgpt-citation-index-2026-blogger.html">ChatGPT 인용 인덱스 글</a>에서 본 "한 카테고리 5편 이상" 룰과 같은 흐름이에요.</p>
+
+        <p><strong>2. 캡션 첫 125자에 토픽 키워드 1~2개를 박는다.</strong> Instagram은 캡션 <strong>첫 125자</strong>를 검색·분류 신호로 가장 강하게 읽습니다(출처: Buffer 2026). X도 첫 두 줄에서 토픽 라벨이 잡혀요. <strong>"AI 유튜브"</strong>·<strong>"AI 틱톡"</strong>·<strong>"AI 인스타"</strong> 같은 명확한 카테고리 단어를 첫 줄에 직접 박는 게 해시태그보다 강력합니다.</p>
+
+        <p><strong>3. alt 텍스트와 자막에 토픽 키워드를 다시 박는다.</strong> 인스타는 alt 텍스트와 영상 자막의 텍스트를 <strong>토픽 분류에 같이</strong> 씁니다(출처: EmbedSocial 2026). 캡션 + alt + 자막 3곳에 같은 토픽 키워드가 일관되게 들어가야 Your Algorithm이 그 글을 그 토픽으로 안정적으로 분류합니다.</p>
+
+        <p><strong>4. 같은 영상을 X와 Instagram에 토픽 일관 패키지로 배포한다.</strong> 한 토픽으로 만든 영상을 <a href="/trends/2026-05-01-chatgpt-youtube-2026-algorithm.html">ChatGPT 유튜브 알고리즘 글</a>의 retention 룰대로 30초 안에 결론 박고, 같은 카피로 두 플랫폼에 배포하면 두 클러스터에서 같은 권위를 누적합니다. <strong>ChatGPT</strong>로 캡션 변형을 5개 만들어 두면 운영 시간이 줄어요.</p>
+
+        <p><strong>5. 글 끝에 같은 토픽의 다음 글로 환류 동선을 박는다.</strong> 한 글이 클러스터 권위를 받으면, 다음 글로 넘어가는 사용자가 클러스터 전체의 권위를 키웁니다. 본문 끝에 <strong>같은 토픽의 다음 글 링크</strong>와 외부 환류(티스토리·Blogger) 한 줄을 고정하는 게 5월 표준입니다.</p>
+
+        <div class="callout warn">
+          <div class="callout-label">⚠ 이번 주 가장 큰 함정</div>
+          5월 첫 주 크리에이터들이 가장 많이 하는 실수는 <strong>"AI 콘텐츠 전반"</strong>처럼 토픽을 너무 넓게 잡는 것입니다(출처: digiwebinsight). X AI Grok과 AI 인스타 Your Algorithm 모두 <strong>토픽이 좁고 일관된 계정</strong>을 더 신뢰합니다. "AI 유튜브 운영"처럼 한 카테고리만 90일 동안 깊이 파는 쪽이 5월 룰에 맞습니다.
+        </div>
+
+        <h2>지금 바로 점검할 3가지</h2>
+        <p><strong>1. 최근 30개 글의 토픽 라벨을 직접 적어 본다.</strong> 종이에 적어 보면 토픽 점프가 얼마나 잦은지 한눈에 보여요. 같은 토픽이 5편 이상 묶이지 않으면 5월 룰에서 도달이 회복되기 어렵습니다.</p>
+
+        <p><strong>2. 인스타 캡션·alt·자막을 토픽 키워드 중심으로 다시 잡는다.</strong> 해시태그를 30개에서 5개 이내로 줄이고, 캡션 첫 125자에 토픽 키워드 1~2개를 직접 박습니다. <a href="/trends/2026-04-29-chatgpt-workspace-agents-blog-automation.html">ChatGPT Workspace Agents 자동화 글</a>의 캡션 템플릿을 참고하면 시간이 줄어요.</p>
+
+        <p><strong>3. 글 끝에 같은 토픽 다음 글 + 외부 환류 한 줄을 고정한다.</strong> 클러스터 권위는 단발 도달이 아니라 동선의 길이로 쌓입니다. 같은 카테고리 다음 글 링크 + 티스토리·Blogger 한 줄 환류가 5월 표준입니다.</p>
+
+        <div class="callout tip">
+          <div class="callout-label">💡 한 줄 정리</div>
+          <ul>
+            <li><strong>2026년 5월</strong>: <strong>X AI</strong> Grok이 75개 토픽 라벨 / <strong>AI 인스타</strong> Your Algorithm은 사용자가 토픽 선택</li>
+            <li>두 플랫폼 모두 <strong>토픽 클러스터</strong>가 도달의 새 단위 — 키워드·해시태그 신호 약화</li>
+            <li>크리에이터 5가지: <strong>토픽 90일 락 · 첫 125자 키워드 · alt+자막 · 일관 배포 · 환류 동선</strong></li>
+            <li>다음 단계: 더 깊이 — <a href="https://creatorjungbok.tistory.com/" target="_blank" rel="noopener">creator-jungbok 티스토리</a>·<a href="https://creatorjungbok.blogspot.com/" target="_blank" rel="noopener">creatorjungbok.blogspot.com</a>에서 시리즈 이어 읽기</li>
+          </ul>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-label">📎 출처</div>
+          <ul>
+            <li>TechCrunch — <a href="https://techcrunch.com/2026/04/22/hands-on-with-xs-new-ai-powered-custom-feeds/" target="_blank" rel="noopener">Hands on with X's new AI-powered custom feeds (2026-04-22)</a></li>
+            <li>The AI Insider — <a href="https://theaiinsider.tech/2026/04/24/x-launches-grok-powered-custom-timelines-as-ai-reshapes-social-media-feeds/" target="_blank" rel="noopener">X Launches Grok-Powered Custom Timelines (2026-04-24)</a></li>
+            <li>TechCrunch — <a href="https://techcrunch.com/2025/12/10/instagrams-new-your-algorithm-tool-gives-you-more-control-over-the-reels-you-see/" target="_blank" rel="noopener">Instagram's new "Your Algorithm" tool (2025-12-10)</a></li>
+            <li>Net Influencer — <a href="https://www.netinfluencer.com/instagram-algorithm-reset-clarifies-the-rules-but-raises-the-stakes-for-creators/" target="_blank" rel="noopener">Instagram's Algorithm Reset Clarifies The Rules</a></li>
+            <li>Buffer — <a href="https://buffer.com/resources/instagram-algorithms/" target="_blank" rel="noopener">How the Instagram Algorithm Works: Your 2026 Guide</a></li>
+            <li>EmbedSocial — <a href="https://embedsocial.com/blog/new-instagram-features-2026/" target="_blank" rel="noopener">New Instagram Features in 2026</a></li>
+          </ul>
+        </div>
+
+        <nav class="trends-nav" aria-label="AI 트렌드 글 네비게이션">
+          <a href="2026-05-02-chatgpt-citation-index-2026-blogger.html" class="trends-nav-item prev">
+            <span class="trends-nav-label">&larr; 이전 글</span>
+            <span class="trends-nav-title">ChatGPT가 인용하는 50개 사이트 공개 — 2026년 5월 AI 블로그 생존 룰 6개 (2026-05-02)</span>
+          </a>
+          <a href="/trends/" class="trends-nav-item index">
+            <span class="trends-nav-index-icon">&#9783;</span>
+            <span>AI 트렌드 전체 목록</span>
+          </a>
+          <span class="trends-nav-item empty"></span>
+        </nav>
+
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">크리에이터 <span>완전정복</span></div>
+    <div class="footer-links">
+      <a href="/learning/">학습</a>
+      <a href="/trends/">AI 트렌드</a>
+      <a href="/playbook/">SNS 인사이트</a>
+      <a href="/about/">소개</a>
+      <a href="/privacy/">개인정보</a>
+      <a href="/contact/">연락처</a>
+    </div>
+    <p class="footer-copy">© 2026 크리에이터 완전정복</p>
+  </div>
+</footer>
+
+<script src="/js/main.js"></script>
+<script src="/js/lang-toggle.js"></script>
+</body>
+</html>
