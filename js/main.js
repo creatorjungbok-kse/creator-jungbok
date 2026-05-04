@@ -169,9 +169,7 @@ function applyNavActive() {
     target = '/en/about/';
   } else if (path.indexOf('/about/') === 0) {
     target = '/about/';
-  } else if (path.indexOf('/learning/') === 0) {
-    target = '/learning/';
-  } else if (path.indexOf('/contact/') === 0) {
+    } else if (path.indexOf('/contact/') === 0) {
     target = '/contact/';
   } else if (path.indexOf('/privacy/') === 0) {
     target = '/privacy/';
