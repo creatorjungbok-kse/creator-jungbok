@@ -90,8 +90,9 @@
 
 <header class="site-header">
   <div class="header-inner">
-    <a href="/en/" class="brand">Creator <span>Jungbok</span></a>
-    <nav class="site-nav">
+    <a href="/en/" class="site-logo">Creator <span>Jungbok</span></a>
+    <button class="nav-toggle" aria-label="Menu" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+    <nav class="header-nav">
       <a href="/en/">Home</a>
       <a href="/en/trends/">AI Trends</a>
       <a href="/en/playbook/">SNS Insights</a>

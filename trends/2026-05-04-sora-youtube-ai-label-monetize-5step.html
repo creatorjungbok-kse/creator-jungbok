@@ -90,8 +90,10 @@
 
 <header class="site-header">
   <div class="header-inner">
-    <a href="/" class="brand">크리에이터 <span>완전정복</span></a>
-    <nav class="site-nav">
+    <a href="/" class="site-logo">크리에이터 <span>완전정복</span></a>
+    <button class="nav-toggle" aria-label="메뉴" onclick="this.classList.toggle('open');this.closest('.header-inner').querySelector('.header-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+    <nav class="header-nav">
+      <a href="/">홈</a>
       <a href="/learning/">학습</a>
       <a href="/trends/">AI 트렌드</a>
       <a href="/playbook/">SNS 인사이트</a>
