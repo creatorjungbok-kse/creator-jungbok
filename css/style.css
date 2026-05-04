@@ -3423,3 +3423,70 @@ strong { font-weight: 700; }
     border-radius: 10px !important;
   }
 }
+
+/* ──────────────────── R1: Google Preferred Sources CTA (2026-05-04) ──────────────────── */
+.preferred-source-cta {
+  max-width: 880px;
+  margin: 3rem auto 0 auto;
+  padding: 1.75rem 1.5rem;
+  background: #FBF6ED;
+  border: 1.5px solid #1A1A1A;
+  border-radius: 4px;
+  position: relative;
+}
+.preferred-source-cta::before {
+  content: "";
+  position: absolute;
+  top: 8px; left: 8px; right: 8px; bottom: 8px;
+  border: 1px solid #D4825C;
+  border-radius: 2px;
+  pointer-events: none;
+  opacity: 0.4;
+}
+.preferred-source-cta .cta-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+.preferred-source-cta .cta-text { flex: 1 1 300px; }
+.preferred-source-cta .cta-text strong {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1A1A1A;
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.01em;
+}
+.preferred-source-cta .cta-text p {
+  margin: 0;
+  font-size: 0.92rem;
+  color: #444;
+  line-height: 1.55;
+}
+.preferred-source-cta .cta-text em {
+  color: #D4825C;
+  font-style: normal;
+  font-weight: 600;
+}
+.preferred-source-cta .cta-button {
+  display: inline-block;
+  padding: 0.7rem 1.3rem;
+  background: #1A1A1A;
+  color: #FBF6ED;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 2px;
+  white-space: nowrap;
+  transition: background 0.15s ease;
+}
+.preferred-source-cta .cta-button:hover { background: #D4825C; }
+@media (max-width: 600px) {
+  .preferred-source-cta { padding: 1.25rem 1rem; margin: 2rem 1rem 0 1rem; }
+  .preferred-source-cta .cta-inner { flex-direction: column; align-items: stretch; }
+  .preferred-source-cta .cta-button { text-align: center; }
+}
