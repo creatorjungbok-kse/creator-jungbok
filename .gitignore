@@ -57,3 +57,6 @@ SESSION-STATE.md
 deliverables/
 *.bat
 style-references/
+
+# Claude Code 로컬 설정 — 머신별 권한 (외부 공개 X)
+.claude/
