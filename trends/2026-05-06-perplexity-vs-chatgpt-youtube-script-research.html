@@ -11,6 +11,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="alternate" hreflang="ko" href="https://creatorjungbok.co.kr/trends/2026-05-06-perplexity-vs-chatgpt-youtube-script-research.html">
+  <link rel="alternate" hreflang="en" href="https://creatorjungbok.co.kr/en/trends/">
+  <link rel="alternate" hreflang="x-default" href="https://creatorjungbok.co.kr/trends/2026-05-06-perplexity-vs-chatgpt-youtube-script-research.html">
   <link rel="stylesheet" href="/css/style.css">
   <style>
     .trend-meta { display: flex; flex-wrap: wrap; gap: .6rem 1rem; font-size: .8rem; color: #666; margin: .75rem 0 1.25rem 0; padding-bottom: 1rem; border-bottom: 1px solid var(--border, #e5e5e5); align-items: center; }
@@ -314,6 +317,24 @@
 </footer>
 
 <script src="/js/main.js"></script>
+<script>
+/* EN 버전 미발행 — nav data-lang="en" 클릭 시 /en/trends/ 인덱스로 이동 */
+(function(){
+  function patchEN(){
+    document.querySelectorAll('[data-lang="en"]').forEach(function(el){
+      el.addEventListener('click', function(e){
+        e.stopImmediatePropagation();
+        e.preventDefault();
+        try{ localStorage.setItem('cj-lang-pref','en'); }catch(x){}
+        location.href='/en/trends/';
+      }, true);
+    });
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', patchEN);
+  } else { patchEN(); }
+})();
+</script>
 <script src="/js/lang-toggle.js"></script>
 </body>
 </html>
