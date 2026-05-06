@@ -199,5 +199,78 @@
 <script src="/js/main.js"></script>
 <script src="/js/lang-toggle.js"></script>
 
+<!-- pagination-js -->
+
+<script>
+/* trends-pagination — JS 클라이언트 페이지네이션 (10개/페이지) */
+(function(){
+  "use strict";
+  var PER_PAGE = 10;
+  var grid = document.querySelector(".trend-grid-list");
+  if (!grid) return;
+  var cards = Array.from(grid.querySelectorAll(".trend-grid-card"));
+  if (cards.length <= PER_PAGE) return;
+  var totalPages = Math.ceil(cards.length / PER_PAGE);
+
+  function getPage(){
+    var h = location.hash.match(/#p(\d+)/);
+    var p = h ? parseInt(h[1], 10) : 1;
+    return Math.max(1, Math.min(p, totalPages));
+  }
+
+  function render(page){
+    /* 카드 표시/숨김 */
+    cards.forEach(function(c, i){
+      c.style.display = (i >= (page-1)*PER_PAGE && i < page*PER_PAGE) ? "" : "none";
+    });
+
+    /* 페이지네이션 nav — 기존 .trends-pagination CSS 재사용 */
+    var nav = document.querySelector(".trends-pagination");
+    if (!nav){
+      nav = document.createElement("nav");
+      nav.className = "trends-pagination";
+      nav.setAttribute("aria-label", "페이지 이동");
+      grid.parentNode.insertBefore(nav, grid.nextSibling);
+    }
+    nav.innerHTML = "";
+
+    /* ← 이전 */
+    var prev = document.createElement(page > 1 ? "a" : "span");
+    prev.className = "pag-arrow" + (page === 1 ? " pag-disabled" : "");
+    prev.setAttribute("aria-label", "이전 페이지");
+    prev.textContent = "←";
+    if (page > 1) prev.href = page === 2 ? "#" : "#p" + (page - 1);
+    nav.appendChild(prev);
+
+    /* 페이지 번호 */
+    for (var i = 1; i <= totalPages; i++){
+      var el;
+      if (i === page){
+        el = document.createElement("span");
+        el.setAttribute("aria-current", "page");
+        el.className = "pag-current";
+      } else {
+        el = document.createElement("a");
+        el.href = i === 1 ? "#" : "#p" + i;
+      }
+      el.textContent = i;
+      nav.appendChild(el);
+    }
+
+    /* → 다음 */
+    var next = document.createElement(page < totalPages ? "a" : "span");
+    next.className = "pag-arrow" + (page === totalPages ? " pag-disabled" : "");
+    next.setAttribute("aria-label", "다음 페이지");
+    next.textContent = "→";
+    if (page < totalPages) next.href = "#p" + (page + 1);
+    nav.appendChild(next);
+
+    window.scrollTo({top: 0, behavior: "smooth"});
+  }
+
+  render(getPage());
+  window.addEventListener("hashchange", function(){ render(getPage()); });
+})();
+</script>
 </body>
 </html>
