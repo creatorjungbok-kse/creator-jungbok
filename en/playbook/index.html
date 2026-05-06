@@ -175,29 +175,13 @@
     
     
     
+    
 
     </div>
   </div>
 </section>
 
 </div>
-
-<footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-logo">Creator <span>Jungbok</span></div>
-    <div class="footer-links">
-      <a href="/en/trends/">AI Trends</a>
-      <a href="/en/playbook/">SNS Insights</a>
-      <a href="/en/about/">About</a>
-      <a href="/en/privacy/">Privacy</a>
-      <a href="/en/contact/">Contact</a>
-    </div>
-    <p class="footer-copy">© 2026 Creator Jungbok</p>
-  </div>
-</footer>
-
-<script src="/js/main.js"></script>
-<script src="/js/lang-toggle.js"></script>
 
 <!-- pagination-js -->
 
@@ -219,12 +203,9 @@
   }
 
   function render(page){
-    /* 카드 표시/숨김 */
     cards.forEach(function(c, i){
       c.style.display = (i >= (page-1)*PER_PAGE && i < page*PER_PAGE) ? "" : "none";
     });
-
-    /* 페이지네이션 nav — 기존 .trends-pagination CSS 재사용 */
     var nav = document.querySelector(".trends-pagination");
     if (!nav){
       nav = document.createElement("nav");
@@ -234,7 +215,6 @@
     }
     nav.innerHTML = "";
 
-    /* ← 이전 */
     var prev = document.createElement(page > 1 ? "a" : "span");
     prev.className = "pag-arrow" + (page === 1 ? " pag-disabled" : "");
     prev.setAttribute("aria-label", "이전 페이지");
@@ -242,7 +222,6 @@
     if (page > 1) prev.href = page === 2 ? "#" : "#p" + (page - 1);
     nav.appendChild(prev);
 
-    /* 페이지 번호 */
     for (var i = 1; i <= totalPages; i++){
       var el;
       if (i === page){
@@ -257,7 +236,6 @@
       nav.appendChild(el);
     }
 
-    /* → 다음 */
     var next = document.createElement(page < totalPages ? "a" : "span");
     next.className = "pag-arrow" + (page === totalPages ? " pag-disabled" : "");
     next.setAttribute("aria-label", "다음 페이지");
@@ -272,5 +250,23 @@
   window.addEventListener("hashchange", function(){ render(getPage()); });
 })();
 </script>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Creator <span>Jungbok</span></div>
+    <div class="footer-links">
+      <a href="/en/trends/">AI Trends</a>
+      <a href="/en/playbook/">SNS Insights</a>
+      <a href="/en/about/">About</a>
+      <a href="/en/privacy/">Privacy</a>
+      <a href="/en/contact/">Contact</a>
+    </div>
+    <p class="footer-copy">© 2026 Creator Jungbok</p>
+  </div>
+</footer>
+
+<script src="/js/lang-toggle.js"></script>
+
 </body>
 </html>

@@ -33,7 +33,8 @@
       "Bash(python -m json.tool .claude/settings.local.json)",
       "Bash(awk '{print $2}')",
       "Bash(python *)",
-      "Bash(python -X utf8 -c ' *)"
+      "Bash(python -X utf8 -c ' *)",
+      "Bash(rm scripts/_fix_articles.py)"
     ]
   }
 }
