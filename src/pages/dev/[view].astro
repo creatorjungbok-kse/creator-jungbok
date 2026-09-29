@@ -1,5 +1,5 @@
 ---
-// dev 전용 셸 미리보기. `astro dev` 또는 PUBLIC_SHELL_PREVIEW=1 빌드에서만 페이지가 생성된다.
+// dev 전용 셸 미리보기. env.ts의 isShellPreview가 켜진 경우에만 페이지가 생성된다.
 import ArticleLayout from '../../layouts/ArticleLayout.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AdSlot from '../../components/AdSlot.astro';
@@ -22,11 +22,11 @@ const para =
 
 {
   view === 'home' ? (
-    <BaseLayout title="홈 셸 미리보기" noindex>
+    <BaseLayout title="홈 셸 미리보기" noindex canonical={false}>
       <HomeView {...homeFixture} />
     </BaseLayout>
   ) : (
-    <ArticleLayout {...a} category={business} noindex>
+    <ArticleLayout {...a} category={business} noindex canonical={false}>
       <h2 id="summary">결론부터</h2>
       <p>{para}</p>
       <div class="table-scroll">

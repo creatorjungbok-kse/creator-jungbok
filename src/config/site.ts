@@ -11,4 +11,5 @@ export const site = {
     naver: 'a75a175b725039ead1e7125e7717e581a82e14a2',
   },
   adsenseClient: 'ca-pub-4083301154077390',
+  ga4Id: 'G-6B72N2BV55',
 } as const;

@@ -4,17 +4,20 @@ import '../styles/base.css';
 import '../styles/layout.css';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import { isProduction } from '../config/env';
 import { site } from '../config/site';
 
 export interface Props {
   title?: string;
   description?: string;
+  // 페이지별 색인·canonical 정책은 04-seo-rules.md를 따른다. production이 아닌 환경은 항상 noindex.
   noindex?: boolean;
+  canonical?: boolean;
 }
 
-const { title, description = site.description, noindex = false } = Astro.props;
-const pageTitle = title ? `${title} | ${site.name}` : `${site.name} — ${site.tagline}`;
-const canonical = new URL(Astro.url.pathname, Astro.site);
+const { title, description = site.description, noindex = false, canonical = true } = Astro.props;
+const pageTitle = title ? `${title} | ${site.name}` : `${site.name}: ${site.tagline}`;
+const robotsNoindex = noindex || !isProduction;
 ---
 
 <!doctype html>
@@ -24,7 +27,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
-    {noindex ? <meta name="robots" content="noindex, follow" /> : <link rel="canonical" href={canonical} />}
+    {robotsNoindex && <meta name="robots" content="noindex, follow" />}
+    {canonical && <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />}
     <meta name="google-site-verification" content={site.verification.google} />
     <meta name="naver-site-verification" content={site.verification.naver} />
     <meta name="google-adsense-account" content={site.adsenseClient} />
@@ -32,10 +36,26 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
+    {
+      isProduction && (
+        <>
+          <script async src={`https://www.googletagmanager.com/gtag/js?id=${site.ga4Id}`} />
+          <script is:inline define:vars={{ ga4Id: site.ga4Id }}>
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function () {
+              window.dataLayer.push(arguments);
+            };
+            window.gtag('js', new Date());
+            window.gtag('config', ga4Id);
+          </script>
+        </>
+      )
+    }
   </head>
   <body>
+    <a class="skip-link" href="#main">본문 바로가기</a>
     <Header />
-    <main>
+    <main id="main" tabindex="-1">
       <slot />
     </main>
     <Footer />

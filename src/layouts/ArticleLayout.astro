@@ -14,12 +14,13 @@ export interface Props {
   sameTopic: MiniListProps['items'];
   guides: MiniListProps['items'];
   noindex?: boolean;
+  canonical?: boolean;
 }
 
-const { title, description, category, updated, headings, sameTopic, guides, noindex } = Astro.props;
+const { title, description, category, updated, headings, sameTopic, guides, noindex, canonical } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description} noindex={noindex}>
+<BaseLayout title={title} description={description} noindex={noindex} canonical={canonical}>
   <div class="container page-grid">
     <article class="article">
       <Breadcrumb items={[{ label: category.name, href: categoryHref(category) }]} />
