@@ -1,0 +1,62 @@
+---
+import { formatDate, formatPrice, vatLabels } from '../lib/format';
+import type { CollectionEntry } from 'astro:content';
+
+type PriceItem = NonNullable<CollectionEntry<'articles'>['data']['priceItems']>[number];
+
+export interface Props {
+  caption: string;
+  items: PriceItem[];
+  // 항목별 확인일이 없을 때 쓰는 글의 조사일
+  researchedAt: Date;
+}
+
+const { caption, items, researchedAt } = Astro.props;
+const hasCondition = items.some((i) => i.condition);
+const hasRegion = items.some((i) => i.region);
+---
+
+<div class="table-scroll">
+  <table class="price-table">
+    <caption>{caption}</caption>
+    <thead>
+      <tr>
+        <th scope="col">항목</th>
+        <th scope="col">가격</th>
+        <th scope="col">VAT</th>
+        {hasCondition && <th scope="col">조건</th>}
+        {hasRegion && <th scope="col">지역</th>}
+        <th scope="col">확인</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        items.map((item) => (
+          <tr>
+            <th scope="row">{item.label}</th>
+            <td class="price-table__price">{formatPrice(item)}</td>
+            <td>{item.vat ? vatLabels[item.vat] : '—'}</td>
+            {hasCondition && <td class="price-table__wrap">{item.condition ?? '—'}</td>}
+            {hasRegion && <td>{item.region ?? '—'}</td>}
+            <td>{formatDate(item.date ?? researchedAt, 'month')}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+
+<style>
+  tbody th {
+    font-weight: 600;
+  }
+
+  .price-table__price {
+    font-weight: 700;
+  }
+
+  .price-table__wrap {
+    min-width: 14em;
+    white-space: normal;
+  }
+</style>

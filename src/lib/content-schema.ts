@@ -3,8 +3,9 @@
 import { z } from 'astro/zod';
 import { audiences } from '../data/audiences';
 import { people } from '../data/people';
-import { commonSources, sourceLevels, type Source } from '../data/sources';
+import { sourceLevels } from '../data/sources';
 import { topics } from '../data/topics';
+import { sourceRefs, sourceResolver } from './sources';
 
 const date = z.coerce.date();
 const text = z.string().trim().min(1);
@@ -138,15 +139,9 @@ const programSchema = z
 
 // ── 글 단위 교차 필드 검증 ────────────────────────────
 type Base = z.infer<z.ZodObject<typeof baseShape>>;
-const commonById = new Map<string, Source>(commonSources.map((s) => [s.id, s]));
-type SourceRef = { path: (string | number)[]; id: string; mustBeS1?: boolean };
+type Refs = Parameters<typeof sourceRefs>[0];
 
-function checkEntry(
-  d: Base,
-  ctx: z.RefinementCtx,
-  refs: SourceRef[],
-  priceItems: z.infer<typeof priceItemSchema>[] = [],
-) {
+function checkEntry(d: Base & Omit<Refs, 'priceItems'> & { priceItems?: z.infer<typeof priceItemSchema>[] }, ctx: z.RefinementCtx) {
   if (d.dateModified < d.datePublished) ctx.addIssue({ code: 'custom', path: ['dateModified'], message: 'dateModified < datePublished' });
   // 내용이 바뀐 날짜에는 변경 기록이 있어야 한다(날짜만 올리는 가짜 업데이트 방지)
   if (+d.dateModified !== +d.datePublished && !d.changelog?.some((c) => +c.date === +d.dateModified)) {
@@ -157,22 +152,24 @@ function checkEntry(
     if (!r?.canReview || d.reviewer === d.author) ctx.addIssue({ code: 'custom', path: ['reviewer'], message: '검수 권한이 있는 다른 사람만 reviewer가 될 수 있다' });
   }
 
-  const local = new Map<string, Source>();
+  const refs = sourceRefs(d);
+  const resolve = sourceResolver(d);
+  const used = new Set(refs.map((r) => r.id));
+  const seen = new Set<string>();
   d.localSources?.forEach((s, i) => {
-    if (local.has(s.id)) ctx.addIssue({ code: 'custom', path: ['localSources', i, 'id'], message: `중복 출처 id ${s.id}` });
-    local.set(s.id, s);
+    if (seen.has(s.id)) ctx.addIssue({ code: 'custom', path: ['localSources', i, 'id'], message: `중복 출처 id ${s.id}` });
+    // 정의만 하고 인용하지 않은 출처는 화면에 나오지 않으므로 남기지 않는다
+    if (!used.has(s.id)) ctx.addIssue({ code: 'custom', path: ['localSources', i, 'id'], message: `인용되지 않은 출처 ${s.id} (sourceIds 등에서 참조하거나 삭제)` });
+    seen.add(s.id);
   });
-  const resolve = (id: string) => (id.startsWith('local:') ? local.get(id) : commonById.get(id));
-
-  const allRefs: SourceRef[] = [...(d.sourceIds ?? []).map((id, i) => ({ path: ['sourceIds', i], id })), ...refs];
-  for (const ref of allRefs) {
+  for (const ref of refs) {
     const s = resolve(ref.id);
     if (!s) ctx.addIssue({ code: 'custom', path: ref.path, message: `존재하지 않는 출처 ${ref.id}` });
     else if (ref.mustBeS1 && s.level !== 'S1') ctx.addIssue({ code: 'custom', path: ref.path, message: `${ref.id}: 공식(S1) 출처만 허용` });
   }
 
   // confidence ↔ 출처 등급(02 8장)
-  priceItems.forEach((p, i) => {
+  d.priceItems?.forEach((p, i) => {
     const levels = p.sourceIds.map((id) => resolve(id)?.level);
     const count = (lv: string) => levels.filter((l) => l === lv).length;
     const rule: Record<string, [boolean, string]> = {
@@ -205,11 +202,7 @@ export const articleSchema = z
   .superRefine((d, ctx) => {
     if (d.contentType === 'cost' && !d.priceItems?.length) ctx.addIssue({ code: 'custom', path: ['priceItems'], message: 'cost 글은 priceItems가 필요하다' });
     if ((d.contentType === 'change') !== (d.change !== undefined)) ctx.addIssue({ code: 'custom', path: ['change'], message: 'change 블록은 change 글에만, change 글에는 필수' });
-    const refs = [
-      ...(d.priceItems ?? []).flatMap((p, i) => p.sourceIds.map((id, j) => ({ path: ['priceItems', i, 'sourceIds', j], id }))),
-      ...(d.change?.officialSourceIds ?? []).map((id, i) => ({ path: ['change', 'officialSourceIds', i], id, mustBeS1: true })),
-    ];
-    checkEntry(d, ctx, refs, d.priceItems);
+    checkEntry(d, ctx);
   });
 
 // ── benefits: 실제 지원·혜택(benefit) ─────────────────
@@ -223,14 +216,4 @@ export const benefitSchema = z
     program: programSchema,
     ads: adsSchema({ mid: slot, end: slot }),
   })
-  .superRefine((d, ctx) => {
-    const p = d.program;
-    const s1 = (path: (string | number)[], id: string) => ({ path: ['program', ...path], id, mustBeS1: true });
-    checkEntry(d, ctx, [
-      ...p.officialSourceIds.map((id, i) => s1(['officialSourceIds', i], id)),
-      ...p.eligibility.map((e, i) => s1(['eligibility', i, 'sourceId'], e.sourceId)),
-      ...(p.exclusions ?? []).map((e, i) => s1(['exclusions', i, 'sourceId'], e.sourceId)),
-      s1(['benefit', 'sourceId'], p.benefit.sourceId),
-      ...(p.statusOverride ? [s1(['statusOverride', 'sourceId'], p.statusOverride.sourceId)] : []),
-    ]);
-  });
+  .superRefine(checkEntry);

@@ -3,6 +3,14 @@
 // level: S1 공식 / S2 공개 가격·공신력 자료 / S3 실제 견적·사례 / S4 커뮤니티·참고 (02 7장)
 export const sourceLevels = ['S1', 'S2', 'S3', 'S4'] as const;
 
+// 화면에 보여줄 등급 설명(내부 코드 S1~S4는 노출하지 않는다)
+export const sourceLevelLabels: Record<(typeof sourceLevels)[number], string> = {
+  S1: '공식 자료',
+  S2: '공개 가격 자료',
+  S3: '견적·사례',
+  S4: '참고 자료',
+};
+
 export interface Source {
   id: string;
   title: string;

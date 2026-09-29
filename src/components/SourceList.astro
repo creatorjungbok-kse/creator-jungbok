@@ -1,0 +1,52 @@
+---
+// 글이 실제로 인용한 출처 목록(citedSources 결과를 받는다).
+import SectionTitle from './SectionTitle.astro';
+import { sourceLevelLabels, type Source } from '../data/sources';
+import { formatDate } from '../lib/format';
+
+export interface Props {
+  sources: Source[];
+}
+
+const { sources } = Astro.props;
+---
+
+{
+  sources.length > 0 && (
+    <section class="source-list">
+      <SectionTitle title="출처·참고자료" tier="secondary" />
+      <ol>
+        {sources.map((s) => (
+          <li>
+            <a href={s.url}>{s.title}</a>
+            <span>
+              {[s.publisher, sourceLevelLabels[s.level], s.checkedAt && `확인 ${formatDate(s.checkedAt)}`].filter(Boolean).join(' · ')}
+            </span>
+          </li>
+        ))}
+      </ol>
+    </section>
+  )
+}
+
+<style>
+  ol {
+    display: grid;
+    gap: var(--space-3);
+    padding-left: 1.25em;
+    list-style: decimal;
+    font-size: var(--text-sm);
+  }
+
+  a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  span {
+    display: block;
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+  }
+</style>

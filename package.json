@@ -11,7 +11,8 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "check:build": "node tools/check-build.mjs",
-    "test:content": "node tools/test-content.mjs"
+    "test:content": "node tools/test-content.mjs",
+    "test:status": "node --test tools/test-benefit-status.mjs"
   },
   "dependencies": {
     "astro": "7.3.5"

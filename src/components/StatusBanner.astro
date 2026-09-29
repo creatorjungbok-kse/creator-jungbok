@@ -1,0 +1,60 @@
+---
+// 지원사업 상세 상단의 상태 표시. 색이 아니라 문구로 상태를 전달한다. 광고 금지 영역.
+import { benefitStatus, statusLabels } from '../lib/benefit-status';
+import { formatDate } from '../lib/format';
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  program: CollectionEntry<'benefits'>['data']['program'];
+}
+
+const { program } = Astro.props;
+const { status, detail, overridden } = benefitStatus(program);
+const end = program.application.end;
+---
+
+<div class={`status-banner status-banner--${status}`} data-ad-protected="status">
+  <p class="status-banner__state">
+    <strong>{statusLabels[status]}</strong>{detail && <span> · {detail}</span>}
+  </p>
+  {overridden && program.statusOverride && <p>{program.statusOverride.reason}</p>}
+  {!overridden && status === 'closed' && end && <p>이 지원사업은 {formatDate(end)} 신청이 종료되었습니다.</p>}
+  <p class="status-banner__checked">신청 정보 확인일 {formatDate(program.lastStatusCheckedAt)}</p>
+</div>
+
+<style>
+  .status-banner {
+    display: grid;
+    gap: var(--space-1);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-border);
+    border-left-width: 4px;
+    border-radius: var(--radius);
+    font-size: var(--text-sm);
+  }
+
+  .status-banner__state {
+    font-size: var(--text-base);
+  }
+
+  .status-banner__checked {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+  }
+
+  .status-banner--upcoming {
+    border-left-color: var(--color-accent);
+  }
+
+  .status-banner--open {
+    border-left-color: var(--color-status-open);
+  }
+
+  .status-banner--closing-soon {
+    border-left-color: var(--color-status-closing);
+  }
+
+  .status-banner--closed {
+    border-left-color: var(--color-text-muted);
+  }
+</style>

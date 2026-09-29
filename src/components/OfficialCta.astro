@@ -1,0 +1,44 @@
+---
+// 공식 사이트로 가는 버튼. 광고와 혼동되지 않는 고유 디자인, vignette 차단, 광고 금지 영역.
+export interface Props {
+  href: string;
+  label?: string;
+}
+
+const { href, label = '공식 신청 페이지 보기' } = Astro.props;
+const domain = new URL(href).hostname;
+---
+
+<a class="official-cta" href={href} data-google-vignette="false" data-ad-protected="official-cta">
+  <span class="official-cta__label">{label}</span>
+  <span class="official-cta__domain">{domain} · 공식 사이트로 이동</span>
+</a>
+
+<style>
+  .official-cta {
+    display: inline-grid;
+    gap: 2px;
+    min-height: var(--touch);
+    padding: var(--space-3) var(--space-5);
+    border: 2px solid var(--color-accent);
+    border-radius: var(--radius);
+    color: var(--color-accent);
+  }
+
+  .official-cta:hover {
+    background: var(--color-accent-soft);
+  }
+
+  .official-cta__label {
+    font-weight: 700;
+  }
+
+  .official-cta__label::after {
+    content: ' ↗';
+  }
+
+  .official-cta__domain {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+  }
+</style>

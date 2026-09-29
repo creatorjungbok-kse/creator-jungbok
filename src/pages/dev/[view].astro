@@ -4,14 +4,21 @@ import ArticleLayout from '../../layouts/ArticleLayout.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AdSlot from '../../components/AdSlot.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
+import BenefitCard from '../../components/BenefitCard.astro';
 import HomeView from '../../components/HomeView.astro';
+import OfficialCta from '../../components/OfficialCta.astro';
+import PriceTable from '../../components/PriceTable.astro';
 import SectionTitle from '../../components/SectionTitle.astro';
+import SourceList from '../../components/SourceList.astro';
+import StatusBanner from '../../components/StatusBanner.astro';
+import SummaryBox from '../../components/SummaryBox.astro';
 import { isShellPreview } from '../../config/env';
 import { categories } from '../../data/categories';
-import { articleFixture as a, homeFixture } from '../../dev/fixtures';
+import { citedSources } from '../../lib/sources';
+import { articleFixture as a, componentFixture as c, homeFixture } from '../../dev/fixtures';
 
 export function getStaticPaths() {
-  return isShellPreview ? [{ params: { view: 'home' } }, { params: { view: 'article' } }] : [];
+  return isShellPreview ? ['home', 'article', 'components'].map((view) => ({ params: { view } })) : [];
 }
 
 const { view } = Astro.params;
@@ -21,11 +28,38 @@ const para =
 ---
 
 {
-  view === 'home' ? (
+  view === 'components' && (
+    <BaseLayout title="부품 미리보기" noindex canonical={false}>
+      <div class="container showcase">
+        <h1>P4 부품 미리보기</h1>
+        <SummaryBox summary={c.summary} />
+        <PriceTable caption="예시 · 가격 표시 형식" items={c.priceItems} researchedAt={c.researchedAt} />
+        <div class="card-grid">
+          {c.benefits.map(([name, program]) => (
+            <BenefitCard href="#" title={name} program={program} audience={c.audience} />
+          ))}
+        </div>
+        {c.benefits.map(([, program]) => (
+          <StatusBanner program={program} />
+        ))}
+        <SummaryBox title="핵심 요약" summary="예시 지원사업의 대상·금액·기간을 공식 공고 기준으로 요약합니다." />
+        <OfficialCta href="https://www.gov.kr/" />
+        <SourceList sources={citedSources(c.sourceData)} />
+      </div>
+    </BaseLayout>
+  )
+}
+
+{
+  view === 'home' && (
     <BaseLayout title="홈 셸 미리보기" noindex canonical={false}>
       <HomeView {...homeFixture} />
     </BaseLayout>
-  ) : (
+  )
+}
+
+{
+  view === 'article' && (
     <ArticleLayout {...a} category={business} noindex canonical={false}>
       <h2 id="summary">결론부터</h2>
       <p>{para}</p>
@@ -72,3 +106,12 @@ const para =
     </ArticleLayout>
   )
 }
+
+<style>
+  .showcase {
+    display: grid;
+    gap: var(--space-5);
+    max-width: var(--prose);
+    padding-block: var(--space-6);
+  }
+</style>

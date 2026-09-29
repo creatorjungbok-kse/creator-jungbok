@@ -1,0 +1,29 @@
+---
+// 글 상단 요약(cost 등: 결론부터 / benefit: 핵심 요약). 광고 금지 영역(data-ad-protected).
+export interface Props {
+  summary: string;
+  title?: string;
+}
+
+const { summary, title = '결론부터' } = Astro.props;
+---
+
+<section class="summary-box" data-ad-protected="summary">
+  <h2>{title}</h2>
+  <p>{summary}</p>
+</section>
+
+<style>
+  .summary-box {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-5);
+    border-left: 3px solid var(--color-accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    background: var(--color-surface);
+  }
+
+  h2 {
+    font-size: var(--text-base);
+  }
+</style>

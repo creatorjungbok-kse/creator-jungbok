@@ -1,0 +1,30 @@
+---
+// 지원·혜택 목록 카드. 표시는 ArticleCard를 그대로 쓰고, 상태·기간·대상 요약만 계산한다.
+import ArticleCard from './ArticleCard.astro';
+import { audiences } from '../data/audiences';
+import { benefitStatus } from '../lib/benefit-status';
+import { applicationPeriod } from '../lib/format';
+import type { CollectionEntry } from 'astro:content';
+
+type Data = CollectionEntry<'benefits'>['data'];
+
+export interface Props {
+  href: string;
+  title: string;
+  program: Data['program'];
+  audience: Data['audience'];
+}
+
+const { href, title, program, audience } = Astro.props;
+const { status, detail } = benefitStatus(program);
+const who = audience.map((id) => audiences.find((a) => a.id === id)!.name).join('·');
+const period = applicationPeriod(program.application);
+---
+
+<ArticleCard
+  href={href}
+  title={title}
+  status={status}
+  excerpt={`대상: ${who} · 혜택: ${program.benefit.text}`}
+  meta={[period, detail].filter((m): m is string => Boolean(m))}
+/>

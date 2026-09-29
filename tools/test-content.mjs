@@ -151,6 +151,9 @@ const cases = [
     edit(B, '    - text: 테스트 조건\n      sourceId: gov24', '    - text: 테스트 조건\n      sourceId: local:blog')(f);
     edit(B, 'audience: [low-income]', 'audience: [low-income]\nlocalSources:\n  - id: local:blog\n    title: 테스트 블로그\n    publisher: 테스트\n    url: https://example.com/blog\n    level: S4\n    checkedAt: 2026-09-20')(f);
   }, 'local:blog: 공식(S1) 출처만 허용'],
+  ['period-without-dates', edit(B, '    start: 2026-10-01\n    end: 2026-12-31\n', ''), 'period 모드는 start·end가 필요하다'],
+  ['until-budget-without-start', edit(B, '    mode: period\n    start: 2026-10-01\n    end: 2026-12-31\n', '    mode: until-budget\n'), 'until-budget 모드는 start가 필요하다'],
+  ['unused-local-source', edit(C, 'sourceIds: [local:vendor-a]', 'sourceIds: [nts]'), '인용되지 않은 출처 local:vendor-a'],
   ['benefits-article-type', edit('articles/benefits/test-check-benefits.md', 'contentType: guide', 'contentType: compare'), 'guide·change만'],
   ['url-collision', add('articles/benefits/test-energy-voucher.md', benefitsGuide.replace('테스트 혜택 확인', '테스트 충돌')), '공개 URL 충돌 /benefits/test-energy-voucher/'],
   ['reserved-slug', add('articles/digital/internet.md', guide.replace('subcategory: startup', 'subcategory: internet').replace('테스트 창업 초기 비용', '테스트 인터넷')), '예약된 slug internet'],
