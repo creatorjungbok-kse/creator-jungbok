@@ -1,0 +1,66 @@
+---
+import SectionTitle from './SectionTitle.astro';
+
+export interface Props {
+  title: string;
+  items: { href: string; title: string; meta?: string }[];
+  numbered?: boolean;
+  class?: string;
+}
+
+const { title, items, numbered = false, class: className } = Astro.props;
+---
+
+<section class={className}>
+  <SectionTitle title={title} />
+  <ol class:list={['mini-list', { numbered }]}>
+    {
+      items.map((item) => (
+        <li>
+          <a href={item.href}>{item.title}</a>
+          {item.meta && <span>{item.meta}</span>}
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .mini-list {
+    counter-reset: rank;
+  }
+
+  li {
+    display: grid;
+    gap: 2px;
+    padding-block: var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+    font-size: var(--text-sm);
+  }
+
+  li:first-child {
+    padding-top: 0;
+  }
+
+  a {
+    font-weight: 600;
+  }
+
+  span {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+  }
+
+  .numbered li {
+    grid-template-columns: 1.5rem minmax(0, 1fr);
+    column-gap: var(--space-2);
+  }
+
+  .numbered li::before {
+    content: counter(rank);
+    counter-increment: rank;
+    grid-row: span 2;
+    color: var(--color-accent);
+    font-weight: 800;
+  }
+</style>

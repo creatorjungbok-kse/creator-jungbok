@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import MiniList from '../../components/MiniList.astro';
+import { categories, categoryLinks, type Category } from '../../data/categories';
+
+export function getStaticPaths() {
+  return categories.map((category) => ({ params: { category: category.slug }, props: { category } }));
+}
+
+interface Props {
+  category: Category;
+}
+
+const { category } = Astro.props;
+---
+
+<BaseLayout title={category.title} description={category.description}>
+  <div class="container page-grid">
+    <div class="page-main">
+      <header class="page-head">
+        <Breadcrumb items={[{ label: category.name }]} />
+        <h1>{category.title}</h1>
+        <p>{category.description}</p>
+      </header>
+      <p class="empty">이 카테고리의 정보를 준비하고 있습니다.</p>
+    </div>
+    <aside class="page-aside" aria-label="보조 정보">
+      <MiniList title="카테고리" items={categoryLinks} />
+    </aside>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-head {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .page-head h1 {
+    font-size: var(--text-2xl);
+  }
+
+  .page-head p,
+  .empty {
+    color: var(--color-text-muted);
+  }
+
+  .empty {
+    padding: var(--space-6);
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius);
+    text-align: center;
+  }
+</style>

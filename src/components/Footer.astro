@@ -1,0 +1,63 @@
+---
+import { site } from '../config/site';
+import { categoryLinks } from '../data/categories';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div>
+      <a class="site-footer__brand" href="/">{site.name}</a>
+      <p>{site.tagline}</p>
+    </div>
+    <nav aria-label="카테고리">
+      <ul class="site-footer__links">
+        {categoryLinks.map((l) => <li><a href={l.href}>{l.title}</a></li>)}
+      </ul>
+    </nav>
+    <p class="site-footer__note">
+      가격·지원 정보는 각 글의 조사 기준일·확인일 기준이며 실제와 다를 수 있습니다. 지원·혜택 정보는 공식 공고를 정리한 것이며
+      개인의 수급 자격을 판단하지 않습니다.
+    </p>
+    <p class="site-footer__copy">© {year} {site.name}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .site-footer__inner {
+    display: grid;
+    gap: var(--space-4);
+    padding-block: var(--space-6);
+  }
+
+  .site-footer__brand {
+    color: var(--color-text);
+    font-weight: 800;
+  }
+
+  .site-footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-5);
+  }
+
+  .site-footer__links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch);
+    color: var(--color-text);
+  }
+
+  .site-footer__note,
+  .site-footer__copy {
+    font-size: var(--text-xs);
+  }
+</style>

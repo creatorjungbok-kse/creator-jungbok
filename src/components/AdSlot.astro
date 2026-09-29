@@ -1,0 +1,34 @@
+---
+import { isShellPreview } from '../config/env';
+import { adSlots, type AdSlotId } from '../config/ads';
+
+export interface Props {
+  id: AdSlotId;
+}
+
+// P1: 광고 위치·간격·높이 예약 확인용 자리만 표시한다. 실제 광고 코드는 없다.
+const { id } = Astro.props;
+---
+
+{
+  isShellPreview && (
+    <div class="ad-slot" data-slot={id}>
+      <strong>광고 자리 · {id}</strong>
+      <span>{adSlots[id]}</span>
+    </div>
+  )
+}
+
+<style>
+  .ad-slot {
+    display: grid;
+    place-content: center;
+    gap: var(--space-1);
+    min-height: 250px;
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius);
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    text-align: center;
+  }
+</style>

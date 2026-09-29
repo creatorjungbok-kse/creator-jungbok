@@ -1,0 +1,75 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import MiniList, { type Props as MiniListProps } from '../components/MiniList.astro';
+import Toc, { type Props as TocProps } from '../components/Toc.astro';
+import { categoryHref, type Category } from '../data/categories';
+
+export interface Props {
+  title: string;
+  description: string;
+  category: Category;
+  updated: string;
+  headings: TocProps['headings'];
+  sameTopic: MiniListProps['items'];
+  guides: MiniListProps['items'];
+  noindex?: boolean;
+}
+
+const { title, description, category, updated, headings, sameTopic, guides, noindex } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} noindex={noindex}>
+  <div class="container page-grid">
+    <article class="article">
+      <Breadcrumb items={[{ label: category.name, href: categoryHref(category) }]} />
+      <header class="article__head">
+        <p class="article__category">{category.name}</p>
+        <h1>{title}</h1>
+        <p class="article__meta">최종 업데이트 <time datetime={updated}>{updated.replaceAll('-', '.')}</time></p>
+      </header>
+      <Toc headings={headings} variant="inline" />
+      <div class="prose">
+        <slot />
+      </div>
+      <slot name="after" />
+    </article>
+
+    <aside class="page-aside article-aside" aria-label="글 보조 정보">
+      <Toc headings={headings} variant="sidebar" />
+      {sameTopic.length > 0 && <MiniList title="같은 주제 글" items={sameTopic} />}
+      {guides.length > 0 && <MiniList title="관련 가이드" items={guides} />}
+    </aside>
+  </div>
+</BaseLayout>
+
+<style>
+  .article {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+    gap: var(--space-5);
+    min-width: 0;
+  }
+
+  .article__head {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .article__category {
+    color: var(--color-accent);
+    font-size: var(--text-sm);
+    font-weight: 700;
+  }
+
+  .article__head h1 {
+    font-size: var(--text-2xl);
+    letter-spacing: -0.02em;
+  }
+
+  .article__meta {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+  }
+</style>

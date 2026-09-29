@@ -1,0 +1,50 @@
+:root {
+  /* color */
+  --color-bg: #ffffff;
+  --color-surface: #f5f7fa;
+  --color-text: #1a1f26;
+  --color-text-muted: #5a6472;
+  --color-border: #e2e6eb;
+  --color-accent: #1f5fcc;
+  --color-accent-soft: #eaf1fc;
+  --color-on-accent: #ffffff;
+  --color-status-open: #127a3e;
+  --color-status-open-soft: #e7f5ec;
+  --color-status-closing: #b4460b;
+  --color-status-closing-soft: #fdf0e6;
+
+  /* type */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic',
+    'Noto Sans KR', 'Segoe UI', sans-serif;
+  --text-xs: 0.8125rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-md: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 1.75rem;
+  --leading-tight: 1.35;
+  --leading-body: 1.7;
+
+  /* space */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+
+  /* shape */
+  --radius: 8px;
+  --radius-pill: 999px;
+
+  /* layout */
+  --container: 1160px;
+  --sidebar: 300px;
+  --gap-layout: 32px;
+  --prose: 720px;
+  --header-h: 56px;
+  --gutter: 16px;
+  --touch: 44px;
+}

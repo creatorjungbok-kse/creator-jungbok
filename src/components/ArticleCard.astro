@@ -1,0 +1,90 @@
+---
+export interface Props {
+  href: string;
+  title: string;
+  category?: string;
+  status?: 'open' | 'closing';
+  excerpt?: string;
+  meta?: string[];
+}
+
+const { href, title, category, status, excerpt, meta = [] } = Astro.props;
+const statusLabel = { open: '신청 중', closing: '마감 임박' } as const;
+---
+
+<article class="card">
+  {
+    (status || category) && (
+      <p class="card__top">
+        {status && <span class={`badge badge--${status}`}>{statusLabel[status]}</span>}
+        {category && <span>{category}</span>}
+      </p>
+    )
+  }
+  <h3 class="card__title"><a href={href}>{title}</a></h3>
+  {excerpt && <p class="card__excerpt">{excerpt}</p>}
+  {meta.length > 0 && <p class="card__meta">{meta.map((m) => <span>{m}</span>)}</p>}
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .card__top {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-accent);
+    font-size: var(--text-xs);
+    font-weight: 600;
+  }
+
+  .badge {
+    padding: 0 var(--space-2);
+    border-radius: var(--radius-pill);
+  }
+
+  .badge--open {
+    background: var(--color-status-open-soft);
+    color: var(--color-status-open);
+  }
+
+  .badge--closing {
+    background: var(--color-status-closing-soft);
+    color: var(--color-status-closing);
+  }
+
+  .card__title {
+    font-size: var(--text-md);
+    font-weight: 700;
+  }
+
+  /* 카드 전체를 클릭 영역으로 */
+  .card__title a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .card__excerpt {
+    display: -webkit-box;
+    overflow: hidden;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .card__meta {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+  }
+
+  .card__meta span + span::before {
+    content: '·';
+    margin-inline: var(--space-2);
+  }
+</style>

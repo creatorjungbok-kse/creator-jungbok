@@ -1,0 +1,61 @@
+---
+export interface Props {
+  headings: { id: string; text: string }[];
+  // inline: 모바일 본문 안 접힘형 / sidebar: 데스크톱 사이드바형 (표시 전환은 layout.css)
+  variant: 'inline' | 'sidebar';
+}
+
+const { headings, variant } = Astro.props;
+const Wrapper = variant === 'inline' ? 'details' : 'nav';
+---
+
+{
+  headings.length > 0 && (
+    <Wrapper class={`toc toc--${variant}`} aria-label={variant === 'sidebar' ? '목차' : undefined}>
+      {variant === 'inline' ? <summary>목차</summary> : <p class="toc__title">목차</p>}
+      <ol>
+        {headings.map((h) => (
+          <li>
+            <a href={`#${h.id}`}>{h.text}</a>
+          </li>
+        ))}
+      </ol>
+    </Wrapper>
+  )
+}
+
+<style>
+  .toc {
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    font-size: var(--text-sm);
+  }
+
+  summary,
+  .toc__title {
+    font-weight: 700;
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    min-height: var(--touch);
+    margin-block: calc(-1 * var(--space-3));
+    cursor: pointer;
+  }
+
+  ol {
+    display: grid;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    counter-reset: toc;
+  }
+
+  li::before {
+    content: counter(toc) '. ';
+    counter-increment: toc;
+    color: var(--color-text-muted);
+  }
+</style>

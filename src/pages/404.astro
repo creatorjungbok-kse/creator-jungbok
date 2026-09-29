@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import MiniList from '../components/MiniList.astro';
+import { categoryLinks } from '../data/categories';
+---
+
+<BaseLayout title="페이지를 찾을 수 없습니다" noindex>
+  <div class="container not-found">
+    <h1>페이지를 찾을 수 없습니다</h1>
+    <p>주소가 바뀌었거나 삭제된 페이지입니다. 아래 카테고리에서 필요한 정보를 찾아보세요.</p>
+    <MiniList title="카테고리" items={categoryLinks} />
+    <p><a href="/">홈으로 가기</a></p>
+  </div>
+</BaseLayout>
+
+<style>
+  .not-found {
+    display: grid;
+    gap: var(--space-5);
+    max-width: var(--prose);
+    padding-block: var(--space-7);
+  }
+
+  .not-found h1 {
+    font-size: var(--text-2xl);
+  }
+
+  .not-found a {
+    color: var(--color-accent);
+  }
+</style>

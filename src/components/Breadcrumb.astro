@@ -1,0 +1,33 @@
+---
+export interface Props {
+  // 홈은 자동으로 앞에 붙는다. 마지막 항목은 현재 페이지(링크 없음).
+  items: { label: string; href?: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav class="breadcrumb" aria-label="현재 위치">
+  <ol>
+    <li><a href="/">홈</a></li>
+    {
+      items.map((item) => (
+        <li>{item.href ? <a href={item.href}>{item.label}</a> : <span aria-current="page">{item.label}</span>}</li>
+      ))
+    }
+  </ol>
+</nav>
+
+<style>
+  .breadcrumb ol {
+    display: flex;
+    flex-wrap: wrap;
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+  }
+
+  .breadcrumb li + li::before {
+    content: '›';
+    margin-inline: var(--space-2);
+  }
+</style>

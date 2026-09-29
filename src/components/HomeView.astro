@@ -1,0 +1,183 @@
+---
+import AdSlot from './AdSlot.astro';
+import ArticleCard, { type Props as Card } from './ArticleCard.astro';
+import MiniList, { type Props as MiniListProps } from './MiniList.astro';
+import SectionTitle from './SectionTitle.astro';
+import UpdateList, { type Props as UpdateListProps } from './UpdateList.astro';
+import { site } from '../config/site';
+import { categories, categoryHref, categoryLinks } from '../data/categories';
+
+type Links = MiniListProps['items'];
+
+export interface Props {
+  benefits: Card[];
+  costs: Card[];
+  trending: Links;
+  byCategory: Record<string, Links>;
+  recent: Card[];
+  popular: Links;
+  updates: UpdateListProps['items'];
+  benefitLinks: Links;
+}
+
+const { benefits, costs, trending, byCategory, recent, popular, updates, benefitLinks } = Astro.props;
+---
+
+<div class="container page-grid">
+  <div class="page-main">
+    <section class="hero">
+      <h1>얼마 들고, 얼마 받을 수 있을까요?</h1>
+      <p>{site.tagline}</p>
+      <form class="search" action="/search/" method="get" role="search">
+        <label class="visually-hidden" for="home-q">검색어</label>
+        <input id="home-q" name="q" type="search" placeholder="예: 입주청소 비용, 근로장려금 신청" />
+        <button type="submit">검색</button>
+      </form>
+    </section>
+
+    {
+      benefits.length > 0 && (
+        <section>
+          <SectionTitle title="지금 신청 가능한 지원·혜택" href="/benefits/" />
+          <div class="card-grid">
+            {benefits.map((c) => (
+              <ArticleCard {...c} />
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    {
+      costs.length > 0 && (
+        <section>
+          <SectionTitle title="많이 찾는 비용" />
+          <div class="card-grid">
+            {costs.map((c) => (
+              <ArticleCard {...c} />
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    {trending.length > 0 && <MiniList title="최근 관심이 높은 돈 정보" items={trending} />}
+
+    {(costs.length > 0 || trending.length > 0) && <AdSlot id="home-1" />}
+
+    <section>
+      <SectionTitle title="카테고리별 정보" />
+      <div class="card-grid">
+        {
+          categories.map((c) => (
+            <section class="category-block">
+              <h3>
+                <a href={categoryHref(c)}>{c.name}</a>
+              </h3>
+              <p>{c.description}</p>
+              {(byCategory[c.slug] ?? []).length > 0 && (
+                <ul>
+                  {byCategory[c.slug]?.map((item) => (
+                    <li>
+                      <a href={item.href}>{item.title}</a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
+          ))
+        }
+      </div>
+    </section>
+
+    {
+      recent.length > 0 && (
+        <section>
+          <SectionTitle title="최근 글" />
+          <div class="card-list">
+            {recent.map((c) => (
+              <ArticleCard {...c} />
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+
+  <aside class="page-aside" aria-label="보조 정보">
+    {popular.length > 0 && <MiniList title="많이 찾는 정보" items={popular} numbered />}
+    {updates.length > 0 && <UpdateList title="최근 업데이트" items={updates} />}
+    {benefitLinks.length > 0 && <MiniList title="지원·혜택 바로가기" items={benefitLinks} />}
+    <MiniList class="desktop-only" title="카테고리" items={categoryLinks} />
+  </aside>
+</div>
+
+<style>
+  .hero {
+    display: grid;
+    gap: var(--space-3);
+    padding: var(--space-6) var(--space-5);
+    border-radius: var(--radius);
+    background: var(--color-accent-soft);
+  }
+
+  .hero h1 {
+    font-size: var(--text-2xl);
+    letter-spacing: -0.02em;
+  }
+
+  .hero p {
+    color: var(--color-text-muted);
+  }
+
+  .search {
+    display: flex;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+  }
+
+  .search input {
+    flex: 1;
+    min-width: 0;
+    min-height: var(--touch);
+    padding-inline: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    font: inherit;
+  }
+
+  .search button {
+    min-height: var(--touch);
+    padding-inline: var(--space-5);
+    border: 0;
+    border-radius: var(--radius);
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .category-block {
+    display: grid;
+    align-content: start;
+    gap: var(--space-2);
+  }
+
+  .category-block h3 {
+    font-size: var(--text-md);
+  }
+
+  .category-block p {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .category-block ul {
+    display: grid;
+    gap: var(--space-1);
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--color-border);
+    font-size: var(--text-sm);
+  }
+</style>

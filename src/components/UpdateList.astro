@@ -1,0 +1,59 @@
+---
+import SectionTitle from './SectionTitle.astro';
+
+export interface Props {
+  title: string;
+  items: { href: string; title: string; date: string }[];
+}
+
+const { title, items } = Astro.props;
+---
+
+<section>
+  <SectionTitle title={title} />
+  <ol class="timeline">
+    {
+      items.map((item) => (
+        <li>
+          <time datetime={item.date}>{item.date.replaceAll('-', '.')}</time>
+          <a href={item.href}>{item.title}</a>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .timeline {
+    border-left: 2px solid var(--color-border);
+  }
+
+  li {
+    position: relative;
+    display: grid;
+    gap: 2px;
+    padding: 0 0 var(--space-4) var(--space-4);
+    font-size: var(--text-sm);
+  }
+
+  li::before {
+    content: '';
+    position: absolute;
+    top: 0.45em;
+    left: -6px;
+    width: 10px;
+    height: 10px;
+    border: 2px solid var(--color-accent);
+    border-radius: 50%;
+    background: var(--color-bg);
+  }
+
+  time {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+  }
+
+  a {
+    font-weight: 600;
+  }
+</style>
