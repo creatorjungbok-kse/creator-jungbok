@@ -13,22 +13,20 @@ const { id } = Astro.props;
 {
   isShellPreview && (
     <div class="ad-slot" data-slot={id}>
-      <strong>광고 자리 · {id}</strong>
-      <span>{adSlots[id]}</span>
+      광고 자리 · {id} · {adSlots[id]}
     </div>
   )
 }
 
 <style>
+  /* 높이는 CLS 방지용 예약 공간. 값은 tokens.css·layout.css의 --ad-min-h */
   .ad-slot {
-    display: grid;
-    place-content: center;
-    gap: var(--space-1);
-    min-height: 250px;
+    min-height: var(--ad-min-h);
+    padding: var(--space-2) var(--space-3);
     border: 1px dashed var(--color-border);
     border-radius: var(--radius);
+    background: var(--color-surface);
     color: var(--color-text-muted);
     font-size: var(--text-xs);
-    text-align: center;
   }
 </style>

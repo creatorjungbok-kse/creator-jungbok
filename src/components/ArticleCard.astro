@@ -6,29 +6,82 @@ export interface Props {
   status?: 'open' | 'closing';
   excerpt?: string;
   meta?: string[];
+  // 썸네일은 대표·최근 콘텐츠에만 쓴다. 없으면 텍스트 카드로 표시된다.
+  image?: { src: string; alt: string };
+  imagePosition?: 'top' | 'side';
+  large?: boolean;
+  // 첫 화면의 대표 이미지(LCP 후보)만 true
+  priority?: boolean;
 }
 
-const { href, title, category, status, excerpt, meta = [] } = Astro.props;
+const {
+  href,
+  title,
+  category,
+  status,
+  excerpt,
+  meta = [],
+  image,
+  imagePosition = 'top',
+  large = false,
+  priority = false,
+} = Astro.props;
 const statusLabel = { open: '신청 중', closing: '마감 임박' } as const;
 ---
 
-<article class="card">
+<article class:list={['card', { 'card--side': image && imagePosition === 'side', 'card--large': large }]}>
   {
-    (status || category) && (
-      <p class="card__top">
-        {status && <span class={`badge badge--${status}`}>{statusLabel[status]}</span>}
-        {category && <span>{category}</span>}
-      </p>
+    image && (
+      <img
+        class="card__image"
+        src={image.src}
+        alt={image.alt}
+        loading={priority ? 'eager' : 'lazy'}
+        fetchpriority={priority ? 'high' : undefined}
+        decoding="async"
+      />
     )
   }
-  <h3 class="card__title"><a href={href}>{title}</a></h3>
-  {excerpt && <p class="card__excerpt">{excerpt}</p>}
-  {meta.length > 0 && <p class="card__meta">{meta.map((m) => <span>{m}</span>)}</p>}
+  <div class="card__body">
+    {
+      (status || category) && (
+        <p class="card__top">
+          {status && <span class={`badge badge--${status}`}>{statusLabel[status]}</span>}
+          {category && <span>{category}</span>}
+        </p>
+      )
+    }
+    <h3 class="card__title"><a href={href}>{title}</a></h3>
+    {excerpt && <p class="card__excerpt">{excerpt}</p>}
+    {meta.length > 0 && <p class="card__meta">{meta.map((m) => <span>{m}</span>)}</p>}
+  </div>
 </article>
 
 <style>
   .card {
     position: relative;
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+  }
+
+  .card--side {
+    grid-template-columns: clamp(96px, 30%, 200px) minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-4);
+  }
+
+  .card__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--radius);
+    background: var(--color-surface);
+  }
+
+  .card__body {
     display: grid;
     gap: var(--space-2);
   }
@@ -60,6 +113,11 @@ const statusLabel = { open: '신청 중', closing: '마감 임박' } as const;
   .card__title {
     font-size: var(--text-md);
     font-weight: 700;
+  }
+
+  .card--large .card__title {
+    font-size: var(--text-xl);
+    letter-spacing: -0.02em;
   }
 
   /* 카드 전체를 클릭 영역으로 */

@@ -10,6 +10,8 @@ import { categories, categoryHref, categoryLinks } from '../data/categories';
 type Links = MiniListProps['items'];
 
 export interface Props {
+  // 첫 항목은 큰 카드, 나머지 2개는 작은 카드
+  featured: Card[];
   benefits: Card[];
   costs: Card[];
   trending: Links;
@@ -20,7 +22,7 @@ export interface Props {
   benefitLinks: Links;
 }
 
-const { benefits, costs, trending, byCategory, recent, popular, updates, benefitLinks } = Astro.props;
+const { featured, benefits, costs, trending, byCategory, recent, popular, updates, benefitLinks } = Astro.props;
 ---
 
 <div class="container page-grid">
@@ -36,9 +38,22 @@ const { benefits, costs, trending, byCategory, recent, popular, updates, benefit
     </section>
 
     {
+      featured.length > 0 && (
+        <section aria-labelledby="featured-title">
+          <h2 id="featured-title" class="visually-hidden">대표 콘텐츠</h2>
+          <div class="featured-grid">
+            {featured.slice(0, 3).map((c, i) =>
+              i === 0 ? <ArticleCard {...c} large priority /> : <ArticleCard {...c} imagePosition="side" />
+            )}
+          </div>
+        </section>
+      )
+    }
+
+    {
       benefits.length > 0 && (
         <section>
-          <SectionTitle title="지금 신청 가능한 지원·혜택" href="/benefits/" />
+          <SectionTitle title="지금 신청 가능한 지원·혜택" href="/benefits/" tier="primary" />
           <div class="card-grid">
             {benefits.map((c) => (
               <ArticleCard {...c} />
@@ -51,7 +66,7 @@ const { benefits, costs, trending, byCategory, recent, popular, updates, benefit
     {
       costs.length > 0 && (
         <section>
-          <SectionTitle title="많이 찾는 비용" />
+          <SectionTitle title="많이 찾는 비용" tier="primary" />
           <div class="card-grid">
             {costs.map((c) => (
               <ArticleCard {...c} />
@@ -61,7 +76,7 @@ const { benefits, costs, trending, byCategory, recent, popular, updates, benefit
       )
     }
 
-    {trending.length > 0 && <MiniList title="최근 관심이 높은 돈 정보" items={trending} />}
+    {trending.length > 0 && <MiniList title="최근 관심이 높은 돈 정보" items={trending} tier="secondary" />}
 
     {(costs.length > 0 || trending.length > 0) && <AdSlot id="home-1" />}
 
@@ -93,10 +108,10 @@ const { benefits, costs, trending, byCategory, recent, popular, updates, benefit
     {
       recent.length > 0 && (
         <section>
-          <SectionTitle title="최근 글" />
+          <SectionTitle title="최근 글" tier="primary" />
           <div class="card-list">
             {recent.map((c) => (
-              <ArticleCard {...c} />
+              <ArticleCard {...c} imagePosition="side" />
             ))}
           </div>
         </section>
@@ -116,13 +131,13 @@ const { benefits, costs, trending, byCategory, recent, popular, updates, benefit
   .hero {
     display: grid;
     gap: var(--space-3);
-    padding: var(--space-6) var(--space-5);
+    padding: clamp(var(--space-5), 4vw, var(--space-6));
     border-radius: var(--radius);
     background: var(--color-accent-soft);
   }
 
   .hero h1 {
-    font-size: var(--text-2xl);
+    font-size: clamp(var(--text-xl), 3vw, var(--text-2xl));
     letter-spacing: -0.02em;
   }
 

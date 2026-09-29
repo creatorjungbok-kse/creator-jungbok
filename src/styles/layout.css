@@ -1,7 +1,7 @@
 /*
  * 페이지 레이아웃과 모든 breakpoint를 이 파일에서만 관리한다.
  *   tablet  >= 768px : 헤더 내비 펼침, 카드 2열
- *   desktop >= 1024px: Main + Right Sidebar 2단
+ *   desktop >= 1024px: Main + Right Sidebar 2단, 광고 예약 높이 축소
  */
 
 .container {
@@ -20,7 +20,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-content: start;
-  gap: var(--space-7);
+  gap: var(--space-6);
   min-width: 0;
 }
 
@@ -31,7 +31,7 @@
 }
 
 .card-grid > * {
-  padding: var(--space-4);
+  padding: var(--space-3) var(--space-4);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
 }
@@ -43,6 +43,12 @@
 
 .card-list > :first-child {
   padding-top: 0;
+}
+
+/* 홈 대표 콘텐츠: 모바일 1열, 태블릿 이상은 큰 카드 1 + 작은 카드 2 */
+.featured-grid {
+  display: grid;
+  gap: var(--space-5);
 }
 
 /* 헤더 내비: 모바일은 popover 메뉴, 태블릿 이상은 인라인 */
@@ -92,17 +98,35 @@
   .card-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .card-grid > * {
+    padding: var(--space-4);
+  }
+
+  .featured-grid {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    grid-template-rows: auto 1fr;
+    align-items: start;
+  }
+
+  .featured-grid > :first-child {
+    grid-row: span 2;
+  }
 }
 
 @media (min-width: 1024px) {
+  :root {
+    --ad-min-h: 200px;
+  }
+
   .page-grid {
     grid-template-columns: minmax(0, 1fr) var(--sidebar);
     gap: var(--gap-layout);
     padding-block: var(--space-6) var(--space-7);
   }
 
-  .page-aside {
-    gap: var(--space-6);
+  .page-main {
+    gap: var(--space-7);
   }
 
   .card-grid--3 {

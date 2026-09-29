@@ -10,7 +10,7 @@ const { title, items } = Astro.props;
 ---
 
 <section>
-  <SectionTitle title={title} />
+  <SectionTitle title={title} tier="utility" />
   <ol class="timeline">
     {
       items.map((item) => (

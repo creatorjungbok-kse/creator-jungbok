@@ -1,18 +1,19 @@
 ---
-import SectionTitle from './SectionTitle.astro';
+import SectionTitle, { type Props as SectionTitleProps } from './SectionTitle.astro';
 
 export interface Props {
   title: string;
+  tier?: SectionTitleProps['tier'];
   items: { href: string; title: string; meta?: string }[];
   numbered?: boolean;
   class?: string;
 }
 
-const { title, items, numbered = false, class: className } = Astro.props;
+const { title, tier = 'utility', items, numbered = false, class: className } = Astro.props;
 ---
 
 <section class={className}>
-  <SectionTitle title={title} />
+  <SectionTitle title={title} tier={tier} />
   <ol class:list={['mini-list', { numbered }]}>
     {
       items.map((item) => (
