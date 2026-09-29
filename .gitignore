@@ -1,4 +1,4 @@
-# 민감 정보 — 절대 GitHub에 올리면 안 됨
+# ── Secrets / credentials (never commit) ──
 .env
 .env.local
 .env.*.local
@@ -14,49 +14,36 @@ oauth-token*.json
 *-oauth.json
 *.bak
 
-# PowerShell 자동화 스크립트 — CEO 사유, 외부 공개 금지
-*.ps1
+# ── Local-only internal docs & AI assistant settings ──
+CLAUDE.md
+CLAUDE.local.md
+SESSION-STATE.md
+docs/
+.claude/
 
-# 시스템 파일
+# ── Local tooling / automation (not part of the published site) ──
+scripts/
+scripts/logs/
+scripts/archive/
+*.ps1
+*.bat
+*.automation.log
+
+# ── Work-in-progress & generated files (not published) ──
+drafts/
+en/drafts/
+outputs/
+deliverables/
+style-references/
+
+# ── System / editor / build ──
 .DS_Store
 Thumbs.db
 desktop.ini
-
-# 에디터
 .vscode/
 .idea/
-
-# 로그
 *.log
 logs/
-
-# 빌드/임시
 node_modules/
 __pycache__/
 *.pyc
-
-# 드래프트 — 승인 전까지 비공개
-drafts/
-en/drafts/
-
-# 자동화 로그
-scripts/logs/
-*.automation.log
-
-# 자동화 작업 파일 — 로컬 전용 (Blogger·Instagram·기타 outputs)
-outputs/
-
-# 학습 축적 데이터 — CEO 사유 데이터, 공개 금지
-scripts/archive/
-
-# 전략/자동화 로직 — CEO 사유, 외부 공개 금지
-docs/
-scripts/
-CLAUDE.md
-SESSION-STATE.md
-deliverables/
-*.bat
-style-references/
-
-# Claude Code 로컬 설정 — 머신별 권한 (외부 공개 X)
-.claude/
