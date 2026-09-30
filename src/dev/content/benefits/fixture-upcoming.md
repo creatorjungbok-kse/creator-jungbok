@@ -1,4 +1,6 @@
 ---
+# UI 검수용 예시(화면에 자연스러운 날짜·문구). 상태 계산 경계 검증은 tools/test-benefit-status.mjs가 맡는다.
+# 신청 예정 상태는 시작일(2027-03-02) 전까지만 유지된다. 그 뒤에는 날짜를 다음 해로 옮긴다.
 title: 예시 · 곧 시작하는 주거 지원
 subcategory: housing
 contentMode: timely
@@ -29,8 +31,8 @@ program:
     sourceId: gov24
   application:
     mode: period
-    start: 2099-01-01
-    end: 2099-12-31
+    start: 2027-03-02
+    end: 2027-03-31
     methods: [예시 · 온라인 신청, 예시 · 주민센터 방문]
     officialUrl: https://www.gov.kr/
   payoutSchedule: 예시 · 신청 후 약 한 달 안에 지급

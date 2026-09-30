@@ -13,7 +13,7 @@ const slug = '[a-z0-9]+(?:-[a-z0-9]+)*';
 const articlePath = new RegExp(`^(${categories.map((c) => c.slug).join('|')})/(${slug})\\.md$`);
 const benefitPath = new RegExp(`^(${slug})\\.md$`);
 
-// dev·test 화면 확인용 fixture는 src/dev/content/에만 두고 slug가 fixture-로 시작한다.
+// 화면 검수용 fixture는 src/dev/content/에만 두고 slug가 fixture-로 시작한다(상태 계산 검증은 tools/test-benefit-status.mjs).
 // 실제 콘텐츠는 이 접두를 쓸 수 없다. 화면 포함 여부는 lib/content.ts가 isShellPreview로 정한다.
 const FIXTURE_PREFIX = 'fixture-';
 

@@ -91,7 +91,7 @@ const audienceNames = item.kind === 'benefit' ? item.entry.data.audience.map((id
           <>
             <SummaryBox summary={data.summary} />
             {changeFacts && <FactList title="적용 시점" items={changeFacts} />}
-            {priceItems && priceItems.length > 0 && <PriceTable caption={`${data.title} · 가격 범위`} items={priceItems} researchedAt={data.researchedAt} />}
+            {priceItems && priceItems.length > 0 && <PriceTable caption="항목별 가격 범위" items={priceItems} researchedAt={data.researchedAt} />}
           </>
         )
       }

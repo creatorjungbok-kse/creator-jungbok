@@ -47,6 +47,21 @@ const Wrapper = variant === 'inline' ? 'details' : 'nav';
     cursor: pointer;
   }
 
+  /* 펼칠 수 있다는 표시(아래 화살표, 펼치면 위로). 상태 전달은 native details가 한다 */
+  summary::after {
+    content: '';
+    width: 0.5em;
+    height: 0.5em;
+    margin-left: auto;
+    border-right: 2px solid var(--color-text-muted);
+    border-bottom: 2px solid var(--color-text-muted);
+    transform: translateY(-25%) rotate(45deg);
+  }
+
+  .toc[open] summary::after {
+    transform: translateY(25%) rotate(-135deg);
+  }
+
   ol {
     display: grid;
     gap: var(--space-2);
