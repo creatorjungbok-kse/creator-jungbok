@@ -4,6 +4,11 @@
   box-sizing: border-box;
 }
 
+/* hidden 속성은 컴포넌트의 display 값보다 우선한다 */
+[hidden] {
+  display: none !important;
+}
+
 html {
   -webkit-text-size-adjust: 100%;
   scroll-padding-top: calc(var(--header-h) + var(--space-4));
@@ -114,6 +119,78 @@ main:focus {
   color: var(--color-accent);
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+/* 목록 페이지(대분류·허브) 머리말 */
+.page-head {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.page-head h1 {
+  font-size: var(--text-2xl);
+}
+
+.page-head p {
+  color: var(--color-text-muted);
+}
+
+/* 콘텐츠가 없을 때의 안내 */
+.empty {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+/* 접힘 요소(details)의 펼침 표시: 아래 화살표, 펼치면 위로. 상태 전달은 native details가 한다 */
+summary.disclosure::after {
+  content: '';
+  width: 0.5em;
+  height: 0.5em;
+  margin-left: auto;
+  border-right: 2px solid var(--color-text-muted);
+  border-bottom: 2px solid var(--color-text-muted);
+  transform: translateY(-25%) rotate(45deg);
+}
+
+details[open] > summary.disclosure::after {
+  transform: translateY(25%) rotate(-135deg);
+}
+
+/* 중분류 이동·상태 필터 칩 */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch);
+  padding-inline: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font: inherit;
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+.chip:hover,
+.chip[aria-pressed='true'] {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.chip[aria-pressed='true'] {
+  background: var(--color-accent-soft);
+  font-weight: 700;
 }
 
 /* 표는 좁은 화면에서 가로 스크롤(Markdown 본문 표는 astro.config.mjs의 tableScroll이 감싼다) */

@@ -12,6 +12,7 @@ author: operator
 ymyl: low
 topics: [small-business]
 related: [/living/fixture-guide/]
+pillar: /business/fixture-startup-guide/
 localSources:
   - id: local:vendor-a
     title: 예시 업체 가격표

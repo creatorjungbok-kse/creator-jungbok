@@ -1,0 +1,39 @@
+---
+// 목록용 카드: 지원사업은 BenefitCard(상태·기간), 일반 글은 ArticleCard(대분류·요약·날짜).
+import ArticleCard, { type Props as ArticleCardProps } from './ArticleCard.astro';
+import BenefitCard from './BenefitCard.astro';
+import { categories } from '../data/categories';
+import type { ContentItem } from '../lib/content';
+import { formatDate } from '../lib/format';
+
+export interface Props {
+  item: ContentItem;
+  // 일반 글 카드의 표시 옵션
+  large?: ArticleCardProps['large'];
+  // 대분류 페이지 안에서는 대분류 이름을 반복하지 않는다
+  showCategory?: boolean;
+}
+
+const { item, large, showCategory = true } = Astro.props;
+const { data } = item.entry;
+const category = categories.find((c) => c.slug === item.category)!;
+const meta =
+  item.kind === 'article' && item.entry.data.contentType === 'cost'
+    ? [`조사 기준 ${formatDate(data.researchedAt, 'month')}`, `업데이트 ${formatDate(data.dateModified)}`]
+    : [`업데이트 ${formatDate(data.dateModified)}`];
+---
+
+{
+  item.kind === 'benefit' ? (
+    <BenefitCard href={item.url} title={data.title} program={item.entry.data.program} audience={item.entry.data.audience} />
+  ) : (
+    <ArticleCard
+      href={item.url}
+      title={data.title}
+      category={showCategory ? category.name : undefined}
+      excerpt={data.summary}
+      meta={meta}
+      large={large}
+    />
+  )
+}

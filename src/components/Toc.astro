@@ -13,7 +13,7 @@ const Wrapper = variant === 'inline' ? 'details' : 'nav';
 {
   headings.length > 0 && (
     <Wrapper class={`toc toc--${variant}`} aria-label={variant === 'sidebar' ? '목차' : undefined}>
-      {variant === 'inline' ? <summary>목차</summary> : <p class="toc__title">목차</p>}
+      {variant === 'inline' ? <summary class="disclosure">목차</summary> : <p class="toc__title">목차</p>}
       <ol>
         {headings.map((h) => (
           <li class:list={{ toc__sub: h.depth === 3 }}>
@@ -45,21 +45,6 @@ const Wrapper = variant === 'inline' ? 'details' : 'nav';
     min-height: var(--touch);
     margin-block: calc(-1 * var(--space-3));
     cursor: pointer;
-  }
-
-  /* 펼칠 수 있다는 표시(아래 화살표, 펼치면 위로). 상태 전달은 native details가 한다 */
-  summary::after {
-    content: '';
-    width: 0.5em;
-    height: 0.5em;
-    margin-left: auto;
-    border-right: 2px solid var(--color-text-muted);
-    border-bottom: 2px solid var(--color-text-muted);
-    transform: translateY(-25%) rotate(45deg);
-  }
-
-  .toc[open] summary::after {
-    transform: translateY(25%) rotate(-135deg);
   }
 
   ol {

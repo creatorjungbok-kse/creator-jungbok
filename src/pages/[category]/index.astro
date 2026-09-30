@@ -1,11 +1,17 @@
 ---
+// 일반 대분류(business·living·digital). /benefits/는 src/pages/benefits/index.astro(허브)가 맡는다.
+// 구성(01 E): 설명 → 중분류 이동 → 대표(Pillar) → 최신 → 중분류별. 인기 데이터가 필요한 "많이 찾는 비용"은 두지 않는다.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import ContentCard from '../../components/ContentCard.astro';
 import MiniList from '../../components/MiniList.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
 import { categories, categoryLinks, type Category } from '../../data/categories';
+import { getAllContent } from '../../lib/content';
+import { latestModified, openBenefits, pillars } from '../../lib/select';
 
 export function getStaticPaths() {
-  return categories.map((category) => ({ params: { category: category.slug }, props: { category } }));
+  return categories.filter((c) => c.slug !== 'benefits').map((category) => ({ params: { category: category.slug }, props: { category } }));
 }
 
 interface Props {
@@ -13,6 +19,18 @@ interface Props {
 }
 
 const { category } = Astro.props;
+const all = await getAllContent();
+const items = all.filter((i) => i.category === category.slug);
+const featured = pillars(items, all).slice(0, 3);
+const latest = latestModified(items).slice(0, 6);
+const bySub = category.subcategories
+  .map((sub) => ({ sub, items: latestModified(items.filter((i) => i.entry.data.subcategory === sub.slug)).slice(0, 5) }))
+  .filter((s) => s.items.length > 0);
+// 이 대분류 글과 주제가 겹치는 신청 가능 지원(01 E "관련 지원·혜택 — 신청 가능 상태만")
+const topics = new Set(items.flatMap((i) => i.entry.data.topics));
+const relatedBenefits = openBenefits(all.filter((i) => i.entry.data.topics.some((t) => topics.has(t)))).slice(0, 5);
+const otherCategories = categoryLinks.filter((l) => l.href !== `/${category.slug}/`);
+const links = (list: typeof items) => list.map((i) => ({ href: i.url, title: i.entry.data.title }));
 ---
 
 <BaseLayout title={category.seoTitle} description={category.description}>
@@ -22,34 +40,70 @@ const { category } = Astro.props;
         <Breadcrumb items={[{ label: category.name }]} />
         <h1>{category.title}</h1>
         <p>{category.description}</p>
+        {
+          bySub.length > 0 && (
+            <nav class="chips" aria-label="중분류">
+              {bySub.map(({ sub }) => (
+                <a class="chip" href={`#sub-${sub.slug}`}>{sub.name}</a>
+              ))}
+            </nav>
+          )
+        }
       </header>
-      <p class="empty">이 카테고리의 정보를 준비하고 있습니다.</p>
+
+      {
+        items.length === 0 && (
+          <div class="empty">
+            <p>이 카테고리의 첫 정보를 준비하고 있습니다.</p>
+            <p>다룰 주제: {category.subcategories.map((s) => s.name).join(' · ')}</p>
+          </div>
+        )
+      }
+
+      {
+        featured.length > 0 && (
+          <section>
+            <SectionTitle title="대표 가이드" tier="primary" />
+            <div class="card-grid">
+              {featured.map((item) => (
+                <ContentCard item={item} showCategory={false} />
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      {
+        latest.length > 0 && (
+          <section>
+            <SectionTitle title="최근 업데이트" tier="primary" />
+            <div class="card-list">
+              {latest.map((item) => (
+                <ContentCard item={item} showCategory={false} />
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      {
+        bySub.map(({ sub, items }) => (
+          <section id={`sub-${sub.slug}`}>
+            <MiniList title={sub.name} tier="secondary" items={links(items)} />
+          </section>
+        ))
+      }
     </div>
+
     <aside class="page-aside" aria-label="보조 정보">
-      <MiniList title="카테고리" items={categoryLinks} />
+      {
+        relatedBenefits.length > 0 && (
+          <div data-open-list>
+            <MiniList title="신청 가능한 관련 지원" items={links(relatedBenefits)} />
+          </div>
+        )
+      }
+      <MiniList title="다른 카테고리" items={otherCategories} />
     </aside>
   </div>
 </BaseLayout>
-
-<style>
-  .page-head {
-    display: grid;
-    gap: var(--space-3);
-  }
-
-  .page-head h1 {
-    font-size: var(--text-2xl);
-  }
-
-  .page-head p,
-  .empty {
-    color: var(--color-text-muted);
-  }
-
-  .empty {
-    padding: var(--space-6);
-    border: 1px dashed var(--color-border);
-    border-radius: var(--radius);
-    text-align: center;
-  }
-</style>

@@ -1,0 +1,191 @@
+---
+// 지원·혜택 허브(01 E benefits 변형). 상태는 빌드 시점에 계산하고(lib/benefit-status), ?status= 필터는
+// 이 페이지 전용 작은 script가 브라우저에서 목록을 좁힐 뿐이다. canonical은 항상 /benefits/, 필터 링크(<a href>)는 만들지 않는다.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import ContentCard from '../../components/ContentCard.astro';
+import MiniList from '../../components/MiniList.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+import { categories, categoryLinks } from '../../data/categories';
+import { statusLabels } from '../../lib/benefit-status';
+import { getAllContent } from '../../lib/content';
+import { closedBenefits, latestModified, openBenefits, statusOf, upcomingBenefits } from '../../lib/select';
+
+const category = categories.find((c) => c.slug === 'benefits')!;
+const items = (await getAllContent()).filter((i) => i.category === 'benefits');
+const open = openBenefits(items);
+const upcoming = upcomingBenefits(items);
+const closed = closedBenefits(items);
+const guides = latestModified(items.filter((i) => i.kind === 'article'));
+const count = (s: string) => items.filter((i) => statusOf(i) === s).length;
+const filters = [
+  { value: '', label: '전체', n: open.length + upcoming.length + closed.length },
+  { value: 'open', label: '신청 가능', n: open.length },
+  { value: 'closing-soon', label: statusLabels['closing-soon'], n: count('closing-soon') },
+  { value: 'upcoming', label: statusLabels.upcoming, n: upcoming.length },
+  { value: 'closed', label: statusLabels.closed, n: closed.length },
+];
+---
+
+<BaseLayout title={category.seoTitle} description={category.description}>
+  <div class="container page-grid">
+    <div class="page-main">
+      <header class="page-head">
+        <Breadcrumb items={[{ label: category.name }]} />
+        <h1>{category.title}</h1>
+        <p>{category.description}</p>
+        {
+          filters[0].n > 0 && (
+            <div class="chips" role="group" aria-label="신청 상태로 보기" data-status-filter>
+              {filters.map((f) => (
+                <button class="chip" type="button" data-value={f.value} data-label={f.label} aria-pressed={f.value === '' ? 'true' : 'false'}>
+                  {f.label} {f.n}
+                </button>
+              ))}
+            </div>
+          )
+        }
+        <p class="visually-hidden" aria-live="polite" data-filter-note></p>
+      </header>
+
+      {
+        items.length === 0 && (
+          <div class="empty">
+            <p>현재 정리된 지원·혜택이 없습니다. 공식 공고를 확인한 지원부터 차례로 추가합니다.</p>
+            <p>다룰 주제: {category.subcategories.map((s) => s.name).join(' · ')}</p>
+          </div>
+        )
+      }
+
+      {
+        open.length > 0 && (
+          <section data-hub-section="open" data-open-list>
+            <SectionTitle title="지금 신청 가능한 지원" tier="primary" />
+            <div class="card-grid">
+              {open.map((item) => (
+                <ContentCard item={item} />
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      {
+        upcoming.length > 0 && (
+          <section data-hub-section="upcoming">
+            <SectionTitle title="곧 시작하는 지원" tier="primary" />
+            <div class="card-grid">
+              {upcoming.map((item) => (
+                <ContentCard item={item} />
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      {
+        guides.length > 0 && (
+          <section data-hub-section="guides">
+            <SectionTitle title="지원 가이드" />
+            <div class="card-list">
+              {guides.map((item) => (
+                <ContentCard item={item} showCategory={false} />
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      {
+        closed.length > 0 && (
+          <section id="closed" data-hub-section="closed">
+            <details class="closed">
+              <summary class="disclosure">종료된 지원 {closed.length}건 보기</summary>
+              <div class="card-grid">
+                {closed.map((item) => (
+                  <ContentCard item={item} />
+                ))}
+              </div>
+            </details>
+          </section>
+        )
+      }
+
+      <p class="empty" data-filter-empty hidden>선택한 상태의 지원이 없습니다.</p>
+    </div>
+
+    <aside class="page-aside" aria-label="보조 정보">
+      {closed.length > 0 && <MiniList title="지난 지원" items={[{ href: '#closed', title: `종료된 지원 ${closed.length}건`, meta: '신청이 끝난 지원사업' }]} />}
+      <MiniList title="다른 카테고리" items={categoryLinks.filter((l) => l.href !== '/benefits/')} />
+    </aside>
+  </div>
+</BaseLayout>
+
+<script>
+  // ?status= 필터: 빌드된 카드의 data-status로 보이기만 바꾼다. 주소는 replaceState로만 바꾸고 링크를 만들지 않는다.
+  const bar = document.querySelector<HTMLElement>('[data-status-filter]');
+  if (bar) {
+    const buttons = [...bar.querySelectorAll<HTMLButtonElement>('button')];
+    const sections = [...document.querySelectorAll<HTMLElement>('[data-hub-section]')];
+    const note = document.querySelector<HTMLElement>('[data-filter-note]')!;
+    const empty = document.querySelector<HTMLElement>('[data-filter-empty]')!;
+    const matches = (status: string | undefined, value: string) =>
+      !value || status === value || (value === 'open' && status === 'closing-soon');
+
+    const apply = (requested: string | null) => {
+      const value = buttons.some((b) => b.dataset.value === requested) ? requested! : '';
+      let shown = 0;
+      for (const section of sections) {
+        const cards = [...section.querySelectorAll<HTMLElement>('[data-status]')];
+        cards.forEach((card) => (card.hidden = !matches(card.dataset.status, value)));
+        const visible = cards.filter((card) => !card.hidden).length;
+        section.hidden = value !== '' && visible === 0;
+        if (value) shown += visible;
+      }
+      if (value === 'closed') openClosed();
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.value === value)));
+      empty.hidden = !value || shown > 0;
+      note.textContent = value ? `${buttons.find((b) => b.dataset.value === value)!.dataset.label} ${shown}건 표시` : '';
+      history.replaceState(null, '', (value ? `?status=${value}` : location.pathname) + location.hash);
+    };
+
+    // "종료된 지원" 경로(#closed)로 오면 접힌 목록을 연다
+    function openClosed() {
+      const details = document.querySelector<HTMLDetailsElement>('#closed details');
+      if (details) details.open = true;
+    }
+    addEventListener('hashchange', () => location.hash === '#closed' && openClosed());
+    if (location.hash === '#closed') openClosed();
+
+    bar.dataset.ready = '';
+    bar.addEventListener('click', (e) => {
+      const button = (e.target as HTMLElement).closest('button');
+      if (button) apply(button.dataset.value!);
+    });
+    apply(new URLSearchParams(location.search).get('status'));
+  }
+</script>
+
+<style>
+  /* 필터는 script가 준비된 뒤에만 보인다. 자리는 미리 잡아 두어 레이아웃이 밀리지 않게 한다 */
+  [data-status-filter]:not([data-ready]) {
+    visibility: hidden;
+  }
+
+  .closed summary {
+    display: flex;
+    align-items: center;
+    min-height: var(--touch);
+    padding-inline: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .closed[open] summary {
+    margin-bottom: var(--space-4);
+  }
+
+</style>

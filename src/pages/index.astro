@@ -1,22 +1,25 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HomeView from '../components/HomeView.astro';
+import { categories } from '../data/categories';
 import { getAllContent } from '../lib/content';
+import { latestModified, latestPublished, openBenefits, pillars, recentCosts, recentlyUpdated, statusOf, timely } from '../lib/select';
 
-// 홈은 모든 빌드에서 생성되므로 여기서 전체 콘텐츠 교차 검증을 실행한다(P6에서 홈 데이터로 사용).
-await getAllContent();
+// 섹션별 개수(01 D). 선택 규칙은 lib/select.ts
+// 홈에는 신청 종료된 지원을 올리지 않는다(종료 지원은 /benefits/의 종료 목록에서 찾는다).
+const all = await getAllContent();
+const listed = all.filter((i) => statusOf(i) !== 'closed');
 ---
 
 <BaseLayout>
   <HomeView
-    featured={[]}
-    benefits={[]}
-    costs={[]}
-    trending={[]}
-    byCategory={{}}
-    recent={[]}
-    popular={[]}
-    updates={[]}
-    benefitLinks={[]}
+    featured={pillars(listed, all).slice(0, 3)}
+    benefits={openBenefits(listed).slice(0, 4)}
+    costs={recentCosts(listed).slice(0, 8)}
+    timely={timely(listed).slice(0, 5)}
+    byCategory={Object.fromEntries(categories.map((c) => [c.slug, latestModified(listed.filter((i) => i.category === c.slug)).slice(0, 3)]))}
+    recent={latestPublished(listed).slice(0, 5)}
+    updates={recentlyUpdated(listed).slice(0, 5)}
+    isEmpty={all.length === 0}
   />
 </BaseLayout>

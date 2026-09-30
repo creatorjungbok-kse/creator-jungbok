@@ -9,7 +9,7 @@ export type SiteEnv = 'development' | 'preview' | 'production';
 export const siteEnv: SiteEnv = import.meta.env.DEV ? 'development' : (SITE_ENV ?? 'preview');
 export const isProduction = siteEnv === 'production';
 
-// dev 전용 셸 미리보기(미리보기 페이지·광고 자리 표시)
+// 화면 검수용 fixture 콘텐츠와 광고 자리 표시를 켠다(dev 서버, 또는 SHELL_PREVIEW=true 빌드)
 export const isShellPreview = import.meta.env.DEV || SHELL_PREVIEW;
 
 if (isProduction && isShellPreview) {

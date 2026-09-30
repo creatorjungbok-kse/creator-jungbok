@@ -1,28 +1,30 @@
 ---
+// 홈 화면. 섹션별 목록 선택은 src/pages/index.astro(lib/select.ts 규칙)에서 하고, 여기서는 표시만 한다.
+// 항목이 없는 섹션은 숨긴다(01 D). 콘텐츠가 하나도 없으면 준비 중 안내를 보여 준다.
 import AdSlot from './AdSlot.astro';
-import ArticleCard, { type Props as Card } from './ArticleCard.astro';
-import MiniList, { type Props as MiniListProps } from './MiniList.astro';
+import ContentCard from './ContentCard.astro';
+import MiniList from './MiniList.astro';
 import SectionTitle from './SectionTitle.astro';
-import UpdateList, { type Props as UpdateListProps } from './UpdateList.astro';
+import UpdateList from './UpdateList.astro';
 import { site } from '../config/site';
 import { categories, categoryHref, categoryLinks } from '../data/categories';
-
-type Links = MiniListProps['items'];
+import type { ContentItem } from '../lib/content';
 
 export interface Props {
   // 첫 항목은 큰 카드, 나머지 2개는 작은 카드
-  featured: Card[];
-  benefits: Card[];
-  costs: Card[];
-  trending: Links;
-  byCategory: Record<string, Links>;
-  recent: Card[];
-  popular: Links;
-  updates: UpdateListProps['items'];
-  benefitLinks: Links;
+  featured: ContentItem[];
+  benefits: ContentItem[];
+  costs: ContentItem[];
+  timely: ContentItem[];
+  byCategory: Record<string, ContentItem[]>;
+  recent: ContentItem[];
+  updates: ContentItem[];
+  isEmpty: boolean;
 }
 
-const { featured, benefits, costs, trending, byCategory, recent, popular, updates, benefitLinks } = Astro.props;
+const { featured, benefits, costs, timely, byCategory, recent, updates, isEmpty } = Astro.props;
+const links = (items: ContentItem[]) => items.map((i) => ({ href: i.url, title: i.entry.data.title }));
+const isoDate = (d: Date) => d.toISOString().slice(0, 10);
 ---
 
 <div class="container page-grid">
@@ -37,14 +39,14 @@ const { featured, benefits, costs, trending, byCategory, recent, popular, update
       </form>
     </section>
 
+    {isEmpty && <p class="empty">첫 정보를 준비하고 있습니다. 아래 카테고리에서 다룰 주제를 확인해 보세요.</p>}
+
     {
       featured.length > 0 && (
         <section aria-labelledby="featured-title">
           <h2 id="featured-title" class="visually-hidden">대표 콘텐츠</h2>
           <div class="featured-grid">
-            {featured.slice(0, 3).map((c, i) =>
-              i === 0 ? <ArticleCard {...c} large priority /> : <ArticleCard {...c} imagePosition="side" />
-            )}
+            {featured.map((item, i) => <ContentCard item={item} large={i === 0} />)}
           </div>
         </section>
       )
@@ -52,11 +54,11 @@ const { featured, benefits, costs, trending, byCategory, recent, popular, update
 
     {
       benefits.length > 0 && (
-        <section>
+        <section data-open-list>
           <SectionTitle title="지금 신청 가능한 지원·혜택" href="/benefits/" tier="primary" />
           <div class="card-grid">
-            {benefits.map((c) => (
-              <ArticleCard {...c} />
+            {benefits.map((item) => (
+              <ContentCard item={item} />
             ))}
           </div>
         </section>
@@ -66,19 +68,19 @@ const { featured, benefits, costs, trending, byCategory, recent, popular, update
     {
       costs.length > 0 && (
         <section>
-          <SectionTitle title="많이 찾는 비용" tier="primary" />
+          <SectionTitle title="최근 조사한 비용" tier="primary" />
           <div class="card-grid">
-            {costs.map((c) => (
-              <ArticleCard {...c} />
+            {costs.map((item) => (
+              <ContentCard item={item} />
             ))}
           </div>
         </section>
       )
     }
 
-    {trending.length > 0 && <MiniList title="최근 관심이 높은 돈 정보" items={trending} tier="secondary" />}
+    {timely.length > 0 && <MiniList title="최근 관심이 높은 돈 정보" items={links(timely)} tier="secondary" />}
 
-    {(costs.length > 0 || trending.length > 0) && <AdSlot id="home-1" />}
+    {(costs.length > 0 || timely.length > 0) && <AdSlot id="home-1" />}
 
     <section>
       <SectionTitle title="카테고리별 정보" />
@@ -94,7 +96,7 @@ const { featured, benefits, costs, trending, byCategory, recent, popular, update
                 <ul>
                   {byCategory[c.slug]?.map((item) => (
                     <li>
-                      <a href={item.href}>{item.title}</a>
+                      <a href={item.url}>{item.entry.data.title}</a>
                     </li>
                   ))}
                 </ul>
@@ -110,8 +112,8 @@ const { featured, benefits, costs, trending, byCategory, recent, popular, update
         <section>
           <SectionTitle title="최근 글" tier="primary" />
           <div class="card-list">
-            {recent.map((c) => (
-              <ArticleCard {...c} imagePosition="side" />
+            {recent.map((item) => (
+              <ContentCard item={item} />
             ))}
           </div>
         </section>
@@ -120,9 +122,14 @@ const { featured, benefits, costs, trending, byCategory, recent, popular, update
   </div>
 
   <aside class="page-aside" aria-label="보조 정보">
-    {popular.length > 0 && <MiniList title="많이 찾는 정보" items={popular} numbered />}
-    {updates.length > 0 && <UpdateList title="최근 업데이트" items={updates} />}
-    {benefitLinks.length > 0 && <MiniList title="지원·혜택 바로가기" items={benefitLinks} />}
+    {updates.length > 0 && <UpdateList title="최근 업데이트" items={updates.map((i) => ({ href: i.url, title: i.entry.data.title, date: isoDate(i.entry.data.dateModified) }))} />}
+    {
+      benefits.length > 0 && (
+        <div class="desktop-only" data-open-list>
+          <MiniList title="지원·혜택 바로가기" items={links(benefits)} />
+        </div>
+      )
+    }
     <MiniList class="desktop-only" title="카테고리" items={categoryLinks} />
   </aside>
 </div>
