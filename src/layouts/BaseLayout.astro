@@ -45,7 +45,7 @@ const canonicalUrl = canonical ? absoluteUrl(Astro.url.pathname) : undefined;
           <meta property="og:title" content={fullTitle} />
           <meta property="og:description" content={description} />
           <meta property="og:url" content={canonicalUrl} />
-          {/* og:image·twitter large 카드는 실제 대표 이미지(P9 브랜드 기본 이미지 또는 P12 콘텐츠 이미지)가 생기면 연결한다 */}
+          {/* og:image·twitter large 카드는 실제 대표 이미지가 생기면 연결한다 */}
           <meta name="twitter:card" content="summary" />
         </>
       )
@@ -54,8 +54,8 @@ const canonicalUrl = canonical ? absoluteUrl(Astro.url.pathname) : undefined;
     <meta name="google-site-verification" content={site.verification.google} />
     <meta name="naver-site-verification" content={site.verification.naver} />
     <meta name="google-adsense-account" content={site.adsenseClient} />
-    <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     {

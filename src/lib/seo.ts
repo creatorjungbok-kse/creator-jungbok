@@ -2,6 +2,7 @@
 // 브랜드명·설명은 config/site.ts에서만 읽는다(P9 브랜드 확정 때 한 곳만 바꾼다).
 import { site } from '../config/site';
 import { categories, categoryHref } from '../data/categories';
+import { infoPages } from '../data/pages';
 import { people } from '../data/people';
 import { getAllContent, type ContentItem } from './content';
 
@@ -38,6 +39,7 @@ export const collectionJsonLd = (name: string, description: string, path: string
 // benefit·change 포함 모든 글은 Article(04 13장). author url은 작성자 소개 페이지(P9)가 생기면 연결한다
 export function articleJsonLd(item: ContentItem) {
   const { data } = item.entry;
+  const author = people.find((p) => p.id === data.author)!;
   return {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -45,7 +47,8 @@ export function articleJsonLd(item: ContentItem) {
     description: data.description ?? data.summary,
     datePublished: isoKst(data.datePublished),
     dateModified: isoKst(data.dateModified),
-    author: { '@type': 'Person', name: people.find((p) => p.id === data.author)!.name },
+    // 사이트 이름으로 쓰는 글은 Organization, 실제 사람이면 Person
+    author: author.isSite ? organization() : { '@type': 'Person', name: author.name },
     publisher: organization(),
     mainEntityOfPage: absoluteUrl(item.url),
     inLanguage: site.lang,
@@ -59,7 +62,7 @@ interface SitemapEntry {
 }
 
 async function sitemapEntries(): Promise<SitemapEntry[]> {
-  const pages = ['/', ...categories.map(categoryHref)].map((url) => ({ url }));
+  const pages = ['/', ...categories.map(categoryHref), ...infoPages.filter((p) => p.inSitemap).map((p) => p.href)].map((url) => ({ url }));
   const content = (await getAllContent()).map((i) => ({ url: i.url, lastmod: ymd(i.entry.data.dateModified) }));
   return [...pages, ...content];
 }

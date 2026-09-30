@@ -1,6 +1,7 @@
 ---
 import { site } from '../config/site';
 import { categoryLinks } from '../data/categories';
+import { infoPages } from '../data/pages';
 
 const year = new Date().getFullYear();
 ---
@@ -14,6 +15,11 @@ const year = new Date().getFullYear();
     <nav aria-label="하단 카테고리">
       <ul class="site-footer__links">
         {categoryLinks.map((l) => <li><a href={l.href}>{l.title}</a></li>)}
+      </ul>
+    </nav>
+    <nav aria-label="사이트 정보">
+      <ul class="site-footer__links site-footer__links--info">
+        {infoPages.map((p) => <li><a href={p.href}>{p.label}</a></li>)}
       </ul>
     </nav>
     <p class="site-footer__note">
@@ -54,6 +60,11 @@ const year = new Date().getFullYear();
     align-items: center;
     min-height: var(--touch);
     color: var(--color-text);
+  }
+
+  .site-footer__links--info a {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
   }
 
   .site-footer__note,

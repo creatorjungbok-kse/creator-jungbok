@@ -171,6 +171,11 @@ for (const file of htmlFiles) {
   rows.push({ page: path, noindex, ga, h1, jsonLd: types.join('+') || '-', title: [...title].length, desc: [...description].length });
 }
 
+// 개인정보 보호책임자 실명: 사용자가 전달하기 전에는 비워 두므로 Warning으로 알린다(05 5-E)
+if (pages.has('/privacy/') && !read(join(dist, 'privacy/index.html')).includes('data-privacy-officer-name')) {
+  warnings.push('privacy/index.html: 개인정보 보호책임자 이름 미입력(config/site.ts privacyOfficerName)');
+}
+
 // ── sitemap(04 8장) ──────────────────────────────────
 const locs = (xml, tag) => [...xml.matchAll(new RegExp(`<${tag}>\\s*<loc>([^<]+)</loc>(?:<lastmod>([^<]+)</lastmod>)?`, 'g'))].map((m) => ({ loc: m[1], lastmod: m[2] }));
 const sitemapIndex = existsSync(join(dist, 'sitemap.xml')) ? read(join(dist, 'sitemap.xml')) : '';
