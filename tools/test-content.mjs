@@ -59,6 +59,7 @@ author: operator
 ymyl: low
 topics: [small-business]
 related: [/business/test-card-terminal/]
+sourceIds: [nts]
 ---
 본문
 `;
@@ -76,6 +77,7 @@ researchedAt: 2026-09-01
 author: operator
 ymyl: medium
 topics: [housing]
+sourceIds: [gov24]
 ---
 본문
 `;
@@ -142,6 +144,7 @@ const cases = [
   ['fixture-prefix-in-real-content', add('articles/living/fixture-moving.md', guide.replace('테스트 창업 초기 비용', '테스트 이사')), 'fixture 전용'],
   ['frontmatter-slug', edit(C, 'contentMode: evergreen', 'contentMode: evergreen\nslug: other'), 'slug'],
   ['missing-source', edit(C, 'sourceIds: [local:vendor-a]', 'sourceIds: [local:missing]'), '존재하지 않는 출처 local:missing'],
+  ['article-without-source', edit('articles/business/test-startup-guide.md', 'sourceIds: [nts]\n', ''), '출처가 1개 이상 필요하다'],
   ['price-without-source', edit(C, '    sourceIds: [local:vendor-a]\n', ''), '가격 숫자에는 출처가 필요하다'],
   ['confidence-mismatch', edit(C, 'confidence: L2', 'confidence: L3'), 'L3는 서로 다른 S2 출처 3개 이상'],
   ['date-order', edit(C, 'dateModified: 2026-09-20', 'dateModified: 2026-08-01'), 'dateModified < datePublished'],

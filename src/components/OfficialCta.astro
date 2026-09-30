@@ -1,11 +1,15 @@
 ---
 // 공식 사이트로 가는 버튼. 광고와 혼동되지 않는 고유 디자인, vignette 차단, 광고 금지 영역.
+import { ctaLabels, type BenefitStatus } from '../lib/benefit-status';
+
 export interface Props {
   href: string;
-  label?: string;
+  // 문구는 상태별 표(lib/benefit-status.ts ctaLabels)에서 정한다
+  status: BenefitStatus;
 }
 
-const { href, label = '공식 신청 페이지 보기' } = Astro.props;
+const { href, status } = Astro.props;
+const label = ctaLabels[status];
 const domain = new URL(href).hostname;
 ---
 

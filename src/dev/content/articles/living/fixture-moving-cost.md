@@ -11,6 +11,14 @@ researchedAt: 2026-09-12
 author: operator
 ymyl: low
 topics: [moving]
+localSources:
+  - id: local:moving-quote
+    title: 예시 이사 업체 견적 안내
+    publisher: 예시 업체
+    url: https://example.com/quote
+    level: S2
+    checkedAt: 2026-09-12
+sourceIds: [local:moving-quote]
 pillar: /living/fixture-guide/
 priceItems:
   - label: 원룸 포장이사

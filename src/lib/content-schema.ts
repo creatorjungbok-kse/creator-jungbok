@@ -153,6 +153,8 @@ function checkEntry(d: Base & Omit<Refs, 'priceItems'> & { priceItems?: z.infer<
   }
 
   const refs = sourceRefs(d);
+  // 모든 글은 출처를 1개 이상 인용한다(editorial-policy: 참고한 출처를 글 아래에 함께 적는다)
+  if (refs.length === 0) ctx.addIssue({ code: 'custom', path: ['sourceIds'], message: '출처가 1개 이상 필요하다(sourceIds 등)' });
   const resolve = sourceResolver(d);
   const used = new Set(refs.map((r) => r.id));
   const seen = new Set<string>();

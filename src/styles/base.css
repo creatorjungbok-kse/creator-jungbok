@@ -248,11 +248,18 @@ details[open] > summary.disclosure::after {
   font-weight: 700;
 }
 
-/* 표는 좁은 화면에서 가로 스크롤(Markdown 본문 표는 astro.config.mjs의 tableScroll이 감싼다) */
+/* 표는 좁은 화면에서 가로 스크롤(Markdown 본문 표는 astro.config.mjs의 tableScroll이 감싼다).
+   더 볼 내용이 있는 쪽 가장자리에만 옅은 그림자를 보여 옆으로 밀 수 있음을 알린다(CSS만, 넘치지 않으면 보이지 않음) */
 .table-scroll {
   overflow-x: auto;
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
+  background:
+    linear-gradient(to right, var(--color-bg) 30%, transparent) left / 32px 100% no-repeat local,
+    linear-gradient(to left, var(--color-bg) 30%, transparent) right / 32px 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, rgb(0 0 0 / 0.16), transparent) left / 12px 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, rgb(0 0 0 / 0.16), transparent) right / 12px 100% no-repeat scroll;
+  background-color: var(--color-bg);
 }
 
 table {

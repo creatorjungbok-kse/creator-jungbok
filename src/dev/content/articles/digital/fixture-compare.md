@@ -11,6 +11,14 @@ researchedAt: 2026-09-10
 author: operator
 ymyl: low
 topics: [telecom]
+localSources:
+  - id: local:carrier-a
+    title: 예시 통신사 요금표
+    publisher: 예시 통신사
+    url: https://example.com/plans
+    level: S2
+    checkedAt: 2026-09-10
+sourceIds: [local:carrier-a]
 ---
 
 예시 문단입니다. 비교 글은 기준을 먼저 밝히고 표로 차이를 보여 줍니다.

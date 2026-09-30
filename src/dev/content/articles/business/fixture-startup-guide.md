@@ -11,6 +11,7 @@ researchedAt: 2026-08-20
 author: operator
 ymyl: low
 topics: [small-business]
+sourceIds: [nts]
 ---
 
 예시 문단입니다. Pillar 가이드는 가장 넓은 질문에 답하고 세부 글로 연결합니다.

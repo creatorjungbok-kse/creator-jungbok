@@ -19,7 +19,8 @@ import { audiences } from '../data/audiences';
 import { categories, categoryHref } from '../data/categories';
 import { people } from '../data/people';
 import type { ContentItem } from '../lib/content';
-import { contentAdSlots, splitAtMiddleH2 } from '../lib/ads';
+import { contentAdSlots, splitBody, topCut } from '../lib/ads';
+import { statusOf } from '../lib/select';
 import { applicationPeriod, formatDate } from '../lib/format';
 import { articleJsonLd } from '../lib/seo';
 import { citedSources } from '../lib/sources';
@@ -68,12 +69,20 @@ const priceItems = item.kind === 'article' ? item.entry.data.priceItems : undefi
 const audienceNames = item.kind === 'benefit' ? item.entry.data.audience.map((id) => audiences.find((a) => a.id === id)!.name) : [];
 
 // 광고 슬롯(03 4~6장). 광고가 꺼져 있으면 contentAdSlots가 빈 집합이라 아래 자리는 모두 출력되지 않는다.
-const adSlots = contentAdSlots(item, headings.filter((h) => h.depth === 2).length);
+const sections = headings.filter((h) => h.depth === 2).length;
+const adSlots = contentAdSlots(item, sections);
 const isArticle = item.kind === 'article';
-// article-top: 요약 박스 바로 아래는 금지 → 핵심 비용표·적용 시점 블록이 있을 때 그 뒤에만
-const topAd = isArticle && adSlots.has('top') && (!!changeFacts || !!priceItems?.length);
-// article-mid: 본문을 가운데 H2 앞에서 나눠 그 사이에
-const [bodyTop, bodyRest] = isArticle && adSlots.has('mid') ? splitAtMiddleH2(await Astro.slots.render('default')) : ['', ''];
+// 본문 안 자리(광고가 꺼져 있으면 본문을 나누지 않는다):
+// - article-mid: 가운데 H2 앞(3번째 H2 이후)
+// - article-top: 첫 번째 본문 섹션 이후 중 모바일 첫 화면 밖이 되는 첫 H2 앞, mid와는 섹션 2개 이상 간격. 요약·목차와 붙지 않는다
+const bodyHtml = isArticle && (adSlots.has('top') || adSlots.has('mid')) ? await Astro.slots.render('default') : undefined;
+const midAt = Math.max(Math.floor(sections / 2), 3);
+const topAt = bodyHtml && adSlots.has('top') ? topCut(bodyHtml, priceItems?.length ? priceItems.length * 48 + 100 : 0, adSlots.has('mid') ? midAt - 1 : sections) : undefined;
+const bodyCuts = [
+  ...(topAt ? [{ h2: topAt, id: 'article-top' as const }] : []),
+  ...(adSlots.has('mid') ? [{ h2: midAt, id: 'article-mid' as const }] : []),
+];
+const bodyParts = bodyHtml && bodyCuts.length ? splitBody(bodyHtml, bodyCuts) : undefined;
 // 본문 뒤·FAQ 앞(article-lower / benefit-mid: 공식 신청 버튼과 본문 전체만큼 떨어진 자리).
 // FAQ 없이 바로 관련 글 카드가 오면 카드 바로 옆이 되므로 생략한다
 const afterBodyAd: AdSlotId = isArticle ? 'article-lower' : 'benefit-mid';
@@ -100,7 +109,7 @@ const showAfterBodyAd = adSlots.has(isArticle ? 'lower' : 'mid') && (!!data.faq?
           <>
             <StatusBanner program={program} />
             <SummaryBox title="핵심 요약" summary={data.summary} />
-            <OfficialCta href={program.application.officialUrl} />
+            <OfficialCta href={program.application.officialUrl} status={statusOf(item)!} />
             <FactList title="지원 정보" items={programFacts!} />
           </>
         ) : (
@@ -112,15 +121,15 @@ const showAfterBodyAd = adSlots.has(isArticle ? 'lower' : 'mid') && (!!data.faq?
         )
       }
 
-      {topAd && <AdSlot id="article-top" />}
       <Toc headings={toc} variant="inline" />
       {
-        bodyRest ? (
-          <>
-            <div class="prose" set:html={bodyTop} />
-            <AdSlot id="article-mid" />
-            <div class="prose" set:html={bodyRest} />
-          </>
+        bodyParts ? (
+          bodyParts.map((part) => (
+            <>
+              {part.adBefore && <AdSlot id={part.adBefore} />}
+              <div class="prose" set:html={part.html} />
+            </>
+          ))
         ) : (
           <div class="prose">
             <slot />

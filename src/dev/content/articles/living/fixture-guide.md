@@ -11,6 +11,14 @@ researchedAt: 2026-09-05
 author: operator
 ymyl: low
 topics: [moving, small-business]
+localSources:
+  - id: local:moving-guide
+    title: 예시 이사 업체 안내
+    publisher: 예시 업체
+    url: https://example.com/moving
+    level: S2
+    checkedAt: 2026-09-05
+sourceIds: [local:moving-guide]
 ---
 
 예시 문단입니다. 가이드 글은 순서대로 따라 할 수 있게 씁니다.
