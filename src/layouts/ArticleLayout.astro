@@ -1,6 +1,7 @@
 ---
 // 글 상세 화면(cost·compare·guide·change·benefit 공통 틀). 유형별 차이는 상단 블록에서만 난다.
 import BaseLayout from './BaseLayout.astro';
+import AdSlot from '../components/AdSlot.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import BenefitCard from '../components/BenefitCard.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
@@ -13,10 +14,12 @@ import SourceList from '../components/SourceList.astro';
 import StatusBanner from '../components/StatusBanner.astro';
 import SummaryBox from '../components/SummaryBox.astro';
 import Toc, { type Props as TocProps } from '../components/Toc.astro';
+import type { AdSlotId } from '../config/ads';
 import { audiences } from '../data/audiences';
 import { categories, categoryHref } from '../data/categories';
 import { people } from '../data/people';
 import type { ContentItem } from '../lib/content';
+import { contentAdSlots, splitAtMiddleH2 } from '../lib/ads';
 import { applicationPeriod, formatDate } from '../lib/format';
 import { articleJsonLd } from '../lib/seo';
 import { citedSources } from '../lib/sources';
@@ -63,6 +66,18 @@ const changeFacts = change && [
 ];
 const priceItems = item.kind === 'article' ? item.entry.data.priceItems : undefined;
 const audienceNames = item.kind === 'benefit' ? item.entry.data.audience.map((id) => audiences.find((a) => a.id === id)!.name) : [];
+
+// 광고 슬롯(03 4~6장). 광고가 꺼져 있으면 contentAdSlots가 빈 집합이라 아래 자리는 모두 출력되지 않는다.
+const adSlots = contentAdSlots(item, headings.filter((h) => h.depth === 2).length);
+const isArticle = item.kind === 'article';
+// article-top: 요약 박스 바로 아래는 금지 → 핵심 비용표·적용 시점 블록이 있을 때 그 뒤에만
+const topAd = isArticle && adSlots.has('top') && (!!changeFacts || !!priceItems?.length);
+// article-mid: 본문을 가운데 H2 앞에서 나눠 그 사이에
+const [bodyTop, bodyRest] = isArticle && adSlots.has('mid') ? splitAtMiddleH2(await Astro.slots.render('default')) : ['', ''];
+// 본문 뒤·FAQ 앞(article-lower / benefit-mid: 공식 신청 버튼과 본문 전체만큼 떨어진 자리).
+// FAQ 없이 바로 관련 글 카드가 오면 카드 바로 옆이 되므로 생략한다
+const afterBodyAd: AdSlotId = isArticle ? 'article-lower' : 'benefit-mid';
+const showAfterBodyAd = adSlots.has(isArticle ? 'lower' : 'mid') && (!!data.faq?.length || related.length === 0);
 ---
 
 <BaseLayout title={data.title} description={data.description ?? data.summary} ogType="article" jsonLd={[articleJsonLd(item)]}>
@@ -97,10 +112,22 @@ const audienceNames = item.kind === 'benefit' ? item.entry.data.audience.map((id
         )
       }
 
+      {topAd && <AdSlot id="article-top" />}
       <Toc headings={toc} variant="inline" />
-      <div class="prose">
-        <slot />
-      </div>
+      {
+        bodyRest ? (
+          <>
+            <div class="prose" set:html={bodyTop} />
+            <AdSlot id="article-mid" />
+            <div class="prose" set:html={bodyRest} />
+          </>
+        ) : (
+          <div class="prose">
+            <slot />
+          </div>
+        )
+      }
+      {showAfterBodyAd && <AdSlot id={afterBodyAd} />}
 
       {
         data.faq && data.faq.length > 0 && (
@@ -118,7 +145,7 @@ const audienceNames = item.kind === 'benefit' ? item.entry.data.audience.map((id
 
       {
         related.length > 0 && (
-          <section>
+          <section data-ad-protected="related">
             <SectionTitle title="함께 보면 좋은 정보" />
             <div class="card-grid card-grid--3">
               {related.slice(0, 3).map((r) =>

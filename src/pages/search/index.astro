@@ -1,6 +1,7 @@
 ---
 // 통합 검색(01 G, 05 8장). 빌드 시점 인덱스(/search-index.json)를 이 페이지 전용 script가 브라우저에서 검색한다.
 // noindex, canonical /search/. ?q= 등으로 가는 링크(<a href>)는 어디에도 만들지 않는다(크롤 트랩 방지, 04 20장).
+// 검색어는 주소에 남기지 않는다(방문 통계가 페이지 주소·이전 페이지 주소로 검색어를 받지 않게). 값은 이 기록 항목의 history.state에만 둔다.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import MiniList from '../../components/MiniList.astro';
@@ -77,8 +78,14 @@ import { categories, categoryLinks } from '../../data/categories';
   const reset = $<HTMLButtonElement>('[data-reset-category]');
   const template = $<HTMLTemplateElement>('[data-result-template]');
 
+  // 방문 통계 함수는 production에서만 있다(BaseLayout). 검색어·그 변형·일부는 보내지 않는다.
+  const gtag = (window as Window & { gtag?: (...args: unknown[]) => void }).gtag;
+
+  // 처음 들어온 주소의 ?q=(홈 검색창·링크)는 한 번만 읽는다. production에서는 BaseLayout이 GA보다 먼저 history.state로 옮겨 둔다.
   const params = new URLSearchParams(location.search);
-  input.value = params.get('q') ?? '';
+  input.value = params.get('q') ?? history.state?.q ?? '';
+  // 이 기록 항목을 처음 표시하는지(history.state.shown 없음). 새로고침·뒤로 가기로 돌아온 같은 검색은 다시 세지 않는다
+  const firstVisit = !history.state?.shown;
   let category = chips.some((c) => c.dataset.category === params.get('category')) ? params.get('category')! : '';
   openOnly.checked = params.get('open') === '1';
   let docs: SearchDoc[] = [];
@@ -104,16 +111,17 @@ import { categories, categoryLinks } from '../../data/categories';
     return node;
   }
 
-  function render() {
+  // track: 검색으로 셀 때 true(사용자 조작, 또는 검색어를 가지고 처음 들어온 경우 결과 계산 뒤 1회). 빈 검색어는 세지 않는다
+  function render(track = false) {
     const q = input.value.trim();
     chips.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.category === category)));
     const next = new URLSearchParams();
-    if (q) next.set('q', q);
     if (category) next.set('category', category);
     if (openOnly.checked) next.set('open', '1');
-    history.replaceState(null, '', next.toString() ? `?${next}` : location.pathname);
+    history.replaceState({ q, shown: true }, '', next.toString() ? `?${next}` : location.pathname);
 
     const found = q ? search(docs, q, { category, openOnly: openOnly.checked }) : [];
+    if (track && q) gtag?.('event', 'search_performed', { results_count: found.length, search_category: category || 'all', open_only: openOnly.checked ? 'yes' : 'no' });
     results.replaceChildren(...found.map(card));
     zero.hidden = !q || found.length > 0;
     reset.hidden = !category;
@@ -122,18 +130,18 @@ import { categories, categoryLinks } from '../../data/categories';
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    render();
+    render(true);
   });
   filters.addEventListener('click', (e) => {
     const chip = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-category]');
     if (!chip) return;
     category = chip.dataset.category!;
-    render();
+    render(true);
   });
-  openOnly.addEventListener('change', render);
+  openOnly.addEventListener('change', () => render(true));
   reset.addEventListener('click', () => {
     category = '';
-    render();
+    render(true);
   });
 
   fetch('/search-index.json')
@@ -141,7 +149,7 @@ import { categories, categoryLinks } from '../../data/categories';
     .then((index: SearchDoc[]) => {
       docs = index;
       filters.dataset.ready = '';
-      render();
+      render(firstVisit);
     })
     .catch(() => (status.textContent = '검색 목록을 불러오지 못했습니다. 잠시 뒤 다시 시도해 주세요.'));
 </script>

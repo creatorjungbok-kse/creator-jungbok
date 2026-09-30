@@ -1,32 +1,13 @@
 ---
-import { isShellPreview } from '../config/env';
-import { adSlots, type AdSlotId } from '../config/ads';
+import { adsEnabled, type AdSlotId } from '../config/ads';
 
 export interface Props {
   id: AdSlotId;
 }
 
-// P1: 광고 위치·간격·높이 예약 확인용 자리만 표시한다. 실제 광고 코드는 없다.
+// 광고가 꺼져 있으면 아무것도(요소·CSS) 출력하지 않는다. 켜지면 CLS 방지용 예약 높이(tokens.css·layout.css의 --ad-min-h)를
+// 가진 빈 자리만 낸다(광고 코드 없음).
 const { id } = Astro.props;
 ---
 
-{
-  isShellPreview && (
-    <div class="ad-slot" data-slot={id}>
-      광고 자리 · {id} · {adSlots[id]}
-    </div>
-  )
-}
-
-<style>
-  /* 높이는 CLS 방지용 예약 공간. 값은 tokens.css·layout.css의 --ad-min-h */
-  .ad-slot {
-    min-height: var(--ad-min-h);
-    padding: var(--space-2) var(--space-3);
-    border: 1px dashed var(--color-border);
-    border-radius: var(--radius);
-    background: var(--color-surface);
-    color: var(--color-text-muted);
-    font-size: var(--text-xs);
-  }
-</style>
+{adsEnabled && <div data-ad-slot={id} style="min-height: var(--ad-min-h)"></div>}

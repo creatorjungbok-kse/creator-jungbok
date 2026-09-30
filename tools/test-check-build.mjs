@@ -42,6 +42,13 @@ const cases = [
   ['production', 'JSON-LD 파싱 실패', edit('index.html', '{"@context":"https://schema.org","@type":"WebSite"', '{"@context":"https://schema.org","@type":"WebSite",'), 'JSON-LD 파싱 실패'],
   ['production', 'production robots 전체 차단', edit('robots.txt', 'Allow: /', 'Disallow: /'), 'robots.txt: production 정책과 다름'],
   ['production', 'production 색인 페이지에 noindex', edit('business/index.html', '<meta name="description"', '<meta name="robots" content="noindex, follow"><meta name="description"'), 'robots noindex 1건'],
+  ['production', 'GA4 검색어 제거 누락', edit('index.html', "url.searchParams.delete('q')", "url.searchParams.get('q')"), 'GA4 검색어 제거 script가 loader보다 앞에 없음'],
+  ['production', 'AdSense 광고 코드', edit('business/index.html', '</main>', '<ins class="adsbygoogle"></ins></main>'), 'business/index.html: 광고 코드'],
+  ['production', '광고가 꺼져 있는데 슬롯 출력', edit('index.html', '</main>', '<div data-ad-slot="home-1"></div></main>'), '광고가 꺼져 있는데 광고 슬롯 1건'],
+  ['production', '광고 없는 페이지(검색)에 슬롯', edit('search/index.html', '</main>', '<div data-ad-slot="home-1"></div></main>'), '광고 없는 페이지에 광고 슬롯'],
+  ['production', 'sidebar에 슬롯', edit('business/index.html', '</aside>', '<div data-ad-slot="home-1"></div></aside>'), '광고 슬롯 home-1: main 본문 밖·sidebar'],
+  ['preview', '공식 신청 버튼 바로 아래 슬롯', edit('benefits/fixture-open/index.html', '공식 사이트로 이동</span></a>', '공식 사이트로 이동</span></a><div data-ad-slot="benefit-mid"></div>'), '광고 슬롯 benefit-mid: 보호 영역(official-cta) 안 또는 인접'],
+  ['preview', '공식 신청 버튼 위 슬롯', edit('benefits/fixture-open/index.html', '<h1', '<div data-ad-slot="benefit-mid"></div><h1'), '광고 슬롯 benefit-mid: 공식 신청 버튼보다 위'],
   ['preview', 'Article headline ≠ H1', edit('business/fixture-cost/index.html', '"headline":"예시', '"headline":"다른'), 'Article.headline ≠ 화면 H1'],
   ['preview', 'BreadcrumbList ≠ 화면', edit('business/fixture-cost/index.html', '"name":"사업·창업"', '"name":"다른 이름"'), 'BreadcrumbList ≠ 화면 Breadcrumb'],
 ];

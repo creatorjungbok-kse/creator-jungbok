@@ -1,4 +1,4 @@
-// 빌드 결과물 검사(환경별 head, SEO, sitemap·RSS·robots, fixture 유출, 신청 가능 영역, script 범위).
+// 빌드 결과물 검사(환경별 head·GA4, SEO, sitemap·RSS·robots, fixture 유출, 신청 가능 영역, script 범위, 광고 슬롯).
 // Fail은 종료 코드 1, Warning은 보고만 한다(04 27장).
 // 사용: npm run check:build -- <development|preview|production> [distDir]
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
@@ -35,24 +35,36 @@ const pages = new Set(htmlFiles.map(pathOf));
 const ALWAYS_NOINDEX = new Set(['/404.html', '/search/']);
 const SITEMAP_EXEMPT = new Set(['/contact/', '/privacy/', '/terms/', '/disclosure/']);
 const SCRIPT_PAGES = new Set(['/benefits/', '/search/']);
+// 광고 없는 페이지(03 12장): 검색·정책·404
+const NO_AD_PAGES = new Set(['/search/', '/404.html', '/about/', '/editorial-policy/', '/contact/', '/privacy/', '/terms/', '/disclosure/']);
+// 광고 설정 단일 출처(src/config/ads.ts)의 on/off
+const adsEnabled = readFileSync('src/config/ads.ts', 'utf8').match(/export const adsEnabled: boolean = (true|false);/)?.[1];
+if (!adsEnabled) {
+  console.error('src/config/ads.ts에서 adsEnabled 값을 읽지 못했습니다.');
+  process.exit(2);
+}
 
-// attr가 붙은 요소 전체(같은 태그의 중첩을 세어 닫는 태그까지)
-function regions(html, attr) {
+// 여는 태그(정규식 그룹 1 = 태그 이름)부터 같은 태그의 중첩을 세어 닫는 태그까지의 [시작, 끝] 위치
+function spans(html, start) {
   const out = [];
-  const start = new RegExp(`<(\\w+)[^>]*\\s${attr}(?=[\\s>=])`, 'g');
-  for (let m; (m = start.exec(html)); ) {
+  for (const m of html.matchAll(start)) {
     const tag = new RegExp(`<(/?)${m[1]}\\b[^>]*>`, 'g');
     tag.lastIndex = m.index;
     for (let t, depth = 0; (t = tag.exec(html)); ) {
       depth += t[1] ? -1 : 1;
       if (depth === 0) {
-        out.push(html.slice(m.index, tag.lastIndex));
+        out.push([m.index, tag.lastIndex]);
         break;
       }
     }
   }
   return out;
 }
+// attr가 붙은 요소의 [시작, 끝]
+const regions = (html, attr) => spans(html, new RegExp(`<(\\w+)[^>]*\\s${attr}(?=[\\s>=])`, 'g'));
+const within = ([s, e], [os, oe]) => os <= s && e <= oe;
+// 두 위치 사이에 보이는 내용(태그를 뺀 글자)이 없으면 인접
+const adjacent = (html, [s, e], [ps, pe]) => (pe <= s || e <= ps) && html.slice(Math.min(e, pe), Math.max(s, ps)).replace(/<[^>]*>/g, '').trim() === '';
 
 // ── 결과물 전체 ─────────────────────────────────────
 // 비공개 파일이 배포 폴더에 없어야 한다(04 10·27장)
@@ -85,18 +97,21 @@ for (const file of htmlFiles) {
 
   const noindex = count(html, /<meta name="robots" content="noindex/g);
   const ga = count(html, /googletagmanager\.com\/gtag\/js\?id=/g);
-  const ads = count(html, /adsbygoogle|pagead2\.googlesyndication/g);
+  const ads = count(html, /adsbygoogle|googlesyndication|googleads|doubleclick|<ins\b/g);
   const canonical = html.match(/<link rel="canonical" href="([^"]+)"/g) ?? [];
   const canonicalUrl = canonical[0]?.match(/href="([^"]+)"/)[1];
   const title = decode(html.match(/<title>([^<]*)<\/title>/)?.[1] ?? '');
   const description = decode(meta('name', 'description') ?? '');
   const h1 = count(html, /<h1\b/g);
 
-  if (ads !== 0) fail(`광고 스크립트 ${ads}건`);
+  if (ads !== 0) fail(`광고 코드 ${ads}건`);
   // 환경별 robots meta·GA4(P2)
   if (env === 'production') {
     if (noindex !== (indexable ? 0 : 1)) fail(`robots noindex ${noindex}건`);
     if (ga !== 1) fail(`GA4 ${ga}건 (기대 1)`);
+    // 검색어 제거(q → history.state)가 GA4 loader보다 먼저 실행돼야 한다
+    const setup = html.indexOf("url.searchParams.delete('q')");
+    if (setup < 0 || setup > html.indexOf('googletagmanager.com/gtag/js')) fail('GA4 검색어 제거 script가 loader보다 앞에 없음');
   } else {
     if (noindex !== 1) fail(`robots noindex ${noindex}건 (기대 1)`);
     if (ga !== 0) fail(`GA4 ${ga}건 (기대 0)`);
@@ -155,7 +170,7 @@ for (const file of htmlFiles) {
   if (shownCrumbs.length && JSON.stringify(crumbs?.itemListElement.map((i) => i.name)) !== JSON.stringify(shownCrumbs)) fail('BreadcrumbList ≠ 화면 Breadcrumb');
 
   // "신청 가능" 영역(data-open-list)에 종료된 지원이 섞이면 실패
-  for (const region of regions(html, 'data-open-list')) {
+  for (const region of regions(html, 'data-open-list').map(([s, e]) => html.slice(s, e))) {
     openLists++;
     if (region.includes('data-status="closed"')) fail('신청 가능 영역에 신청 종료 카드');
     for (const [, href] of region.matchAll(/href="([^"]+)"/g)) if (closedUrls.has(href)) fail(`신청 가능 영역에 종료 지원 링크 ${href}`);
@@ -167,6 +182,24 @@ for (const file of htmlFiles) {
     ([, attrs, body]) => !attrs.includes('application/ld+json') && !attrs.includes('googletagmanager.com') && !body.includes('window.dataLayer'),
   ).length;
   if (siteScripts > 0 && !SCRIPT_PAGES.has(path)) fail(`허용되지 않은 페이지 script ${siteScripts}건`);
+
+  // 광고 슬롯(03 3·5·12·13장): 꺼져 있으면 0개. 켜져 있어도 광고 없는 페이지·main 밖·sidebar·보호 영역 안이나 바로 옆·공식 신청 버튼 위 금지
+  const slots = regions(html, 'data-ad-slot');
+  if (adsEnabled === 'false' && slots.length) fail(`광고가 꺼져 있는데 광고 슬롯 ${slots.length}건`);
+  if (slots.length && NO_AD_PAGES.has(path)) fail('광고 없는 페이지에 광고 슬롯');
+  const main = spans(html, /<(main)\b/g);
+  const asides = spans(html, /<(aside)\b/g);
+  const protectedAreas = regions(html, 'data-ad-protected');
+  const cta = regions(html, 'data-ad-protected="official-cta"')[0];
+  for (const slot of slots) {
+    const id = html.slice(...slot).match(/data-ad-slot="([^"]*)"/)?.[1];
+    if (!main.some((m) => within(slot, m)) || asides.some((a) => within(slot, a))) fail(`광고 슬롯 ${id}: main 본문 밖·sidebar`);
+    for (const p of protectedAreas) {
+      const name = html.slice(...p).match(/data-ad-protected="([^"]*)"/)?.[1];
+      if (within(slot, p) || adjacent(html, slot, p)) fail(`광고 슬롯 ${id}: 보호 영역(${name}) 안 또는 인접`);
+    }
+    if (cta && slot[0] < cta[0]) fail(`광고 슬롯 ${id}: 공식 신청 버튼보다 위`);
+  }
 
   rows.push({ page: path, noindex, ga, h1, jsonLd: types.join('+') || '-', title: [...title].length, desc: [...description].length });
 }

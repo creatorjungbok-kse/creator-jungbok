@@ -61,15 +61,27 @@ const canonicalUrl = canonical ? absoluteUrl(Astro.url.pathname) : undefined;
     {
       isProduction && (
         <>
-          <script async src={`https://www.googletagmanager.com/gtag/js?id=${site.ga4Id}`} />
           <script is:inline define:vars={{ ga4Id: site.ga4Id }}>
+            // 검색어(q)는 GA4로 보내지 않는다. GA가 읽기 전에 주소에서 q만 지우고(다른 파라미터 유지) 값은 이 기록 항목의
+            // history.state로 옮긴다(검색 페이지가 읽는다). 그래서 page_location·이후 페이지의 page_referrer에 검색어가 없다.
+            const url = new URL(location.href);
+            if (url.searchParams.has('q')) {
+              const q = url.searchParams.get('q');
+              url.searchParams.delete('q');
+              history.replaceState({ q }, '', url.href);
+            }
             window.dataLayer = window.dataLayer || [];
             window.gtag = function () {
               window.dataLayer.push(arguments);
             };
             window.gtag('js', new Date());
             window.gtag('config', ga4Id);
+            // 공식 신청 버튼 클릭(지원·혜택 글). 페이지 주소 외의 값은 보내지 않는다
+            document.addEventListener('click', (e) => {
+              if (e.target instanceof Element && e.target.closest('[data-ad-protected="official-cta"]')) window.gtag('event', 'official_cta_click');
+            });
           </script>
+          <script async src={`https://www.googletagmanager.com/gtag/js?id=${site.ga4Id}`} />
         </>
       )
     }

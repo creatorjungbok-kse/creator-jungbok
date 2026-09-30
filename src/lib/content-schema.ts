@@ -197,7 +197,7 @@ export const articleSchema = z
     change: z
       .strictObject({ effectiveFrom: date, effectiveUntil: date.optional(), officialSourceIds: z.array(sourceId).min(1) })
       .optional(),
-    ads: adsSchema({ top: slot, mid: slot, lower: slot, end: slot }),
+    ads: adsSchema({ top: slot, mid: slot, lower: slot }),
   })
   .superRefine((d, ctx) => {
     if (d.contentType === 'cost' && !d.priceItems?.length) ctx.addIssue({ code: 'custom', path: ['priceItems'], message: 'cost 글은 priceItems가 필요하다' });
@@ -214,6 +214,6 @@ export const benefitSchema = z
     ymyl: z.enum(['low', 'medium', 'high']).default('medium'),
     audience: z.array(idsOf(audiences)).min(1),
     program: programSchema,
-    ads: adsSchema({ mid: slot, end: slot }),
+    ads: adsSchema({ mid: slot }),
   })
   .superRefine(checkEntry);
