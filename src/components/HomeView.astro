@@ -78,7 +78,7 @@ const isoDate = (d: Date) => d.toISOString().slice(0, 10);
       )
     }
 
-    {timely.length > 0 && <MiniList title="최근 관심이 높은 돈 정보" items={links(timely)} tier="secondary" />}
+    {timely.length > 0 && <MiniList title="최근 확인할 돈 정보" items={links(timely)} tier="secondary" />}
 
     {(costs.length > 0 || timely.length > 0) && <AdSlot id="home-1" />}
 

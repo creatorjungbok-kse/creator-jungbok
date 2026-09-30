@@ -18,7 +18,7 @@ interface StatusInput {
   statusOverride?: { value: BenefitStatus };
 }
 
-export interface StatusResult {
+interface StatusResult {
   status: BenefitStatus;
   // 상태와 함께 보여줄 날짜 안내(예: D-6, 오늘 마감, 10월 5일부터). 표시할 근거가 없으면 없음
   detail?: string;

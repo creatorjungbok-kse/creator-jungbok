@@ -1,7 +1,7 @@
 // 글이 인용한 출처 목록. 검증(content-schema)과 화면(SourceList)이 같은 목록을 쓴다.
 import { commonSources, type Source } from '../data/sources';
 
-export interface SourceRef {
+interface SourceRef {
   path: (string | number)[];
   id: string;
   // 공식(S1) 출처만 허용되는 위치

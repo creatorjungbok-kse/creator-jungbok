@@ -36,7 +36,7 @@ export function pillars(items: ContentItem[], all: ContentItem[]) {
   );
 }
 
-// Timely 글(신청 종료 지원 제외): 홈 "최근 관심이 높은 돈 정보"(01 D 데이터 없을 때의 표기)
+// Timely 글(신청 종료 지원 제외): 홈 "최근 확인할 돈 정보". 관심도 데이터가 없으므로 인기를 암시하는 제목을 쓰지 않는다
 export const timely = (items: ContentItem[]) =>
   latestPublished(items.filter((i) => i.entry.data.contentMode === 'timely' && statusOf(i) !== 'closed'));
 
