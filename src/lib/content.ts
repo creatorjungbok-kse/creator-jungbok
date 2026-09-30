@@ -4,7 +4,8 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { isShellPreview } from '../config/env';
 import { categories } from '../data/categories';
-import { genericTerms, synonymGroups } from '../data/synonyms';
+import { genericTerms } from '../data/synonyms';
+import { normalize } from './search';
 
 type ArticleEntry = CollectionEntry<'articles'> | CollectionEntry<'fixtureArticles'>;
 type BenefitEntry = CollectionEntry<'benefits'> | CollectionEntry<'fixtureBenefits'>;
@@ -27,10 +28,9 @@ const toItem = {
   }),
 };
 
-// primaryQuery 비교용: 공백·일반어 제거, 동의어는 묶음의 첫 단어로 통일(02 6장)
+// primaryQuery 비교용: 검색과 같은 정규화(공백·문장부호 제거, 동의어 통일) 후 일반어 제거(02 6장)
 function normalizeQuery(q: string) {
-  let s = q.replace(/\s+/g, '');
-  for (const group of synonymGroups) for (const word of group.slice(1)) s = s.replaceAll(word, group[0]);
+  let s = normalize(q);
   for (const term of genericTerms) s = s.replaceAll(term, '');
   return s;
 }

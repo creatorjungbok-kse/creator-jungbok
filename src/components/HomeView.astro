@@ -32,7 +32,7 @@ const isoDate = (d: Date) => d.toISOString().slice(0, 10);
     <section class="hero">
       <h1>얼마 들고, 얼마 받을 수 있을까요?</h1>
       <p>{site.tagline}</p>
-      <form class="search" action="/search/" method="get" role="search">
+      <form class="search-form" action="/search/" method="get" role="search">
         <label class="visually-hidden" for="home-q">검색어</label>
         <input id="home-q" name="q" type="search" placeholder="예: 입주청소 비용, 근로장려금 신청" />
         <button type="submit">검색</button>
@@ -150,34 +150,6 @@ const isoDate = (d: Date) => d.toISOString().slice(0, 10);
 
   .hero p {
     color: var(--color-text-muted);
-  }
-
-  .search {
-    display: flex;
-    gap: var(--space-2);
-    margin-top: var(--space-2);
-  }
-
-  .search input {
-    flex: 1;
-    min-width: 0;
-    min-height: var(--touch);
-    padding-inline: var(--space-4);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius);
-    font: inherit;
-  }
-
-  .search button {
-    min-height: var(--touch);
-    padding-inline: var(--space-5);
-    border: 0;
-    border-radius: var(--radius);
-    background: var(--color-accent);
-    color: var(--color-on-accent);
-    font: inherit;
-    font-weight: 700;
-    cursor: pointer;
   }
 
   .category-block {

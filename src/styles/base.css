@@ -161,6 +161,61 @@ details[open] > summary.disclosure::after {
   transform: translateY(25%) rotate(-135deg);
 }
 
+/* 검색창(홈 Hero·검색 페이지) */
+.search-form {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.search-form input {
+  flex: 1;
+  min-width: 0;
+  min-height: var(--touch);
+  padding-inline: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font: inherit;
+}
+
+.search-form button {
+  min-height: var(--touch);
+  padding-inline: var(--space-5);
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* 지원 상태 배지(카드·검색 결과). 색만이 아니라 문구로 상태를 전달한다 */
+.badge {
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+}
+
+.badge--open {
+  background: var(--color-status-open-soft);
+  color: var(--color-status-open);
+}
+
+.badge--closing-soon {
+  background: var(--color-status-closing-soft);
+  color: var(--color-status-closing);
+}
+
+.badge--upcoming {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.badge--closed {
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+}
+
 /* 중분류 이동·상태 필터 칩 */
 .chips {
   display: flex;

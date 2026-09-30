@@ -58,6 +58,8 @@ for (const file of htmlFiles) {
   const rel = relative(dist, file).split(sep).join('/');
   const html = readFileSync(file, 'utf8');
   const is404 = rel === '404.html';
+  // 항상 noindex인 페이지(04 2장): 404, 검색
+  const alwaysNoindex = is404 || rel === 'search/index.html';
   const path = pathOf(file);
   const noindex = count(html, /<meta name="robots" content="noindex/g);
   const ga = count(html, /googletagmanager\.com\/gtag\/js\?id=/g);
@@ -69,7 +71,7 @@ for (const file of htmlFiles) {
 
   if (ads !== 0) fail(`광고 스크립트 ${ads}건`);
   if (env === 'production') {
-    if (noindex !== (is404 ? 1 : 0)) fail(`robots noindex ${noindex}건`);
+    if (noindex !== (alwaysNoindex ? 1 : 0)) fail(`robots noindex ${noindex}건`);
     if (ga !== 1) fail(`GA4 ${ga}건 (기대 1)`);
   } else {
     if (noindex !== 1) fail(`robots noindex ${noindex}건 (기대 1)`);
@@ -82,21 +84,26 @@ for (const file of htmlFiles) {
     if (region.includes('data-status="closed"')) fail('신청 가능 영역에 신청 종료 카드');
     for (const [, href] of region.matchAll(/href="([^"]+)"/g)) if (closedUrls.has(href)) fail(`신청 가능 영역에 종료 지원 링크 ${href}`);
   }
-  // 필터 URL(?status= 등)은 링크로 만들지 않는다(색인·sitemap 대상 아님)
-  if (/href="[^"]*\?[^"]*status=/.test(html)) fail('필터 URL 링크');
-  // 사이트 자체 script는 benefits 허브에만(production GA4 loader 제외)
+  // 필터·검색 URL(?status= ?q= 등)은 링크로 만들지 않는다(색인·sitemap 대상 아님, 크롤 트랩 방지)
+  if (/href="[^"]*\?[^"]*\b(status|q|category|open)=/.test(html)) fail('필터·검색 URL 링크');
+  // 사이트 자체 script는 benefits 허브와 검색 페이지에만(production GA4 loader 제외)
   const siteScripts = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)].filter(
     ([tag, body]) => !tag.includes('googletagmanager.com') && !body.includes('window.dataLayer'),
   ).length;
-  if (siteScripts > 0 && rel !== 'benefits/index.html') fail(`허용되지 않은 페이지 script ${siteScripts}건`);
+  if (siteScripts > 0 && !['benefits/index.html', 'search/index.html'].includes(rel)) fail(`허용되지 않은 페이지 script ${siteScripts}건`);
   if (!title) fail('title 없음');
   if (!description) fail('description 없음');
   rows.push({ page: path, noindex, ga, canonical: canonical ?? '-', title, descLen: description.length });
 }
+
+// 검색 인덱스: 모든 항목이 실제 페이지를 가리킨다
+const index = JSON.parse(readFileSync(join(dist, 'search-index.json'), 'utf8'));
+const pages = new Set(htmlFiles.map(pathOf));
+for (const doc of index) if (!pages.has(doc.url)) errors.push(`search-index.json: 없는 페이지 ${doc.url}`);
 
 console.table(rows);
 if (errors.length) {
   console.error(errors.join('\n'));
   process.exit(1);
 }
-console.log(`OK (${env}, ${rows.length} pages, 신청 가능 영역 ${openLists}곳 검사, 종료 지원 ${closedUrls.size}건)`);
+console.log(`OK (${env}, ${rows.length} pages, 검색 인덱스 ${index.length}건, 신청 가능 영역 ${openLists}곳 검사, 종료 지원 ${closedUrls.size}건)`);

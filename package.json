@@ -12,7 +12,8 @@
     "preview": "astro preview",
     "check:build": "node tools/check-build.mjs",
     "test:content": "node tools/test-content.mjs",
-    "test:status": "node --test tools/test-benefit-status.mjs"
+    "test:status": "node --test tools/test-benefit-status.mjs",
+    "test:search": "node --test tools/test-search.mjs"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "0.4.2",

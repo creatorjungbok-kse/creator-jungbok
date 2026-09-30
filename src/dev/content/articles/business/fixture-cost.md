@@ -4,6 +4,7 @@ contentType: cost
 subcategory: payment
 contentMode: evergreen
 primaryQuery: fixture 카드단말기 설치 비용
+synonyms: [카드기 설치비, 카드 결제기 가격]
 summary: 화면 확인용 예시 글입니다. 실제 글에서는 조사된 가격 범위, 가장 큰 변수, 자주 붙는 추가 비용을 두세 문장으로 먼저 알려 줍니다.
 datePublished: 2026-09-01
 dateModified: 2026-09-20

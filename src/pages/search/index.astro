@@ -1,0 +1,233 @@
+---
+// 통합 검색(01 G, 05 8장). 빌드 시점 인덱스(/search-index.json)를 이 페이지 전용 script가 브라우저에서 검색한다.
+// noindex, canonical /search/. ?q= 등으로 가는 링크(<a href>)는 어디에도 만들지 않는다(크롤 트랩 방지, 04 20장).
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import MiniList from '../../components/MiniList.astro';
+import { categories, categoryLinks } from '../../data/categories';
+---
+
+<BaseLayout title="검색" description="비용·비교·지원금 정보를 한 번에 검색합니다." noindex>
+  <div class="container page-grid">
+    <div class="page-main">
+      <header class="page-head">
+        <Breadcrumb items={[{ label: '검색' }]} />
+        <h1>검색</h1>
+        <form class="search-form" action="/search/" method="get" role="search" data-search-form>
+          <label class="visually-hidden" for="q">검색어</label>
+          <input id="q" name="q" type="search" placeholder="예: 입주청소 비용, 근로장려금 신청" autocomplete="off" />
+          <button type="submit">검색</button>
+        </form>
+        <div class="filters" data-search-filters>
+          <div class="chips" role="group" aria-label="카테고리로 좁히기">
+            <button class="chip" type="button" data-category="" aria-pressed="true">전체</button>
+            {
+              categories.map((c) => (
+                <button class="chip" type="button" data-category={c.slug} aria-pressed="false">
+                  {c.name}
+                </button>
+              ))
+            }
+          </div>
+          <label class="open-only"><input type="checkbox" data-open-only /> 신청 가능한 지원만</label>
+        </div>
+      </header>
+
+      <noscript><p class="empty">검색은 브라우저의 JavaScript가 켜져 있어야 동작합니다. 오른쪽(모바일은 아래) 카테고리에서 찾아보세요.</p></noscript>
+      <section class="search-results" aria-label="검색 결과">
+        <p class="search-status" aria-live="polite" data-search-status></p>
+        <ol class="results" data-results></ol>
+        <div class="empty" data-zero hidden>
+          <p>검색 결과가 없습니다.</p>
+          <p>띄어쓰기를 바꾸거나 더 짧은 말로 다시 검색해 보세요. 예: “입주청소 비용” → “입주청소”</p>
+          <p><button class="chip" type="button" data-reset-category hidden>전체 카테고리에서 다시 찾기</button></p>
+        </div>
+      </section>
+
+      <template data-result-template>
+        <li class="result">
+          <p class="result__top"><span class="badge" data-f="status"></span><span class="result__type" data-f="type"></span><span data-f="category"></span></p>
+          <h2 class="result__title"><a data-f="title"></a></h2>
+          <p class="result__summary" data-f="summary"></p>
+          <p class="result__meta" data-f="meta"></p>
+        </li>
+      </template>
+    </div>
+
+    <aside class="page-aside" aria-label="보조 정보">
+      <MiniList title="카테고리" items={categoryLinks} />
+    </aside>
+  </div>
+</BaseLayout>
+
+<script>
+  import { statusLabels } from '../../lib/benefit-status';
+  import { search, type SearchDoc } from '../../lib/search';
+
+  const typeLabels: Record<SearchDoc['type'], string> = { cost: '비용', compare: '비교', guide: '가이드', change: '변경', benefit: '지원·혜택' };
+  const $ = <T extends Element>(selector: string) => document.querySelector<T>(selector)!;
+  const form = $<HTMLFormElement>('[data-search-form]');
+  const input = $<HTMLInputElement>('#q');
+  const filters = $<HTMLElement>('[data-search-filters]');
+  const chips = [...filters.querySelectorAll<HTMLButtonElement>('[data-category]')];
+  const openOnly = $<HTMLInputElement>('[data-open-only]');
+  const status = $<HTMLElement>('[data-search-status]');
+  const results = $<HTMLOListElement>('[data-results]');
+  const zero = $<HTMLElement>('[data-zero]');
+  const reset = $<HTMLButtonElement>('[data-reset-category]');
+  const template = $<HTMLTemplateElement>('[data-result-template]');
+
+  const params = new URLSearchParams(location.search);
+  input.value = params.get('q') ?? '';
+  let category = chips.some((c) => c.dataset.category === params.get('category')) ? params.get('category')! : '';
+  openOnly.checked = params.get('open') === '1';
+  let docs: SearchDoc[] = [];
+
+  // 결과는 textContent로만 채운다(인덱스 값을 HTML로 해석하지 않음)
+  function card(doc: SearchDoc) {
+    const node = template.content.firstElementChild!.cloneNode(true) as HTMLElement;
+    const field = (name: string) => node.querySelector<HTMLElement>(`[data-f="${name}"]`)!;
+    const badge = field('status');
+    if (doc.status) {
+      badge.textContent = statusLabels[doc.status];
+      badge.classList.add(`badge--${doc.status}`);
+    } else badge.remove();
+    field('type').textContent = typeLabels[doc.type];
+    // 지원·혜택 글은 유형과 대분류 이름이 같으므로 한 번만
+    if (typeLabels[doc.type] === doc.categoryName) field('category').remove();
+    else field('category').textContent = doc.categoryName;
+    const link = field('title') as HTMLAnchorElement;
+    link.href = doc.url;
+    link.textContent = doc.title;
+    field('summary').textContent = doc.summary;
+    field('meta').textContent = [doc.detail, `업데이트 ${doc.updated}`].filter(Boolean).join(' · ');
+    return node;
+  }
+
+  function render() {
+    const q = input.value.trim();
+    chips.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.category === category)));
+    const next = new URLSearchParams();
+    if (q) next.set('q', q);
+    if (category) next.set('category', category);
+    if (openOnly.checked) next.set('open', '1');
+    history.replaceState(null, '', next.toString() ? `?${next}` : location.pathname);
+
+    const found = q ? search(docs, q, { category, openOnly: openOnly.checked }) : [];
+    results.replaceChildren(...found.map(card));
+    zero.hidden = !q || found.length > 0;
+    reset.hidden = !category;
+    status.textContent = q ? `“${q}” 검색 결과 ${found.length}건` : '';
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    render();
+  });
+  filters.addEventListener('click', (e) => {
+    const chip = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-category]');
+    if (!chip) return;
+    category = chip.dataset.category!;
+    render();
+  });
+  openOnly.addEventListener('change', render);
+  reset.addEventListener('click', () => {
+    category = '';
+    render();
+  });
+
+  fetch('/search-index.json')
+    .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+    .then((index: SearchDoc[]) => {
+      docs = index;
+      filters.dataset.ready = '';
+      render();
+    })
+    .catch(() => (status.textContent = '검색 목록을 불러오지 못했습니다. 잠시 뒤 다시 시도해 주세요.'));
+</script>
+
+<style>
+  /* 필터는 인덱스가 준비된 뒤에만 보인다(자리는 미리 잡아 레이아웃이 밀리지 않게) */
+  .filters:not([data-ready]) {
+    visibility: hidden;
+  }
+
+  .filters {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .open-only {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--touch);
+    font-size: var(--text-sm);
+  }
+
+  .open-only input {
+    width: 1.25rem;
+    height: 1.25rem;
+    accent-color: var(--color-accent);
+  }
+
+  /* 결과는 인덱스를 받은 뒤 그려지므로 자리를 미리 잡아 둔다(아래 내용이 밀리지 않게, CLS) */
+  .search-results {
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+    min-height: 70vh;
+  }
+
+  .search-status {
+    min-height: calc(var(--text-sm) * var(--leading-body));
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .results {
+    display: grid;
+  }
+
+  .result {
+    display: grid;
+    gap: var(--space-2);
+    padding-block: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .result__top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-accent);
+    font-size: var(--text-xs);
+    font-weight: 600;
+  }
+
+  .result__type {
+    padding: 0 var(--space-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    color: var(--color-text-muted);
+  }
+
+  .result__title {
+    font-size: var(--text-md);
+  }
+
+  .result__title a:hover {
+    color: var(--color-accent);
+  }
+
+  .result__summary {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .result__meta {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+  }
+</style>
