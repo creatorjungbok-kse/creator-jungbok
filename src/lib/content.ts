@@ -1,20 +1,25 @@
-// 두 컬렉션을 하나의 목록으로 합치고 URL을 계산한다. 공개 URL의 계산은 이 파일에서만 한다.
+// 컬렉션을 하나의 목록으로 합치고 URL을 계산한다. 공개 URL의 계산은 이 파일에서만 한다.
 // 글 사이의 검증도 여기서 한 번만 실행한다(빌드 실패).
+// dev·test fixture(src/dev/content/)는 isShellPreview일 때만 포함한다. production에는 절대 들어가지 않는다.
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { isShellPreview } from '../config/env';
 import { categories } from '../data/categories';
 import { genericTerms, synonymGroups } from '../data/synonyms';
 
-type ContentItem =
-  | { collection: 'articles'; category: string; slug: string; url: string; entry: CollectionEntry<'articles'> }
-  | { collection: 'benefits'; category: 'benefits'; slug: string; url: string; entry: CollectionEntry<'benefits'> };
+type ArticleEntry = CollectionEntry<'articles'> | CollectionEntry<'fixtureArticles'>;
+type BenefitEntry = CollectionEntry<'benefits'> | CollectionEntry<'fixtureBenefits'>;
+
+export type ContentItem =
+  | { kind: 'article'; category: string; slug: string; url: string; entry: ArticleEntry }
+  | { kind: 'benefit'; category: 'benefits'; slug: string; url: string; entry: BenefitEntry };
 
 const toItem = {
-  articles: (entry: CollectionEntry<'articles'>): ContentItem => {
+  article: (entry: ArticleEntry): ContentItem => {
     const [category, slug] = entry.id.split('/');
-    return { collection: 'articles', category, slug, url: `/${category}/${slug}/`, entry };
+    return { kind: 'article', category, slug, url: `/${category}/${slug}/`, entry };
   },
-  benefits: (entry: CollectionEntry<'benefits'>): ContentItem => ({
-    collection: 'benefits',
+  benefit: (entry: BenefitEntry): ContentItem => ({
+    kind: 'benefit',
     category: 'benefits',
     slug: entry.id,
     url: `/benefits/${entry.id}/`,
@@ -32,7 +37,7 @@ function normalizeQuery(q: string) {
 
 function validate(items: ContentItem[]) {
   const errors: string[] = [];
-  const where = (i: ContentItem) => `${i.collection}/${i.entry.id}`;
+  const where = (i: ContentItem) => `${i.entry.collection}/${i.entry.id}`;
   const byUrl = new Map<string, ContentItem>();
   const byQuery = new Map<string, ContentItem>();
 
@@ -48,7 +53,7 @@ function validate(items: ContentItem[]) {
     // 중분류 허브(/category/subcategory/)와 pagination 경로는 글 slug로 쓸 수 없다
     if (subSlugs.includes(item.slug) || item.slug === 'page') errors.push(`${where(item)}: 예약된 slug ${item.slug}`);
     if (!subSlugs.includes(data.subcategory)) errors.push(`${where(item)}: ${item.category}에 없는 subcategory ${data.subcategory}`);
-    if (item.collection === 'articles' && item.category === 'benefits' && !['guide', 'change'].includes(item.entry.data.contentType)) {
+    if (item.kind === 'article' && item.category === 'benefits' && !['guide', 'change'].includes(item.entry.data.contentType)) {
       errors.push(`${where(item)}: benefits 카테고리의 일반 글은 guide·change만 가능`);
     }
 
@@ -60,7 +65,7 @@ function validate(items: ContentItem[]) {
 
   for (const item of items) {
     const { data } = item.entry;
-    const pillar = item.collection === 'articles' ? item.entry.data.pillar : undefined;
+    const pillar = item.kind === 'article' ? item.entry.data.pillar : undefined;
     const links = [...(data.related ?? []), ...(pillar ? [pillar] : [])];
     for (const url of links) {
       if (!byUrl.has(url)) errors.push(`${where(item)}: 존재하지 않는 글 링크 ${url}`);
@@ -76,8 +81,11 @@ let cache: Promise<ContentItem[]> | undefined;
 export function getAllContent(): Promise<ContentItem[]> {
   cache ??= (async () => {
     const items = [
-      ...(await getCollection('articles')).map(toItem.articles),
-      ...(await getCollection('benefits')).map(toItem.benefits),
+      ...(await getCollection('articles')).map(toItem.article),
+      ...(await getCollection('benefits')).map(toItem.benefit),
+      ...(isShellPreview
+        ? [...(await getCollection('fixtureArticles')).map(toItem.article), ...(await getCollection('fixtureBenefits')).map(toItem.benefit)]
+        : []),
     ];
     validate(items);
     return items;

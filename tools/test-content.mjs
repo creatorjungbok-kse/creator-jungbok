@@ -139,6 +139,7 @@ const cases = [
   ['unknown-category-folder', add('articles/unknown/test-x.md', guide.replace('테스트 창업 초기 비용', '테스트 기타')), '콘텐츠 파일 경로 오류'],
   ['unknown-subcategory', edit(C, 'subcategory: payment', 'subcategory: nope'), '없는 subcategory'],
   ['unknown-topic', edit(C, 'topics: [small-business]', 'topics: [nope]'), 'topics'],
+  ['fixture-prefix-in-real-content', add('articles/living/fixture-moving.md', guide.replace('테스트 창업 초기 비용', '테스트 이사')), 'fixture 전용'],
   ['frontmatter-slug', edit(C, 'contentMode: evergreen', 'contentMode: evergreen\nslug: other'), 'slug'],
   ['missing-source', edit(C, 'sourceIds: [local:vendor-a]', 'sourceIds: [local:missing]'), '존재하지 않는 출처 local:missing'],
   ['price-without-source', edit(C, '    sourceIds: [local:vendor-a]\n', ''), '가격 숫자에는 출처가 필요하다'],

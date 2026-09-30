@@ -1,45 +1,161 @@
 ---
+// 글 상세 화면(cost·compare·guide·change·benefit 공통 틀). 유형별 차이는 상단 블록에서만 난다.
 import BaseLayout from './BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import BenefitCard from '../components/BenefitCard.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
-import MiniList, { type Props as MiniListProps } from '../components/MiniList.astro';
+import FactList from '../components/FactList.astro';
+import MiniList from '../components/MiniList.astro';
+import OfficialCta from '../components/OfficialCta.astro';
+import PriceTable from '../components/PriceTable.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import SourceList from '../components/SourceList.astro';
+import StatusBanner from '../components/StatusBanner.astro';
+import SummaryBox from '../components/SummaryBox.astro';
 import Toc, { type Props as TocProps } from '../components/Toc.astro';
-import { categoryHref, type Category } from '../data/categories';
+import { audiences } from '../data/audiences';
+import { categories, categoryHref } from '../data/categories';
+import { people } from '../data/people';
+import type { ContentItem } from '../lib/content';
+import { applicationPeriod, formatDate } from '../lib/format';
+import { citedSources } from '../lib/sources';
 
 export interface Props {
-  title: string;
-  description: string;
-  category: Category;
-  updated: string;
+  item: ContentItem;
+  // 본문 H2·H3
   headings: TocProps['headings'];
-  sameTopic: MiniListProps['items'];
-  guides: MiniListProps['items'];
-  noindex?: boolean;
-  canonical?: boolean;
+  // lib/related.ts 결과(순서 유지). 앞 3개는 본문 아래 카드, 다음 5개는 사이드바 목록
+  related: ContentItem[];
 }
 
-const { title, description, category, updated, headings, sameTopic, guides, noindex, canonical } = Astro.props;
+const { item, headings, related } = Astro.props;
+const { data } = item.entry;
+const category = categories.find((c) => c.slug === item.category)!;
+const nameOf = (id: string) => people.find((p) => p.id === id)!.name;
+const isoDate = (d: Date) => d.toISOString().slice(0, 10);
+const categoryName = (i: ContentItem) => categories.find((c) => c.slug === i.category)!.name;
+
+const toc: TocProps['headings'] = data.faq?.length ? [...headings, { id: 'faq', text: '자주 묻는 질문', depth: 2 }] : headings;
+const history = [...(data.changelog ?? [])].sort((a, b) => +b.date - +a.date);
+
+// 상단 사실 목록: 스키마에 있는 값만 표시한다
+const program = item.kind === 'benefit' ? item.entry.data.program : undefined;
+const programFacts = program && [
+  { label: '운영 기관', value: program.operator },
+  { label: '지역', value: program.region },
+  ...(program.round ? [{ label: '회차', value: program.round }] : []),
+  { label: '대상', value: program.eligibility.map((e) => e.text) },
+  ...(program.exclusions?.length ? [{ label: '제외 대상', value: program.exclusions.map((e) => e.text) }] : []),
+  { label: '지원 내용', value: program.benefit.text },
+  { label: '신청 기간', value: applicationPeriod(program.application)! },
+  ...(program.application.methods?.length ? [{ label: '신청 방법', value: program.application.methods }] : []),
+  ...(program.application.documents?.length ? [{ label: '제출 서류', value: program.application.documents }] : []),
+  ...(program.payoutSchedule ? [{ label: '지급 시기', value: program.payoutSchedule }] : []),
+  ...(program.validFrom || program.validTo
+    ? [{ label: '혜택 기간', value: [program.validFrom, program.validTo].map((d) => (d ? formatDate(d) : '')).join(' ~ ') }]
+    : []),
+];
+const change = item.kind === 'article' ? item.entry.data.change : undefined;
+const changeFacts = change && [
+  { label: '시행일', value: formatDate(change.effectiveFrom) },
+  ...(change.effectiveUntil ? [{ label: '종료일', value: formatDate(change.effectiveUntil) }] : []),
+];
+const priceItems = item.kind === 'article' ? item.entry.data.priceItems : undefined;
+const audienceNames = item.kind === 'benefit' ? item.entry.data.audience.map((id) => audiences.find((a) => a.id === id)!.name) : [];
 ---
 
-<BaseLayout title={title} description={description} noindex={noindex} canonical={canonical}>
+<BaseLayout title={data.title} description={data.description ?? data.summary}>
   <div class="container page-grid">
     <article class="article">
       <Breadcrumb items={[{ label: category.name, href: categoryHref(category) }]} />
       <header class="article__head">
-        <p class="article__category">{category.name}</p>
-        <h1>{title}</h1>
-        <p class="article__meta">최종 업데이트 <time datetime={updated}>{updated.replaceAll('-', '.')}</time></p>
+        <p class="article__category">{category.name}{audienceNames.length > 0 && ` · ${audienceNames.join('·')}`}</p>
+        <h1>{data.title}</h1>
+        <p class="article__meta">
+          <span>작성 {nameOf(data.author)}</span>
+          {data.reviewer && <span>검수 {nameOf(data.reviewer)}</span>}
+          <span>최종 업데이트 <time datetime={isoDate(data.dateModified)}>{formatDate(data.dateModified)}</time></span>
+          {item.kind === 'article' && <span>조사 기준일 {formatDate(data.researchedAt)}</span>}
+        </p>
       </header>
-      <Toc headings={headings} variant="inline" />
+
+      {
+        program ? (
+          <>
+            <StatusBanner program={program} />
+            <SummaryBox title="핵심 요약" summary={data.summary} />
+            <OfficialCta href={program.application.officialUrl} />
+            <FactList title="지원 정보" items={programFacts!} />
+          </>
+        ) : (
+          <>
+            <SummaryBox summary={data.summary} />
+            {changeFacts && <FactList title="적용 시점" items={changeFacts} />}
+            {priceItems && priceItems.length > 0 && <PriceTable caption={`${data.title} · 가격 범위`} items={priceItems} researchedAt={data.researchedAt} />}
+          </>
+        )
+      }
+
+      <Toc headings={toc} variant="inline" />
       <div class="prose">
         <slot />
       </div>
-      <slot name="after" />
+
+      {
+        data.faq && data.faq.length > 0 && (
+          <section id="faq" class="faq">
+            <SectionTitle title="자주 묻는 질문" />
+            {data.faq.map((f) => (
+              <div class="faq__item">
+                <h3>{f.question}</h3>
+                <p>{f.answer}</p>
+              </div>
+            ))}
+          </section>
+        )
+      }
+
+      {
+        related.length > 0 && (
+          <section>
+            <SectionTitle title="함께 보면 좋은 정보" />
+            <div class="card-grid card-grid--3">
+              {related.slice(0, 3).map((r) =>
+                r.kind === 'benefit' ? (
+                  <BenefitCard href={r.url} title={r.entry.data.title} program={r.entry.data.program} audience={r.entry.data.audience} />
+                ) : (
+                  <ArticleCard href={r.url} title={r.entry.data.title} category={categoryName(r)} meta={[`업데이트 ${formatDate(r.entry.data.dateModified)}`]} />
+                ),
+              )}
+            </div>
+          </section>
+        )
+      }
+
+      <SourceList sources={citedSources(data)} />
+
+      <section class="history">
+        <SectionTitle title="업데이트 기록" />
+        <ol>
+          {
+            history.map((c) => (
+              <li>
+                <time datetime={isoDate(c.date)}>{formatDate(c.date)}</time> {c.summary}
+              </li>
+            ))
+          }
+          <li><time datetime={isoDate(data.datePublished)}>{formatDate(data.datePublished)}</time> 최초 작성</li>
+        </ol>
+      </section>
     </article>
 
     <aside class="page-aside article-aside" aria-label="글 보조 정보">
-      <Toc headings={headings} variant="sidebar" />
-      {sameTopic.length > 0 && <MiniList title="같은 주제 글" items={sameTopic} />}
-      {guides.length > 0 && <MiniList title="관련 가이드" items={guides} />}
+      <Toc headings={toc} variant="sidebar" />
+      {
+        related.length > 3 && (
+          <MiniList title="더 볼 만한 글" items={related.slice(3, 8).map((r) => ({ href: r.url, title: r.entry.data.title, meta: categoryName(r) }))} />
+        )
+      }
     </aside>
   </div>
 </BaseLayout>
@@ -72,5 +188,36 @@ const { title, description, category, updated, headings, sameTopic, guides, noin
   .article__meta {
     color: var(--color-text-muted);
     font-size: var(--text-xs);
+  }
+
+  .article__meta span + span::before {
+    content: '·';
+    margin-inline: var(--space-2);
+  }
+
+  .faq__item {
+    padding-block: var(--space-4);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .faq__item h3 {
+    font-size: var(--text-md);
+  }
+
+  .faq__item p {
+    margin-top: var(--space-2);
+    color: var(--color-text-muted);
+  }
+
+  .history ol {
+    display: grid;
+    gap: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .history time {
+    margin-right: var(--space-2);
+    font-variant-numeric: tabular-nums;
   }
 </style>

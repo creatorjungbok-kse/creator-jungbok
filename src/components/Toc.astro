@@ -1,6 +1,7 @@
 ---
 export interface Props {
-  headings: { id: string; text: string }[];
+  // 본문 H2·H3. H3는 들여써서 번호 없이 표시한다.
+  headings: { id: string; text: string; depth: 2 | 3 }[];
   // inline: 모바일 본문 안 접힘형 / sidebar: 데스크톱 사이드바형 (표시 전환은 layout.css)
   variant: 'inline' | 'sidebar';
 }
@@ -15,7 +16,7 @@ const Wrapper = variant === 'inline' ? 'details' : 'nav';
       {variant === 'inline' ? <summary>목차</summary> : <p class="toc__title">목차</p>}
       <ol>
         {headings.map((h) => (
-          <li>
+          <li class:list={{ toc__sub: h.depth === 3 }}>
             <a href={`#${h.id}`}>{h.text}</a>
           </li>
         ))}
@@ -53,9 +54,14 @@ const Wrapper = variant === 'inline' ? 'details' : 'nav';
     counter-reset: toc;
   }
 
-  li::before {
+  li:not(.toc__sub)::before {
     content: counter(toc) '. ';
     counter-increment: toc;
     color: var(--color-text-muted);
+  }
+
+  .toc__sub {
+    padding-left: 1.5em;
+    font-size: var(--text-xs);
   }
 </style>

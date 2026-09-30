@@ -11,7 +11,7 @@ const year = new Date().getFullYear();
       <a class="site-footer__brand" href="/">{site.name}</a>
       <p>{site.tagline}</p>
     </div>
-    <nav aria-label="카테고리">
+    <nav aria-label="하단 카테고리">
       <ul class="site-footer__links">
         {categoryLinks.map((l) => <li><a href={l.href}>{l.title}</a></li>)}
       </ul>

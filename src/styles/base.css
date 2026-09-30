@@ -100,9 +100,14 @@ main:focus {
   font-size: var(--text-lg);
 }
 
-.prose ul {
+.prose ul,
+.prose ol {
   padding-left: 1.25em;
   list-style: disc;
+}
+
+.prose ol {
+  list-style: decimal;
 }
 
 .prose a {
@@ -111,7 +116,7 @@ main:focus {
   text-underline-offset: 3px;
 }
 
-/* 표는 좁은 화면에서 가로 스크롤 */
+/* 표는 좁은 화면에서 가로 스크롤(Markdown 본문 표는 astro.config.mjs의 tableScroll이 감싼다) */
 .table-scroll {
   overflow-x: auto;
   border: 1px solid var(--color-border);

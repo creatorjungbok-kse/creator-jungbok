@@ -1,0 +1,59 @@
+---
+// 항목·값 목록(지원사업 정보, 변경 적용 시점). 값이 없는 항목은 호출하는 쪽에서 빼고 넘긴다.
+export interface Props {
+  title?: string;
+  items: { label: string; value: string | string[] }[];
+}
+
+const { title, items } = Astro.props;
+---
+
+<section class="fact-list">
+  {title && <h2>{title}</h2>}
+  <dl>
+    {
+      items.map(({ label, value }) => (
+        <div>
+          <dt>{label}</dt>
+          <dd>{Array.isArray(value) ? <ul>{value.map((v) => <li>{v}</li>)}</ul> : value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</section>
+
+<style>
+  .fact-list {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  h2 {
+    font-size: var(--text-lg);
+  }
+
+  dl {
+    border-top: 1px solid var(--color-border);
+    font-size: var(--text-sm);
+  }
+
+  dl > div {
+    display: grid;
+    grid-template-columns: 7em minmax(0, 1fr);
+    gap: var(--space-3);
+    padding-block: var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  dt {
+    color: var(--color-text-muted);
+    font-weight: 600;
+  }
+
+  ul {
+    display: grid;
+    gap: var(--space-1);
+    padding-left: 1.1em;
+    list-style: disc;
+  }
+</style>

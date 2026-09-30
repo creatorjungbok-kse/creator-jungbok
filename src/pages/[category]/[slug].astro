@@ -1,0 +1,29 @@
+---
+// 모든 글 상세 페이지의 유일한 route: /{category}/{slug}/ (articles + benefits).
+// URL 계산과 교차 검증은 lib/content.ts, 화면은 ArticleLayout.
+import { render } from 'astro:content';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import { getAllContent, type ContentItem } from '../../lib/content';
+import { relatedItems } from '../../lib/related';
+
+export async function getStaticPaths() {
+  const all = await getAllContent();
+  return all.map((item) => ({
+    params: { category: item.category, slug: item.slug },
+    props: { item, related: relatedItems(item, all) },
+  }));
+}
+
+interface Props {
+  item: ContentItem;
+  related: ContentItem[];
+}
+
+const { item, related } = Astro.props;
+const { Content, headings } = await render(item.entry);
+const toc = headings.flatMap((h) => (h.depth === 2 || h.depth === 3 ? [{ id: h.slug, text: h.text, depth: h.depth as 2 | 3 }] : []));
+---
+
+<ArticleLayout item={item} headings={toc} related={related}>
+  <Content />
+</ArticleLayout>

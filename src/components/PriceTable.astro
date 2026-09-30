@@ -16,7 +16,7 @@ const hasCondition = items.some((i) => i.condition);
 const hasRegion = items.some((i) => i.region);
 ---
 
-<div class="table-scroll">
+<div class="table-scroll" tabindex="0" role="region" aria-label={caption}>
   <table class="price-table">
     <caption>{caption}</caption>
     <thead>

@@ -11,17 +11,25 @@ if (!['development', 'preview', 'production'].includes(env)) {
   process.exit(2);
 }
 
-const htmlFiles = (dir) =>
+const allFiles = (dir) =>
   readdirSync(dir).flatMap((name) => {
     const path = join(dir, name);
-    return statSync(path).isDirectory() ? htmlFiles(path) : name.endsWith('.html') ? [path] : [];
+    return statSync(path).isDirectory() ? allFiles(path) : [path];
   });
+const files = allFiles(dist);
 
 const count = (html, re) => (html.match(re) ?? []).length;
 const errors = [];
 const rows = [];
 
-for (const file of htmlFiles(dist)) {
+// dev·test fixture(slug fixture-*)는 production 결과물의 어떤 파일(HTML·검색 색인·sitemap·RSS 포함)에도 없어야 한다
+if (env === 'production') {
+  for (const file of files.filter((f) => /\.(html|json|xml|txt|js|css|webmanifest)$/.test(f))) {
+    if (readFileSync(file, 'utf8').includes('fixture-')) errors.push(`${relative(dist, file)}: fixture 유출`);
+  }
+}
+
+for (const file of files.filter((f) => f.endsWith('.html'))) {
   const rel = relative(dist, file).split(sep).join('/');
   const html = readFileSync(file, 'utf8');
   const is404 = rel === '404.html';
