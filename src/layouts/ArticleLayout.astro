@@ -18,6 +18,7 @@ import { categories, categoryHref } from '../data/categories';
 import { people } from '../data/people';
 import type { ContentItem } from '../lib/content';
 import { applicationPeriod, formatDate } from '../lib/format';
+import { articleJsonLd } from '../lib/seo';
 import { citedSources } from '../lib/sources';
 
 export interface Props {
@@ -64,7 +65,7 @@ const priceItems = item.kind === 'article' ? item.entry.data.priceItems : undefi
 const audienceNames = item.kind === 'benefit' ? item.entry.data.audience.map((id) => audiences.find((a) => a.id === id)!.name) : [];
 ---
 
-<BaseLayout title={data.title} description={data.description ?? data.summary}>
+<BaseLayout title={data.title} description={data.description ?? data.summary} ogType="article" jsonLd={[articleJsonLd(item)]}>
   <div class="container page-grid">
     <article class="article">
       <Breadcrumb items={[{ label: category.name, href: categoryHref(category) }]} />

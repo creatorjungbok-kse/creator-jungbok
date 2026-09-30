@@ -9,6 +9,7 @@ import SectionTitle from '../../components/SectionTitle.astro';
 import { categories, categoryLinks } from '../../data/categories';
 import { statusLabels } from '../../lib/benefit-status';
 import { getAllContent } from '../../lib/content';
+import { collectionJsonLd } from '../../lib/seo';
 import { closedBenefits, latestModified, openBenefits, statusOf, upcomingBenefits } from '../../lib/select';
 
 const category = categories.find((c) => c.slug === 'benefits')!;
@@ -27,7 +28,7 @@ const filters = [
 ];
 ---
 
-<BaseLayout title={category.seoTitle} description={category.description}>
+<BaseLayout title={category.seoTitle} description={category.description} jsonLd={[collectionJsonLd(category.title, category.description, '/benefits/')]}>
   <div class="container page-grid">
     <div class="page-main">
       <header class="page-head">

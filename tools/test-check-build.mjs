@@ -1,0 +1,71 @@
+// check-build 회귀 테스트: 정상 빌드는 통과하고, 일부러 망가뜨린 결과물은 기대한 Fail로 막히는지 확인한다.
+// 사용: npm run test:seo   (production 빌드 1회 + fixture preview 빌드 1회)
+import { spawnSync } from 'node:child_process';
+import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+
+const work = mkdtempSync(join(tmpdir(), 'check-build-test-'));
+const run = (cmd, args, env = {}) => spawnSync(cmd, args, { encoding: 'utf8', env: { ...process.env, ASTRO_TELEMETRY_DISABLED: '1', ...env } });
+const build = (name, env) => {
+  const out = join(work, name);
+  const r = run('npx', ['astro', 'build', '--outDir', out], env);
+  if (r.status !== 0) throw new Error(`${name} 빌드 실패\n${r.stdout}${r.stderr}`);
+  return out;
+};
+const check = (env, dir) => {
+  const r = run('node', ['tools/check-build.mjs', env, dir]);
+  return { status: r.status, out: r.stdout + r.stderr };
+};
+const edit = (file, from, to) => (dir) => {
+  const path = join(dir, file);
+  const text = readFileSync(path, 'utf8');
+  if (!text.includes(from)) throw new Error(`수정 대상 없음: ${file} / ${from}`);
+  writeFileSync(path, text.replace(from, to));
+};
+const loc = (path) => `<url><loc>https://creatorjungbok.co.kr${path}</loc></url>`;
+const addToMain = (xml) => edit('sitemap-main.xml', '</urlset>', `${xml}\n</urlset>`);
+
+// [환경, 이름, 망가뜨리기, 기대 Fail 문구]
+const cases = [
+  ['production', 'title 없음', edit('business/index.html', '<title>', '<title data-x>'), 'title 없음'],
+  ['production', 'description 없음', edit('business/index.html', '<meta name="description"', '<meta name="x-description"'), 'description 없음'],
+  ['production', 'canonical 다른 도메인', edit('business/index.html', 'rel="canonical" href="https://creatorjungbok.co.kr/business/"', 'rel="canonical" href="https://www.creatorjungbok.co.kr/business/"'), 'canonical https://www.creatorjungbok.co.kr/business/'],
+  ['production', 'canonical 잘못된 path', edit('living/index.html', 'rel="canonical" href="https://creatorjungbok.co.kr/living/"', 'rel="canonical" href="https://creatorjungbok.co.kr/business/"'), '(기대 https://creatorjungbok.co.kr/living/)'],
+  ['production', 'H1 2개', edit('digital/index.html', '</main>', '<h1>x</h1></main>'), 'H1 2개'],
+  ['production', 'noindex 페이지가 sitemap에', addToMain(loc('/search/')), 'sitemap 제외 대상'],
+  ['production', 'sitemap URL에 route 없음', addToMain(loc('/business/nope/')), '실제 페이지 없음'],
+  ['production', 'filter URL이 sitemap에', edit('sitemap-benefits.xml', '</urlset>', `${loc('/benefits/?status=open')}\n</urlset>`), 'query·fragment 포함'],
+  ['production', 'indexable 페이지 sitemap 누락', edit('sitemap-main.xml', loc('/living/'), ''), '/living/: sitemap 누락'],
+  ['production', 'production sitemap에 fixture', addToMain(loc('/business/fixture-cost/')), 'sitemap-main.xml: fixture 유출'],
+  ['production', 'production RSS에 fixture', edit('rss.xml', '</channel>', '<item><link>https://creatorjungbok.co.kr/business/fixture-cost/</link></item></channel>'), 'rss.xml: fixture 유출'],
+  ['production', 'JSON-LD 파싱 실패', edit('index.html', '{"@context":"https://schema.org","@type":"WebSite"', '{"@context":"https://schema.org","@type":"WebSite",'), 'JSON-LD 파싱 실패'],
+  ['production', 'production robots 전체 차단', edit('robots.txt', 'Allow: /', 'Disallow: /'), 'robots.txt: production 정책과 다름'],
+  ['production', 'production 색인 페이지에 noindex', edit('business/index.html', '<meta name="description"', '<meta name="robots" content="noindex, follow"><meta name="description"'), 'robots noindex 1건'],
+  ['preview', 'Article headline ≠ H1', edit('business/fixture-cost/index.html', '"headline":"예시', '"headline":"다른'), 'Article.headline ≠ 화면 H1'],
+  ['preview', 'BreadcrumbList ≠ 화면', edit('business/fixture-cost/index.html', '"name":"사업·창업"', '"name":"다른 이름"'), 'BreadcrumbList ≠ 화면 Breadcrumb'],
+];
+
+let failed = 0;
+try {
+  const dists = { production: build('production', { SITE_ENV: 'production' }), preview: build('preview', { SHELL_PREVIEW: 'true' }) };
+  for (const [env, dir] of Object.entries(dists)) {
+    const r = check(env, dir);
+    const ok = r.status === 0;
+    if (!ok) failed++;
+    console.log(`${ok ? 'PASS' : 'FAIL'}  정상 ${env} 빌드 통과${ok ? '' : `\n${r.out.slice(-1500)}`}`);
+  }
+  for (const [env, name, mutate, expected] of cases) {
+    const dir = join(work, `case-${cases.findIndex((c) => c[1] === name)}`);
+    cpSync(dists[env], dir, { recursive: true });
+    mutate(dir);
+    const r = check(env, dir);
+    const ok = r.status === 1 && r.out.includes(expected);
+    if (!ok) failed++;
+    const evidence = r.out.split('\n').find((l) => l.includes(expected))?.trim();
+    console.log(`${ok ? 'PASS' : 'FAIL'}  ${name}${ok ? `  ← ${evidence}` : `\n${r.out.slice(-1500)}`}`);
+  }
+} finally {
+  rmSync(work, { recursive: true, force: true });
+}
+process.exit(failed ? 1 : 0);

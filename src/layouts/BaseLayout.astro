@@ -4,8 +4,10 @@ import '../styles/base.css';
 import '../styles/layout.css';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import JsonLd from '../components/JsonLd.astro';
 import { isProduction } from '../config/env';
 import { site } from '../config/site';
+import { absoluteUrl, pageTitle } from '../lib/seo';
 
 export interface Props {
   title?: string;
@@ -13,11 +15,16 @@ export interface Props {
   // 페이지별 색인·canonical 정책은 04-seo-rules.md를 따른다. production이 아닌 환경은 항상 noindex.
   noindex?: boolean;
   canonical?: boolean;
+  // Open Graph 유형: 글 상세는 article
+  ogType?: 'website' | 'article';
+  // 페이지별 JSON-LD(lib/seo.ts가 만든다). BreadcrumbList는 Breadcrumb 부품이 직접 낸다
+  jsonLd?: object[];
 }
 
-const { title, description = site.description, noindex = false, canonical = true } = Astro.props;
-const pageTitle = title ? `${title} | ${site.name}` : `${site.name}: ${site.tagline}`;
+const { title, description = site.description, noindex = false, canonical = true, ogType = 'website', jsonLd = [] } = Astro.props;
+const fullTitle = pageTitle(title);
 const robotsNoindex = noindex || !isProduction;
+const canonicalUrl = canonical ? absoluteUrl(Astro.url.pathname) : undefined;
 ---
 
 <!doctype html>
@@ -25,10 +32,25 @@ const robotsNoindex = noindex || !isProduction;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{pageTitle}</title>
+    <title>{fullTitle}</title>
     <meta name="description" content={description} />
     {robotsNoindex && <meta name="robots" content="noindex, follow" />}
-    {canonical && <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />}
+    {
+      canonicalUrl && (
+        <>
+          <link rel="canonical" href={canonicalUrl} />
+          <meta property="og:type" content={ogType} />
+          <meta property="og:site_name" content={site.name} />
+          <meta property="og:locale" content="ko_KR" />
+          <meta property="og:title" content={fullTitle} />
+          <meta property="og:description" content={description} />
+          <meta property="og:url" content={canonicalUrl} />
+          {/* og:image·twitter large 카드는 실제 대표 이미지(P9 브랜드 기본 이미지 또는 P12 콘텐츠 이미지)가 생기면 연결한다 */}
+          <meta name="twitter:card" content="summary" />
+        </>
+      )
+    }
+    {jsonLd.map((data) => <JsonLd data={data} />)}
     <meta name="google-site-verification" content={site.verification.google} />
     <meta name="naver-site-verification" content={site.verification.naver} />
     <meta name="google-adsense-account" content={site.adsenseClient} />

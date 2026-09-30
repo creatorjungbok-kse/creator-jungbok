@@ -1,22 +1,37 @@
 ---
+// 화면 Breadcrumb과 JSON-LD BreadcrumbList를 같은 목록에서 만든다(04 13장, 경로·이름을 두 곳에서 관리하지 않음).
+import JsonLd from './JsonLd.astro';
+import { absoluteUrl } from '../lib/seo';
+
 export interface Props {
-  // 홈은 자동으로 앞에 붙는다. 마지막 항목은 현재 페이지(링크 없음).
+  // 홈은 자동으로 앞에 붙는다. 링크 없는 항목은 현재 페이지.
   items: { label: string; href?: string }[];
 }
 
 const { items } = Astro.props;
+const trail = [{ label: '홈', href: '/' }, ...items];
+const breadcrumbList = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: trail.map((t, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: t.label,
+    item: absoluteUrl(t.href ?? Astro.url.pathname),
+  })),
+};
 ---
 
 <nav class="breadcrumb" aria-label="현재 위치">
   <ol>
-    <li><a href="/">홈</a></li>
     {
-      items.map((item) => (
+      trail.map((item) => (
         <li>{item.href ? <a href={item.href}>{item.label}</a> : <span aria-current="page">{item.label}</span>}</li>
       ))
     }
   </ol>
 </nav>
+<JsonLd data={breadcrumbList} />
 
 <style>
   .breadcrumb ol {

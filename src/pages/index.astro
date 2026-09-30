@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HomeView from '../components/HomeView.astro';
 import { categories } from '../data/categories';
 import { getAllContent } from '../lib/content';
+import { homeJsonLd } from '../lib/seo';
 import { latestModified, latestPublished, openBenefits, pillars, recentCosts, recentlyUpdated, statusOf, timely } from '../lib/select';
 
 // 섹션별 개수(01 D). 선택 규칙은 lib/select.ts
@@ -11,7 +12,7 @@ const all = await getAllContent();
 const listed = all.filter((i) => statusOf(i) !== 'closed');
 ---
 
-<BaseLayout>
+<BaseLayout jsonLd={homeJsonLd()}>
   <HomeView
     featured={pillars(listed, all).slice(0, 3)}
     benefits={openBenefits(listed).slice(0, 4)}

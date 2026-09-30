@@ -44,3 +44,28 @@ test('신청 가능만 보기', () => assert.deepEqual(urls(search(docs, '에너
 test('동의어: 보조금 → 지원사업을 쓴 글', () => assert.ok(urls(search(docs, '보조금')).includes('/benefits/energy-open/')));
 test('모든 핵심어가 있어야 결과', () => assert.deepEqual(search(docs, '입주청소 자동차'), []));
 test('결과 0건', () => assert.deepEqual(search(docs, '자동차보험'), []));
+
+// ── 안전장치 ─────────────────────────────────────────
+test('비용·가격·요금·얼마·견적만 검색하면 빈 검색어로 만들지 않는다', () => {
+  for (const w of ['비용', '가격', '요금', '얼마', '견적']) assert.deepEqual(queryTerms(w), [w]);
+  assert.deepEqual(queryTerms('인터넷 요금'), ['인터넷']);
+  assert.deepEqual(queryTerms('포장이사비용'), ['포장이사']);
+});
+
+test('정규화 후 빈 검색어는 전체 결과가 아니라 0건', () => {
+  for (const q of ['', '   ', '!!!', '· - ·']) assert.deepEqual(search(docs, q), []);
+});
+
+test('HTML·스크립트 형태의 검색어는 문자열로만 비교되고 결과를 만들지 않는다', () => {
+  assert.deepEqual(search(docs, '<img src=x onerror=alert(1)>'), []);
+  assert.deepEqual(search(docs, '<script>alert(1)</script>'), []);
+});
+
+test('검색 페이지 script는 HTML 문자열을 삽입하지 않는다(textContent·검증된 인덱스 URL만)', async () => {
+  const { readFileSync } = await import('node:fs');
+  const page = readFileSync(new URL('../src/pages/search/index.astro', import.meta.url), 'utf8');
+  const script = page.slice(page.indexOf('<script>'), page.indexOf('</script>'));
+  assert.doesNotMatch(script, /innerHTML|outerHTML|insertAdjacentHTML|document\.write|eval\(|new Function/);
+  // 결과 링크 주소는 인덱스의 url만 쓴다
+  assert.match(script, /link\.href = doc\.url;/);
+});

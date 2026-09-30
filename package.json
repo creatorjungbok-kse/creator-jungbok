@@ -13,7 +13,8 @@
     "check:build": "node tools/check-build.mjs",
     "test:content": "node tools/test-content.mjs",
     "test:status": "node --test tools/test-benefit-status.mjs",
-    "test:search": "node --test tools/test-search.mjs"
+    "test:search": "node --test tools/test-search.mjs",
+    "test:seo": "node tools/test-check-build.mjs"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "0.4.2",

@@ -6,8 +6,9 @@ import Breadcrumb from '../../components/Breadcrumb.astro';
 import ContentCard from '../../components/ContentCard.astro';
 import MiniList from '../../components/MiniList.astro';
 import SectionTitle from '../../components/SectionTitle.astro';
-import { categories, categoryLinks, type Category } from '../../data/categories';
+import { categories, categoryHref, categoryLinks, type Category } from '../../data/categories';
 import { getAllContent } from '../../lib/content';
+import { collectionJsonLd } from '../../lib/seo';
 import { latestModified, openBenefits, pillars } from '../../lib/select';
 
 export function getStaticPaths() {
@@ -33,7 +34,7 @@ const otherCategories = categoryLinks.filter((l) => l.href !== `/${category.slug
 const links = (list: typeof items) => list.map((i) => ({ href: i.url, title: i.entry.data.title }));
 ---
 
-<BaseLayout title={category.seoTitle} description={category.description}>
+<BaseLayout title={category.seoTitle} description={category.description} jsonLd={[collectionJsonLd(category.title, category.description, categoryHref(category))]}>
   <div class="container page-grid">
     <div class="page-main">
       <header class="page-head">

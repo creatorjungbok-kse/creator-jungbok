@@ -1,0 +1,10 @@
+---
+// JSON-LD 한 덩어리. `<`를 이스케이프해 문자열이 script를 닫지 못하게 한다.
+export interface Props {
+  data: object;
+}
+
+const json = JSON.stringify(Astro.props.data).replaceAll('<', '\\u003c');
+---
+
+<script type="application/ld+json" set:html={json} />
