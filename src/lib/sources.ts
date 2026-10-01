@@ -1,5 +1,6 @@
 // 글이 인용한 출처 목록. 검증(content-schema)과 화면(SourceList)이 같은 목록을 쓴다.
 import { commonSources, type Source } from '../data/sources';
+import { toolSourceIds, type ToolId } from '../tools/registry';
 
 interface SourceRef {
   path: (string | number)[];
@@ -14,6 +15,7 @@ interface SourceFields {
   priceItems?: { sourceIds: string[] }[];
   compare?: { rows: { sourceIds?: string[] }[] };
   actionLinks?: { sourceId: string }[];
+  tool?: ToolId;
   change?: { officialSourceIds: string[] };
   program?: {
     officialSourceIds: string[];
@@ -33,6 +35,8 @@ export function sourceRefs(d: SourceFields): SourceRef[] {
     ...(d.priceItems ?? []).flatMap((item, i) => item.sourceIds.map((id, j) => ({ path: ['priceItems', i, 'sourceIds', j], id }))),
     ...(d.compare?.rows ?? []).flatMap((row, i) => (row.sourceIds ?? []).map((id, j) => ({ path: ['compare', 'rows', i, 'sourceIds', j], id }))),
     ...(d.actionLinks ?? []).map((link, i) => s1(['actionLinks', i, 'sourceId'], link.sourceId)),
+    // 도구 상수의 근거(공통 출처). 도구 숫자는 공식 출처만
+    ...(d.tool ? toolSourceIds[d.tool].map((id) => s1(['tool'], id)) : []),
     ...(d.change?.officialSourceIds ?? []).map((id, i) => s1(['change', 'officialSourceIds', i], id)),
     ...(p
       ? [

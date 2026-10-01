@@ -1,7 +1,7 @@
 ---
 // 글 상세 화면(cost·compare·guide·change·benefit 공통 틀). 블록 순서는 유형별로 고정이고, 내용이 있는 블록만 나온다.
 // - benefit: 상태 → 한눈에 보기 → 공식 신청·안내 링크 → 내가 해당되는지 → 준비할 것 → 꼭 알아둘 것 → (목차·본문) → FAQ
-// - 그 밖의 글: 결론 → (한눈에 보기·적용 시점·가격표·비교표·guide 준비할 것) → (목차·본문) → 준비할 것 → 꼭 알아둘 것 → 공식 링크 → FAQ
+// - 그 밖의 글: 결론 → (도구·한눈에 보기·적용 시점·가격표·비교표·guide 준비할 것) → (목차·본문) → 준비할 것 → 꼭 알아둘 것 → 공식 링크 → FAQ
 //   단 guide는 공식 링크를 본문 앞(정리 블록 바로 뒤)에 둔다
 // 공통 끝부분: 다음에 볼 정보(최대 3개, 없으면 숨김) → 출처 → 업데이트 기록. 목차는 본문 H2가 3개 이상일 때만.
 import BaseLayout from './BaseLayout.astro';
@@ -19,6 +19,7 @@ import SourceList from '../components/SourceList.astro';
 import StatusBanner from '../components/StatusBanner.astro';
 import SummaryBox from '../components/SummaryBox.astro';
 import Toc, { type Props as TocProps } from '../components/Toc.astro';
+import { toolComponents } from '../components/tools';
 import type { AdSlotId } from '../config/ads';
 import { audiences } from '../data/audiences';
 import { categories, categoryHref } from '../data/categories';
@@ -80,6 +81,8 @@ const changeFacts = change && [
 const priceItems = article?.priceItems;
 const isGuide = article?.contentType === 'guide';
 const checklist = article?.checklist;
+// 사이트 도구(cost 글만): 결론 바로 아래. 도구가 없는 글에는 script가 하나도 붙지 않는다
+const Tool = article?.tool ? toolComponents[article.tool] : undefined;
 
 // 광고 슬롯(03 4~6장). 광고가 꺼져 있으면 contentAdSlots가 빈 집합이라 아래 자리는 모두 출력되지 않는다.
 // [후속] 분량 판단이 본문 H2 수 기준이라 블록 중심 글에서는 실제 길이와 어긋날 수 있다(docs/05 후속 항목).
@@ -131,6 +134,7 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
         ) : (
           <>
             <SummaryBox summary={data.summary} />
+            {Tool && <Tool />}
             {article?.quickFacts && <FactList title={article.quickFacts.title} items={article.quickFacts.items} variant="quick" />}
             {changeFacts && <FactList title="적용 시점" items={changeFacts} />}
             {priceItems && priceItems.length > 0 && <PriceTable caption="항목별 가격 범위" items={priceItems} researchedAt={data.researchedAt} />}

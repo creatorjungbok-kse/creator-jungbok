@@ -61,6 +61,7 @@ export const categories: Category[] = [
       { slug: 'install', name: '설치·교체' },
       { slug: 'rental', name: '렌탈' },
       { slug: 'services', name: '생활 서비스' },
+      { slug: 'utilities', name: '공과금' },
     ],
   },
   {

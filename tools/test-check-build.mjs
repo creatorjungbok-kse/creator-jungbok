@@ -26,7 +26,11 @@ const edit = (file, from, to) => (dir) => {
 const loc = (path) => `<url><loc>https://creatorjungbok.co.kr${path}</loc></url>`;
 const addToMain = (xml) => edit('sitemap-main.xml', '</urlset>', `${xml}\n</urlset>`);
 
-// [환경, 이름, 망가뜨리기, 기대 Fail 문구]
+const TOOL = 'living/electricity-bill-calculator/index.html';
+const VALID = 'data-valid-until="2026-12-31"';
+const kstPlus = (days) => new Date(Date.now() + 9 * 3600e3 + days * 864e5).toISOString().slice(0, 10);
+
+// [환경, 이름, 망가뜨리기, 기대 문구, 기대 종료 코드(기본 1 = Fail, 0 = Warning만)]
 const cases = [
   ['production', 'title 없음', edit('business/index.html', '<title>', '<title data-x>'), 'title 없음'],
   ['production', 'description 없음', edit('business/index.html', '<meta name="description"', '<meta name="x-description"'), 'description 없음'],
@@ -46,6 +50,10 @@ const cases = [
   ['production', 'AdSense 광고 코드', edit('business/index.html', '</main>', '<ins class="adsbygoogle"></ins></main>'), 'business/index.html: 광고 코드'],
   ['production', '광고가 꺼져 있는데 슬롯 출력', edit('index.html', '</main>', '<div data-ad-slot="home-1"></div></main>'), '광고가 꺼져 있는데 광고 슬롯 1건'],
   ['production', '광고 없는 페이지(검색)에 슬롯', edit('search/index.html', '</main>', '<div data-ad-slot="home-1"></div></main>'), '광고 없는 페이지에 광고 슬롯'],
+  ['production', '도구 없는 페이지에 script', edit('business/index.html', '</main>', '<script>1</script></main>'), '허용되지 않은 페이지 script 1건'],
+  ['production', '도구 상수 기한 지남', edit(TOOL, VALID, `data-valid-until="${kstPlus(-1)}"`), '도구 상수 기한 지남'],
+  ['production', '도구 상수 기한 14일 이내', edit(TOOL, VALID, `data-valid-until="${kstPlus(7)}"`), '도구 상수 기한 임박', 0],
+  ['preview', 'preview는 도구 기한을 막지 않음', edit(TOOL, VALID, `data-valid-until="${kstPlus(-1)}"`), 'OK (preview', 0],
   ['production', 'sidebar에 슬롯', edit('business/index.html', '</aside>', '<div data-ad-slot="home-1"></div></aside>'), '광고 슬롯 home-1: main 본문 밖·sidebar'],
   ['preview', '공식 신청 버튼 바로 아래 슬롯', edit('benefits/fixture-open/index.html', '공식 사이트로 이동</span></a>', '공식 사이트로 이동</span></a><div data-ad-slot="benefit-mid"></div>'), '광고 슬롯 benefit-mid: 보호 영역(official-cta) 안 또는 인접'],
   ['preview', '공식 신청 버튼 위 슬롯', edit('benefits/fixture-open/index.html', '<h1', '<div data-ad-slot="benefit-mid"></div><h1'), '광고 슬롯 benefit-mid: 공식 신청 버튼보다 위'],
@@ -62,12 +70,12 @@ try {
     if (!ok) failed++;
     console.log(`${ok ? 'PASS' : 'FAIL'}  정상 ${env} 빌드 통과${ok ? '' : `\n${r.out.slice(-1500)}`}`);
   }
-  for (const [env, name, mutate, expected] of cases) {
+  for (const [env, name, mutate, expected, status = 1] of cases) {
     const dir = join(work, `case-${cases.findIndex((c) => c[1] === name)}`);
     cpSync(dists[env], dir, { recursive: true });
     mutate(dir);
     const r = check(env, dir);
-    const ok = r.status === 1 && r.out.includes(expected);
+    const ok = r.status === status && r.out.includes(expected);
     if (!ok) failed++;
     const evidence = r.out.split('\n').find((l) => l.includes(expected))?.trim();
     console.log(`${ok ? 'PASS' : 'FAIL'}  ${name}${ok ? `  ← ${evidence}` : `\n${r.out.slice(-1500)}`}`);

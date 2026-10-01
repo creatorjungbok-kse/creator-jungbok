@@ -1,4 +1,4 @@
-// 빌드 결과물 검사(환경별 head·GA4, SEO, sitemap·RSS·robots, fixture 유출, 신청 가능 영역, script 범위, 광고 슬롯).
+// 빌드 결과물 검사(환경별 head·GA4, SEO, sitemap·RSS·robots, fixture 유출, 신청 가능 영역, script 범위, 도구 상수 기한, 광고 슬롯).
 // Fail은 종료 코드 1, Warning은 보고만 한다(04 27장).
 // 사용: npm run check:build -- <development|preview|production> [distDir]
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
@@ -35,6 +35,9 @@ const pages = new Set(htmlFiles.map(pathOf));
 const ALWAYS_NOINDEX = new Set(['/404.html', '/search/']);
 const SITEMAP_EXEMPT = new Set(['/contact/', '/privacy/', '/terms/', '/disclosure/']);
 const SCRIPT_PAGES = new Set(['/benefits/', '/search/']);
+// 도구 상수 기한(production만): 남은 날이 이 값 이하면 Warning, 지나면 Fail. 오늘 = 한국 날짜
+const TOOL_EXPIRY_WARN_DAYS = 14;
+const todayKst = new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10);
 // 광고 없는 페이지(03 12장): 검색·정책·404
 const NO_AD_PAGES = new Set(['/search/', '/404.html', '/about/', '/editorial-policy/', '/contact/', '/privacy/', '/terms/', '/disclosure/']);
 // 광고 설정 단일 출처(src/config/ads.ts)의 on/off
@@ -177,11 +180,21 @@ for (const file of htmlFiles) {
   }
   // 필터·검색 URL(?status= ?q= 등)은 링크로 만들지 않는다(색인·sitemap 대상 아님, 크롤 트랩 방지)
   if (/href="[^"]*\?[^"]*\b(status|q|category|open)=/.test(html)) fail('필터·검색 URL 링크');
-  // 사이트 자체 script는 benefits 허브와 검색 페이지에만(production GA4 loader·JSON-LD 제외)
+  // 사이트 자체 script는 benefits 허브·검색 페이지·도구(data-tool)가 있는 글에만(production GA4 loader·JSON-LD 제외)
   const siteScripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)].filter(
     ([, attrs, body]) => !attrs.includes('application/ld+json') && !attrs.includes('googletagmanager.com') && !body.includes('window.dataLayer'),
   ).length;
-  if (siteScripts > 0 && !SCRIPT_PAGES.has(path)) fail(`허용되지 않은 페이지 script ${siteScripts}건`);
+  const hasTool = /\sdata-tool="/.test(html);
+  if (siteScripts > 0 && !SCRIPT_PAGES.has(path) && !hasTool) fail(`허용되지 않은 페이지 script ${siteScripts}건`);
+
+  // 도구 상수 기한(연료비조정단가 등 기간이 있는 값). production에서만 막는다
+  if (env === 'production') {
+    for (const [, until] of html.matchAll(/\sdata-valid-until="([^"]*)"/g)) {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(until)) fail(`도구 상수 기한 형식 오류 ${until}`);
+      else if (until < todayKst) fail(`도구 상수 기한 지남(${until}, 오늘 ${todayKst}): src/tools 상수를 갱신하세요`);
+      else if ((Date.parse(until) - Date.parse(todayKst)) / 864e5 <= TOOL_EXPIRY_WARN_DAYS) warn(`도구 상수 기한 임박(${until}까지, 오늘 ${todayKst})`);
+    }
+  }
 
   // 광고 슬롯(03 3·5·12·13장): 꺼져 있으면 0개. 켜져 있어도 광고 없는 페이지·main 밖·sidebar·보호 영역 안이나 바로 옆·공식 신청 버튼 위 금지
   const slots = regions(html, 'data-ad-slot');

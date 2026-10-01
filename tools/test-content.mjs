@@ -166,7 +166,10 @@ const cases = [
   ['confidence-mismatch', edit(C, 'confidence: L2', 'confidence: L3'), 'L3는 서로 다른 S2 출처 3개 이상'],
   ['date-order', edit(C, 'dateModified: 2026-09-20', 'dateModified: 2026-08-01'), 'dateModified < datePublished'],
   ['modified-without-changelog', edit(C, 'changelog:\n  - date: 2026-09-20\n    summary: 가격 재확인\n', ''), 'changelog'],
-  ['cost-without-prices', (f) => (f[C] = f[C].replace(/priceItems:[\s\S]*?changelog:/, 'changelog:')), 'cost 글은 priceItems가 필요하다'],
+  ['cost-without-prices', (f) => (f[C] = f[C].replace(/priceItems:[\s\S]*?changelog:/, 'changelog:')), 'cost 글은 priceItems 또는 tool이 필요하다'],
+  ['cost-with-tool-only', (f) => (f[C] = f[C].replace(/localSources:[\s\S]*?changelog:/, 'tool: electricity-bill\nchangelog:')), null],
+  ['unknown-tool', edit(C, 'contentType: cost', 'contentType: cost\ntool: nope'), 'tool'],
+  ['tool-on-guide', edit('articles/business/test-startup-guide.md', 'contentType: guide', 'contentType: guide\ntool: electricity-bill'), 'tool은 cost 글에만'],
   ['benefit-without-program', (f) => (f[B] = f[B].replace(/program:[\s\S]*?---/, '---')), 'program'],
   ['benefit-non-official-source', (f) => {
     edit(B, '    - text: 테스트 조건\n      sourceId: gov24', '    - text: 테스트 조건\n      sourceId: local:blog')(f);

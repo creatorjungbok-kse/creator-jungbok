@@ -6,6 +6,7 @@ import { people } from '../data/people';
 import { sourceLevels } from '../data/sources';
 import { topics } from '../data/topics';
 import { actionUrlProblem, hostExceptionProblem, linkActions } from './action-links';
+import { toolIds } from '../tools/registry';
 import { sourceRefs, sourceResolver } from './sources';
 
 const date = z.coerce.date();
@@ -253,6 +254,8 @@ export const articleSchema = z
     // Supporting 글이 속한 Pillar(02 5장)
     pillar: internalPath.optional(),
     priceItems: z.array(priceItemSchema).optional(),
+    // 사이트 도구(계산기 등). 도구의 요금표·상수는 src/tools에만 두고 priceItems에 중복으로 쓰지 않는다
+    tool: z.enum(toolIds).optional(),
     // 한눈에 보기(결론 바로 아래): 상황·항목별 핵심 답
     quickFacts: z.strictObject({ title: text, items: z.array(z.strictObject({ label: text, value: text })).min(1) }).optional(),
     compare: compareSchema.optional(),
@@ -262,7 +265,8 @@ export const articleSchema = z
     ads: adsSchema({ top: slot, mid: slot, lower: slot }),
   })
   .superRefine((d, ctx) => {
-    if (d.contentType === 'cost' && !d.priceItems?.length) ctx.addIssue({ code: 'custom', path: ['priceItems'], message: 'cost 글은 priceItems가 필요하다' });
+    if (d.contentType === 'cost' && !d.priceItems?.length && !d.tool) ctx.addIssue({ code: 'custom', path: ['priceItems'], message: 'cost 글은 priceItems 또는 tool이 필요하다' });
+    if (d.tool && d.contentType !== 'cost') ctx.addIssue({ code: 'custom', path: ['tool'], message: 'tool은 cost 글에만 둔다' });
     if ((d.contentType === 'change') !== (d.change !== undefined)) ctx.addIssue({ code: 'custom', path: ['change'], message: 'change 블록은 change 글에만, change 글에는 필수' });
     if ((d.contentType === 'compare') !== (d.compare !== undefined)) ctx.addIssue({ code: 'custom', path: ['compare'], message: 'compare 표는 compare 글에만, compare 글에는 필수' });
     // '신청하기'는 상태를 계산하는 지원·혜택 글에서만 쓴다
@@ -270,8 +274,8 @@ export const articleSchema = z
       if (l.action === 'application') ctx.addIssue({ code: 'custom', path: ['actionLinks', i, 'action'], message: 'application 링크는 지원·혜택(benefit) 글에서만 쓴다(info·check 사용)' });
     });
     // 정리 가치: 제목·공식 링크·출처만 있는 페이지를 막는다(글자 수 기준은 두지 않는다)
-    if (!d.priceItems?.length && !d.compare && !d.checklist && !d.notes && !d.quickFacts) {
-      ctx.addIssue({ code: 'custom', path: ['notes'], message: '정리 블록이 1개 이상 필요하다(priceItems·compare·quickFacts·checklist·notes 중)' });
+    if (!d.priceItems?.length && !d.compare && !d.checklist && !d.notes && !d.quickFacts && !d.tool) {
+      ctx.addIssue({ code: 'custom', path: ['notes'], message: '정리 블록이 1개 이상 필요하다(priceItems·compare·quickFacts·checklist·notes·tool 중)' });
     }
     checkEntry(d, ctx);
   });
