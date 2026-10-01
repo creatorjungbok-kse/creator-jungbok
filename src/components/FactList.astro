@@ -1,14 +1,17 @@
 ---
-// 항목·값 목록(지원사업 정보, 변경 적용 시점). 값이 없는 항목은 호출하는 쪽에서 빼고 넘긴다.
+// 항목·값 목록(변경 적용 시점, 지원·혜택 한눈에 보기). 값이 없는 항목은 호출하는 쪽에서 빼고 넘긴다.
+// quick: 한눈에 보기 칸(회색 칸, 태블릿 이상 2열). notes는 칸 아래 작은 보조 정보 한 줄씩
 export interface Props {
   title?: string;
   items: { label: string; value: string | string[] }[];
+  variant?: 'list' | 'quick';
+  notes?: string[];
 }
 
-const { title, items } = Astro.props;
+const { title, items, variant = 'list', notes = [] } = Astro.props;
 ---
 
-<section class="fact-list">
+<section class:list={['fact-list', `fact-list--${variant}`]}>
   {title && <h2>{title}</h2>}
   <dl>
     {
@@ -20,6 +23,7 @@ const { title, items } = Astro.props;
       ))
     }
   </dl>
+  {notes.length > 0 && <p class="fact-list__notes">{notes.map((n) => <span>{n}</span>)}</p>}
 </section>
 
 <style>
@@ -56,5 +60,51 @@ const { title, items } = Astro.props;
     gap: var(--space-1);
     padding-left: 1.1em;
     list-style: disc;
+  }
+
+  /* 한눈에 보기: 칸 안에 라벨(작게)·값(굵게)을 위아래로 */
+  .fact-list--quick {
+    padding: var(--space-5);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+  }
+
+  .fact-list--quick dl {
+    display: grid;
+    gap: var(--space-4);
+    border-top: 0;
+  }
+
+  .fact-list--quick dl > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+    padding: 0;
+    border: 0;
+  }
+
+  .fact-list--quick dt {
+    font-size: var(--text-xs);
+  }
+
+  .fact-list--quick dd {
+    margin: 0;
+    font-size: var(--text-md);
+    font-weight: var(--weight-semibold);
+  }
+
+  .fact-list__notes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-4);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+  }
+
+  @media (min-width: 768px) {
+    .fact-list--quick dl {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 </style>

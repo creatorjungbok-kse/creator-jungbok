@@ -19,6 +19,12 @@ localSources:
     level: S2
     checkedAt: 2026-09-05
 sourceIds: [local:moving-guide]
+checklist:
+  title: 이사 전 체크리스트
+  items:
+    - 예시 · 업체 견적 2곳 이상 비교
+    - 예시 · 전입신고 일정 확인
+    - 예시 · 관리비·공과금 정산
 ---
 
 예시 문단입니다. 가이드 글은 순서대로 따라 할 수 있게 씁니다.

@@ -12,6 +12,11 @@ author: operator
 ymyl: low
 topics: [small-business]
 sourceIds: [nts]
+checklist:
+  items:
+    - 예시 · 사업자등록
+    - 예시 · 매장 계약
+    - 예시 · 결제 단말기 설치
 ---
 
 예시 문단입니다. Pillar 가이드는 가장 넓은 질문에 답하고 세부 글로 연결합니다.

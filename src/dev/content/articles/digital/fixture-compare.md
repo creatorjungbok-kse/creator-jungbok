@@ -19,17 +19,26 @@ localSources:
     level: S2
     checkedAt: 2026-09-10
 sourceIds: [local:carrier-a]
+compare:
+  caption: 속도별 월 요금(예시)
+  options: [예시 A, 예시 B, 예시 C]
+  rows:
+    - label: 100Mbps
+      values: [예시 월 2만 원대, 예시 월 2만 원대, 예시 월 3만 원대]
+      sourceIds: [local:carrier-a]
+    - label: 500Mbps
+      values: [예시 월 3만 원대, 예시 월 3만 원대, 예시 월 4만 원대]
+      sourceIds: [local:carrier-a]
+    - label: 1Gbps
+      values: [예시 월 4만 원대, 예시 월 4만 원대, 예시 월 5만 원대]
+      sourceIds: [local:carrier-a]
+    - label: 약정·할인
+      values: [약정 3년 기준 예시, 결합 할인 제외 예시, 설치비 별도 예시]
+notes:
+  - 예시 · 표의 요금은 약정 기간에 따라 달라집니다.
 ---
 
 예시 문단입니다. 비교 글은 기준을 먼저 밝히고 표로 차이를 보여 줍니다.
-
-## 한눈에 비교
-
-| 조건 | 예시 A | 예시 B | 예시 C | 비고 | 업데이트 |
-| --- | --- | --- | --- | --- | --- |
-| 100Mbps | 예시 월 2만 원대 | 예시 월 2만 원대 | 예시 월 3만 원대 | 약정 3년 기준 예시 | 2026.09 |
-| 500Mbps | 예시 월 3만 원대 | 예시 월 3만 원대 | 예시 월 4만 원대 | 결합 할인 제외 예시 | 2026.09 |
-| 1Gbps | 예시 월 4만 원대 | 예시 월 4만 원대 | 예시 월 5만 원대 | 설치비 별도 예시 | 2026.09 |
 
 ## 고르는 기준
 

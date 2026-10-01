@@ -1,0 +1,64 @@
+---
+// 짧은 항목 목록. check: 준비할 것·핵심 조건(체크 표시, 누르는 기능·저장 없음) / note: 꼭 알아둘 것(점 표시).
+// protect: 광고 금지 영역 이름(자격 조건처럼 행동 판단에 쓰는 블록)
+export interface Props {
+  title: string;
+  items: string[];
+  marker?: 'check' | 'note';
+  protect?: string;
+}
+
+const { title, items, marker = 'check', protect } = Astro.props;
+---
+
+<section class:list={['checklist', `checklist--${marker}`]} data-ad-protected={protect}>
+  <h2>{title}</h2>
+  <ul>{items.map((item) => <li>{item}</li>)}</ul>
+  <slot />
+</section>
+
+<style>
+  .checklist {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  h2 {
+    font-size: var(--text-lg);
+    letter-spacing: -0.01em;
+  }
+
+  ul {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  li {
+    display: grid;
+    grid-template-columns: 1.5rem minmax(0, 1fr);
+    gap: var(--space-2);
+    align-items: start;
+  }
+
+  li::before {
+    display: grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: var(--radius-sm);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-bold);
+  }
+
+  .checklist--check li::before {
+    content: '✓';
+    background: var(--color-brand-soft);
+    color: var(--color-brand-text);
+  }
+
+  .checklist--note li::before {
+    content: '!';
+    background: var(--color-surface-strong);
+    color: var(--color-text);
+  }
+</style>

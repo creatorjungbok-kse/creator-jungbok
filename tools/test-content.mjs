@@ -60,6 +60,8 @@ ymyl: low
 topics: [small-business]
 related: [/business/test-card-terminal/]
 sourceIds: [nts]
+checklist:
+  items: [테스트 준비 항목]
 ---
 본문
 `;
@@ -78,8 +80,13 @@ author: operator
 ymyl: medium
 topics: [housing]
 sourceIds: [gov24]
+notes: [테스트 주의 사항]
+actionLinks:
+  - org: 정부24
+    action: check
+    url: https://www.gov.kr/
+    sourceId: gov24
 ---
-본문
 `;
 
 const benefit = `---
@@ -114,6 +121,11 @@ program:
     officialUrl: https://www.gov.kr/
   lastStatusCheckedAt: 2026-09-20
   officialSourceIds: [gov24]
+actionLinks:
+  - org: 정부24
+    action: application
+    url: https://www.gov.kr/
+    sourceId: gov24
 ---
 본문
 `;
@@ -134,6 +146,11 @@ const add = (file, content) => (f) => {
 };
 const C = 'articles/business/test-card-terminal.md';
 const B = 'benefits/test-energy-voucher.md';
+const G = 'articles/benefits/test-check-benefits.md';
+// 행동 링크 한 개를 바꾼다(G의 정부24 링크)
+const link = (url, extra = '') => edit(G, '    url: https://www.gov.kr/\n    sourceId: gov24', `    url: ${url}\n    sourceId: gov24${extra}`);
+const localOfficial = (hosts) =>
+  edit(G, 'notes: [테스트 주의 사항]', `notes: [테스트 주의 사항]\nlocalSources:\n  - id: local:city\n    title: 테스트시청\n    publisher: 테스트시\n    url: https://www.test-city.go.kr/notice/1\n    level: S1\n    checkedAt: 2026-09-20${hosts ? `\n    actionHosts: [${hosts}]` : ''}`);
 
 // [이름, 수정, 기대 오류 문구(없으면 통과 기대)]
 const cases = [
@@ -158,10 +175,62 @@ const cases = [
   ['period-without-dates', edit(B, '    start: 2026-10-01\n    end: 2026-12-31\n', ''), 'period 모드는 start·end가 필요하다'],
   ['until-budget-without-start', edit(B, '    mode: period\n    start: 2026-10-01\n    end: 2026-12-31\n', '    mode: until-budget\n'), 'until-budget 모드는 start가 필요하다'],
   ['unused-local-source', edit(C, 'sourceIds: [local:vendor-a]', 'sourceIds: [nts]'), '인용되지 않은 출처 local:vendor-a'],
-  ['benefits-article-type', edit('articles/benefits/test-check-benefits.md', 'contentType: guide', 'contentType: compare'), 'guide·change만'],
+  ['benefits-article-type', (f) => {
+    edit(G, 'contentType: guide', 'contentType: compare')(f);
+    edit(G, 'notes: [테스트 주의 사항]', 'notes: [테스트 주의 사항]\ncompare:\n  caption: 테스트 비교\n  options: [A, B]\n  rows:\n    - label: 가격\n      values: [1만 원, 2만 원]')(f);
+  }, 'guide·change만'],
   ['url-collision', add('articles/benefits/test-energy-voucher.md', benefitsGuide.replace('테스트 혜택 확인', '테스트 충돌')), '공개 URL 충돌 /benefits/test-energy-voucher/'],
   ['reserved-slug', add('articles/digital/internet.md', guide.replace('subcategory: startup', 'subcategory: internet').replace('테스트 창업 초기 비용', '테스트 인터넷')), '예약된 slug internet'],
   ['duplicate-primary-query', edit('articles/business/test-startup-guide.md', 'primaryQuery: 테스트 창업 초기 비용', 'primaryQuery: 테스트 카드단말기 가격'), 'primaryQuery 중복'],
+  // ── 짧은 페이지 품질(글자 수 기준 없음): 정리 블록 + 출처 ──
+  ['no-value-block', edit('articles/business/test-startup-guide.md', 'checklist:\n  items: [테스트 준비 항목]\n', ''), '정리 블록이 1개 이상 필요하다'],
+  ['link-only-page', edit(G, 'notes: [테스트 주의 사항]\n', ''), '정리 블록이 1개 이상 필요하다'],
+  ['compare-without-table', edit('articles/business/test-startup-guide.md', 'contentType: guide', 'contentType: compare'), 'compare 표는 compare 글에만'],
+  ['compare-row-length', (f) => {
+    edit('articles/business/test-startup-guide.md', 'contentType: guide', 'contentType: compare')(f);
+    edit('articles/business/test-startup-guide.md', 'checklist:', 'compare:\n  caption: 테스트 비교\n  options: [A, B]\n  rows:\n    - label: 가격\n      values: [1만 원]\nchecklist:')(f);
+  }, '값 1개 ≠ 선택지 2개'],
+  ['benefit-checklist-field', edit(B, 'actionLinks:', 'checklist:\n  items: [x]\nactionLinks:'), 'program.application.documents에 쓴다'],
+  // ── 공식 행동 링크 ──
+  ['action-subdomain-ok', link('https://plus.gov.kr/service/1'), null],
+  ['action-other-domain', link('https://www.example.com/gov'), '출처(www.gov.kr)와 다른 도메인 www.example.com'],
+  ['action-lookalike-domain', link('https://www.gov.kr.example.com/'), '다른 도메인 www.gov.kr.example.com'],
+  ['action-lookalike-suffix', link('https://evilgov.kr/'), '다른 도메인 evilgov.kr'],
+  ['action-userinfo', link('https://www.gov.kr@example.com/'), '포트·사용자 정보'],
+  ['action-http', link('http://www.gov.kr/'), 'https 주소만 허용'],
+  ['action-org-mismatch', edit(G, '  - org: 정부24', '  - org: 국세청'), "기관명 '국세청'이 출처 이름"],
+  ['action-non-official-source', (f) => {
+    edit(G, '    sourceId: gov24', '    sourceId: local:blog')(f);
+    edit(G, '  - org: 정부24', '  - org: 테스트 블로그')(f);
+    edit(G, 'notes: [테스트 주의 사항]', 'notes: [테스트 주의 사항]\nlocalSources:\n  - id: local:blog\n    title: 테스트 블로그\n    publisher: 테스트\n    url: https://blog.example.com/\n    level: S2\n    checkedAt: 2026-09-20')(f);
+  }, 'local:blog: 공식(S1) 출처만 허용'],
+  ['action-missing-source', edit(G, '    sourceId: gov24', '    sourceId: nope'), '존재하지 않는 출처 nope'],
+  ['action-application-in-article', edit(G, 'action: check', 'action: application'), 'application 링크는 지원·혜택(benefit) 글에서만'],
+  ['benefit-without-links', (f) => (f[B] = f[B].replace(/actionLinks:[\s\S]*?---/, '---')), 'actionLinks'],
+  ['benefit-first-link-not-official', edit(B, '    action: application\n    url: https://www.gov.kr/', '    action: application\n    url: https://plus.gov.kr/'), '첫 행동 링크는 action application + program.application.officialUrl'],
+  // 예외 호스트: 사람이 확인해 출처에 등록한 정확한 호스트만
+  ['action-host-exception-ok', (f) => {
+    localOfficial('form.test-city.kr')(f);
+    edit(G, '  - org: 정부24\n    action: check\n    url: https://www.gov.kr/\n    sourceId: gov24', '  - org: 테스트시청\n    action: check\n    url: https://form.test-city.kr/form\n    sourceId: local:city')(f);
+  }, null],
+  ['action-host-not-registered', (f) => {
+    localOfficial('')(f);
+    edit(G, '  - org: 정부24\n    action: check\n    url: https://www.gov.kr/\n    sourceId: gov24', '  - org: 테스트시청\n    action: check\n    url: https://form.test-city.kr/form\n    sourceId: local:city')(f);
+  }, '다른 도메인 form.test-city.kr'],
+  ['action-host-exception-suffix', (f) => {
+    localOfficial('go.kr')(f);
+    edit(G, '  - org: 정부24\n    action: check\n    url: https://www.gov.kr/\n    sourceId: gov24', '  - org: 테스트시청\n    action: check\n    url: https://www.test-city.go.kr/notice/1\n    sourceId: local:city')(f);
+  }, '공용 도메인 접미사는 예외로 둘 수 없음: go.kr'],
+  // S1 = 원 제공자의 공식 1차 출처: 사업자의 자기 상품 공식 페이지도 행동 링크에 쓸 수 있다(도메인 검증은 같음)
+  ['action-operator-s1-ok', (f) => {
+    edit(G, 'notes: [테스트 주의 사항]', 'notes: [테스트 주의 사항]\nlocalSources:\n  - id: local:telecom\n    title: 테스트텔레콤 요금제\n    publisher: 테스트텔레콤\n    url: https://www.test-telecom.co.kr/plans\n    level: S1\n    checkedAt: 2026-09-20')(f);
+    edit(G, '  - org: 정부24\n    action: check\n    url: https://www.gov.kr/\n    sourceId: gov24', '  - org: 테스트텔레콤\n    action: check\n    url: https://shop.test-telecom.co.kr/plans/1\n    sourceId: local:telecom')(f);
+  }, null],
+  ['action-operator-other-domain', (f) => {
+    edit(G, 'notes: [테스트 주의 사항]', 'notes: [테스트 주의 사항]\nlocalSources:\n  - id: local:telecom\n    title: 테스트텔레콤 요금제\n    publisher: 테스트텔레콤\n    url: https://www.test-telecom.co.kr/plans\n    level: S1\n    checkedAt: 2026-09-20')(f);
+    edit(G, '  - org: 정부24\n    action: check\n    url: https://www.gov.kr/\n    sourceId: gov24', '  - org: 테스트텔레콤\n    action: check\n    url: https://www.other-telecom.co.kr/plans\n    sourceId: local:telecom')(f);
+  }, '다른 도메인 www.other-telecom.co.kr'],
+  ['action-host-exception-non-official', edit(C, '    level: S2\n    checkedAt: 2026-09-20', '    level: S2\n    checkedAt: 2026-09-20\n    actionHosts: [form.example.com]'), 'actionHosts는 공식(S1) 출처에만'],
   ['broken-related-link', edit('articles/business/test-startup-guide.md', 'related: [/business/test-card-terminal/]', 'related: [/business/nope/]'), '존재하지 않는 글 링크 /business/nope/'],
 ];
 

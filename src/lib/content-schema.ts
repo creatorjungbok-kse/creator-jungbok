@@ -5,6 +5,7 @@ import { audiences } from '../data/audiences';
 import { people } from '../data/people';
 import { sourceLevels } from '../data/sources';
 import { topics } from '../data/topics';
+import { actionUrlProblem, hostExceptionProblem, linkActions } from './action-links';
 import { sourceRefs, sourceResolver } from './sources';
 
 const date = z.coerce.date();
@@ -19,13 +20,28 @@ const sourceShape = {
   publisher: text,
   url: z.url(),
   level: z.enum(sourceLevels),
+  // 행동 링크용 예외 호스트(공식 S1 출처만, 정확한 호스트 이름만)
+  actionHosts: z
+    .array(z.string().superRefine((h, ctx) => {
+      const problem = hostExceptionProblem(h);
+      if (problem) ctx.addIssue({ code: 'custom', message: problem });
+    }))
+    .min(1)
+    .optional(),
 };
-export const commonSourceSchema = z.strictObject({ id: z.string().regex(/^[a-z0-9-]+$/), ...sourceShape, checkedAt: date.optional() });
-const localSourceSchema = z.strictObject({
-  id: z.string().regex(/^local:[a-z0-9-]+$/, "글 전용 출처 id는 'local:' 접두"),
-  ...sourceShape,
-  checkedAt: date,
-});
+const actionHostsOnlyS1 = (s: { level: string; actionHosts?: string[] }, ctx: z.RefinementCtx) => {
+  if (s.actionHosts && s.level !== 'S1') ctx.addIssue({ code: 'custom', path: ['actionHosts'], message: 'actionHosts는 공식(S1) 출처에만 둘 수 있다' });
+};
+export const commonSourceSchema = z
+  .strictObject({ id: z.string().regex(/^[a-z0-9-]+$/), ...sourceShape, checkedAt: date.optional() })
+  .superRefine(actionHostsOnlyS1);
+const localSourceSchema = z
+  .strictObject({
+    id: z.string().regex(/^local:[a-z0-9-]+$/, "글 전용 출처 id는 'local:' 접두"),
+    ...sourceShape,
+    checkedAt: date,
+  })
+  .superRefine(actionHostsOnlyS1);
 const sourceId = z.string().min(1);
 
 // ── 가격 ─────────────────────────────────────────────
@@ -60,6 +76,25 @@ const priceItemSchema = z
     if (p.confidence === 'L5' && !p.note) ctx.addIssue({ code: 'custom', path: ['note'], message: 'L5는 계산식을 note에 적는다' });
   });
 
+// ── 정리 블록(꿀팁정복 자체의 정리 가치) ─────────────
+// 공식 행동 링크: 버튼 문구는 org + action으로 만든다(lib/action-links.ts). 출처는 S1(공공기관·공식 사업자의 자기 페이지 포함),
+// URL은 그 출처의 공식 도메인이어야 한다. action: application(신청 관련 공식 페이지, 지원·혜택 글 전용)·info·check
+const actionLinkSchema = z.strictObject({ org: text, action: z.enum(linkActions), url: z.url(), sourceId });
+const checklistSchema = z.strictObject({ title: text.optional(), items: z.array(text).min(1) });
+// 꼭 알아둘 것: 헷갈리기 쉬운 핵심만(최대 5개)
+const notesSchema = z.array(text).min(1).max(5);
+const compareSchema = z
+  .strictObject({
+    caption: text,
+    options: z.array(text).min(2).max(4),
+    rows: z.array(z.strictObject({ label: text, values: z.array(text), sourceIds: z.array(sourceId).optional() })).min(1),
+  })
+  .superRefine((c, ctx) => {
+    c.rows.forEach((r, i) => {
+      if (r.values.length !== c.options.length) ctx.addIssue({ code: 'custom', path: ['rows', i, 'values'], message: `값 ${r.values.length}개 ≠ 선택지 ${c.options.length}개` });
+    });
+  });
+
 // ── 공통 필드 ────────────────────────────────────────
 const peopleIds = idsOf(people);
 const baseShape = {
@@ -83,6 +118,9 @@ const baseShape = {
   // 글 전체에서 인용한 공통 출처
   sourceIds: z.array(sourceId).optional(),
   localSources: z.array(localSourceSchema).optional(),
+  actionLinks: z.array(actionLinkSchema).min(1).optional(),
+  checklist: checklistSchema.optional(),
+  notes: notesSchema.optional(),
 };
 
 const adsSchema = <S extends z.ZodRawShape>(slots: S) =>
@@ -170,6 +208,17 @@ function checkEntry(d: Base & Omit<Refs, 'priceItems'> & { priceItems?: z.infer<
     else if (ref.mustBeS1 && s.level !== 'S1') ctx.addIssue({ code: 'custom', path: ref.path, message: `${ref.id}: 공식(S1) 출처만 허용` });
   }
 
+  // 공식 행동 링크: 출처는 S1(sourceRefs의 mustBeS1), 기관명은 출처 이름과 같고, URL은 그 출처의 공식 도메인
+  d.actionLinks?.forEach((link, i) => {
+    const s = resolve(link.sourceId);
+    if (!s) return;
+    if (link.org !== s.title && link.org !== s.publisher) {
+      ctx.addIssue({ code: 'custom', path: ['actionLinks', i, 'org'], message: `기관명 '${link.org}'이 출처 이름(${s.title}·${s.publisher})과 다르다` });
+    }
+    const problem = actionUrlProblem(link.url, s);
+    if (problem) ctx.addIssue({ code: 'custom', path: ['actionLinks', i, 'url'], message: `행동 링크 URL: ${problem}` });
+  });
+
   // confidence ↔ 출처 등급(02 8장)
   d.priceItems?.forEach((p, i) => {
     const levels = p.sourceIds.map((id) => resolve(id)?.level);
@@ -196,6 +245,7 @@ export const articleSchema = z
     // Supporting 글이 속한 Pillar(02 5장)
     pillar: internalPath.optional(),
     priceItems: z.array(priceItemSchema).optional(),
+    compare: compareSchema.optional(),
     change: z
       .strictObject({ effectiveFrom: date, effectiveUntil: date.optional(), officialSourceIds: z.array(sourceId).min(1) })
       .optional(),
@@ -204,6 +254,15 @@ export const articleSchema = z
   .superRefine((d, ctx) => {
     if (d.contentType === 'cost' && !d.priceItems?.length) ctx.addIssue({ code: 'custom', path: ['priceItems'], message: 'cost 글은 priceItems가 필요하다' });
     if ((d.contentType === 'change') !== (d.change !== undefined)) ctx.addIssue({ code: 'custom', path: ['change'], message: 'change 블록은 change 글에만, change 글에는 필수' });
+    if ((d.contentType === 'compare') !== (d.compare !== undefined)) ctx.addIssue({ code: 'custom', path: ['compare'], message: 'compare 표는 compare 글에만, compare 글에는 필수' });
+    // '신청하기'는 상태를 계산하는 지원·혜택 글에서만 쓴다
+    d.actionLinks?.forEach((l, i) => {
+      if (l.action === 'application') ctx.addIssue({ code: 'custom', path: ['actionLinks', i, 'action'], message: 'application 링크는 지원·혜택(benefit) 글에서만 쓴다(info·check 사용)' });
+    });
+    // 정리 가치: 제목·공식 링크·출처만 있는 페이지를 막는다(글자 수 기준은 두지 않는다)
+    if (!d.priceItems?.length && !d.compare && !d.checklist && !d.notes) {
+      ctx.addIssue({ code: 'custom', path: ['notes'], message: '정리 블록이 1개 이상 필요하다(priceItems·compare·checklist·notes 중)' });
+    }
     checkEntry(d, ctx);
   });
 
@@ -216,6 +275,17 @@ export const benefitSchema = z
     ymyl: z.enum(['low', 'medium', 'high']).default('medium'),
     audience: z.array(idsOf(audiences)).min(1),
     program: programSchema,
+    // 지원·혜택 글은 공식 행동 링크가 필수. 첫 링크 = 공식 신청 링크(program.application.officialUrl, action application)
+    actionLinks: z.array(actionLinkSchema).min(1),
     ads: adsSchema({ mid: slot }),
   })
-  .superRefine(checkEntry);
+  .superRefine((d, ctx) => {
+    const [first] = d.actionLinks;
+    if (first.action !== 'application' || first.url !== d.program.application.officialUrl) {
+      ctx.addIssue({ code: 'custom', path: ['actionLinks', 0], message: '첫 행동 링크는 action application + program.application.officialUrl과 같은 URL이어야 한다' });
+    }
+    // 준비물은 program.application.documents 한 곳에 쓴다
+    if (d.checklist) ctx.addIssue({ code: 'custom', path: ['checklist'], message: '지원·혜택 글의 준비물은 program.application.documents에 쓴다' });
+    // 정리 가치는 program(조건·혜택·기간)이 스키마로 보장한다
+    checkEntry(d, ctx);
+  });

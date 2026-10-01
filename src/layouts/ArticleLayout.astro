@@ -1,13 +1,17 @@
 ---
-// 글 상세 화면(cost·compare·guide·change·benefit 공통 틀). 유형별 차이는 상단 블록에서만 난다.
+// 글 상세 화면(cost·compare·guide·change·benefit 공통 틀). 블록 순서는 유형별로 고정이고, 내용이 있는 블록만 나온다.
+// - benefit: 상태 → 한눈에 보기 → 공식 신청·안내 링크 → 내가 해당되는지 → 준비할 것 → 꼭 알아둘 것 → (목차·본문) → FAQ
+// - 그 밖의 글: 결론 → (적용 시점·가격표·비교표·guide 준비할 것) → (목차·본문) → 준비할 것 → 꼭 알아둘 것 → 공식 링크 → FAQ
+// 공통 끝부분: 다음에 볼 정보(최대 3개, 없으면 숨김) → 출처 → 업데이트 기록. 목차는 본문 H2가 3개 이상일 때만.
 import BaseLayout from './BaseLayout.astro';
+import ActionLinks from '../components/ActionLinks.astro';
 import AdSlot from '../components/AdSlot.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import BenefitCard from '../components/BenefitCard.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
+import Checklist from '../components/Checklist.astro';
+import CompareTable from '../components/CompareTable.astro';
 import FactList from '../components/FactList.astro';
-import MiniList from '../components/MiniList.astro';
-import OfficialCta from '../components/OfficialCta.astro';
 import PriceTable from '../components/PriceTable.astro';
 import SectionTitle from '../components/SectionTitle.astro';
 import SourceList from '../components/SourceList.astro';
@@ -20,6 +24,7 @@ import { categories, categoryHref } from '../data/categories';
 import { people } from '../data/people';
 import type { ContentItem } from '../lib/content';
 import { contentAdSlots, splitBody, topCut } from '../lib/ads';
+import { statusLabels } from '../lib/benefit-status';
 import { statusOf } from '../lib/select';
 import { applicationPeriod, formatDate } from '../lib/format';
 import { articleJsonLd } from '../lib/seo';
@@ -29,7 +34,7 @@ export interface Props {
   item: ContentItem;
   // 본문 H2·H3
   headings: TocProps['headings'];
-  // lib/related.ts 결과(순서 유지). 앞 3개는 본문 아래 카드, 다음 5개는 사이드바 목록
+  // lib/related.ts 결과(최대 3개, 순서 유지)
   related: ContentItem[];
 }
 
@@ -40,53 +45,57 @@ const nameOf = (id: string) => people.find((p) => p.id === id)!.name;
 const isoDate = (d: Date) => d.toISOString().slice(0, 10);
 const categoryName = (i: ContentItem) => categories.find((c) => c.slug === i.category)!.name;
 
-const toc: TocProps['headings'] = data.faq?.length ? [...headings, { id: 'faq', text: '자주 묻는 질문', depth: 2 }] : headings;
+// 목차: 본문 H2가 3개 이상일 때만(짧은 글은 블록 순서만으로 충분하다)
+const sections = headings.filter((h) => h.depth === 2).length;
+const toc: TocProps['headings'] =
+  sections >= 3 ? (data.faq?.length ? [...headings, { id: 'faq', text: '자주 묻는 질문', depth: 2 }] : headings) : [];
 const history = [...(data.changelog ?? [])].sort((a, b) => +b.date - +a.date);
 
-// 상단 사실 목록: 스키마에 있는 값만 표시한다
+// 지원·혜택: 한눈에 보기 4항목 + 보조 정보(스키마에 있는 값만)
 const program = item.kind === 'benefit' ? item.entry.data.program : undefined;
-const programFacts = program && [
-  { label: '운영 기관', value: program.operator },
-  { label: '지역', value: program.region },
-  ...(program.round ? [{ label: '회차', value: program.round }] : []),
-  { label: '대상', value: program.eligibility.map((e) => e.text) },
-  ...(program.exclusions?.length ? [{ label: '제외 대상', value: program.exclusions.map((e) => e.text) }] : []),
-  { label: '지원 내용', value: program.benefit.text },
-  { label: '신청 기간', value: applicationPeriod(program.application)! },
-  ...(program.application.methods?.length ? [{ label: '신청 방법', value: program.application.methods }] : []),
-  ...(program.application.documents?.length ? [{ label: '제출 서류', value: program.application.documents }] : []),
-  ...(program.payoutSchedule ? [{ label: '지급 시기', value: program.payoutSchedule }] : []),
+const status = item.kind === 'benefit' ? statusOf(item)! : undefined;
+const audienceNames = item.kind === 'benefit' ? item.entry.data.audience.map((id) => audiences.find((a) => a.id === id)!.name) : [];
+const quickFacts = program && [
+  { label: '대상', value: `${audienceNames.join('·')} · ${program.region}` },
+  { label: '금액·혜택', value: program.benefit.text },
+  { label: '신청기간', value: applicationPeriod(program.application)! },
+  { label: '현재 상태', value: statusLabels[status!] },
+];
+const quickNotes = program && [
+  `운영 ${program.operator}`,
+  ...(program.round ? [`회차 ${program.round}`] : []),
+  ...(program.payoutSchedule ? [`지급 ${program.payoutSchedule}`] : []),
   ...(program.validFrom || program.validTo
-    ? [{ label: '혜택 기간', value: [program.validFrom, program.validTo].map((d) => (d ? formatDate(d) : '')).join(' ~ ') }]
+    ? [`혜택 기간 ${[program.validFrom, program.validTo].map((d) => (d ? formatDate(d) : '')).join(' ~ ')}`]
     : []),
 ];
-const change = item.kind === 'article' ? item.entry.data.change : undefined;
+
+const article = item.kind === 'article' ? item.entry.data : undefined;
+const change = article?.change;
 const changeFacts = change && [
   { label: '시행일', value: formatDate(change.effectiveFrom) },
   ...(change.effectiveUntil ? [{ label: '종료일', value: formatDate(change.effectiveUntil) }] : []),
 ];
-const priceItems = item.kind === 'article' ? item.entry.data.priceItems : undefined;
-const audienceNames = item.kind === 'benefit' ? item.entry.data.audience.map((id) => audiences.find((a) => a.id === id)!.name) : [];
+const priceItems = article?.priceItems;
+const isGuide = article?.contentType === 'guide';
+const checklist = article?.checklist;
 
 // 광고 슬롯(03 4~6장). 광고가 꺼져 있으면 contentAdSlots가 빈 집합이라 아래 자리는 모두 출력되지 않는다.
-const sections = headings.filter((h) => h.depth === 2).length;
+// [후속] 분량 판단이 본문 H2 수 기준이라 블록 중심 글에서는 실제 길이와 어긋날 수 있다(docs/05 후속 항목).
 const adSlots = contentAdSlots(item, sections);
 const isArticle = item.kind === 'article';
-// 본문 안 자리(광고가 꺼져 있으면 본문을 나누지 않는다):
-// - article-mid: 가운데 H2 앞(3번째 H2 이후)
-// - article-top: 첫 번째 본문 섹션 이후 중 모바일 첫 화면 밖이 되는 첫 H2 앞, mid와는 섹션 2개 이상 간격. 요약·목차와 붙지 않는다
-const bodyHtml = isArticle && (adSlots.has('top') || adSlots.has('mid')) ? await Astro.slots.render('default') : undefined;
+const bodyHtml = (await Astro.slots.render('default')).trim();
+// 본문 안 자리: article-mid(가운데 H2 앞), article-top(모바일 첫 화면 밖이 되는 첫 H2 앞). 광고가 꺼져 있으면 나누지 않는다
 const midAt = Math.max(Math.floor(sections / 2), 3);
-const topAt = bodyHtml && adSlots.has('top') ? topCut(bodyHtml, priceItems?.length ? priceItems.length * 48 + 100 : 0, adSlots.has('mid') ? midAt - 1 : sections) : undefined;
-const bodyCuts = [
-  ...(topAt ? [{ h2: topAt, id: 'article-top' as const }] : []),
-  ...(adSlots.has('mid') ? [{ h2: midAt, id: 'article-mid' as const }] : []),
-];
-const bodyParts = bodyHtml && bodyCuts.length ? splitBody(bodyHtml, bodyCuts) : undefined;
-// 본문 뒤·FAQ 앞(article-lower / benefit-mid: 공식 신청 버튼과 본문 전체만큼 떨어진 자리).
-// FAQ 없이 바로 관련 글 카드가 오면 카드 바로 옆이 되므로 생략한다
+const topAt = isArticle && adSlots.has('top') ? topCut(bodyHtml, priceItems?.length ? priceItems.length * 48 + 100 : 0, adSlots.has('mid') ? midAt - 1 : sections) : undefined;
+const bodyCuts = isArticle
+  ? [...(topAt ? [{ h2: topAt, id: 'article-top' as const }] : []), ...(adSlots.has('mid') ? [{ h2: midAt, id: 'article-mid' as const }] : [])]
+  : [];
+const bodyParts = bodyHtml ? splitBody(bodyHtml, bodyCuts) : [];
+// 본문 바로 뒤 자리(article-lower / benefit-mid): 다음 블록이 광고 금지 영역(공식 링크·관련 글)이면 생략한다
 const afterBodyAd: AdSlotId = isArticle ? 'article-lower' : 'benefit-mid';
-const showAfterBodyAd = adSlots.has(isArticle ? 'lower' : 'mid') && (!!data.faq?.length || related.length === 0);
+const nextIsSafe = isArticle ? !!(checklist && !isGuide) || !!data.notes || (!data.actionLinks && (!!data.faq?.length || related.length === 0)) : !!data.faq?.length || related.length === 0;
+const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' : 'mid') && nextIsSafe;
 ---
 
 <BaseLayout title={data.title} description={data.description ?? data.summary} ogType="article" jsonLd={[articleJsonLd(item)]}>
@@ -100,7 +109,7 @@ const showAfterBodyAd = adSlots.has(isArticle ? 'lower' : 'mid') && (!!data.faq?
           <span>작성 {nameOf(data.author)}</span>
           {data.reviewer && <span>검수 {nameOf(data.reviewer)}</span>}
           <span>최종 업데이트 <time datetime={isoDate(data.dateModified)}>{formatDate(data.dateModified)}</time></span>
-          {item.kind === 'article' && <span>조사 기준일 {formatDate(data.researchedAt)}</span>}
+          {isArticle && <span>조사 기준일 {formatDate(data.researchedAt)}</span>}
         </p>
       </header>
 
@@ -108,35 +117,45 @@ const showAfterBodyAd = adSlots.has(isArticle ? 'lower' : 'mid') && (!!data.faq?
         program ? (
           <>
             <StatusBanner program={program} />
-            <SummaryBox title="핵심 요약" summary={data.summary} />
-            <OfficialCta href={program.application.officialUrl} status={statusOf(item)!} />
-            <FactList title="지원 정보" items={programFacts!} />
+            <FactList title="한눈에 보기" items={quickFacts!} variant="quick" notes={quickNotes} />
+            <ActionLinks title="공식 신청·안내" links={data.actionLinks!} status={status} methods={program.application.methods} />
+            <Checklist title="내가 해당되는지" items={program.eligibility.map((e) => e.text)} protect="eligibility">
+              {(program.exclusions?.length ?? 0) > 0 && <p class="article__exclusions">이런 경우는 제외: {program.exclusions!.map((e) => e.text).join(' / ')}</p>}
+            </Checklist>
+            {(program.application.documents?.length ?? 0) > 0 && <Checklist title="준비할 것" items={program.application.documents!} />}
+            {data.notes && <Checklist title="꼭 알아둘 것" items={data.notes} marker="note" />}
           </>
         ) : (
           <>
             <SummaryBox summary={data.summary} />
             {changeFacts && <FactList title="적용 시점" items={changeFacts} />}
             {priceItems && priceItems.length > 0 && <PriceTable caption="항목별 가격 범위" items={priceItems} researchedAt={data.researchedAt} />}
+            {article?.compare && <CompareTable caption={article.compare.caption} options={article.compare.options} rows={article.compare.rows} />}
+            {isGuide && checklist && <Checklist title={checklist.title ?? '준비할 것'} items={checklist.items} />}
           </>
         )
       }
 
       <Toc headings={toc} variant="inline" />
       {
-        bodyParts ? (
-          bodyParts.map((part) => (
-            <>
-              {part.adBefore && <AdSlot id={part.adBefore} />}
-              <div class="prose" set:html={part.html} />
-            </>
-          ))
-        ) : (
-          <div class="prose">
-            <slot />
-          </div>
-        )
+        bodyParts.map((part) => (
+          <>
+            {part.adBefore && <AdSlot id={part.adBefore} />}
+            <div class="prose" set:html={part.html} />
+          </>
+        ))
       }
       {showAfterBodyAd && <AdSlot id={afterBodyAd} />}
+
+      {
+        isArticle && (
+          <>
+            {checklist && !isGuide && <Checklist title={checklist.title ?? '준비할 것'} items={checklist.items} />}
+            {data.notes && <Checklist title="꼭 알아둘 것" items={data.notes} marker="note" />}
+            {data.actionLinks && <ActionLinks title="공식 사이트에서 확인" links={data.actionLinks} />}
+          </>
+        )
+      }
 
       {
         data.faq && data.faq.length > 0 && (
@@ -155,9 +174,9 @@ const showAfterBodyAd = adSlots.has(isArticle ? 'lower' : 'mid') && (!!data.faq?
       {
         related.length > 0 && (
           <section data-ad-protected="related">
-            <SectionTitle title="함께 보면 좋은 정보" />
+            <SectionTitle title="다음에 볼 정보" />
             <div class="card-grid card-grid--3">
-              {related.slice(0, 3).map((r) =>
+              {related.map((r) =>
                 r.kind === 'benefit' ? (
                   <BenefitCard href={r.url} title={r.entry.data.title} program={r.entry.data.program} audience={r.entry.data.audience} />
                 ) : (
@@ -186,14 +205,13 @@ const showAfterBodyAd = adSlots.has(isArticle ? 'lower' : 'mid') && (!!data.faq?
       </section>
     </article>
 
-    <aside class="page-aside article-aside" aria-label="글 보조 정보">
-      <Toc headings={toc} variant="sidebar" />
-      {
-        related.length > 3 && (
-          <MiniList title="더 볼 만한 글" items={related.slice(3, 8).map((r) => ({ href: r.url, title: r.entry.data.title, meta: categoryName(r) }))} />
-        )
-      }
-    </aside>
+    {
+      toc.length > 0 && (
+        <aside class="page-aside article-aside" aria-label="글 보조 정보">
+          <Toc headings={toc} variant="sidebar" />
+        </aside>
+      )
+    }
   </div>
 </BaseLayout>
 
@@ -230,6 +248,11 @@ const showAfterBodyAd = adSlots.has(isArticle ? 'lower' : 'mid') && (!!data.faq?
   .article__meta span + span::before {
     content: '·';
     margin-inline: var(--space-2);
+  }
+
+  .article__exclusions {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
   }
 
   .faq__item {

@@ -1,0 +1,38 @@
+---
+// 비교 글의 "선택지 × 기준" 표. 넓으면 가로 스크롤(base.css .table-scroll)
+export interface Props {
+  caption: string;
+  options: string[];
+  rows: { label: string; values: string[] }[];
+}
+
+const { caption, options, rows } = Astro.props;
+---
+
+<div class="table-scroll" tabindex="0" role="region" aria-label={caption}>
+  <table class="compare-table">
+    <caption>{caption}</caption>
+    <thead>
+      <tr>
+        <th scope="col">기준</th>
+        {options.map((o) => <th scope="col">{o}</th>)}
+      </tr>
+    </thead>
+    <tbody>
+      {
+        rows.map((r) => (
+          <tr>
+            <th scope="row">{r.label}</th>
+            {r.values.map((v) => <td>{v}</td>)}
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+
+<style>
+  tbody th {
+    font-weight: var(--weight-semibold);
+  }
+</style>

@@ -47,6 +47,19 @@ faq:
 changelog:
   - date: 2026-09-20
     summary: 예시 · 가격 범위 재확인
+checklist:
+  title: 상담 전에 준비할 것
+  items:
+    - 예시 · 사업자등록증
+    - 예시 · 매장 인터넷 회선 정보
+notes:
+  - 예시 · 무료 단말기는 약정 기간과 위약금을 먼저 확인합니다.
+  - 예시 · 가격에 부가세가 포함됐는지 확인합니다.
+actionLinks:
+  - org: 국세청
+    action: check
+    url: https://www.nts.go.kr/
+    sourceId: nts
 ---
 
 예시 문단입니다. 실제 글에서는 조사 기준일과 출처를 밝힌 가격 범위, 조건별 차이, 확인 방법을 이 자리에 씁니다.

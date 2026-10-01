@@ -12,6 +12,8 @@ interface SourceFields {
   sourceIds?: string[];
   localSources?: Source[];
   priceItems?: { sourceIds: string[] }[];
+  compare?: { rows: { sourceIds?: string[] }[] };
+  actionLinks?: { sourceId: string }[];
   change?: { officialSourceIds: string[] };
   program?: {
     officialSourceIds: string[];
@@ -29,6 +31,8 @@ export function sourceRefs(d: SourceFields): SourceRef[] {
   return [
     ...(d.sourceIds ?? []).map((id, i) => ({ path: ['sourceIds', i], id })),
     ...(d.priceItems ?? []).flatMap((item, i) => item.sourceIds.map((id, j) => ({ path: ['priceItems', i, 'sourceIds', j], id }))),
+    ...(d.compare?.rows ?? []).flatMap((row, i) => (row.sourceIds ?? []).map((id, j) => ({ path: ['compare', 'rows', i, 'sourceIds', j], id }))),
+    ...(d.actionLinks ?? []).map((link, i) => s1(['actionLinks', i, 'sourceId'], link.sourceId)),
     ...(d.change?.officialSourceIds ?? []).map((id, i) => s1(['change', 'officialSourceIds', i], id)),
     ...(p
       ? [

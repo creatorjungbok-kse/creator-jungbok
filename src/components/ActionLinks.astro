@@ -1,0 +1,111 @@
+---
+// 공식 행동 링크. 버튼 문구(기관명 + 목적)는 lib/action-links.ts에서만 만든다. 파랑 = 공식 외부 링크(광고와 다른 고유 모양).
+// 광고 금지 영역: 지원·혜택 글은 'official-cta'(광고 슬롯이 이보다 위에 올 수 없음), 그 밖의 글은 'action-links'.
+// 지원·혜택 글의 첫 링크(공식 신청 링크)에만 data-official-cta를 붙인다(GA4 official_cta_click).
+import { actionLabel, type LinkAction } from '../lib/action-links';
+import type { BenefitStatus } from '../lib/benefit-status';
+
+export interface Props {
+  title: string;
+  links: { org: string; action: LinkAction; url: string }[];
+  // 지원·혜택 글이면 상태(application 문구가 상태에 따라 바뀐다)
+  status?: BenefitStatus;
+  // 신청 방법 등 링크 아래 한 줄 정보
+  methods?: string[];
+}
+
+const { title, links, status, methods } = Astro.props;
+const isBenefit = status !== undefined;
+---
+
+<section class="action-links" data-ad-protected={isBenefit ? 'official-cta' : 'action-links'}>
+  <h2>{title}</h2>
+  <ul>
+    {
+      links.map((link, i) => (
+        <li>
+          <a
+            class:list={['action-link', { 'action-link--primary': i === 0 }]}
+            href={link.url}
+            data-google-vignette="false"
+            data-official-cta={isBenefit && i === 0 ? '' : undefined}
+          >
+            <span class="action-link__label">{actionLabel(link.org, link.action, status)}</span>
+            <span class="action-link__domain">{new URL(link.url).hostname} · 공식 사이트로 이동</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  {methods && methods.length > 0 && <p class="action-links__methods">신청 방법: {methods.join(' · ')}</p>}
+  <p class="action-links__note">신청·확인은 해당 기관 사이트에서 진행됩니다.</p>
+</section>
+
+<style>
+  .action-links {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  h2 {
+    font-size: var(--text-lg);
+    letter-spacing: -0.01em;
+  }
+
+  ul {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .action-link {
+    display: grid;
+    gap: 2px;
+    width: min(100%, 28rem);
+    min-height: var(--touch);
+    padding: var(--space-3) var(--space-5);
+    border: 1px solid var(--color-link);
+    border-radius: var(--radius);
+    color: var(--color-link);
+  }
+
+  .action-link:hover {
+    background: var(--color-link-soft);
+    text-decoration: none;
+  }
+
+  .action-link__label {
+    font-weight: var(--weight-bold);
+  }
+
+  .action-link__label::after {
+    content: ' ↗';
+  }
+
+  .action-link__domain {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+  }
+
+  /* 첫 링크(대표 공식 링크): 파랑 채움 */
+  .action-link--primary {
+    background: var(--color-link);
+    color: var(--color-bg);
+  }
+
+  .action-link--primary:hover {
+    background: var(--color-link-strong);
+  }
+
+  .action-link--primary .action-link__domain {
+    color: var(--color-link-soft);
+  }
+
+  .action-links__methods {
+    font-size: var(--text-sm);
+  }
+
+  .action-links__note {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+  }
+</style>

@@ -13,14 +13,6 @@ export const statusLabels: Record<BenefitStatus, string> = {
   closed: '신청 종료',
 };
 
-// 공식 사이트 버튼(OfficialCta) 문구: 상태에 따라 이 표에서만 정한다. 신청할 수 없는 상태에는 '신청'을 쓰지 않는다
-export const ctaLabels: Record<BenefitStatus, string> = {
-  upcoming: '공식 안내 보기',
-  open: '공식 신청 페이지 보기',
-  'closing-soon': '공식 신청 페이지 보기',
-  closed: '공식 공고 보기',
-};
-
 interface StatusInput {
   application: { mode: 'period' | 'rolling' | 'until-budget'; start?: Date; end?: Date };
   statusOverride?: { value: BenefitStatus };

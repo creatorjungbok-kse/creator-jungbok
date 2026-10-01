@@ -31,10 +31,23 @@ program:
   application:
     mode: rolling
     methods: [예시 · 온라인 신청, 예시 · 주민센터 방문]
+    documents: [예시 · 신분증, 예시 · 소득 확인 서류, 예시 · 통장 사본]
     officialUrl: https://www.gov.kr/
   payoutSchedule: 예시 · 신청 후 약 한 달 안에 지급
   lastStatusCheckedAt: 2026-09-01
   officialSourceIds: [gov24]
+actionLinks:
+  - org: 정부24
+    action: application
+    url: https://www.gov.kr/
+    sourceId: gov24
+  - org: 한국전력공사
+    action: info
+    url: https://home.kepco.co.kr/
+    sourceId: kepco
+notes:
+  - 예시 · 같은 해에 비슷한 지원을 받았다면 중복 지원이 안 될 수 있습니다.
+  - 예시 · 신청은 공식 사이트에서만 하고, 문자로 온 링크는 누르지 않습니다.
 ---
 
 예시 문단입니다. 지원사업 상세는 공식 공고에 있는 정보만 씁니다.

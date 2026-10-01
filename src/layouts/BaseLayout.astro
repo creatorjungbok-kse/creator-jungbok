@@ -78,7 +78,7 @@ const canonicalUrl = canonical ? absoluteUrl(Astro.url.pathname) : undefined;
             window.gtag('config', ga4Id);
             // 공식 신청 버튼 클릭(지원·혜택 글). 페이지 주소 외의 값은 보내지 않는다
             document.addEventListener('click', (e) => {
-              if (e.target instanceof Element && e.target.closest('[data-ad-protected="official-cta"]')) window.gtag('event', 'official_cta_click');
+              if (e.target instanceof Element && e.target.closest('[data-official-cta]')) window.gtag('event', 'official_cta_click');
             });
           </script>
           <script async src={`https://www.googletagmanager.com/gtag/js?id=${site.ga4Id}`} />

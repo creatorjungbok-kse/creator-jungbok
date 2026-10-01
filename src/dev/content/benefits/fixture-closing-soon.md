@@ -40,6 +40,11 @@ program:
     sourceId: gov24
   lastStatusCheckedAt: 2026-09-01
   officialSourceIds: [gov24]
+actionLinks:
+  - org: 정부24
+    action: application
+    url: https://www.gov.kr/
+    sourceId: gov24
 ---
 
 예시 문단입니다. 지원사업 상세는 공식 공고에 있는 정보만 씁니다.
