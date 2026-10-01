@@ -230,6 +230,14 @@ const cases = [
     edit(G, 'notes: [테스트 주의 사항]', 'notes: [테스트 주의 사항]\nlocalSources:\n  - id: local:telecom\n    title: 테스트텔레콤 요금제\n    publisher: 테스트텔레콤\n    url: https://www.test-telecom.co.kr/plans\n    level: S1\n    checkedAt: 2026-09-20')(f);
     edit(G, '  - org: 정부24\n    action: check\n    url: https://www.gov.kr/\n    sourceId: gov24', '  - org: 테스트텔레콤\n    action: check\n    url: https://www.other-telecom.co.kr/plans\n    sourceId: local:telecom')(f);
   }, '다른 도메인 www.other-telecom.co.kr'],
+  // 버튼 목적 문구(purpose)·한눈에 보기(quickFacts)·SEO 제목(seoTitle)
+  ['action-purpose-ok', edit(G, '    action: check\n', '    action: check\n    purpose: 받을 수 있는 혜택 확인하기\n'), null],
+  ['action-purpose-bad-ending', edit(G, '    action: check\n', '    action: check\n    purpose: 혜택 조회\n'), "purpose는 '하기'·'보기'로 끝나는 목적 문구"],
+  ['action-purpose-on-application', edit(B, '    action: application\n', '    action: application\n    purpose: 신청하기\n'), 'application 링크는 상태별 문구를 쓰므로 purpose를 둘 수 없다'],
+  ['quickfacts-as-value-block', (f) => {
+    edit(G, 'notes: [테스트 주의 사항]\n', 'quickFacts:\n  title: 무엇이 필요한가요?\n  items:\n    - label: 테스트 상황\n      value: 테스트 할 일\n')(f);
+    edit(G, 'contentMode: evergreen', 'contentMode: evergreen\nseoTitle: 테스트 SEO 제목')(f);
+  }, null],
   ['action-host-exception-non-official', edit(C, '    level: S2\n    checkedAt: 2026-09-20', '    level: S2\n    checkedAt: 2026-09-20\n    actionHosts: [form.example.com]'), 'actionHosts는 공식(S1) 출처에만'],
   ['broken-related-link', edit('articles/business/test-startup-guide.md', 'related: [/business/test-card-terminal/]', 'related: [/business/nope/]'), '존재하지 않는 글 링크 /business/nope/'],
 ];

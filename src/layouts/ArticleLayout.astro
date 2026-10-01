@@ -1,7 +1,8 @@
 ---
 // 글 상세 화면(cost·compare·guide·change·benefit 공통 틀). 블록 순서는 유형별로 고정이고, 내용이 있는 블록만 나온다.
 // - benefit: 상태 → 한눈에 보기 → 공식 신청·안내 링크 → 내가 해당되는지 → 준비할 것 → 꼭 알아둘 것 → (목차·본문) → FAQ
-// - 그 밖의 글: 결론 → (적용 시점·가격표·비교표·guide 준비할 것) → (목차·본문) → 준비할 것 → 꼭 알아둘 것 → 공식 링크 → FAQ
+// - 그 밖의 글: 결론 → (한눈에 보기·적용 시점·가격표·비교표·guide 준비할 것) → (목차·본문) → 준비할 것 → 꼭 알아둘 것 → 공식 링크 → FAQ
+//   단 guide는 공식 링크를 본문 앞(정리 블록 바로 뒤)에 둔다
 // 공통 끝부분: 다음에 볼 정보(최대 3개, 없으면 숨김) → 출처 → 업데이트 기록. 목차는 본문 H2가 3개 이상일 때만.
 import BaseLayout from './BaseLayout.astro';
 import ActionLinks from '../components/ActionLinks.astro';
@@ -94,11 +95,13 @@ const bodyCuts = isArticle
 const bodyParts = bodyHtml ? splitBody(bodyHtml, bodyCuts) : [];
 // 본문 바로 뒤 자리(article-lower / benefit-mid): 다음 블록이 광고 금지 영역(공식 링크·관련 글)이면 생략한다
 const afterBodyAd: AdSlotId = isArticle ? 'article-lower' : 'benefit-mid';
-const nextIsSafe = isArticle ? !!(checklist && !isGuide) || !!data.notes || (!data.actionLinks && (!!data.faq?.length || related.length === 0)) : !!data.faq?.length || related.length === 0;
+const nextIsSafe = isArticle
+  ? !!(checklist && !isGuide) || !!data.notes || ((isGuide || !data.actionLinks) && (!!data.faq?.length || related.length === 0))
+  : !!data.faq?.length || related.length === 0;
 const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' : 'mid') && nextIsSafe;
 ---
 
-<BaseLayout title={data.title} description={data.description ?? data.summary} ogType="article" jsonLd={[articleJsonLd(item)]}>
+<BaseLayout title={data.seoTitle ?? data.title} description={data.description ?? data.summary} ogType="article" jsonLd={[articleJsonLd(item)]}>
   <div class="container page-grid">
     <article class="article">
       <Breadcrumb items={[{ label: category.name, href: categoryHref(category) }]} />
@@ -128,10 +131,12 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
         ) : (
           <>
             <SummaryBox summary={data.summary} />
+            {article?.quickFacts && <FactList title={article.quickFacts.title} items={article.quickFacts.items} variant="quick" />}
             {changeFacts && <FactList title="적용 시점" items={changeFacts} />}
             {priceItems && priceItems.length > 0 && <PriceTable caption="항목별 가격 범위" items={priceItems} researchedAt={data.researchedAt} />}
             {article?.compare && <CompareTable caption={article.compare.caption} options={article.compare.options} rows={article.compare.rows} />}
             {isGuide && checklist && <Checklist title={checklist.title ?? '준비할 것'} items={checklist.items} />}
+            {isGuide && data.actionLinks && <ActionLinks title="공식 사이트에서 확인" links={data.actionLinks} />}
           </>
         )
       }
@@ -152,7 +157,7 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
           <>
             {checklist && !isGuide && <Checklist title={checklist.title ?? '준비할 것'} items={checklist.items} />}
             {data.notes && <Checklist title="꼭 알아둘 것" items={data.notes} marker="note" />}
-            {data.actionLinks && <ActionLinks title="공식 사이트에서 확인" links={data.actionLinks} />}
+            {!isGuide && data.actionLinks && <ActionLinks title="공식 사이트에서 확인" links={data.actionLinks} />}
           </>
         )
       }

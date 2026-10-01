@@ -79,7 +79,12 @@ const priceItemSchema = z
 // ── 정리 블록(꿀팁정복 자체의 정리 가치) ─────────────
 // 공식 행동 링크: 버튼 문구는 org + action으로 만든다(lib/action-links.ts). 출처는 S1(공공기관·공식 사업자의 자기 페이지 포함),
 // URL은 그 출처의 공식 도메인이어야 한다. action: application(신청 관련 공식 페이지, 지원·혜택 글 전용)·info·check
-const actionLinkSchema = z.strictObject({ org: text, action: z.enum(linkActions), url: z.url(), sourceId });
+// purpose(선택): 버튼 목적 문구('사업자등록 상태 확인하기'처럼 '하기'·'보기'로 끝남). 문구 = '{org}에서 {purpose}'. application에는 쓸 수 없다(상태별 문구)
+const actionLinkSchema = z
+  .strictObject({ org: text, action: z.enum(linkActions), purpose: text.regex(/(하기|보기)$/, "purpose는 '하기'·'보기'로 끝나는 목적 문구").optional(), url: z.url(), sourceId })
+  .superRefine((l, ctx) => {
+    if (l.purpose && l.action === 'application') ctx.addIssue({ code: 'custom', path: ['purpose'], message: 'application 링크는 상태별 문구를 쓰므로 purpose를 둘 수 없다' });
+  });
 const checklistSchema = z.strictObject({ title: text.optional(), items: z.array(text).min(1) });
 // 꼭 알아둘 것: 헷갈리기 쉬운 핵심만(최대 5개)
 const notesSchema = z.array(text).min(1).max(5);
@@ -98,7 +103,10 @@ const compareSchema = z
 // ── 공통 필드 ────────────────────────────────────────
 const peopleIds = idsOf(people);
 const baseShape = {
+  // 화면 H1·Article headline
   title: text,
+  // <title>·OG 제목이 H1과 달라야 할 때만(없으면 title)
+  seoTitle: text.optional(),
   // 없으면 summary를 meta description으로 쓴다
   description: text.optional(),
   contentMode: z.enum(['evergreen', 'timely']),
@@ -245,6 +253,8 @@ export const articleSchema = z
     // Supporting 글이 속한 Pillar(02 5장)
     pillar: internalPath.optional(),
     priceItems: z.array(priceItemSchema).optional(),
+    // 한눈에 보기(결론 바로 아래): 상황·항목별 핵심 답
+    quickFacts: z.strictObject({ title: text, items: z.array(z.strictObject({ label: text, value: text })).min(1) }).optional(),
     compare: compareSchema.optional(),
     change: z
       .strictObject({ effectiveFrom: date, effectiveUntil: date.optional(), officialSourceIds: z.array(sourceId).min(1) })
@@ -260,8 +270,8 @@ export const articleSchema = z
       if (l.action === 'application') ctx.addIssue({ code: 'custom', path: ['actionLinks', i, 'action'], message: 'application 링크는 지원·혜택(benefit) 글에서만 쓴다(info·check 사용)' });
     });
     // 정리 가치: 제목·공식 링크·출처만 있는 페이지를 막는다(글자 수 기준은 두지 않는다)
-    if (!d.priceItems?.length && !d.compare && !d.checklist && !d.notes) {
-      ctx.addIssue({ code: 'custom', path: ['notes'], message: '정리 블록이 1개 이상 필요하다(priceItems·compare·checklist·notes 중)' });
+    if (!d.priceItems?.length && !d.compare && !d.checklist && !d.notes && !d.quickFacts) {
+      ctx.addIssue({ code: 'custom', path: ['notes'], message: '정리 블록이 1개 이상 필요하다(priceItems·compare·quickFacts·checklist·notes 중)' });
     }
     checkEntry(d, ctx);
   });

@@ -7,7 +7,7 @@ import type { BenefitStatus } from '../lib/benefit-status';
 
 export interface Props {
   title: string;
-  links: { org: string; action: LinkAction; url: string }[];
+  links: { org: string; action: LinkAction; purpose?: string; url: string }[];
   // 지원·혜택 글이면 상태(application 문구가 상태에 따라 바뀐다)
   status?: BenefitStatus;
   // 신청 방법 등 링크 아래 한 줄 정보
@@ -30,7 +30,7 @@ const isBenefit = status !== undefined;
             data-google-vignette="false"
             data-official-cta={isBenefit && i === 0 ? '' : undefined}
           >
-            <span class="action-link__label">{actionLabel(link.org, link.action, status)}</span>
+            <span class="action-link__label">{actionLabel(link.org, link.action, status, link.purpose)}</span>
             <span class="action-link__domain">{new URL(link.url).hostname} · 공식 사이트로 이동</span>
           </a>
         </li>

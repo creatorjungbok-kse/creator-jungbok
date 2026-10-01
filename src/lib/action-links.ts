@@ -17,9 +17,10 @@ const otherLabels: Record<Exclude<LinkAction, 'application'>, (org: string) => s
   check: (org) => `${org}에서 확인하기`,
 };
 
-export function actionLabel(org: string, action: LinkAction, status?: BenefitStatus): string {
+// purpose가 있으면 '{org}에서 {purpose}'(예: 국세청 홈택스에서 사업자등록 상태 확인하기). application은 항상 상태별 문구
+export function actionLabel(org: string, action: LinkAction, status?: BenefitStatus, purpose?: string): string {
   if (action === 'application') return applicationLabels[status ?? 'open'](org);
-  return otherLabels[action](org);
+  return purpose ? `${org}에서 ${purpose}` : otherLabels[action](org);
 }
 
 // 그 자체로는 한 기관의 도메인이 아닌 공용 접미사. 출처 URL의 호스트가 여기에 해당하면 하위 도메인 허용을 하지 않는다.

@@ -15,6 +15,9 @@ test('문구: 기관명 + 목적, 신청할 수 없는 상태에는 신청하기
   assert.equal(actionLabel('정부24', 'application', 'closed'), '정부24 공고 보기');
   assert.equal(actionLabel('서울시', 'info'), '서울시 공식 안내 보기');
   assert.equal(actionLabel('국세청', 'check'), '국세청에서 확인하기');
+  // purpose가 있으면 기관명 + 목적 문구, application은 purpose를 무시하고 상태별 문구
+  assert.equal(actionLabel('국세청 홈택스', 'check', undefined, '사업자등록 상태 확인하기'), '국세청 홈택스에서 사업자등록 상태 확인하기');
+  assert.equal(actionLabel('정부24', 'application', 'closed', '신청하기'), '정부24 공고 보기');
 });
 
 test('허용: 출처 URL 자체, 같은 호스트, www 없는 호스트, 하위 도메인', () => {
