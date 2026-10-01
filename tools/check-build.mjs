@@ -199,6 +199,11 @@ for (const file of htmlFiles) {
       if (emptyHubs.has(hub) && chip) fail(`공개 글 없는 카테고리 검색 필터 ${hub}`);
       if (!emptyHubs.has(hub) && !chip) fail(`검색 필터에 없는 카테고리 ${hub}`);
     }
+    // '신청 가능한 지원만'은 검색 데이터에 benefit 항목이 있을 때만 보이고 켤 수 있다
+    const hasBenefitDocs = JSON.parse(read(join(dist, 'search-index.json'))).some((d) => d.type === 'benefit');
+    const openOnly = html.match(/<label class="open-only"[^>]*>\s*<input[^>]*data-open-only[^>]*>/)?.[0] ?? '';
+    const shown = openOnly && !/\shidden/.test(openOnly.match(/<label[^>]*>/)[0]) && !/\sdisabled/.test(openOnly.match(/<input[^>]*>/)[0]);
+    if (hasBenefitDocs !== Boolean(shown)) fail(`'신청 가능한 지원만' ${shown ? '표시' : '숨김'} (검색 데이터 benefit ${hasBenefitDocs ? '있음' : '없음'})`);
   }
 
   // 사이트 자체 script는 benefits 허브·검색 페이지·도구(data-tool)가 있는 글에만(production GA4 loader·JSON-LD 제외)

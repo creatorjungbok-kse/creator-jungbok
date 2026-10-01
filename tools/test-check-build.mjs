@@ -69,6 +69,8 @@ const cases = [
   ['production', '글 있는 카테고리가 메뉴에서 빠짐', dropNav('index.html', '/living/'), 'index.html: 메뉴에 없는 카테고리 /living/'],
   ['production', '빈 카테고리(benefits) 검색 필터', edit('search/index.html', 'data-category="business"', 'data-category="benefits"></button><button data-category="business"'), 'search/index.html: 공개 글 없는 카테고리 검색 필터 /benefits/'],
   ['preview', 'fixture 지원·혜택이 있으면 검색 필터 필수', edit('search/index.html', 'data-category="benefits"', 'data-category="x-benefits"'), 'search/index.html: 검색 필터에 없는 카테고리 /benefits/'],
+  ['production', 'benefit 없는데 신청 가능 필터 표시', (dir) => { const p = join(dir, 'search/index.html'); writeFileSync(p, readFileSync(p, 'utf8').replace(/<label class="open-only"[^>]*>\s*<input[^>]*data-open-only[^>]*>/, '<label class="open-only"><input type="checkbox" data-open-only>')); }, "'신청 가능한 지원만' 표시 (검색 데이터 benefit 없음)"],
+  ['preview', 'benefit 있는데 신청 가능 필터 숨김', edit('search/index.html', '<label class="open-only"', '<label class="open-only" hidden'), "'신청 가능한 지원만' 숨김 (검색 데이터 benefit 있음)"],
   ['preview', 'fixture 지원·혜택이 있으면 메뉴 필수', dropNav('index.html', '/benefits/'), 'index.html: 메뉴에 없는 카테고리 /benefits/'],
   ['production', 'sidebar에 슬롯', edit('business/index.html', '</aside>', '<div data-ad-slot="home-1"></div></aside>'), '광고 슬롯 home-1: main 본문 밖·sidebar'],
   ['preview', '공식 신청 버튼 바로 아래 슬롯', edit('benefits/fixture-open/index.html', '공식 사이트로 이동</span></a>', '공식 사이트로 이동</span></a><div data-ad-slot="benefit-mid"></div>'), '광고 슬롯 benefit-mid: 보호 영역(official-cta) 안 또는 인접'],
