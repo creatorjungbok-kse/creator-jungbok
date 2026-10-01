@@ -213,6 +213,15 @@ for (const file of htmlFiles) {
   const hasTool = /\sdata-tool="/.test(html);
   if (siteScripts > 0 && !SCRIPT_PAGES.has(path) && !hasTool) fail(`허용되지 않은 페이지 script ${siteScripts}건`);
 
+  // 이미지: 로컬 파일만(원격 이미지 금지), 결과물에 실제로 있고, 레이아웃 이동(CLS)을 막는 width·height가 있어야 한다
+  for (const [tag] of html.matchAll(/<img\b[^>]*>/g)) {
+    const src = tag.match(/\ssrc="([^"]*)"/)?.[1] ?? '';
+    if (!src.startsWith('/') || src.startsWith('//')) fail(`원격·상대 경로 이미지 ${src}`);
+    else if (!existsSync(join(dist, decodeURIComponent(src.split(/[?#]/)[0])))) fail(`없는 이미지 ${src}`);
+    if (!/\swidth="\d+"/.test(tag) || !/\sheight="\d+"/.test(tag)) fail(`width·height 없는 이미지 ${src}`);
+    if (!/\salt="/.test(tag)) fail(`alt 없는 이미지 ${src}`);
+  }
+
   // 도구 상수 기한(연료비조정단가 등 기간이 있는 값). production에서만 막는다
   if (env === 'production') {
     for (const [, until] of html.matchAll(/\sdata-valid-until="([^"]*)"/g)) {

@@ -18,6 +18,10 @@
   --color-status-open-soft: #e7f5ec;
   --color-status-closing: #b4460b;
   --color-status-closing-soft: #fdf0e6;
+  /* 대표 이미지가 없는 글의 대체 칸(대분류별, 썸네일 바탕색과 같은 계열) */
+  --color-tone-business: #ffe7b0;
+  --color-tone-living: #e3edfb;
+  --color-tone-digital: #f3ebe4;
 
   /* type — 시스템 글꼴(웹폰트 다운로드 없음). 크기는 M3 단계를 한국어 본문에 맞춰 조정 */
   --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic',

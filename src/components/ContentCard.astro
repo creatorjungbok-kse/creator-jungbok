@@ -1,41 +1,36 @@
 ---
-// 목록용 카드: 지원사업은 BenefitCard(상태·기간), 일반 글은 ArticleCard(대분류·요약·날짜).
+// 목록용 카드: 지원사업은 BenefitCard(상태·기간), 일반 글은 ArticleCard(분류·요약·날짜). 모양은 variant로 고른다.
 import ArticleCard, { type Props as ArticleCardProps } from './ArticleCard.astro';
 import BenefitCard from './BenefitCard.astro';
-import { categories } from '../data/categories';
+import { categories, subcategoryName } from '../data/categories';
 import type { ContentItem } from '../lib/content';
 import { formatDate } from '../lib/format';
 
 export interface Props {
   item: ContentItem;
-  // 일반 글 카드의 표시 옵션
-  large?: ArticleCardProps['large'];
-  cta?: ArticleCardProps['cta'];
-  // 대분류 페이지 안에서는 대분류 이름을 반복하지 않는다
-  showCategory?: boolean;
+  variant?: ArticleCardProps['variant'];
+  // 첫 화면 대표 이미지만 바로 불러온다
+  eager?: boolean;
+  // 카드 위 분류 글자: full = 대분류(· 세부 분류) / sub = 세부 분류만 / none = 없음(세부 분류 구획 안)
+  label?: 'full' | 'sub' | 'none';
 }
 
-const { item, large, cta, showCategory = true } = Astro.props;
+const { item, variant = 'text', eager = false, label: labelMode = 'full' } = Astro.props;
 const { data } = item.entry;
 const category = categories.find((c) => c.slug === item.category)!;
+const sub = subcategoryName(category, data.subcategory);
+const label = { full: variant === 'text' ? category.name : `${category.name} · ${sub}`, sub, none: undefined }[labelMode];
 const meta =
   item.kind === 'article' && item.entry.data.contentType === 'cost'
     ? [`조사 기준 ${formatDate(data.researchedAt, 'month')}`, `업데이트 ${formatDate(data.dateModified)}`]
     : [`업데이트 ${formatDate(data.dateModified)}`];
+const thumbnail = { src: data.thumbnail, label: category.name, tone: category.slug, eager };
 ---
 
 {
   item.kind === 'benefit' ? (
-    <BenefitCard href={item.url} title={data.title} program={item.entry.data.program} audience={item.entry.data.audience} />
+    <BenefitCard href={item.url} title={data.title} program={item.entry.data.program} audience={item.entry.data.audience} variant={variant} thumbnail={thumbnail} />
   ) : (
-    <ArticleCard
-      href={item.url}
-      title={data.title}
-      category={showCategory ? category.name : undefined}
-      excerpt={data.summary}
-      meta={meta}
-      large={large}
-      cta={cta}
-    />
+    <ArticleCard href={item.url} title={data.title} category={label} excerpt={data.summary} meta={meta} variant={variant} thumbnail={thumbnail} />
   )
 }

@@ -1,0 +1,164 @@
+---
+// 홈·카테고리 공통 사이드바(모바일에서는 본문 아래로 내려간다): 카테고리(글 수·세부 분류) → 최근 글 → 계산기·도구.
+// 인기 글은 두지 않는다(조회 데이터가 없다). 글이 없는 대분류·세부 분류는 나오지 않고, 첫 글이 생기면 자동으로 나온다.
+import ContentCard from './ContentCard.astro';
+import SectionTitle from './SectionTitle.astro';
+import { categoryHref } from '../data/categories';
+import { activeCategories, getAllContent } from '../lib/content';
+import { latestPublished, statusOf } from '../lib/select';
+import { toolIds, toolNames } from '../tools/registry';
+
+export interface Props {
+  // 지금 보고 있는 대분류(목록에서 표시)
+  current?: string;
+  // 본문에 이미 최근 글 목록이 있으면(홈) 사이드바에서는 뺀다
+  showRecent?: boolean;
+  // 글 상세에서는 지금 글을 최근 글에서 뺀다
+  exclude?: string;
+}
+
+const { current, showRecent = true, exclude } = Astro.props;
+const all = await getAllContent();
+const listed = all.filter((i) => statusOf(i) !== 'closed');
+const tree = (await activeCategories()).map((c) => {
+  const items = all.filter((i) => i.category === c.slug);
+  // 지원·혜택 허브는 세부 분류 구획이 없어 대분류만 보인다
+  const subs =
+    c.slug === 'benefits'
+      ? []
+      : c.subcategories.map((s) => ({ ...s, count: items.filter((i) => i.entry.data.subcategory === s.slug).length })).filter((s) => s.count > 0);
+  return { c, count: items.length, subs };
+});
+const recent = latestPublished(listed.filter((i) => i.url !== exclude)).slice(0, 5);
+const tools = toolIds.flatMap((id) => {
+  const item = all.find((i) => i.kind === 'article' && i.entry.data.tool === id);
+  return item ? [{ href: item.url, name: toolNames[id] }] : [];
+});
+---
+
+<section class="side-block">
+  <SectionTitle title="카테고리" tier="utility" />
+  <ul class="cat-tree">
+    {
+      tree.map(({ c, count, subs }) => (
+        <li>
+          <a href={categoryHref(c)} aria-current={c.slug === current ? 'page' : undefined}>
+            <span>{c.name}</span>
+            <span class="count">{count}<span class="visually-hidden">개</span></span>
+          </a>
+          {subs.length > 0 && (
+            <ul>
+              {subs.map((s) => (
+                <li>
+                  <a href={`${categoryHref(c)}#sub-${s.slug}`}>
+                    <span>{s.name}</span>
+                    <span class="count">{s.count}<span class="visually-hidden">개</span></span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+{
+  showRecent && recent.length > 0 && (
+    <section class="side-block">
+      <SectionTitle title="최근 글" tier="utility" />
+      <div class="side-posts">
+        {recent.map((item) => (
+          <ContentCard item={item} variant="mini" />
+        ))}
+      </div>
+    </section>
+  )
+}
+
+{
+  tools.length > 0 && (
+    <section class="side-block">
+      <SectionTitle title="계산기·도구" tier="utility" />
+      <ul class="tool-links">
+        {tools.map((t) => (
+          <li>
+            <a href={t.href}>{t.name}</a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+<style>
+  .side-block {
+    display: grid;
+    align-content: start;
+  }
+
+  /* 카테고리 목록: 줄 전체가 링크(44px 이상), 글 수는 오른쪽 */
+  .cat-tree a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    min-height: var(--touch);
+    color: var(--color-text);
+    font-weight: var(--weight-semibold);
+  }
+
+  .cat-tree > li {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .cat-tree a[aria-current='page'] {
+    color: var(--color-brand-text);
+  }
+
+  .cat-tree ul {
+    padding: 0 0 var(--space-2) var(--space-4);
+  }
+
+  .cat-tree ul a {
+    min-height: 2.25rem;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+  }
+
+  /* 글 수: 오른쪽의 작은 회색 숫자(칸·배경 없음) */
+  .count {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    font-weight: 400;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .side-posts {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .tool-links {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .tool-links a {
+    display: flex;
+    align-items: center;
+    min-height: var(--touch);
+    padding-inline: var(--space-4);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+  }
+
+  .tool-links a:hover {
+    background: var(--color-surface-strong);
+  }
+</style>

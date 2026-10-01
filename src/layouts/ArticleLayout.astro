@@ -7,8 +7,9 @@
 import BaseLayout from './BaseLayout.astro';
 import ActionLinks from '../components/ActionLinks.astro';
 import AdSlot from '../components/AdSlot.astro';
-import ArticleCard from '../components/ArticleCard.astro';
-import BenefitCard from '../components/BenefitCard.astro';
+import BlogSidebar from '../components/BlogSidebar.astro';
+import ContentCard from '../components/ContentCard.astro';
+import Thumbnail from '../components/Thumbnail.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Checklist from '../components/Checklist.astro';
 import CompareTable from '../components/CompareTable.astro';
@@ -22,7 +23,7 @@ import Toc, { type Props as TocProps } from '../components/Toc.astro';
 import { toolComponents } from '../components/tools';
 import type { AdSlotId } from '../config/ads';
 import { audiences } from '../data/audiences';
-import { categories, categoryHref } from '../data/categories';
+import { categories, categoryHref, subcategoryName } from '../data/categories';
 import { people } from '../data/people';
 import type { ContentItem } from '../lib/content';
 import { contentAdSlots, splitBody, topCut } from '../lib/ads';
@@ -45,7 +46,6 @@ const { data } = item.entry;
 const category = categories.find((c) => c.slug === item.category)!;
 const nameOf = (id: string) => people.find((p) => p.id === id)!.name;
 const isoDate = (d: Date) => d.toISOString().slice(0, 10);
-const categoryName = (i: ContentItem) => categories.find((c) => c.slug === i.category)!.name;
 
 // 목차: 본문 H2가 3개 이상일 때만(짧은 글은 블록 순서만으로 충분하다)
 const sections = headings.filter((h) => h.depth === 2).length;
@@ -108,15 +108,20 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
   <div class="container page-grid">
     <article class="article">
       <Breadcrumb items={[{ label: category.name, href: categoryHref(category) }]} />
-      <header class="article__head">
-        <p class="article__category">{category.name}{audienceNames.length > 0 && ` · ${audienceNames.join('·')}`}</p>
-        <h1>{data.title}</h1>
-        <p class="article__meta">
-          <span>작성 {nameOf(data.author)}</span>
-          {data.reviewer && <span>검수 {nameOf(data.reviewer)}</span>}
-          <span>최종 업데이트 <time datetime={isoDate(data.dateModified)}>{formatDate(data.dateModified)}</time></span>
-          {isArticle && <span>조사 기준일 {formatDate(data.researchedAt)}</span>}
-        </p>
+      <header class:list={['article__head', { 'article__head--thumb': data.thumbnail }]}>
+        <div class="article__titles">
+          <p class="article__category">
+            <a href={categoryHref(category)}>{category.name}</a> · {subcategoryName(category, data.subcategory)}{audienceNames.length > 0 && ` · ${audienceNames.join('·')}`}
+          </p>
+          <h1>{data.title}</h1>
+          <p class="article__meta">
+            <span>작성 {nameOf(data.author)}</span>
+            {data.reviewer && <span>검수 {nameOf(data.reviewer)}</span>}
+            <span>최종 업데이트 <time datetime={isoDate(data.dateModified)}>{formatDate(data.dateModified)}</time></span>
+            {isArticle && <span>조사 기준일 {formatDate(data.researchedAt)}</span>}
+          </p>
+        </div>
+        {data.thumbnail && <Thumbnail src={data.thumbnail} label={category.name} tone={category.slug} eager />}
       </header>
 
       {
@@ -184,14 +189,10 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
         related.length > 0 && (
           <section data-ad-protected="related">
             <SectionTitle title="다음에 볼 정보" />
-            <div class="card-grid card-grid--3">
-              {related.map((r) =>
-                r.kind === 'benefit' ? (
-                  <BenefitCard href={r.url} title={r.entry.data.title} program={r.entry.data.program} audience={r.entry.data.audience} />
-                ) : (
-                  <ArticleCard href={r.url} title={r.entry.data.title} category={categoryName(r)} meta={[`업데이트 ${formatDate(r.entry.data.dateModified)}`]} />
-                ),
-              )}
+            <div class="post-grid">
+              {related.map((r) => (
+                <ContentCard item={r} variant="stack" />
+              ))}
             </div>
           </section>
         )
@@ -215,9 +216,13 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
     </article>
 
     {
-      toc.length > 0 && (
+      toc.length > 0 ? (
         <aside class="page-aside article-aside" aria-label="글 보조 정보">
           <Toc headings={toc} variant="sidebar" />
+        </aside>
+      ) : (
+        <aside class="page-aside desktop-only" aria-label="카테고리와 도구">
+          <BlogSidebar current={item.category} exclude={item.url} />
         </aside>
       )
     }
@@ -233,15 +238,34 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
     min-width: 0;
   }
 
+  /* 글 머리: 분류 · 제목 · 작성 정보. 대표 이미지는 모바일에서 아래, 태블릿 이상에서 오른쪽 작은 칸 */
   .article__head {
     display: grid;
+    gap: var(--space-4);
+  }
+
+  .article__titles {
+    display: grid;
+    align-content: center;
     gap: var(--space-2);
+  }
+
+  @media (min-width: 768px) {
+    .article__head--thumb {
+      grid-template-columns: minmax(0, 1fr) 13.5rem;
+      align-items: center;
+      gap: var(--space-5);
+    }
   }
 
   .article__category {
     color: var(--color-brand-text);
     font-size: var(--text-sm);
     font-weight: var(--weight-semibold);
+  }
+
+  .article__category a {
+    color: inherit;
   }
 
   .article__head h1 {

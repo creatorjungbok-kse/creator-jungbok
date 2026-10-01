@@ -5,6 +5,12 @@ import { electricityBill } from './electricity-bill/constants';
 export const toolIds = ['electricity-bill', 'mvno-plan-cost'] as const;
 export type ToolId = (typeof toolIds)[number];
 
+// 사이드바 '계산기·도구' 목록에 쓰는 짧은 이름(도구가 들어 있는 글로 연결된다)
+export const toolNames: Record<ToolId, string> = {
+  'electricity-bill': '전기요금 계산기',
+  'mvno-plan-cost': '알뜰폰 총비용 비교',
+};
+
 // 도구를 둘 수 있는 글 유형(도구마다 하나)
 export const toolContentTypes: Record<ToolId, 'cost' | 'compare'> = {
   'electricity-bill': 'cost',

@@ -1,26 +1,27 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HomeView from '../components/HomeView.astro';
-import { categories } from '../data/categories';
 import { getAllContent } from '../lib/content';
 import { homeJsonLd } from '../lib/seo';
-import { latestModified, latestPublished, openBenefits, pillars, recentCosts, recentlyUpdated, statusOf, timely } from '../lib/select';
+import { featured, latestPublished, openBenefits, statusOf, timely } from '../lib/select';
 
 // 섹션별 개수(01 D). 선택 규칙은 lib/select.ts
 // 홈에는 신청 종료된 지원을 올리지 않는다(종료 지원은 /benefits/의 종료 목록에서 찾는다).
 const all = await getAllContent();
 const listed = all.filter((i) => statusOf(i) !== 'closed');
+const top = featured(listed, all).slice(0, 3);
+// 최근 글은 대표 글과 겹치지 않게 고른다. 글이 적어 3개가 안 되면 대표 글도 포함한 최신 순으로 보여 준다
+const latest = latestPublished(listed);
+const rest = latest.filter((i) => !top.includes(i));
+const recent = (rest.length >= 3 ? rest : latest).slice(0, 8);
 ---
 
 <BaseLayout jsonLd={homeJsonLd()}>
   <HomeView
-    featured={pillars(listed, all).slice(0, 3)}
+    featured={top}
     benefits={openBenefits(listed).slice(0, 4)}
-    costs={recentCosts(listed).slice(0, 8)}
     timely={timely(listed).slice(0, 5)}
-    byCategory={Object.fromEntries(categories.map((c) => [c.slug, latestModified(listed.filter((i) => i.category === c.slug)).slice(0, 3)]))}
-    recent={latestPublished(listed).slice(0, 5)}
-    updates={recentlyUpdated(listed).slice(0, 5)}
+    recent={recent}
     isEmpty={all.length === 0}
   />
 </BaseLayout>

@@ -15,14 +15,6 @@ const sorted = (items: ContentItem[], compare: (a: ContentItem, b: ContentItem) 
 export const latestModified = (items: ContentItem[]) => sorted(items, newest('dateModified'));
 export const latestPublished = (items: ContentItem[]) => sorted(items, newest('datePublished'));
 
-// 실제 내용이 바뀐 글(changelog가 있는 수정)만. 날짜만 올린 글은 schema가 막는다.
-export const recentlyUpdated = (items: ContentItem[]) =>
-  latestModified(items.filter((i) => +i.entry.data.dateModified !== +i.entry.data.datePublished));
-
-// 최근 조사한 비용: cost 글, 조사 기준일 순
-export const recentCosts = (items: ContentItem[]) =>
-  sorted(items.filter((i) => i.kind === 'article' && i.entry.data.contentType === 'cost'), newest('researchedAt'));
-
 // 대표 콘텐츠: 다른 글이 pillar로 가리키는 Pillar 글(02 5장). Supporting이 많은 순 → 최근 수정 순
 export function pillars(items: ContentItem[], all: ContentItem[]) {
   const supporters = new Map<string, number>();
@@ -35,6 +27,9 @@ export function pillars(items: ContentItem[], all: ContentItem[]) {
     (a, b) => supporters.get(b.url)! - supporters.get(a.url)! || newest('dateModified')(a, b),
   );
 }
+
+// 홈 대표 글(먼저 읽어 볼 가이드): Pillar 글 먼저, 남는 자리는 최근 게시 순으로 채운다(별도 우선순위 필드 없음)
+export const featured = (items: ContentItem[], all: ContentItem[]) => [...new Set([...pillars(items, all), ...latestPublished(items)])];
 
 // Timely 글(신청 종료 지원 제외): 홈 "최근 확인할 돈 정보". 관심도 데이터가 없으므로 인기를 암시하는 제목을 쓰지 않는다
 export const timely = (items: ContentItem[]) =>

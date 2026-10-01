@@ -1,27 +1,40 @@
 ---
+// 글 목록 카드 하나. 홈·카테고리·관련 글·사이드바가 모두 이 카드를 쓰고 variant로 모양만 바꾼다.
+// - text: 글자만(지원·혜택 카드, 회색 칸 목록)
+// - feature: 큰 대표 글(이미지 위, 큰 제목·요약)
+// - stack: 이미지 위 + 제목(관련 글·작은 대표 글)
+// - row: 이미지 왼쪽 + 분류·제목·요약·날짜(최근 글·카테고리 목록)
+// - mini: 작은 이미지 왼쪽 + 제목(사이드바)
+// 카드 전체가 제목 링크의 클릭 영역이다(링크는 제목 하나뿐이라 스크린리더에서 중복되지 않는다).
+import Thumbnail, { type Props as ThumbnailProps } from './Thumbnail.astro';
 import { statusLabels, type BenefitStatus } from '../lib/benefit-status';
 
 export interface Props {
   href: string;
   title: string;
+  // 카드 위 작은 분류 글자(예: 집·생활 · 공과금)
   category?: string;
   // 지원·혜택 카드의 상태(BenefitCard가 계산해 넘긴다)
   status?: BenefitStatus;
   excerpt?: string;
   meta?: string[];
-  // 썸네일은 콘텐츠에 대표 이미지 필드가 생길 때(P8) 추가한다. 지금은 텍스트 카드만 있다.
-  large?: boolean;
-  // 카드 끝의 이동 안내 문구(홈 '먼저 읽어 볼 가이드'). 카드 전체가 제목 링크라 화면 표시용이다
-  cta?: string;
+  variant?: 'text' | 'feature' | 'stack' | 'row' | 'mini';
+  // text가 아닌 카드의 대표 이미지(src가 없으면 Thumbnail이 대체 칸을 그린다)
+  thumbnail?: Omit<ThumbnailProps, 'class'>;
 }
 
-const { href, title, category, status, excerpt, meta = [], large = false, cta } = Astro.props;
+const { href, title, category, status, excerpt, meta = [], variant = 'text', thumbnail } = Astro.props;
+const showThumb = variant !== 'text' && thumbnail;
+const showTop = (status || category) && variant !== 'mini';
+const showExcerpt = excerpt && (variant === 'text' || variant === 'feature' || variant === 'row');
+const showMeta = meta.length > 0 && variant !== 'mini' && variant !== 'stack';
 ---
 
-<article class:list={['card', { 'card--large': large }]} data-status={status}>
+<article class:list={['card', `card--${variant}`]} data-status={status}>
+  {showThumb && <Thumbnail {...thumbnail} class="card__thumb" />}
   <div class="card__body">
     {
-      (status || category) && (
+      showTop && (
         <p class="card__top">
           {status && <span class={`badge badge--${status}`}>{statusLabels[status]}</span>}
           {category && <span>{category}</span>}
@@ -29,9 +42,8 @@ const { href, title, category, status, excerpt, meta = [], large = false, cta } 
       )
     }
     <h3 class="card__title"><a href={href}>{title}</a></h3>
-    {excerpt && <p class="card__excerpt">{excerpt}</p>}
-    {meta.length > 0 && <p class="card__meta">{meta.map((m) => <span>{m}</span>)}</p>}
-    {cta && <p class="card__cta" aria-hidden="true">{cta}</p>}
+    {showExcerpt && <p class="card__excerpt">{excerpt}</p>}
+    {showMeta && <p class="card__meta">{meta.map((m) => <span>{m}</span>)}</p>}
   </div>
 </article>
 
@@ -41,15 +53,19 @@ const { href, title, category, status, excerpt, meta = [], large = false, cta } 
     display: grid;
     align-content: start;
     gap: var(--space-3);
+    min-width: 0;
   }
 
   .card__body {
     display: grid;
-    gap: var(--space-2);
+    align-content: start;
+    gap: var(--space-1);
+    min-width: 0;
   }
 
   .card__top {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: var(--space-2);
     color: var(--color-brand-text);
@@ -57,17 +73,15 @@ const { href, title, category, status, excerpt, meta = [], large = false, cta } 
     font-weight: var(--weight-semibold);
   }
 
+  /* 긴 제목은 3줄까지 */
   .card__title {
+    display: -webkit-box;
+    overflow: hidden;
     font-size: var(--text-base);
     font-weight: var(--weight-semibold);
     line-height: 1.5;
-  }
-
-  .card--large .card__title {
-    font-size: var(--text-xl);
-    font-weight: var(--weight-bold);
-    line-height: var(--leading-tight);
-    letter-spacing: -0.02em;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
   }
 
   /* 카드 전체를 클릭 영역으로 */
@@ -77,9 +91,15 @@ const { href, title, category, status, excerpt, meta = [], large = false, cta } 
     inset: 0;
   }
 
+  .card:hover .card__title a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
   .card__excerpt {
     display: -webkit-box;
     overflow: hidden;
+    margin-top: var(--space-1);
     color: var(--color-text-muted);
     font-size: var(--text-sm);
     -webkit-box-orient: vertical;
@@ -87,6 +107,7 @@ const { href, title, category, status, excerpt, meta = [], large = false, cta } 
   }
 
   .card__meta {
+    margin-top: var(--space-1);
     color: var(--color-text-muted);
     font-size: var(--text-xs);
   }
@@ -96,10 +117,50 @@ const { href, title, category, status, excerpt, meta = [], large = false, cta } 
     margin-inline: var(--space-2);
   }
 
-  .card__cta {
-    margin-top: var(--space-1);
-    color: var(--color-brand-text);
+  /* feature: 큰 대표 글 */
+  .card--feature .card__body {
+    gap: var(--space-2);
+  }
+
+  .card--feature .card__title {
+    font-size: var(--text-xl);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
+    letter-spacing: -0.02em;
+  }
+
+  /* row: 이미지 왼쪽(모바일은 작게) */
+  .card--row {
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-4);
+  }
+
+  .card--row .card__title {
+    -webkit-line-clamp: 2;
+  }
+
+  /* mini: 사이드바용 작은 줄 */
+  .card--mini {
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .card--mini .card__title {
     font-size: var(--text-sm);
-    font-weight: var(--weight-semibold);
+    font-weight: var(--weight-medium);
+    -webkit-line-clamp: 2;
+  }
+
+  @media (min-width: 768px) {
+    .card--row {
+      grid-template-columns: 12.5rem minmax(0, 1fr);
+      gap: var(--space-5);
+    }
+
+    .card--row .card__title {
+      font-size: var(--text-md);
+    }
   }
 </style>

@@ -38,7 +38,7 @@ export const categories: Category[] = [
     seoTitle: '사업·창업 비용·정보',
     description: '사업자등록·세무 절차부터 창업과 운영에 드는 비용까지 사업에 필요한 정보를 정리합니다.',
     subcategories: [
-      { slug: 'tax', name: '세무·회계' },
+      { slug: 'tax', name: '사업자등록·세무' },
       { slug: 'labor', name: '노무·직원' },
       { slug: 'payment', name: '결제·POS' },
       { slug: 'website', name: '홈페이지·쇼핑몰' },
@@ -83,4 +83,7 @@ export const categories: Category[] = [
 ];
 
 export const categoryHref = (c: Category) => `/${c.slug}/`;
+
+// 세부 분류 표시 이름. 글 frontmatter에는 slug(예: utilities)만 쓰고, 화면 이름은 위 registry 한 곳에서 바꾼다
+export const subcategoryName = (c: Category, slug: string) => c.subcategories.find((s) => s.slug === slug)!.name;
 
