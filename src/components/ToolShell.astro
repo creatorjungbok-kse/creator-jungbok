@@ -31,3 +31,141 @@ const { id, title, validUntil } = Astro.props;
     letter-spacing: -0.01em;
   }
 </style>
+
+<!-- 도구 공통 입력·결과 모양(도구가 있는 페이지에만 실린다). 도구별 모양은 각 도구 컴포넌트에 둔다 -->
+<style is:global>
+  .tool-scope,
+  .tool-hint {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .tool-noscript {
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    font-size: var(--text-sm);
+  }
+
+  .tool-form {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .tool-form fieldset {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .tool-label {
+    margin-bottom: var(--space-2);
+    font-weight: var(--weight-semibold);
+  }
+
+  .tool-field {
+    display: grid;
+  }
+
+  /* 알약 모양 선택지(라디오) */
+  .tool-choices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .tool-choice {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--touch);
+    padding-inline: var(--space-4);
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+  }
+
+  .tool-choice:has(input:checked) {
+    border-color: var(--color-brand);
+    background: var(--color-brand-soft);
+    font-weight: var(--weight-semibold);
+  }
+
+  .tool-choice input {
+    accent-color: var(--color-brand-text);
+  }
+
+  /* 입력칸 + 단위 */
+  .tool-input {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    max-width: 16rem;
+  }
+
+  .tool-input input {
+    flex: 1;
+    min-width: 0;
+    min-height: 48px;
+    padding-inline: var(--space-4);
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font: inherit;
+    font-size: var(--text-md);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tool-input input[aria-invalid='true'] {
+    border-color: var(--color-status-closing);
+  }
+
+  .tool-hint {
+    margin-top: var(--space-1);
+  }
+
+  .tool-error {
+    color: var(--color-status-closing);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+  }
+
+  .tool-error:empty {
+    display: none;
+  }
+
+  .tool-submit {
+    justify-self: start;
+    min-height: 48px;
+    padding-inline: var(--space-6);
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: var(--color-brand);
+    color: var(--color-text);
+    font: inherit;
+    font-weight: var(--weight-bold);
+    cursor: pointer;
+  }
+
+  .tool-result {
+    display: grid;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+  }
+
+  .tool-notice {
+    font-size: var(--text-sm);
+  }
+
+  .tool-steps {
+    display: grid;
+    gap: var(--space-2);
+    padding-left: 1.25em;
+    font-size: var(--text-sm);
+    list-style: decimal;
+  }
+</style>

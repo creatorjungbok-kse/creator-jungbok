@@ -6,7 +6,7 @@ import { people } from '../data/people';
 import { sourceLevels } from '../data/sources';
 import { topics } from '../data/topics';
 import { actionUrlProblem, hostExceptionProblem, linkActions } from './action-links';
-import { toolIds } from '../tools/registry';
+import { toolContentTypes, toolIds } from '../tools/registry';
 import { sourceRefs, sourceResolver } from './sources';
 
 const date = z.coerce.date();
@@ -266,9 +266,12 @@ export const articleSchema = z
   })
   .superRefine((d, ctx) => {
     if (d.contentType === 'cost' && !d.priceItems?.length && !d.tool) ctx.addIssue({ code: 'custom', path: ['priceItems'], message: 'cost 글은 priceItems 또는 tool이 필요하다' });
-    if (d.tool && d.contentType !== 'cost') ctx.addIssue({ code: 'custom', path: ['tool'], message: 'tool은 cost 글에만 둔다' });
+    if (d.tool && toolContentTypes[d.tool] !== d.contentType) ctx.addIssue({ code: 'custom', path: ['tool'], message: `tool ${d.tool}은 ${toolContentTypes[d.tool]} 글에만 둔다` });
     if ((d.contentType === 'change') !== (d.change !== undefined)) ctx.addIssue({ code: 'custom', path: ['change'], message: 'change 블록은 change 글에만, change 글에는 필수' });
-    if ((d.contentType === 'compare') !== (d.compare !== undefined)) ctx.addIssue({ code: 'custom', path: ['compare'], message: 'compare 표는 compare 글에만, compare 글에는 필수' });
+    // compare 글: 고정 비교표(compare) 또는 비교 도구(tool) 중 하나만(v1)
+    if (d.compare && d.contentType !== 'compare') ctx.addIssue({ code: 'custom', path: ['compare'], message: 'compare 표는 compare 글에만 둔다' });
+    if (d.contentType === 'compare' && !d.compare && !d.tool) ctx.addIssue({ code: 'custom', path: ['compare'], message: 'compare 글은 compare 표 또는 tool이 필요하다' });
+    if (d.contentType === 'compare' && d.compare && d.tool) ctx.addIssue({ code: 'custom', path: ['tool'], message: 'compare 글에는 compare 표와 tool 중 하나만 둔다' });
     // '신청하기'는 상태를 계산하는 지원·혜택 글에서만 쓴다
     d.actionLinks?.forEach((l, i) => {
       if (l.action === 'application') ctx.addIssue({ code: 'custom', path: ['actionLinks', i, 'action'], message: 'application 링크는 지원·혜택(benefit) 글에서만 쓴다(info·check 사용)' });

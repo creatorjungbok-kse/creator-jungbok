@@ -24,16 +24,16 @@ const label = (season: Season, kWh: number) => `${c.seasons[season].label} · ${
 ---
 
 <ToolShell id="electricity-bill" title="전기요금 계산기" validUntil={validUntil(c)}>
-  <p class="eb-scope">{c.appliesTo} · 월 사용량 {c.minKwh}~{c.maxKwh.toLocaleString('ko-KR')}kWh</p>
-  <noscript><p class="eb-noscript">계산기는 JavaScript가 켜져 있어야 동작합니다. 아래 예시 결과와 요금표를 참고하세요.</p></noscript>
+  <p class="tool-scope">{c.appliesTo} · 월 사용량 {c.minKwh}~{c.maxKwh.toLocaleString('ko-KR')}kWh</p>
+  <noscript><p class="tool-noscript">계산기는 JavaScript가 켜져 있어야 동작합니다. 아래 예시 결과와 요금표를 참고하세요.</p></noscript>
 
-  <form class="eb-form" data-eb-form hidden novalidate>
+  <form class="tool-form" data-eb-form hidden novalidate>
     <fieldset>
-      <legend>사용 시기</legend>
-      <div class="eb-seasons">
+      <legend class="tool-label">사용 시기</legend>
+      <div class="tool-choices">
         {
           (['summer', 'other'] as Season[]).map((s) => (
-            <label class="eb-season">
+            <label class="tool-choice">
               <input type="radio" name="eb-season" value={s} checked={s === 'other'} />
               <span>{c.seasons[s].label}</span>
             </label>
@@ -41,19 +41,19 @@ const label = (season: Season, kWh: number) => `${c.seasons[season].label} · ${
         }
       </div>
     </fieldset>
-    <div class="eb-field">
-      <label for="eb-kwh">월 사용량</label>
-      <div class="eb-input">
+    <div class="tool-field">
+      <label class="tool-label" for="eb-kwh">월 사용량</label>
+      <div class="tool-input">
         <input id="eb-kwh" type="text" inputmode="numeric" autocomplete="off" maxlength="6" aria-describedby="eb-kwh-hint eb-kwh-error" />
         <span aria-hidden="true">kWh</span>
       </div>
-      <p id="eb-kwh-hint" class="eb-hint">전기요금 청구서나 한전ON의 월 사용량을 정수로 입력하세요.</p>
-      <p id="eb-kwh-error" class="eb-error" data-eb-error></p>
+      <p id="eb-kwh-hint" class="tool-hint">전기요금 청구서나 한전ON의 월 사용량을 정수로 입력하세요.</p>
+      <p id="eb-kwh-error" class="tool-error" data-eb-error></p>
     </div>
-    <button type="submit">계산하기</button>
+    <button class="tool-submit" type="submit">계산하기</button>
   </form>
 
-  <div class="eb-result" data-eb-result>
+  <div class="tool-result" data-eb-result>
     <div aria-live="polite" aria-atomic="true">
       <p class="eb-result__label"><span data-eb-kind>예시</span> · <span data-eb-label>{label(example.season, example.kWh)}</span></p>
       <p class="eb-result__total">예상 청구금액 <strong data-eb="total">{won(r.total)}</strong></p>
@@ -72,7 +72,7 @@ const label = (season: Season, kWh: number) => `${c.seasons[season].label} · ${
         <dd data-eb="total">{won(r.total)}</dd>
       </div>
     </dl>
-    <p class="eb-notice">{c.appliesTo} 기준의 예상 금액이며 실제 청구액은 계약종별·검침기간·할인 등에 따라 달라질 수 있습니다.</p>
+    <p class="tool-notice">{c.appliesTo} 기준의 예상 금액이며 실제 청구액은 계약종별·검침기간·할인 등에 따라 달라질 수 있습니다.</p>
     <p class="eb-basis">
       연료비조정단가 적용 기간 {day(fuel.effectiveFrom)}~{day(fuel.effectiveTo)} · 요금 확인일 {day(c.checkedAt)}
     </p>
@@ -131,7 +131,7 @@ const label = (season: Season, kWh: number) => `${c.seasons[season].label} · ${
   </div>
 
   <h3>계산 순서</h3>
-  <ol class="eb-steps">
+  <ol class="tool-steps">
     <li>기본요금: 한 달 사용량이 속한 구간의 기본요금을 한 번 적용합니다.</li>
     <li>전력량요금: 사용량을 구간별로 나눠 구간 단가를 곱해 더합니다(원 미만 버림).</li>
     <li>기후환경요금·연료비조정요금: 사용량에 kWh당 단가를 곱합니다.</li>
@@ -203,128 +203,10 @@ const label = (season: Season, kWh: number) => `${c.seasons[season].label} · ${
 </script>
 
 <style>
-  .eb-scope,
-  .eb-hint,
   .eb-basis {
     color: var(--color-text-muted);
     font-size: var(--text-sm);
   }
-
-  .eb-noscript {
-    padding: var(--space-3) var(--space-4);
-    border-radius: var(--radius-sm);
-    background: var(--color-surface);
-    font-size: var(--text-sm);
-  }
-
-  .eb-form {
-    display: grid;
-    gap: var(--space-4);
-  }
-
-  fieldset {
-    margin: 0;
-    padding: 0;
-    border: 0;
-  }
-
-  legend,
-  .eb-field > label {
-    margin-bottom: var(--space-2);
-    font-weight: var(--weight-semibold);
-  }
-
-  .eb-field {
-    display: grid;
-  }
-
-  .eb-seasons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-  }
-
-  .eb-season {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    min-height: var(--touch);
-    padding-inline: var(--space-4);
-    border: 1px solid var(--color-outline);
-    border-radius: var(--radius-pill);
-    cursor: pointer;
-  }
-
-  .eb-season:has(input:checked) {
-    border-color: var(--color-brand);
-    background: var(--color-brand-soft);
-    font-weight: var(--weight-semibold);
-  }
-
-  .eb-season input {
-    accent-color: var(--color-brand-text);
-  }
-
-  .eb-input {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    max-width: 16rem;
-  }
-
-  .eb-input input {
-    flex: 1;
-    min-width: 0;
-    min-height: 48px;
-    padding-inline: var(--space-4);
-    border: 1px solid var(--color-outline);
-    border-radius: var(--radius-sm);
-    background: var(--color-bg);
-    color: var(--color-text);
-    font: inherit;
-    font-size: var(--text-md);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .eb-input input[aria-invalid='true'] {
-    border-color: var(--color-status-closing);
-  }
-
-  .eb-hint {
-    margin-top: var(--space-1);
-  }
-
-  .eb-error {
-    color: var(--color-status-closing);
-    font-size: var(--text-sm);
-    font-weight: var(--weight-semibold);
-  }
-
-  .eb-error:empty {
-    display: none;
-  }
-
-  .eb-form button {
-    justify-self: start;
-    min-height: 48px;
-    padding-inline: var(--space-6);
-    border: 0;
-    border-radius: var(--radius-pill);
-    background: var(--color-brand);
-    color: var(--color-text);
-    font: inherit;
-    font-weight: var(--weight-bold);
-    cursor: pointer;
-  }
-
-  .eb-result {
-    display: grid;
-    gap: var(--space-3);
-    padding: var(--space-4);
-    border-radius: var(--radius);
-    background: var(--color-surface);
-  }
-
   .eb-result__label {
     font-size: var(--text-sm);
     font-weight: var(--weight-semibold);
@@ -364,10 +246,6 @@ const label = (season: Season, kWh: number) => `${c.seasons[season].label} · ${
     font-weight: var(--weight-bold);
   }
 
-  .eb-notice {
-    font-size: var(--text-sm);
-  }
-
   .eb-tariff {
     display: grid;
     gap: var(--space-4);
@@ -396,13 +274,5 @@ const label = (season: Season, kWh: number) => `${c.seasons[season].label} · ${
   /* 구간 이름(201~400kWh)은 중간에서 끊지 않는다 */
   .eb-tariff tbody th {
     white-space: nowrap;
-  }
-
-  .eb-steps {
-    display: grid;
-    gap: var(--space-2);
-    padding-left: 1.25em;
-    font-size: var(--text-sm);
-    list-style: decimal;
   }
 </style>

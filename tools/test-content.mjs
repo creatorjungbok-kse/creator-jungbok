@@ -169,7 +169,8 @@ const cases = [
   ['cost-without-prices', (f) => (f[C] = f[C].replace(/priceItems:[\s\S]*?changelog:/, 'changelog:')), 'cost 글은 priceItems 또는 tool이 필요하다'],
   ['cost-with-tool-only', (f) => (f[C] = f[C].replace(/localSources:[\s\S]*?changelog:/, 'tool: electricity-bill\nchangelog:')), null],
   ['unknown-tool', edit(C, 'contentType: cost', 'contentType: cost\ntool: nope'), 'tool'],
-  ['tool-on-guide', edit('articles/business/test-startup-guide.md', 'contentType: guide', 'contentType: guide\ntool: electricity-bill'), 'tool은 cost 글에만'],
+  ['tool-on-guide', edit('articles/business/test-startup-guide.md', 'contentType: guide', 'contentType: guide\ntool: electricity-bill'), 'tool electricity-bill은 cost 글에만'],
+  ['mvno-tool-on-cost', edit(C, 'contentType: cost', 'contentType: cost\ntool: mvno-plan-cost'), 'tool mvno-plan-cost은 compare 글에만'],
   ['benefit-without-program', (f) => (f[B] = f[B].replace(/program:[\s\S]*?---/, '---')), 'program'],
   ['benefit-non-official-source', (f) => {
     edit(B, '    - text: 테스트 조건\n      sourceId: gov24', '    - text: 테스트 조건\n      sourceId: local:blog')(f);
@@ -188,7 +189,17 @@ const cases = [
   // ── 짧은 페이지 품질(글자 수 기준 없음): 정리 블록 + 출처 ──
   ['no-value-block', edit('articles/business/test-startup-guide.md', 'checklist:\n  items: [테스트 준비 항목]\n', ''), '정리 블록이 1개 이상 필요하다'],
   ['link-only-page', edit(G, 'notes: [테스트 주의 사항]\n', ''), '정리 블록이 1개 이상 필요하다'],
-  ['compare-without-table', edit('articles/business/test-startup-guide.md', 'contentType: guide', 'contentType: compare'), 'compare 표는 compare 글에만'],
+  ['compare-without-table-or-tool', edit('articles/business/test-startup-guide.md', 'contentType: guide', 'contentType: compare'), 'compare 글은 compare 표 또는 tool이 필요하다'],
+  ['compare-table-only', (f) => {
+    edit('articles/business/test-startup-guide.md', 'contentType: guide', 'contentType: compare')(f);
+    edit('articles/business/test-startup-guide.md', 'checklist:', 'compare:\n  caption: 테스트 비교\n  options: [A, B]\n  rows:\n    - label: 가격\n      values: [1만 원, 2만 원]\nchecklist:')(f);
+  }, null],
+  ['compare-tool-only', edit('articles/business/test-startup-guide.md', 'contentType: guide', 'contentType: compare\ntool: mvno-plan-cost'), null],
+  ['compare-table-and-tool', (f) => {
+    edit('articles/business/test-startup-guide.md', 'contentType: guide', 'contentType: compare\ntool: mvno-plan-cost')(f);
+    edit('articles/business/test-startup-guide.md', 'checklist:', 'compare:\n  caption: 테스트 비교\n  options: [A, B]\n  rows:\n    - label: 가격\n      values: [1만 원, 2만 원]\nchecklist:')(f);
+  }, 'compare 글에는 compare 표와 tool 중 하나만'],
+  ['compare-table-on-guide', edit('articles/business/test-startup-guide.md', 'checklist:', 'compare:\n  caption: 테스트 비교\n  options: [A, B]\n  rows:\n    - label: 가격\n      values: [1만 원, 2만 원]\nchecklist:'), 'compare 표는 compare 글에만 둔다'],
   ['compare-row-length', (f) => {
     edit('articles/business/test-startup-guide.md', 'contentType: guide', 'contentType: compare')(f);
     edit('articles/business/test-startup-guide.md', 'checklist:', 'compare:\n  caption: 테스트 비교\n  options: [A, B]\n  rows:\n    - label: 가격\n      values: [1만 원]\nchecklist:')(f);

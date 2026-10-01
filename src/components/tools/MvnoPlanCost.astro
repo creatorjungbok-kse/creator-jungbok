@@ -1,0 +1,439 @@
+---
+// 알뜰폰 요금제 A/B 예상 총비용 비교. 12개월·24개월 결과를 함께 보여 준다(기간 선택 없음).
+// 처음에는 빈 칸(예시 값 없음). 입력값·요금제 이름은 이 페이지 안에서만 계산하고 저장·전송하지 않는다.
+// JavaScript가 없으면 입력칸을 숨기고 계산 방법만 보인다.
+import ToolShell from '../ToolShell.astro';
+import { defaultNames, horizons, limits } from '../../tools/mvno-plan-cost/calc';
+
+const plans = ['a', 'b'] as const;
+const range = (l: { min: number; max: number; unit: string }) => `${l.min.toLocaleString('ko-KR')}~${l.max.toLocaleString('ko-KR')}${l.unit}`;
+---
+
+<ToolShell id="mvno-plan-cost" title="요금제 A/B 예상 총비용 비교">
+  <p class="tool-scope">할인 월요금·할인기간·종료 후 요금·1회 비용을 넣으면 12개월·24개월 예상 총액과 월평균을 함께 계산합니다.</p>
+  <noscript><p class="tool-noscript">계산기는 JavaScript가 켜져 있어야 동작합니다. 아래 계산 방법을 참고하세요.</p></noscript>
+
+  <form class="tool-form" data-mv-form hidden novalidate>
+    <div class="mv-plans">
+      {
+        plans.map((p) => (
+          <fieldset class="mv-plan" data-plan={p}>
+            <legend class="mv-plan__title">{defaultNames[p]}</legend>
+            <div class="tool-field">
+              <label class="tool-label" for={`mv-${p}-name`}>이름(선택)</label>
+              <div class="tool-input mv-input--wide">
+                <input id={`mv-${p}-name`} type="text" autocomplete="off" maxlength="30" placeholder={`비우면 ${defaultNames[p]}`} />
+              </div>
+            </div>
+            <fieldset>
+              <legend class="tool-label">할인 방식</legend>
+              <div class="tool-choices">
+                <label class="tool-choice">
+                  <input type="radio" name={`mv-${p}-kind`} value="period" checked />
+                  <span>기간 할인</span>
+                </label>
+                <label class="tool-choice">
+                  <input type="radio" name={`mv-${p}-kind`} value="flat" />
+                  <span>종료 시점 없음</span>
+                </label>
+              </div>
+            </fieldset>
+            <div class="tool-field">
+              <label class="tool-label" for={`mv-${p}-price`} data-mv-price-label>할인 월요금</label>
+              <div class="tool-input">
+                <input id={`mv-${p}-price`} type="text" inputmode="numeric" autocomplete="off" maxlength="8" aria-describedby={`mv-${p}-price-error`} />
+                <span aria-hidden="true">원</span>
+              </div>
+              <p id={`mv-${p}-price-error`} class="tool-error" data-mv-error></p>
+            </div>
+            <div class="mv-period" data-mv-period>
+              <div class="tool-field">
+                <label class="tool-label" for={`mv-${p}-promoMonths`}>할인 개월 수</label>
+                <div class="tool-input">
+                  <input id={`mv-${p}-promoMonths`} type="text" inputmode="numeric" autocomplete="off" maxlength="3" aria-describedby={`mv-${p}-promoMonths-error`} />
+                  <span aria-hidden="true">개월</span>
+                </div>
+                <p id={`mv-${p}-promoMonths-error`} class="tool-error" data-mv-error></p>
+              </div>
+              <div class="tool-field">
+                <label class="tool-label" for={`mv-${p}-regularPrice`}>할인 종료 후 월요금</label>
+                <div class="tool-input">
+                  <input id={`mv-${p}-regularPrice`} type="text" inputmode="numeric" autocomplete="off" maxlength="8" aria-describedby={`mv-${p}-regularPrice-error`} />
+                  <span aria-hidden="true">원</span>
+                </div>
+                <p id={`mv-${p}-regularPrice-error`} class="tool-error" data-mv-error></p>
+              </div>
+            </div>
+            <div class="tool-field">
+              <label class="tool-label" for={`mv-${p}-oneTime`}>유심·eSIM 등 1회 비용(선택)</label>
+              <div class="tool-input">
+                <input id={`mv-${p}-oneTime`} type="text" inputmode="numeric" autocomplete="off" maxlength="8" aria-describedby={`mv-${p}-oneTime-error`} />
+                <span aria-hidden="true">원</span>
+              </div>
+              <p id={`mv-${p}-oneTime-error`} class="tool-error" data-mv-error></p>
+            </div>
+          </fieldset>
+        ))
+      }
+    </div>
+    <div class="tool-field">
+      <label class="tool-label" for="mv-current">현재 월 통신비(선택)</label>
+      <div class="tool-input">
+        <input id="mv-current" type="text" inputmode="numeric" autocomplete="off" maxlength="8" aria-describedby="mv-current-hint mv-current-error" />
+        <span aria-hidden="true">원</span>
+      </div>
+      <p id="mv-current-hint" class="tool-hint">넣으면 두 요금제를 현재 요금과도 비교합니다.</p>
+      <p id="mv-current-error" class="tool-error" data-mv-error></p>
+    </div>
+    <p class="tool-hint">금액은 {range(limits.price)}, 할인 개월은 {range(limits.promoMonths)} 사이의 정수로 입력하세요.</p>
+    <button class="tool-submit" type="submit">비교하기</button>
+  </form>
+
+  <p class="mv-empty" data-mv-empty hidden>두 요금제를 입력하고 비교하기를 누르면 12개월·24개월 예상 총액이 여기에 나옵니다.</p>
+  <p class="visually-hidden" aria-live="polite" data-mv-status></p>
+
+  <div class="tool-result mv-result" data-mv-result hidden>
+    <ul class="mv-summary" data-mv-summary></ul>
+    <div class="table-scroll mv-table-wrap" tabindex="0" role="region" aria-label="예상 총비용 비교">
+      <table class="mv-table">
+        <caption>예상 총비용</caption>
+        <thead>
+          <tr>
+            <th scope="col">항목</th>
+            <th scope="col" data-mv-name="a">{defaultNames.a}</th>
+            <th scope="col" data-mv-name="b">{defaultNames.b}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            horizons.map((m) => (
+              <>
+                <tr>
+                  <th scope="row">{m}개월 예상 총액</th>
+                  <td data-mv={`${m}-totalA`} />
+                  <td data-mv={`${m}-totalB`} />
+                </tr>
+                <tr>
+                  <th scope="row">{m}개월 월평균</th>
+                  <td data-mv={`${m}-averageA`} />
+                  <td data-mv={`${m}-averageB`} />
+                </tr>
+              </>
+            ))
+          }
+          {
+            horizons.map((m) => (
+              <tr data-mv-current hidden>
+                <th scope="row">{m}개월 현재 요금 대비</th>
+                <td data-mv={`${m}-vsCurrentA`} />
+                <td data-mv={`${m}-vsCurrentB`} />
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <!-- 좁은 화면(결과 영역 30rem 미만): 표 대신 세로 목록. 표·목록 중 화면에 보이는 한쪽만 display로 남아 접근성 트리에도 한쪽만 있다 -->
+    <div class="mv-cards">
+      {
+        horizons.map((m) =>
+          (['total', 'average'] as const).map((k) => (
+            <section class="mv-card">
+              <h3 class="mv-card__title">{m}개월 {k === 'total' ? '예상 총액' : '월평균'}</h3>
+              <dl>
+                {(['a', 'b'] as const).map((p) => (
+                  <div>
+                    <dt data-mv-name={p}>{defaultNames[p]}</dt>
+                    <dd data-mv={`${m}-${k}${p.toUpperCase()}`} />
+                  </div>
+                ))}
+              </dl>
+            </section>
+          )),
+        )
+      }
+      {
+        horizons.map((m) => (
+          <section class="mv-card" data-mv-current hidden>
+            <h3 class="mv-card__title">{m}개월 현재 요금 대비</h3>
+            <ul>
+              {(['a', 'b'] as const).map((p) => (
+                <li>
+                  <span class="mv-card__name" data-mv-name={p}>{defaultNames[p]}</span>: <span data-mv={`${m}-vsCurrent${p.toUpperCase()}`} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+    </div>
+    <p class="tool-notice">요금제 가격과 프로모션은 바뀔 수 있으므로 가입 직전에는 해당 통신사 공식 화면에서 최종 조건을 확인하세요.</p>
+  </div>
+
+  <h3 class="mv-steps-title">계산 방법</h3>
+  <ol class="tool-steps">
+    <li>기간 할인: 할인 월요금 × 할인 개월 + 할인 종료 후 월요금 × 남은 개월 + 1회 비용</li>
+    <li>종료 시점 없음: 월요금 × 개월 + 1회 비용</li>
+    <li>할인 개월이 비교 기간보다 길면 비교 기간 전체를 할인 월요금으로 계산합니다.</li>
+    <li>월평균은 예상 총액을 개월 수로 나눠 원 단위로 반올림합니다.</li>
+  </ol>
+</ToolShell>
+
+<script>
+  // 입력값·요금제 이름은 이 페이지 안에서만 쓴다(form 제출·GA 이벤트·URL·브라우저 저장 없음).
+  import { comparePlans, defaultNames, differenceSentence, limits, parseInteger, readPlan, vsCurrentText, won, type HorizonResult, type PlanField } from '../../tools/mvno-plan-cost/calc';
+
+  const root = document.querySelector<HTMLElement>('[data-tool="mvno-plan-cost"]');
+  const form = root?.querySelector<HTMLFormElement>('[data-mv-form]');
+  if (root && form) {
+    const result = root.querySelector<HTMLElement>('[data-mv-result]')!;
+    const empty = root.querySelector<HTMLElement>('[data-mv-empty]')!;
+    const status = root.querySelector<HTMLElement>('[data-mv-status]')!;
+    const plans = ['a', 'b'] as const;
+    const field = (id: string) => form.querySelector<HTMLInputElement>(`#${id}`)!;
+    const kindOf = (p: 'a' | 'b') => (form.querySelector<HTMLInputElement>(`input[name="mv-${p}-kind"]:checked`)?.value ?? 'period') as 'period' | 'flat';
+    let shown = false;
+
+    const setError = (id: string, message?: string) => {
+      const input = field(id);
+      form.querySelector(`#${id}-error`)!.textContent = message ?? '';
+      if (message) input.setAttribute('aria-invalid', 'true');
+      else input.removeAttribute('aria-invalid');
+    };
+    // 할인 방식에 맞춰 칸 보이기·이름 바꾸기
+    const syncKind = (p: 'a' | 'b') => {
+      const fs = form.querySelector<HTMLElement>(`[data-plan="${p}"]`)!;
+      const period = kindOf(p) === 'period';
+      fs.querySelector<HTMLElement>('[data-mv-period]')!.hidden = !period;
+      fs.querySelector('[data-mv-price-label]')!.textContent = period ? '할인 월요금' : '월요금';
+      if (!period) for (const f of ['promoMonths', 'regularPrice']) setError(`mv-${p}-${f}`);
+    };
+    // 계산 뒤 입력이 바뀌거나 잘못되면 이전 결과를 숨긴다(빈 상태로도 되돌리지 않는다)
+    const hideStale = () => {
+      if (!shown) return;
+      result.hidden = true;
+      status.textContent = '';
+      shown = false;
+    };
+    // 같은 값이 표(넓은 화면)와 목록(좁은 화면)에 함께 있다
+    const cell = (key: string, text: string) => root.querySelectorAll(`[data-mv="${key}"]`).forEach((e) => (e.textContent = text));
+
+    const run = () => {
+      const plansRead = plans.map((p) => {
+        const r = readPlan({
+          kind: kindOf(p),
+          price: field(`mv-${p}-price`).value,
+          promoMonths: field(`mv-${p}-promoMonths`).value,
+          regularPrice: field(`mv-${p}-regularPrice`).value,
+          oneTime: field(`mv-${p}-oneTime`).value,
+        });
+        for (const f of ['price', 'promoMonths', 'regularPrice', 'oneTime'] as PlanField[]) setError(`mv-${p}-${f}`, r.ok ? undefined : r.errors[f]);
+        return r;
+      });
+      const current = parseInteger(field('mv-current').value, limits.current, false);
+      setError('mv-current', current.ok ? undefined : current.error);
+      const [a, b] = plansRead;
+      if (!a.ok || !b.ok || !current.ok) {
+        hideStale();
+        form.querySelector<HTMLInputElement>('[aria-invalid="true"]')?.focus();
+        return;
+      }
+      const names = {
+        a: field('mv-a-name').value.trim() || defaultNames.a,
+        b: field('mv-b-name').value.trim() || defaultNames.b,
+      };
+      const rows: HorizonResult[] = comparePlans(a.plan, b.plan, current.value);
+      for (const p of plans) root.querySelectorAll(`[data-mv-name="${p}"]`).forEach((e) => (e.textContent = names[p]));
+      for (const r of rows) {
+        cell(`${r.months}-totalA`, won(r.totalA));
+        cell(`${r.months}-totalB`, won(r.totalB));
+        cell(`${r.months}-averageA`, won(r.averageA));
+        cell(`${r.months}-averageB`, won(r.averageB));
+        if (r.vsCurrentA !== undefined) {
+          cell(`${r.months}-vsCurrentA`, vsCurrentText(r.vsCurrentA));
+          cell(`${r.months}-vsCurrentB`, vsCurrentText(r.vsCurrentB!));
+        }
+      }
+      for (const el of root.querySelectorAll<HTMLElement>('[data-mv-current]')) el.hidden = current.value === undefined;
+      const sentences = rows.map((r) => differenceSentence(r, names));
+      const summary = root.querySelector('[data-mv-summary]')!;
+      summary.replaceChildren(...sentences.map((s) => Object.assign(document.createElement('li'), { textContent: s })));
+      empty.hidden = true;
+      result.hidden = false;
+      status.textContent = sentences.join(' ');
+      shown = true;
+    };
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      run();
+    });
+    form.addEventListener('input', hideStale);
+    form.addEventListener('change', (e) => {
+      const t = e.target as HTMLInputElement;
+      if (t.type === 'radio') syncKind(t.name === 'mv-a-kind' ? 'a' : 'b');
+      hideStale();
+    });
+    for (const p of plans) syncKind(p);
+    form.hidden = false;
+    empty.hidden = false;
+  }
+</script>
+
+<style>
+  .mv-plans {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  /* 요금제 A·B 묶음: 넓은 화면에서는 나란히 */
+  @media (min-width: 640px) {
+    .mv-plans {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .mv-plan {
+    display: grid;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+  }
+
+  .mv-plan__title {
+    padding-inline: var(--space-2);
+    font-weight: var(--weight-bold);
+  }
+
+  .mv-period {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .mv-input--wide {
+    max-width: none;
+  }
+
+  .mv-input--wide input {
+    font-size: var(--text-base);
+  }
+
+  .mv-empty {
+    padding: var(--space-4);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .mv-summary {
+    display: grid;
+    gap: var(--space-1);
+    font-weight: var(--weight-bold);
+  }
+
+  /* 결과 영역 폭으로 표·목록을 고른다 */
+  .mv-result {
+    container-type: inline-size;
+  }
+
+  .mv-table-wrap {
+    display: none;
+  }
+
+  .mv-cards {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  @container (min-width: 30rem) {
+    .mv-table-wrap {
+      display: block;
+    }
+
+    .mv-cards {
+      display: none;
+    }
+  }
+
+  .mv-card {
+    display: grid;
+    gap: var(--space-1);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    font-size: var(--text-sm);
+  }
+
+  .mv-card__title {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-bold);
+  }
+
+  .mv-card div {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+
+  /* 요금제끼리 구분선 */
+  .mv-card div,
+  .mv-card li {
+    padding-block: var(--space-2);
+  }
+
+  .mv-card div + div,
+  .mv-card li + li {
+    border-top: 1px solid var(--color-border);
+  }
+
+  /* 이름은 단어 단위로 줄바꿈, 금액은 한 줄 */
+  .mv-card dt,
+  .mv-card__name {
+    min-width: 0;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+
+  .mv-card dd {
+    margin: 0;
+    font-weight: var(--weight-semibold);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .mv-card li {
+    word-break: keep-all;
+  }
+
+  .mv-card__name {
+    font-weight: var(--weight-semibold);
+  }
+
+  .mv-table th,
+  .mv-table td {
+    padding-inline: var(--space-3);
+    white-space: normal;
+  }
+
+  .mv-table td {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* 금액은 한 줄(현재 요금 대비 문장 행은 줄바꿈) */
+  .mv-table tr:not([data-mv-current]) td {
+    white-space: nowrap;
+  }
+
+  /* 이름이 길어도 표가 넘치지 않게(단어 단위 줄바꿈) */
+  .mv-table thead th {
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+
+  .mv-steps-title {
+    font-size: var(--text-md);
+  }
+</style>
