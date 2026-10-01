@@ -3,7 +3,7 @@
 // dev·test fixture(src/dev/content/)는 isShellPreview일 때만 포함한다. production에는 절대 들어가지 않는다.
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { isShellPreview } from '../config/env';
-import { categories } from '../data/categories';
+import { categories, categoryHref, type Category } from '../data/categories';
 import { genericTerms } from '../data/synonyms';
 import { normalize } from './search';
 
@@ -92,3 +92,15 @@ export function getAllContent(): Promise<ContentItem[]> {
   })();
   return cache;
 }
+
+// 공개 글이 1개 이상인 대분류(categories 배열 순서 유지). 글이 0개인 대분류는 nav·홈·footer·sitemap에서 빠지고
+// 허브는 noindex가 된다(직접 접근하면 빈 상태 화면). 첫 글이 생기면 코드 수정 없이 다시 나타난다.
+// production은 fixture를 포함하지 않으므로 preview fixture가 production 결과를 바꾸지 않는다.
+export async function activeCategories(): Promise<Category[]> {
+  const all = await getAllContent();
+  return categories.filter((c) => all.some((i) => i.category === c.slug));
+}
+
+export const activeCategoryLinks = async () => (await activeCategories()).map((c) => ({ href: categoryHref(c), title: c.name }));
+
+export const hasPublicContent = async (slug: string) => (await getAllContent()).some((i) => i.category === slug);

@@ -1,6 +1,7 @@
 ---
 // 전기요금 계산기(주택용 저압 일반가구) + 요금표 + 계산 순서. 숫자는 모두 src/tools/electricity-bill/constants.ts에서 온다.
-// JavaScript가 없으면 입력칸을 숨기고 예시 결과(그 외 기간 200kWh)와 요금표만 보인다.
+// 입력 UI는 첫 화면부터 자리를 차지한다(스크립트 실행 뒤 레이아웃 이동 없음). JavaScript가 없으면 data-js-only로 숨기고
+// 예시 결과(그 외 기간 200kWh)와 요금표만 보인다(BaseLayout의 noscript 스타일).
 import ToolShell from '../ToolShell.astro';
 import { electricityBill as c, type Season } from '../../tools/electricity-bill/constants';
 import { calcElectricityBill, percent, perKwh, tierLabels, validUntil, won } from '../../tools/electricity-bill/calc';
@@ -27,7 +28,7 @@ const label = (season: Season, kWh: number) => `${c.seasons[season].label} · ${
   <p class="tool-scope">{c.appliesTo} · 월 사용량 {c.minKwh}~{c.maxKwh.toLocaleString('ko-KR')}kWh</p>
   <noscript><p class="tool-noscript">계산기는 JavaScript가 켜져 있어야 동작합니다. 아래 예시 결과와 요금표를 참고하세요.</p></noscript>
 
-  <form class="tool-form" data-eb-form hidden novalidate>
+  <div class="tool-form" data-eb-form data-js-only>
     <fieldset>
       <legend class="tool-label">사용 시기</legend>
       <div class="tool-choices">
@@ -50,8 +51,8 @@ const label = (season: Season, kWh: number) => `${c.seasons[season].label} · ${
       <p id="eb-kwh-hint" class="tool-hint">전기요금 청구서나 한전ON의 월 사용량을 정수로 입력하세요.</p>
       <p id="eb-kwh-error" class="tool-error" data-eb-error></p>
     </div>
-    <button class="tool-submit" type="submit">계산하기</button>
-  </form>
+    <button class="tool-submit" type="button" disabled>계산하기</button>
+  </div>
 
   <div class="tool-result" data-eb-result>
     <div aria-live="polite" aria-atomic="true">
@@ -142,12 +143,12 @@ const label = (season: Season, kWh: number) => `${c.seasons[season].label} · ${
 </section>
 
 <script>
-  // 입력값은 이 페이지 안에서만 계산한다(저장·전송·GA 이벤트 없음). form은 제출하지 않는다.
+  // 입력값은 이 페이지 안에서만 계산한다(저장·전송·GA 이벤트 없음).
   import { electricityBill as c, type Season } from '../../tools/electricity-bill/constants';
   import { calcElectricityBill, parseKwh, won } from '../../tools/electricity-bill/calc';
 
   const root = document.querySelector<HTMLElement>('[data-tool="electricity-bill"]');
-  const form = root?.querySelector<HTMLFormElement>('[data-eb-form]');
+  const form = root?.querySelector<HTMLElement>('[data-eb-form]');
   if (root && form) {
     const input = form.querySelector<HTMLInputElement>('#eb-kwh')!;
     const error = form.querySelector<HTMLElement>('[data-eb-error]')!;
@@ -188,9 +189,15 @@ const label = (season: Season, kWh: number) => `${c.seasons[season].label} · ${
       show(parsed.value);
     };
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      run();
+    // form이 아니라 native 제출이 없다(입력값이 URL에 붙지 않음). 버튼은 스크립트가 준비된 뒤에만 켜진다
+    const submit = form.querySelector<HTMLButtonElement>('.tool-submit')!;
+    submit.addEventListener('click', run);
+    // 입력칸·선택지에서 Enter = 계산
+    form.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && e.target instanceof HTMLInputElement) {
+        e.preventDefault();
+        run();
+      }
     });
     input.addEventListener('input', () => {
       const parsed = parseKwh(input.value, c);
@@ -198,7 +205,7 @@ const label = (season: Season, kWh: number) => `${c.seasons[season].label} · ${
     });
     // 결과가 보이는 동안 사용 시기를 바꾸면 같은 사용량으로 다시 계산
     for (const r of radios) r.addEventListener('change', () => shownKwh !== undefined && !result.hidden && run());
-    form.hidden = false;
+    submit.disabled = false;
   }
 </script>
 

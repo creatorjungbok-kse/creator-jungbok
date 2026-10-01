@@ -1,7 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import MiniList from '../components/MiniList.astro';
-import { categoryLinks } from '../data/categories';
+import { activeCategoryLinks } from '../lib/content';
+
+const categoryLinks = await activeCategoryLinks();
 ---
 
 <BaseLayout title="페이지를 찾을 수 없습니다" description="요청한 주소의 페이지가 없습니다. 카테고리에서 필요한 정보를 찾아보세요." noindex canonical={false}>

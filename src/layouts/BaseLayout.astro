@@ -85,6 +85,8 @@ const canonicalUrl = canonical ? absoluteUrl(Astro.url.pathname) : undefined;
         </>
       )
     }
+    <!-- JavaScript가 꺼져 있으면 스크립트로만 동작하는 UI(계산기 입력 등)를 숨긴다 -->
+    <noscript><style>[data-js-only]{display:none!important}</style></noscript>
   </head>
   <body>
     <a class="skip-link" href="#main">본문 바로가기</a>

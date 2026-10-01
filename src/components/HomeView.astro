@@ -7,8 +7,8 @@ import MiniList from './MiniList.astro';
 import SectionTitle from './SectionTitle.astro';
 import UpdateList from './UpdateList.astro';
 import { site } from '../config/site';
-import { categories, categoryHref, categoryLinks } from '../data/categories';
-import type { ContentItem } from '../lib/content';
+import { categoryHref } from '../data/categories';
+import { activeCategories, activeCategoryLinks, type ContentItem } from '../lib/content';
 
 export interface Props {
   // 첫 항목은 큰 카드, 나머지 2개는 작은 카드
@@ -25,16 +25,19 @@ export interface Props {
 const { featured, benefits, costs, timely, byCategory, recent, updates, isEmpty } = Astro.props;
 const links = (items: ContentItem[]) => items.map((i) => ({ href: i.url, title: i.entry.data.title }));
 const isoDate = (d: Date) => d.toISOString().slice(0, 10);
+// 공개 글이 있는 대분류만(lib/content.ts activeCategories)
+const categories = await activeCategories();
+const categoryLinks = await activeCategoryLinks();
 ---
 
 <div class="container page-grid">
   <div class="page-main">
     <section class="hero">
-      <h1>얼마 들고, 얼마 받을 수 있을까요?</h1>
-      <p>{site.tagline}</p>
+      <h1>{site.tagline}</h1>
+      <p>공식 자료를 먼저 확인하고, 확인한 날짜를 함께 적습니다.</p>
       <form class="search-form" action="/search/" method="get" role="search">
         <label class="visually-hidden" for="home-q">검색어</label>
-        <input id="home-q" name="q" type="search" placeholder="예: 입주청소 비용, 근로장려금 신청" />
+        <input id="home-q" name="q" type="search" placeholder="예: 전기요금 계산기, 사업자등록증" />
         <button type="submit">검색</button>
       </form>
     </section>
@@ -68,7 +71,7 @@ const isoDate = (d: Date) => d.toISOString().slice(0, 10);
     {
       costs.length > 0 && (
         <section>
-          <SectionTitle title="최근 조사한 비용" tier="primary" />
+          <SectionTitle title="먼저 읽어 볼 가이드" tier="primary" />
           <div class="card-grid">
             {costs.map((item) => (
               <ContentCard item={item} />

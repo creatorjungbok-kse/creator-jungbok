@@ -4,6 +4,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import config from '../astro.config.mjs';
+import { categories } from '../src/data/categories.ts';
 
 const env = process.argv[2];
 const dist = process.argv[3] ?? 'dist';
@@ -30,6 +31,10 @@ const warnings = [];
 const rows = [];
 const htmlFiles = files.filter((f) => f.endsWith('.html'));
 const pages = new Set(htmlFiles.map(pathOf));
+// 공개 글이 없는 대분류 허브(lib/content.ts activeCategories와 같은 규칙): noindex, sitemap 제외, 다른 페이지에서 링크하지 않음.
+// 글이 생기면 자동으로 일반 허브가 된다(색인·메뉴 필수)
+const hubs = categories.map((c) => `/${c.slug}/`);
+const emptyHubs = new Set(hubs.filter((hub) => ![...pages].some((p) => p !== hub && p.startsWith(hub))));
 
 // 색인 정책(04 1장): 404·검색은 항상 noindex, sitemap 제외. 신뢰 페이지 4종은 index지만 sitemap 제외
 const ALWAYS_NOINDEX = new Set(['/404.html', '/search/']);
@@ -93,7 +98,7 @@ for (const file of htmlFiles) {
   const rel = relOf(file);
   const path = pathOf(file);
   const html = read(file);
-  const indexable = !ALWAYS_NOINDEX.has(path);
+  const indexable = !ALWAYS_NOINDEX.has(path) && !emptyHubs.has(path);
   const fail = (msg) => errors.push(`${rel}: ${msg}`);
   const warn = (msg) => warnings.push(`${rel}: ${msg}`);
   const meta = (attr, name) => html.match(new RegExp(`<meta ${attr}="${name}" content="([^"]*)"`))?.[1];
@@ -180,6 +185,22 @@ for (const file of htmlFiles) {
   }
   // 필터·검색 URL(?status= ?q= 등)은 링크로 만들지 않는다(색인·sitemap 대상 아님, 크롤 트랩 방지)
   if (/href="[^"]*\?[^"]*\b(status|q|category|open)=/.test(html)) fail('필터·검색 URL 링크');
+  // 대분류 메뉴: 글이 있는 대분류는 모두, 글이 없는 대분류는 어디에서도 링크하지 않는다
+  const nav = html.match(/<nav id="site-nav"[\s\S]*?<\/nav>/)?.[0] ?? '';
+  for (const hub of hubs) {
+    if (emptyHubs.has(hub)) {
+      if (path !== hub && html.includes(`href="${hub}"`)) fail(`공개 글 없는 카테고리 링크 ${hub}`);
+    } else if (!nav.includes(`href="${hub}"`)) fail(`메뉴에 없는 카테고리 ${hub}`);
+  }
+  // 검색 카테고리 필터 칩도 같은 규칙
+  if (path === '/search/') {
+    for (const hub of hubs) {
+      const chip = html.includes(`data-category="${hub.slice(1, -1)}"`);
+      if (emptyHubs.has(hub) && chip) fail(`공개 글 없는 카테고리 검색 필터 ${hub}`);
+      if (!emptyHubs.has(hub) && !chip) fail(`검색 필터에 없는 카테고리 ${hub}`);
+    }
+  }
+
   // 사이트 자체 script는 benefits 허브·검색 페이지·도구(data-tool)가 있는 글에만(production GA4 loader·JSON-LD 제외)
   const siteScripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)].filter(
     ([, attrs, body]) => !attrs.includes('application/ld+json') && !attrs.includes('googletagmanager.com') && !body.includes('window.dataLayer'),
@@ -226,12 +247,15 @@ if (pages.has('/privacy/') && !read(join(dist, 'privacy/index.html')).includes('
 const locs = (xml, tag) => [...xml.matchAll(new RegExp(`<${tag}>\\s*<loc>([^<]+)</loc>(?:<lastmod>([^<]+)</lastmod>)?`, 'g'))].map((m) => ({ loc: m[1], lastmod: m[2] }));
 const sitemapIndex = existsSync(join(dist, 'sitemap.xml')) ? read(join(dist, 'sitemap.xml')) : '';
 const children = locs(sitemapIndex, 'sitemap').map((s) => s.loc);
-const expectedChildren = ['/sitemap-main.xml', '/sitemap-benefits.xml'].map((p) => origin + p);
-if (JSON.stringify(children) !== JSON.stringify(expectedChildren)) errors.push(`sitemap.xml: 하위 sitemap ${children.join(', ') || '없음'}`);
+const partXml = Object.fromEntries(['main', 'benefits'].map((part) => [part, existsSync(join(dist, `sitemap-${part}.xml`)) ? read(join(dist, `sitemap-${part}.xml`)) : '']));
+// index에는 색인 URL이 1개 이상인 하위 sitemap만(main은 항상 있다)
+const expectedChildren = Object.entries(partXml).filter(([, xml]) => locs(xml, 'url').length > 0).map(([part]) => `${origin}/sitemap-${part}.xml`);
+if (JSON.stringify(children) !== JSON.stringify(expectedChildren) || !children.includes(`${origin}/sitemap-main.xml`)) {
+  errors.push(`sitemap.xml: 하위 sitemap ${children.join(', ') || '없음'} (기대 ${expectedChildren.join(', ')})`);
+}
 const inSitemap = new Map();
-for (const part of ['main', 'benefits']) {
+for (const [part, xml] of Object.entries(partXml)) {
   const name = `sitemap-${part}.xml`;
-  const xml = existsSync(join(dist, name)) ? read(join(dist, name)) : '';
   if (!xml.includes('<urlset')) errors.push(`${name}: 없음`);
   for (const { loc, lastmod } of locs(xml, 'url')) {
     const url = new URL(loc);
@@ -248,7 +272,8 @@ for (const part of ['main', 'benefits']) {
   }
 }
 for (const path of pages) {
-  if (!ALWAYS_NOINDEX.has(path) && !SITEMAP_EXEMPT.has(path) && !inSitemap.has(path)) errors.push(`${path}: sitemap 누락`);
+  if (!ALWAYS_NOINDEX.has(path) && !SITEMAP_EXEMPT.has(path) && !emptyHubs.has(path) && !inSitemap.has(path)) errors.push(`${path}: sitemap 누락`);
+  if (emptyHubs.has(path) && inSitemap.has(path)) errors.push(`${path}: 공개 글 없는 카테고리가 sitemap에 있음`);
 }
 
 // ── RSS(04 9장) ──────────────────────────────────────

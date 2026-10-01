@@ -136,6 +136,11 @@ const { id, title, validUntil } = Astro.props;
     display: none;
   }
 
+  .tool-submit:disabled {
+    cursor: default;
+    opacity: 0.6;
+  }
+
   .tool-submit {
     justify-self: start;
     min-height: 48px;

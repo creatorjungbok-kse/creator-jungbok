@@ -5,7 +5,10 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import MiniList from '../../components/MiniList.astro';
-import { categories, categoryLinks } from '../../data/categories';
+import { activeCategories, activeCategoryLinks } from '../../lib/content';
+
+// 카테고리 필터: 공개 글이 있는 대분류만(글이 생기면 자동으로 다시 나타난다)
+const categories = await activeCategories();
 ---
 
 <BaseLayout title="검색" description="비용·비교·지원금 정보를 한 번에 검색합니다." noindex>
@@ -16,7 +19,7 @@ import { categories, categoryLinks } from '../../data/categories';
         <h1>검색</h1>
         <form class="search-form" action="/search/" method="get" role="search" data-search-form>
           <label class="visually-hidden" for="q">검색어</label>
-          <input id="q" name="q" type="search" placeholder="예: 입주청소 비용, 근로장려금 신청" autocomplete="off" />
+          <input id="q" name="q" type="search" placeholder="예: 전기요금 계산기, 사업자등록증" autocomplete="off" />
           <button type="submit">검색</button>
         </form>
         <div class="filters" data-search-filters>
@@ -40,7 +43,7 @@ import { categories, categoryLinks } from '../../data/categories';
         <ol class="results" data-results></ol>
         <div class="empty" data-zero hidden>
           <p>검색 결과가 없습니다.</p>
-          <p>띄어쓰기를 바꾸거나 더 짧은 말로 다시 검색해 보세요. 예: “입주청소 비용” → “입주청소”</p>
+          <p>검색어를 조금 짧게 바꿔보세요. 예: 사업자등록증 재발급 → 사업자등록증</p>
           <p><button class="chip" type="button" data-reset-category hidden>전체 카테고리에서 다시 찾기</button></p>
         </div>
       </section>
@@ -56,7 +59,7 @@ import { categories, categoryLinks } from '../../data/categories';
     </div>
 
     <aside class="page-aside" aria-label="보조 정보">
-      <MiniList title="카테고리" items={categoryLinks} />
+      <MiniList title="카테고리" items={await activeCategoryLinks()} />
     </aside>
   </div>
 </BaseLayout>

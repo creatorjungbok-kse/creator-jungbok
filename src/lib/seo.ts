@@ -1,10 +1,10 @@
 // SEO 메타데이터의 한 곳(04). title·canonical URL·날짜 형식·JSON-LD·sitemap 목록을 여기서 만든다.
 // 브랜드명·설명은 config/site.ts에서만 읽는다(P9 브랜드 확정 때 한 곳만 바꾼다).
 import { site } from '../config/site';
-import { categories, categoryHref } from '../data/categories';
+import { categoryHref } from '../data/categories';
 import { infoPages } from '../data/pages';
 import { people } from '../data/people';
-import { getAllContent, type ContentItem } from './content';
+import { activeCategories, getAllContent, type ContentItem } from './content';
 
 // 사이트 절대 URL(astro.config.mjs `site`)
 export const absoluteUrl = (path: string) => new URL(path, import.meta.env.SITE).href;
@@ -62,7 +62,8 @@ interface SitemapEntry {
 }
 
 async function sitemapEntries(): Promise<SitemapEntry[]> {
-  const pages = ['/', ...categories.map(categoryHref), ...infoPages.filter((p) => p.inSitemap).map((p) => p.href)].map((url) => ({ url }));
+  // 공개 글이 없는 대분류 허브는 noindex라 넣지 않는다
+  const pages = ['/', ...(await activeCategories()).map(categoryHref), ...infoPages.filter((p) => p.inSitemap).map((p) => p.href)].map((url) => ({ url }));
   const content = (await getAllContent()).map((i) => ({ url: i.url, lastmod: ymd(i.entry.data.dateModified) }));
   return [...pages, ...content];
 }
@@ -70,10 +71,12 @@ async function sitemapEntries(): Promise<SitemapEntry[]> {
 // /benefits/ 아래 전체는 sitemap-benefits, 나머지는 sitemap-main
 const isBenefitsPath = (url: string) => url.startsWith('/benefits/');
 
-export async function urlsetResponse(part: 'main' | 'benefits') {
-  const urls = (await sitemapEntries())
-    .filter((e) => isBenefitsPath(e.url) === (part === 'benefits'))
-    .map((e) => `  <url><loc>${escapeXml(absoluteUrl(e.url))}</loc>${e.lastmod ? `<lastmod>${e.lastmod}</lastmod>` : ''}</url>`);
+export const sitemapParts = ['main', 'benefits'] as const;
+export type SitemapPart = (typeof sitemapParts)[number];
+export const sitemapEntriesOf = async (part: SitemapPart) => (await sitemapEntries()).filter((e) => isBenefitsPath(e.url) === (part === 'benefits'));
+
+export async function urlsetResponse(part: SitemapPart) {
+  const urls = (await sitemapEntriesOf(part)).map((e) => `  <url><loc>${escapeXml(absoluteUrl(e.url))}</loc>${e.lastmod ? `<lastmod>${e.lastmod}</lastmod>` : ''}</url>`);
   return xmlResponse(`<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join('\n')}\n</urlset>\n`);
 }
 

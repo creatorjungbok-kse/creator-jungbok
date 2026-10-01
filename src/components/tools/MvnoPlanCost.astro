@@ -1,7 +1,7 @@
 ---
 // 알뜰폰 요금제 A/B 예상 총비용 비교. 12개월·24개월 결과를 함께 보여 준다(기간 선택 없음).
 // 처음에는 빈 칸(예시 값 없음). 입력값·요금제 이름은 이 페이지 안에서만 계산하고 저장·전송하지 않는다.
-// JavaScript가 없으면 입력칸을 숨기고 계산 방법만 보인다.
+// 입력 UI와 빈 상태 안내는 첫 화면부터 자리를 차지한다. JavaScript가 없으면 data-js-only로 숨기고 계산 방법만 보인다.
 import ToolShell from '../ToolShell.astro';
 import { defaultNames, horizons, limits } from '../../tools/mvno-plan-cost/calc';
 
@@ -13,7 +13,7 @@ const range = (l: { min: number; max: number; unit: string }) => `${l.min.toLoca
   <p class="tool-scope">할인 월요금·할인기간·종료 후 요금·1회 비용을 넣으면 12개월·24개월 예상 총액과 월평균을 함께 계산합니다.</p>
   <noscript><p class="tool-noscript">계산기는 JavaScript가 켜져 있어야 동작합니다. 아래 계산 방법을 참고하세요.</p></noscript>
 
-  <form class="tool-form" data-mv-form hidden novalidate>
+  <div class="tool-form" data-mv-form data-js-only>
     <div class="mv-plans">
       {
         plans.map((p) => (
@@ -86,10 +86,10 @@ const range = (l: { min: number; max: number; unit: string }) => `${l.min.toLoca
       <p id="mv-current-error" class="tool-error" data-mv-error></p>
     </div>
     <p class="tool-hint">금액은 {range(limits.price)}, 할인 개월은 {range(limits.promoMonths)} 사이의 정수로 입력하세요.</p>
-    <button class="tool-submit" type="submit">비교하기</button>
-  </form>
+    <button class="tool-submit" type="button" disabled>비교하기</button>
+  </div>
 
-  <p class="mv-empty" data-mv-empty hidden>두 요금제를 입력하고 비교하기를 누르면 12개월·24개월 예상 총액이 여기에 나옵니다.</p>
+  <p class="mv-empty" data-mv-empty data-js-only>두 요금제를 입력하고 비교하기를 누르면 12개월·24개월 예상 총액이 여기에 나옵니다.</p>
   <p class="visually-hidden" aria-live="polite" data-mv-status></p>
 
   <div class="tool-result mv-result" data-mv-result hidden>
@@ -180,11 +180,11 @@ const range = (l: { min: number; max: number; unit: string }) => `${l.min.toLoca
 </ToolShell>
 
 <script>
-  // 입력값·요금제 이름은 이 페이지 안에서만 쓴다(form 제출·GA 이벤트·URL·브라우저 저장 없음).
+  // 입력값·요금제 이름은 이 페이지 안에서만 쓴다(native 제출·GA 이벤트·URL·브라우저 저장 없음).
   import { comparePlans, defaultNames, differenceSentence, limits, parseInteger, readPlan, vsCurrentText, won, type HorizonResult, type PlanField } from '../../tools/mvno-plan-cost/calc';
 
   const root = document.querySelector<HTMLElement>('[data-tool="mvno-plan-cost"]');
-  const form = root?.querySelector<HTMLFormElement>('[data-mv-form]');
+  const form = root?.querySelector<HTMLElement>('[data-mv-form]');
   if (root && form) {
     const result = root.querySelector<HTMLElement>('[data-mv-result]')!;
     const empty = root.querySelector<HTMLElement>('[data-mv-empty]')!;
@@ -264,9 +264,15 @@ const range = (l: { min: number; max: number; unit: string }) => `${l.min.toLoca
       shown = true;
     };
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      run();
+    // form이 아니라 native 제출이 없다(입력값이 URL에 붙지 않음). 버튼은 스크립트가 준비된 뒤에만 켜진다
+    const submit = form.querySelector<HTMLButtonElement>('.tool-submit')!;
+    submit.addEventListener('click', run);
+    // 입력칸·선택지에서 Enter = 계산
+    form.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && e.target instanceof HTMLInputElement) {
+        e.preventDefault();
+        run();
+      }
     });
     form.addEventListener('input', hideStale);
     form.addEventListener('change', (e) => {
@@ -275,8 +281,7 @@ const range = (l: { min: number; max: number; unit: string }) => `${l.min.toLoca
       hideStale();
     });
     for (const p of plans) syncKind(p);
-    form.hidden = false;
-    empty.hidden = false;
+    submit.disabled = false;
   }
 </script>
 

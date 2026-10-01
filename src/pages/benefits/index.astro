@@ -6,9 +6,9 @@ import Breadcrumb from '../../components/Breadcrumb.astro';
 import ContentCard from '../../components/ContentCard.astro';
 import MiniList from '../../components/MiniList.astro';
 import SectionTitle from '../../components/SectionTitle.astro';
-import { categories, categoryLinks } from '../../data/categories';
+import { categories } from '../../data/categories';
 import { statusLabels } from '../../lib/benefit-status';
-import { getAllContent } from '../../lib/content';
+import { activeCategoryLinks, getAllContent } from '../../lib/content';
 import { collectionJsonLd } from '../../lib/seo';
 import { closedBenefits, latestModified, openBenefits, statusOf, upcomingBenefits } from '../../lib/select';
 
@@ -28,7 +28,7 @@ const filters = [
 ];
 ---
 
-<BaseLayout title={category.seoTitle} description={category.description} jsonLd={[collectionJsonLd(category.title, category.description, '/benefits/')]}>
+<BaseLayout title={category.seoTitle} description={category.description} noindex={items.length === 0} jsonLd={[collectionJsonLd(category.title, category.description, '/benefits/')]}>
   <div class="container page-grid">
     <div class="page-main">
       <header class="page-head">
@@ -117,7 +117,7 @@ const filters = [
 
     <aside class="page-aside" aria-label="보조 정보">
       {closed.length > 0 && <MiniList title="지난 지원" items={[{ href: '#closed', title: `종료된 지원 ${closed.length}건`, meta: '신청이 끝난 지원사업' }]} />}
-      <MiniList title="다른 카테고리" items={categoryLinks.filter((l) => l.href !== '/benefits/')} />
+      <MiniList title="다른 카테고리" items={(await activeCategoryLinks()).filter((l) => l.href !== '/benefits/')} />
     </aside>
   </div>
 </BaseLayout>

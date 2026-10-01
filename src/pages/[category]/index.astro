@@ -6,8 +6,8 @@ import Breadcrumb from '../../components/Breadcrumb.astro';
 import ContentCard from '../../components/ContentCard.astro';
 import MiniList from '../../components/MiniList.astro';
 import SectionTitle from '../../components/SectionTitle.astro';
-import { categories, categoryHref, categoryLinks, type Category } from '../../data/categories';
-import { getAllContent } from '../../lib/content';
+import { categories, categoryHref, type Category } from '../../data/categories';
+import { activeCategoryLinks, getAllContent } from '../../lib/content';
 import { collectionJsonLd } from '../../lib/seo';
 import { latestModified, openBenefits, pillars } from '../../lib/select';
 
@@ -30,11 +30,11 @@ const bySub = category.subcategories
 // 이 대분류 글과 주제가 겹치는 신청 가능 지원(01 E "관련 지원·혜택 — 신청 가능 상태만")
 const topics = new Set(items.flatMap((i) => i.entry.data.topics));
 const relatedBenefits = openBenefits(all.filter((i) => i.entry.data.topics.some((t) => topics.has(t)))).slice(0, 5);
-const otherCategories = categoryLinks.filter((l) => l.href !== `/${category.slug}/`);
+const otherCategories = (await activeCategoryLinks()).filter((l) => l.href !== `/${category.slug}/`);
 const links = (list: typeof items) => list.map((i) => ({ href: i.url, title: i.entry.data.title }));
 ---
 
-<BaseLayout title={category.seoTitle} description={category.description} jsonLd={[collectionJsonLd(category.title, category.description, categoryHref(category))]}>
+<BaseLayout title={category.seoTitle} description={category.description} noindex={items.length === 0} jsonLd={[collectionJsonLd(category.title, category.description, categoryHref(category))]}>
   <div class="container page-grid">
     <div class="page-main">
       <header class="page-head">

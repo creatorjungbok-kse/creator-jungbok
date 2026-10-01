@@ -32,16 +32,16 @@ quickFacts:
     - label: 은행·기관 등에서 사업자등록증명을 요구했다
       value: 사업자등록증명 발급
 actionLinks:
-  - org: 국세청 홈택스
-    action: check
-    purpose: 사업자등록 상태 확인하기
-    url: https://mob.tbht.hometax.go.kr/jsonAction.do?actionId=UTBCAABA14F001
-    sourceId: local:hometax-status
-  - org: 국세청 홈택스
-    action: check
-    purpose: 사업자등록 신청하기
-    url: https://mob.tbht.hometax.go.kr/jsonAction.do?actionId=UTBABAAB59F001
-    sourceId: local:hometax-register
+  - org: 정부24
+    action: info
+    purpose: 사업자등록증 재발급 안내 보기
+    url: https://www.gov.kr/mw/AA020InfoCappView.do?CappBizCD=12100000374
+    sourceId: local:gov24-reissue
+  - org: 정부24
+    action: info
+    purpose: 사업자등록 신청 안내 보기
+    url: https://www.gov.kr/mw/AA020InfoCappView.do?CappBizCD=12100000072
+    sourceId: local:gov24-register
   - org: 정부24
     action: check
     purpose: 사업자등록증명 발급하기
@@ -54,12 +54,24 @@ notes:
 faq:
   - question: 사업자등록증을 잃어버리면 다시 발급할 수 있나요?
     answer: 네. 기존 사업자는 홈택스의 사업자등록증 재발급 메뉴에서 다시 출력할 수 있습니다.
-  - question: 정부24에서 사업자등록증을 재발급하면 되나요?
-    answer: 정부24에서 제공하는 관련 민원은 사업자등록증명 발급입니다. 사업자등록증 자체를 다시 출력하려는 경우에는 홈택스의 사업자등록증 재발급 메뉴를 확인하는 것이 맞습니다.
+  - question: 정부24에서도 사업자등록증을 재발급할 수 있나요?
+    answer: 정부24에도 사업자등록증 재발급 민원 안내 페이지가 있습니다. 온라인 신청은 홈택스로 연결됩니다. 사업자등록증명은 사업내역을 증명하기 위한 별도의 민원입니다.
   - question: 사업자등록증과 사업자등록증명 중 무엇을 제출해야 하나요?
     answer: 제출처가 요구한 서류명을 먼저 확인하세요. 사업자등록증명은 사업내역을 증명하기 위한 별도의 국세 민원입니다.
-sourceIds: [local:hometax-status, local:hometax-register, local:gov24-certificate, local:hometax-correction]
+sourceIds: [local:gov24-reissue, local:gov24-register, local:gov24-certificate, local:hometax-status, local:hometax-register, local:hometax-correction]
 localSources:
+  - id: local:gov24-reissue
+    title: 사업자등록증 재발급
+    publisher: 정부24
+    url: https://www.gov.kr/mw/AA020InfoCappView.do?CappBizCD=12100000374
+    level: S1
+    checkedAt: 2026-10-01
+  - id: local:gov24-register
+    title: 사업자등록 신청(개인사업자), 법인이 아닌 단체의 고유번호 신청
+    publisher: 정부24
+    url: https://www.gov.kr/mw/AA020InfoCappView.do?CappBizCD=12100000072
+    level: S1
+    checkedAt: 2026-10-01
   - id: local:hometax-status
     title: 사업자등록 민원처리상태 조회
     publisher: 국세청 홈택스
@@ -91,6 +103,8 @@ localSources:
 이미 사업자등록이 되어 있다면 홈택스에서 사업자등록증을 다시 출력할 수 있습니다. 국세청 홈택스 공식 안내의 현재 메뉴 경로는 다음과 같습니다.
 
 **국세증명·사업자등록·세금관련 신청/신고 → 즉시발급 증명 → 사업자등록증 재발급**
+
+정부24에도 사업자등록증 재발급 민원 안내가 있습니다. 인터넷·방문으로 신청할 수 있고 수수료는 없으며, 온라인 신청은 홈택스로 연결됩니다.
 
 처음 사업자등록을 신청한 경우에는 처리상태가 처리완료(등록완료)가 된 뒤 세무서에서 수령하거나 홈택스에서 직접 발급할 수 있습니다.
 

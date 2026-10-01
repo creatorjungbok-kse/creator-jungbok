@@ -23,6 +23,14 @@ const edit = (file, from, to) => (dir) => {
   if (!text.includes(from)) throw new Error(`수정 대상 없음: ${file} / ${from}`);
   writeFileSync(path, text.replace(from, to));
 };
+// 대분류 메뉴(#site-nav)에서 한 카테고리 링크를 뺀다
+const dropNav = (file, hub) => (dir) => {
+  const path = join(dir, file);
+  const text = readFileSync(path, 'utf8');
+  const next = text.replace(new RegExp(`(<nav id="site-nav"[\\s\\S]*?)<a href="${hub}"[^>]*>[^<]*</a>`), '$1');
+  if (next === text) throw new Error(`메뉴 링크 없음: ${file} ${hub}`);
+  writeFileSync(path, next);
+};
 const loc = (path) => `<url><loc>https://creatorjungbok.co.kr${path}</loc></url>`;
 const addToMain = (xml) => edit('sitemap-main.xml', '</urlset>', `${xml}\n</urlset>`);
 
@@ -54,6 +62,14 @@ const cases = [
   ['production', '도구 상수 기한 지남', edit(TOOL, VALID, `data-valid-until="${kstPlus(-1)}"`), '도구 상수 기한 지남'],
   ['production', '도구 상수 기한 14일 이내', edit(TOOL, VALID, `data-valid-until="${kstPlus(7)}"`), '도구 상수 기한 임박', 0],
   ['preview', 'preview는 도구 기한을 막지 않음', edit(TOOL, VALID, `data-valid-until="${kstPlus(-1)}"`), 'OK (preview', 0],
+  ['production', '빈 카테고리(benefits)를 메뉴에 링크', edit('business/index.html', '<nav id="site-nav" class="site-nav" popover aria-label="카테고리"', '<nav id="site-nav" class="site-nav" popover aria-label="카테고리"><a href="/benefits/">지원·혜택</a'), '공개 글 없는 카테고리 링크 /benefits/'],
+  ['production', '빈 카테고리 허브 색인', edit('benefits/index.html', '<meta name="robots" content="noindex, follow">', ''), 'benefits/index.html: robots noindex 0건'],
+  ['production', '빈 카테고리 허브가 sitemap에', edit('sitemap-benefits.xml', '</urlset>', `${loc('/benefits/')}\n</urlset>`), '/benefits/: 공개 글 없는 카테고리가 sitemap에 있음'],
+  ['production', '빈 카테고리 sitemap이 index에', edit('sitemap.xml', '</sitemapindex>', '<sitemap><loc>https://creatorjungbok.co.kr/sitemap-benefits.xml</loc></sitemap></sitemapindex>'), 'sitemap.xml: 하위 sitemap'],
+  ['production', '글 있는 카테고리가 메뉴에서 빠짐', dropNav('index.html', '/living/'), 'index.html: 메뉴에 없는 카테고리 /living/'],
+  ['production', '빈 카테고리(benefits) 검색 필터', edit('search/index.html', 'data-category="business"', 'data-category="benefits"></button><button data-category="business"'), 'search/index.html: 공개 글 없는 카테고리 검색 필터 /benefits/'],
+  ['preview', 'fixture 지원·혜택이 있으면 검색 필터 필수', edit('search/index.html', 'data-category="benefits"', 'data-category="x-benefits"'), 'search/index.html: 검색 필터에 없는 카테고리 /benefits/'],
+  ['preview', 'fixture 지원·혜택이 있으면 메뉴 필수', dropNav('index.html', '/benefits/'), 'index.html: 메뉴에 없는 카테고리 /benefits/'],
   ['production', 'sidebar에 슬롯', edit('business/index.html', '</aside>', '<div data-ad-slot="home-1"></div></aside>'), '광고 슬롯 home-1: main 본문 밖·sidebar'],
   ['preview', '공식 신청 버튼 바로 아래 슬롯', edit('benefits/fixture-open/index.html', '공식 사이트로 이동</span></a>', '공식 사이트로 이동</span></a><div data-ad-slot="benefit-mid"></div>'), '광고 슬롯 benefit-mid: 보호 영역(official-cta) 안 또는 인접'],
   ['preview', '공식 신청 버튼 위 슬롯', edit('benefits/fixture-open/index.html', '<h1', '<div data-ad-slot="benefit-mid"></div><h1'), '광고 슬롯 benefit-mid: 공식 신청 버튼보다 위'],

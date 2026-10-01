@@ -34,9 +34,9 @@ export const categories: Category[] = [
   {
     slug: 'business',
     name: '사업·창업',
-    title: '사업·창업 비용',
+    title: '사업·창업',
     seoTitle: '사업·창업 비용·정보',
-    description: '창업 준비, 매장 운영, 세무·결제 등 사업에 드는 비용을 조건별로 비교합니다.',
+    description: '사업자등록·세무 절차부터 창업과 운영에 드는 비용까지 사업에 필요한 정보를 정리합니다.',
     subcategories: [
       { slug: 'tax', name: '세무·회계' },
       { slug: 'labor', name: '노무·직원' },
@@ -50,9 +50,9 @@ export const categories: Category[] = [
   {
     slug: 'living',
     name: '집·생활',
-    title: '집·생활 비용',
+    title: '집·생활',
     seoTitle: '집·생활 비용·정보',
-    description: '이사, 청소, 수리, 인테리어 등 집과 생활에 드는 비용을 확인합니다.',
+    description: '공과금처럼 집과 생활에 드는 비용과 알아두면 좋은 정보를 정리합니다.',
     subcategories: [
       { slug: 'moving', name: '이사' },
       { slug: 'cleaning', name: '청소' },
@@ -67,9 +67,9 @@ export const categories: Category[] = [
   {
     slug: 'digital',
     name: '통신·디지털',
-    title: '통신·디지털 비용',
+    title: '통신·디지털',
     seoTitle: '통신·디지털 비용·정보',
-    description: '요금제, 인터넷, 구독 서비스, 쇼핑몰 구축 등 통신·디지털 비용을 비교합니다.',
+    description: '휴대폰 요금제처럼 통신·디지털 생활에 드는 비용과 정보를 정리합니다.',
     subcategories: [
       { slug: 'internet', name: '인터넷' },
       { slug: 'mobile', name: '휴대폰·알뜰폰' },
@@ -84,4 +84,3 @@ export const categories: Category[] = [
 
 export const categoryHref = (c: Category) => `/${c.slug}/`;
 
-export const categoryLinks = categories.map((c) => ({ href: categoryHref(c), title: c.name }));
