@@ -10,11 +10,12 @@ export interface Props {
   item: ContentItem;
   // 일반 글 카드의 표시 옵션
   large?: ArticleCardProps['large'];
+  cta?: ArticleCardProps['cta'];
   // 대분류 페이지 안에서는 대분류 이름을 반복하지 않는다
   showCategory?: boolean;
 }
 
-const { item, large, showCategory = true } = Astro.props;
+const { item, large, cta, showCategory = true } = Astro.props;
 const { data } = item.entry;
 const category = categories.find((c) => c.slug === item.category)!;
 const meta =
@@ -34,6 +35,7 @@ const meta =
       excerpt={data.summary}
       meta={meta}
       large={large}
+      cta={cta}
     />
   )
 }

@@ -17,13 +17,17 @@ const { summary, title = '결론부터' } = Astro.props;
   .summary-box {
     display: grid;
     gap: var(--space-2);
-    padding: var(--space-4) var(--space-5);
-    border-left: 3px solid var(--color-accent);
-    border-radius: 0 var(--radius) var(--radius) 0;
+    justify-items: start;
+    padding: var(--space-5);
+    border-radius: var(--radius);
     background: var(--color-surface);
   }
 
+  /* 꿀색 강조 라벨 */
   h2 {
-    font-size: var(--text-base);
+    padding: 2px var(--space-2);
+    border-radius: var(--radius-sm);
+    background: var(--color-brand-soft);
+    font-size: var(--text-sm);
   }
 </style>

@@ -32,7 +32,6 @@ const year = new Date().getFullYear();
 
 <style>
   .site-footer {
-    border-top: 1px solid var(--color-border);
     background: var(--color-surface);
     color: var(--color-text-muted);
     font-size: var(--text-sm);
@@ -45,8 +44,13 @@ const year = new Date().getFullYear();
   }
 
   .site-footer__brand {
+    display: inline-flex;
+    align-items: center;
+    justify-self: start;
+    min-height: var(--touch);
+    margin-block: calc(-1 * var(--space-3));
     color: var(--color-text);
-    font-weight: 800;
+    font-weight: var(--weight-bold);
   }
 
   .site-footer__links {
@@ -58,6 +62,7 @@ const year = new Date().getFullYear();
   .site-footer__links a {
     display: inline-flex;
     align-items: center;
+    min-width: var(--space-6);
     min-height: var(--touch);
     color: var(--color-text);
   }

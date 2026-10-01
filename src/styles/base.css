@@ -52,7 +52,8 @@ a {
 }
 
 a:hover {
-  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .skip-link {
@@ -62,14 +63,10 @@ a:hover {
   z-index: 20;
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius);
-  background: var(--color-accent);
-  color: var(--color-on-accent);
-  font-weight: 700;
+  background: var(--color-link);
+  color: var(--color-bg);
+  font-weight: var(--weight-bold);
   transform: translateY(-200%);
-}
-
-.skip-link:hover {
-  color: var(--color-on-accent);
 }
 
 .skip-link:focus {
@@ -81,7 +78,7 @@ main:focus {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-link);
   outline-offset: 2px;
 }
 
@@ -95,14 +92,22 @@ main:focus {
   margin-top: var(--space-4);
 }
 
+h1,
+h2,
+h3 {
+  font-weight: var(--weight-bold);
+}
+
 .prose h2 {
   margin-top: var(--space-7);
   font-size: var(--text-xl);
+  letter-spacing: -0.01em;
 }
 
 .prose h3 {
   margin-top: var(--space-6);
   font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
 }
 
 .prose ul,
@@ -116,7 +121,7 @@ main:focus {
 }
 
 .prose a {
-  color: var(--color-accent);
+  color: var(--color-link);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -129,6 +134,7 @@ main:focus {
 
 .page-head h1 {
   font-size: var(--text-2xl);
+  letter-spacing: -0.02em;
 }
 
 .page-head p {
@@ -140,8 +146,8 @@ main:focus {
   display: grid;
   gap: var(--space-3);
   padding: var(--space-6);
-  border: 1px dashed var(--color-border);
   border-radius: var(--radius);
+  background: var(--color-surface);
   color: var(--color-text-muted);
   text-align: center;
 }
@@ -161,7 +167,7 @@ details[open] > summary.disclosure::after {
   transform: translateY(25%) rotate(-135deg);
 }
 
-/* 검색창(홈 Hero·검색 페이지) */
+/* 검색창(홈 Hero·검색 페이지): M3 검색 막대 — 알약 모양 회색 칸 + 꿀색 검색 버튼(주요 내부 행동) */
 .search-form {
   display: flex;
   gap: var(--space-2);
@@ -171,29 +177,38 @@ details[open] > summary.disclosure::after {
 .search-form input {
   flex: 1;
   min-width: 0;
-  min-height: var(--touch);
-  padding-inline: var(--space-4);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
+  min-height: 48px;
+  padding-inline: var(--space-5);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text);
   font: inherit;
+}
+
+.search-form input::placeholder {
+  color: var(--color-text-muted);
 }
 
 .search-form button {
-  min-height: var(--touch);
+  min-height: 48px;
   padding-inline: var(--space-5);
   border: 0;
-  border-radius: var(--radius);
-  background: var(--color-accent);
-  color: var(--color-on-accent);
+  border-radius: var(--radius-pill);
+  background: var(--color-brand);
+  color: var(--color-text);
   font: inherit;
-  font-weight: 700;
+  font-weight: var(--weight-bold);
   cursor: pointer;
 }
 
-/* 지원 상태 배지(카드·검색 결과). 색만이 아니라 문구로 상태를 전달한다 */
+/* 지원 상태 배지(카드·검색 결과). 색만이 아니라 문구로 상태를 전달한다. 색 의미는 그대로(가능 초록·임박 주황·예정 파랑·종료 회색) */
 .badge {
   padding: 0 var(--space-2);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  line-height: 1.7;
 }
 
 .badge--open {
@@ -207,16 +222,16 @@ details[open] > summary.disclosure::after {
 }
 
 .badge--upcoming {
-  background: var(--color-accent-soft);
-  color: var(--color-accent);
+  background: var(--color-link-soft);
+  color: var(--color-link);
 }
 
 .badge--closed {
-  background: var(--color-surface);
+  background: var(--color-surface-strong);
   color: var(--color-text-muted);
 }
 
-/* 중분류 이동·상태 필터 칩 */
+/* 중분류 이동·상태 필터 칩: M3 필터 칩(8px 모서리). 선택은 꿀색 옅은 바탕 */
 .chips {
   display: flex;
   flex-wrap: wrap;
@@ -228,24 +243,25 @@ details[open] > summary.disclosure::after {
   align-items: center;
   min-height: var(--touch);
   padding-inline: var(--space-4);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-outline);
+  border-radius: var(--radius-sm);
   background: var(--color-bg);
   color: var(--color-text);
   font: inherit;
   font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
   cursor: pointer;
 }
 
-.chip:hover,
-.chip[aria-pressed='true'] {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
+.chip:hover {
+  background: var(--color-surface);
+  text-decoration: none;
 }
 
 .chip[aria-pressed='true'] {
-  background: var(--color-accent-soft);
-  font-weight: 700;
+  border-color: var(--color-brand-soft);
+  background: var(--color-brand-soft);
+  font-weight: var(--weight-semibold);
 }
 
 /* 표는 좁은 화면에서 가로 스크롤(Markdown 본문 표는 astro.config.mjs의 tableScroll이 감싼다).
@@ -253,7 +269,7 @@ details[open] > summary.disclosure::after {
 .table-scroll {
   overflow-x: auto;
   border: 1px solid var(--color-border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   background:
     linear-gradient(to right, var(--color-bg) 30%, transparent) left / 32px 100% no-repeat local,
     linear-gradient(to left, var(--color-bg) 30%, transparent) right / 32px 100% no-repeat local,
@@ -272,7 +288,7 @@ table {
 caption {
   padding: var(--space-3) var(--space-4);
   text-align: left;
-  font-weight: 600;
+  font-weight: var(--weight-semibold);
 }
 
 th,
@@ -283,7 +299,8 @@ td {
 }
 
 thead th {
-  background: var(--color-surface);
+  background: var(--color-surface-strong);
+  font-weight: var(--weight-semibold);
 }
 
 .visually-hidden {

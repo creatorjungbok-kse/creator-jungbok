@@ -20,20 +20,21 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-content: start;
-  gap: var(--space-6);
+  gap: var(--section-gap);
   min-width: 0;
 }
 
-/* 카드 묶음: 타일형(grid) / 목록형(list) */
+/* 카드 묶음: 타일형(grid, M3 채움 카드: 옅은 회색 바탕·그림자 없음) / 목록형(list, 구분선) */
 .card-grid {
   display: grid;
   gap: var(--space-3);
 }
 
-.card-grid > * {
-  padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--color-border);
+.card-grid > *,
+.featured-grid > * {
+  padding: var(--space-4) var(--space-5);
   border-radius: var(--radius);
+  background: var(--color-surface);
 }
 
 .card-list > * {
@@ -45,10 +46,21 @@
   padding-top: 0;
 }
 
-/* 홈 대표 콘텐츠: 모바일 1열, 태블릿 이상은 큰 카드 1 + 작은 카드 2 */
+/* 홈 대표 콘텐츠(먼저 읽어 볼 가이드): 모바일은 모두 1열. 태블릿 이상은 개수(서버에서 붙인 class)에 따라
+   3개 = 큰 카드 1 + 작은 카드 2 / 2개 = 같은 크기 2열 / 1개 = 넓은 카드 1. 0개면 섹션을 출력하지 않는다 */
 .featured-grid {
   display: grid;
-  gap: var(--space-5);
+  gap: var(--space-3);
+}
+
+.featured-grid > * {
+  padding: var(--space-5);
+}
+
+/* 큰 카드(3개일 때 첫 카드, 1개일 때)는 꿀색 옅은 칸으로 강조 */
+.featured-grid--3 > :first-child,
+.featured-grid--1 > * {
+  background: var(--color-brand-soft);
 }
 
 /* 헤더 내비: 모바일은 popover 메뉴, 태블릿 이상은 인라인 */
@@ -99,34 +111,34 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .card-grid > * {
-    padding: var(--space-4);
+  .featured-grid--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .featured-grid {
+  .featured-grid--3 {
     grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-    grid-template-rows: auto 1fr;
-    align-items: start;
   }
 
-  .featured-grid > :first-child {
+  .featured-grid--3 > :first-child {
     grid-row: span 2;
+    padding: var(--space-6);
+  }
+
+  .featured-grid--1 > * {
+    padding: var(--space-6);
   }
 }
 
 @media (min-width: 1024px) {
   :root {
     --ad-min-h: 200px;
+    --section-gap: 3.5rem;
   }
 
   .page-grid {
     grid-template-columns: minmax(0, 1fr) var(--sidebar);
     gap: var(--gap-layout);
     padding-block: var(--space-6) var(--space-7);
-  }
-
-  .page-main {
-    gap: var(--space-7);
   }
 
   .card-grid--3 {

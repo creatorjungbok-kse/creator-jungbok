@@ -23,18 +23,19 @@ const domain = new URL(href).hostname;
     display: inline-grid;
     gap: 2px;
     min-height: var(--touch);
-    padding: var(--space-3) var(--space-5);
-    border: 2px solid var(--color-accent);
-    border-radius: var(--radius);
-    color: var(--color-accent);
+    padding: var(--space-3) var(--space-6);
+    border: 1px solid var(--color-link);
+    border-radius: var(--radius-pill);
+    color: var(--color-link);
   }
 
   .official-cta:hover {
-    background: var(--color-accent-soft);
+    background: var(--color-link-soft);
+    text-decoration: none;
   }
 
   .official-cta__label {
-    font-weight: 700;
+    font-weight: var(--weight-bold);
   }
 
   .official-cta__label::after {

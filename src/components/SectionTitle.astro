@@ -15,68 +15,45 @@ const { title, href, tier = 'secondary' } = Astro.props;
 </div>
 
 <style>
+  /* M3식 섹션 머리: 선·막대 없이 크기와 굵기로만 위계를 나눈다. '전체 보기'는 오른쪽 보조 글자 */
   .section-title {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     gap: var(--space-4);
     margin-bottom: var(--space-4);
   }
 
   h2 {
-    font-weight: 700;
+    font-weight: var(--weight-bold);
+    letter-spacing: -0.01em;
   }
 
+  /* 터치 영역 44px, 바깥 여백은 음수 margin으로 상쇄 */
   a {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    min-height: var(--touch);
+    margin-block: calc(-1 * var(--space-3));
     color: var(--color-text-muted);
-    font-size: var(--text-xs);
-  }
-
-  /* primary·secondary: 전체 폭 얇은 선 + 제목 밑 accent 선(두께로 위계 구분) */
-  .section-title--primary,
-  .section-title--secondary {
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .section-title--primary h2,
-  .section-title--secondary h2,
-  .section-title--primary a,
-  .section-title--secondary a {
-    padding-bottom: var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
   }
 
   .section-title--primary h2 {
-    margin-bottom: -1px;
-    border-bottom: 3px solid var(--color-accent);
     font-size: var(--text-lg);
-    font-weight: 800;
-  }
-
-  .section-title--primary {
-    margin-bottom: var(--space-5);
   }
 
   .section-title--secondary h2 {
-    margin-bottom: -1px;
-    border-bottom: 2px solid var(--color-accent);
     font-size: var(--text-md);
   }
 
-  /* utility: 전체 폭 선 없이 짧은 accent 막대 */
   .section-title--utility {
-    margin-bottom: var(--space-3);
+    margin-bottom: var(--space-2);
   }
 
   .section-title--utility h2 {
     font-size: var(--text-base);
-  }
-
-  .section-title--utility h2::before {
-    content: '';
-    display: block;
-    width: 20px;
-    height: 3px;
-    margin-bottom: var(--space-2);
-    background: var(--color-accent);
   }
 </style>

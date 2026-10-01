@@ -27,9 +27,9 @@ const end = program.application.end;
     display: grid;
     gap: var(--space-1);
     padding: var(--space-3) var(--space-4);
-    border: 1px solid var(--color-border);
-    border-left-width: 4px;
+    border-left: 4px solid;
     border-radius: var(--radius);
+    background: var(--color-surface);
     font-size: var(--text-sm);
   }
 
@@ -43,7 +43,7 @@ const end = program.application.end;
   }
 
   .status-banner--upcoming {
-    border-left-color: var(--color-accent);
+    border-left-color: var(--color-link);
   }
 
   .status-banner--open {

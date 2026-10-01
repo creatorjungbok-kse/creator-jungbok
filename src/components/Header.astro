@@ -66,11 +66,27 @@ const showSearch = path !== '/' && path !== '/search/';
     height: var(--header-h);
   }
 
+  /* 로고: 꿀색 표식 + 이름(이미지 요청 없이 CSS로) */
   .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
     margin-right: auto;
     font-size: var(--text-lg);
-    font-weight: 800;
+    font-weight: var(--weight-bold);
     letter-spacing: -0.02em;
+  }
+
+  .logo::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    background: var(--color-brand);
+  }
+
+  .logo:hover {
+    text-decoration: none;
   }
 
   /* 헤더 검색: 1024px 미만은 아이콘 링크(/search/), 이상은 입력창.
@@ -88,13 +104,19 @@ const showSearch = path !== '/' && path !== '/search/';
     order: 1;
   }
 
+  /* 알약 모양 칸 하나 안에 입력창과 버튼 */
+  .header-search {
+    align-items: center;
+    padding-left: var(--space-4);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface);
+  }
+
   .header-search input {
-    width: 12rem;
+    width: 11rem;
     min-height: 40px;
-    padding-inline: var(--space-3);
-    border: 1px solid var(--color-border);
-    border-right: 0;
-    border-radius: var(--radius) 0 0 var(--radius);
+    border: 0;
+    background: transparent;
     font: inherit;
     font-size: var(--text-sm);
   }
@@ -104,10 +126,10 @@ const showSearch = path !== '/' && path !== '/search/';
     place-items: center;
     width: 40px;
     min-height: 40px;
-    border: 1px solid var(--color-border);
-    border-radius: 0 var(--radius) var(--radius) 0;
-    background: var(--color-surface);
-    color: inherit;
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--color-text-muted);
     cursor: pointer;
   }
 
@@ -143,10 +165,30 @@ const showSearch = path !== '/' && path !== '/search/';
     align-items: center;
     min-height: var(--touch);
     padding-inline: var(--space-3);
-    font-weight: 600;
+    font-weight: var(--weight-medium);
   }
 
+  .site-nav a:hover {
+    text-decoration: none;
+    background: var(--color-surface);
+  }
+
+  /* 현재 위치: 꿀색. 모바일 메뉴는 칸 배경, 태블릿 이상은 아래 3px 줄 */
   .site-nav a[aria-current='page'] {
-    color: var(--color-accent);
+    border-radius: var(--radius-sm);
+    background: var(--color-brand-soft);
+    font-weight: var(--weight-bold);
+  }
+
+  @media (min-width: 768px) {
+    .site-nav a {
+      min-height: var(--header-h);
+    }
+
+    .site-nav a[aria-current='page'] {
+      border-radius: 0;
+      background: none;
+      box-shadow: inset 0 -3px 0 var(--color-brand);
+    }
   }
 </style>

@@ -43,10 +43,10 @@ const isoDate = (d: Date) => d.toISOString().slice(0, 10);
 
     {
       featured.length > 0 && (
-        <section aria-labelledby="featured-title">
-          <h2 id="featured-title" class="visually-hidden">대표 콘텐츠</h2>
-          <div class="featured-grid">
-            {featured.map((item, i) => <ContentCard item={item} large={i === 0} />)}
+        <section>
+          <SectionTitle title="먼저 읽어 볼 가이드" tier="primary" />
+          <div class={`featured-grid featured-grid--${Math.min(featured.length, 3)}`}>
+            {featured.map((item, i) => <ContentCard item={item} large={i === 0 && featured.length !== 2} cta="가이드 읽기 →" />)}
           </div>
         </section>
       )
@@ -140,13 +140,11 @@ const isoDate = (d: Date) => d.toISOString().slice(0, 10);
     /* 좁은 화면(360px 미만)에서 검색창이 칸을 밀어내지 않게 */
     grid-template-columns: minmax(0, 1fr);
     gap: var(--space-3);
-    padding: clamp(var(--space-5), 4vw, var(--space-6));
-    border-radius: var(--radius);
-    background: var(--color-accent-soft);
+    padding-top: var(--space-4);
   }
 
   .hero h1 {
-    font-size: clamp(var(--text-xl), 3vw, var(--text-2xl));
+    font-size: clamp(var(--text-xl), 3.4vw, 2rem);
     letter-spacing: -0.02em;
   }
 
@@ -162,6 +160,7 @@ const isoDate = (d: Date) => d.toISOString().slice(0, 10);
 
   .category-block h3 {
     font-size: var(--text-md);
+    font-weight: var(--weight-bold);
   }
 
   .category-block p {
@@ -175,5 +174,21 @@ const isoDate = (d: Date) => d.toISOString().slice(0, 10);
     padding-top: var(--space-2);
     border-top: 1px solid var(--color-border);
     font-size: var(--text-sm);
+  }
+
+  /* Featured 3개(태블릿 이상): 큰 카드는 내용을 세로 중앙보다 약간 아래에 두고, 제목 한 단계 크게, 요약 3줄까지 */
+  @media (min-width: 768px) {
+    .featured-grid--3 > :global(.card:first-child) {
+      align-content: center;
+      padding-top: var(--space-7);
+    }
+
+    .featured-grid--3 > :global(.card:first-child .card__title) {
+      font-size: var(--text-2xl);
+    }
+
+    .featured-grid--3 > :global(.card:first-child .card__excerpt) {
+      -webkit-line-clamp: 3;
+    }
   }
 </style>
