@@ -12,6 +12,7 @@ test('문구: 기관명 + 목적, 신청할 수 없는 상태에는 신청하기
   assert.equal(actionLabel('정부24', 'application', 'open'), '정부24에서 신청하기');
   assert.equal(actionLabel('정부24', 'application', 'closing-soon'), '정부24에서 신청하기');
   assert.equal(actionLabel('정부24', 'application', 'upcoming'), '정부24 신청 안내 보기');
+  assert.equal(actionLabel('정부24', 'application', 'paused'), '정부24 신청 안내 보기');
   assert.equal(actionLabel('정부24', 'application', 'closed'), '정부24 공고 보기');
   assert.equal(actionLabel('서울시', 'info'), '서울시 공식 안내 보기');
   assert.equal(actionLabel('국세청', 'check'), '국세청에서 확인하기');

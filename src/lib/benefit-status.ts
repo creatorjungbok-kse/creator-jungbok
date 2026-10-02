@@ -1,7 +1,7 @@
 // 지원사업 상태 계산(빌드 시점). 외부 import 없이 순수 함수로 유지한다(node 테스트에서 직접 import).
 // 날짜는 한국 날짜(Asia/Seoul)의 YYYY-MM-DD 경계로 비교한다. 시각은 쓰지 않는다.
 
-export type BenefitStatus = 'upcoming' | 'open' | 'closing-soon' | 'closed';
+export type BenefitStatus = 'upcoming' | 'open' | 'closing-soon' | 'paused' | 'closed';
 
 // 종료일까지 남은 날이 이 값 이하면 마감 임박(D-7 ~ D-0). 이 상수 한 곳에서만 관리한다.
 export const CLOSING_SOON_DAYS = 7;
@@ -10,11 +10,13 @@ export const statusLabels: Record<BenefitStatus, string> = {
   upcoming: '신청 예정',
   open: '신청 가능',
   'closing-soon': '마감 임박',
+  paused: '신청 일시 중단',
   closed: '신청 종료',
 };
 
 interface StatusInput {
-  application: { mode: 'period' | 'rolling' | 'until-budget'; start?: Date; end?: Date };
+  // pauses: 신청 기간 안의 공식 일시 중단 기간(예: 포인트 생성 처리기간). 그 날짜에만 '신청 일시 중단'
+  application: { mode: 'period' | 'rolling' | 'until-budget'; start?: Date; end?: Date; pauses?: { start: Date; end: Date; reason?: string }[] };
   statusOverride?: { value: BenefitStatus };
 }
 
@@ -23,6 +25,8 @@ interface StatusResult {
   // 상태와 함께 보여줄 날짜 안내(예: D-6, 오늘 마감, 10월 5일부터). 표시할 근거가 없으면 없음
   detail?: string;
   overridden: boolean;
+  // 일시 중단 중이면 그 공식 사유(상태 배너에 표시)
+  pauseReason?: string;
 }
 
 const DAY = 86_400_000;
@@ -55,5 +59,11 @@ export function benefitStatus(program: StatusInput, now: Date = new Date()): Sta
   else if (endDay !== undefined && today > endDay) status = 'closed';
   else if (endDay !== undefined && endDay - today <= CLOSING_SOON_DAYS) status = 'closing-soon';
   else status = 'open';
+  // 신청 기간 중 공식 일시 중단일이면 그날만 중단으로 표시하고, 다음 날부터 원래 상태로 돌아간다
+  const pause = program.application.pauses?.find((x) => contentDay(x.start) <= today && today <= contentDay(x.end));
+  if (pause && status !== 'upcoming' && status !== 'closed') {
+    const resume = new Date(pause.end.getTime() + DAY);
+    return { status: 'paused', detail: endDay !== undefined && contentDay(resume) > endDay ? undefined : `${monthDay(resume)}부터 재개`, overridden: false, pauseReason: pause.reason };
+  }
   return { status, detail: detailFor(status), overridden: false };
 }

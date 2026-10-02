@@ -1,20 +1,29 @@
 // check-build 회귀 테스트: 정상 빌드는 통과하고, 일부러 망가뜨린 결과물은 기대한 Fail로 막히는지 확인한다.
 // 사용: npm run test:seo   (production 빌드 1회 + fixture preview 빌드 1회)
 import { spawnSync } from 'node:child_process';
-import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdtempSync, readdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 const work = mkdtempSync(join(tmpdir(), 'check-build-test-'));
-const run = (cmd, args, env = {}) => spawnSync(cmd, args, { encoding: 'utf8', env: { ...process.env, ASTRO_TELEMETRY_DISABLED: '1', ...env } });
-const build = (name, env) => {
+const run = (cmd, args, env = {}, cwd = process.cwd()) => spawnSync(cmd, args, { cwd, encoding: 'utf8', env: { ...process.env, ASTRO_TELEMETRY_DISABLED: '1', ...env } });
+const build = (name, env, cwd) => {
   const out = join(work, name);
-  const r = run('npx', ['astro', 'build', '--outDir', out], env);
+  const r = run('npx', ['astro', 'build', '--outDir', out], env, cwd);
   if (r.status !== 0) throw new Error(`${name} 빌드 실패\n${r.stdout}${r.stderr}`);
   return out;
 };
+// 지원·혜택 글이 하나도 없는 production(빈 카테고리 규칙 검사용): 저장소를 임시 폴더에 복사하고 benefits 글만 지운 뒤 빌드한다
+const emptyBenefitsRepo = () => {
+  const repo = join(work, 'repo-empty-benefits');
+  cpSync(process.cwd(), repo, { recursive: true, filter: (src) => !/[\\/](node_modules|dist|\.git|\.astro)$/.test(src) });
+  symlinkSync(join(process.cwd(), 'node_modules'), join(repo, 'node_modules'), 'junction');
+  const dir = join(repo, 'src/content/benefits');
+  for (const f of readdirSync(dir)) if (f.endsWith('.md')) rmSync(join(dir, f));
+  return repo;
+};
 const check = (env, dir) => {
-  const r = run('node', ['tools/check-build.mjs', env, dir]);
+  const r = run('node', ['tools/check-build.mjs', env === 'production-empty' ? 'production' : env, dir]);
   return { status: r.status, out: r.stdout + r.stderr };
 };
 const edit = (file, from, to) => (dir) => {
@@ -38,6 +47,7 @@ const TOOL = 'living/electricity-bill-calculator/index.html';
 const VALID = 'data-valid-until="2026-12-31"';
 const kstPlus = (days) => new Date(Date.now() + 9 * 3600e3 + days * 864e5).toISOString().slice(0, 10);
 
+// 환경 production-empty = 지원·혜택 글이 없는 production 빌드
 // [환경, 이름, 망가뜨리기, 기대 문구, 기대 종료 코드(기본 1 = Fail, 0 = Warning만)]
 const cases = [
   ['production', 'title 없음', edit('business/index.html', '<title>', '<title data-x>'), 'title 없음'],
@@ -71,14 +81,14 @@ const cases = [
   ['production', '도구 상수 기한 지남', edit(TOOL, VALID, `data-valid-until="${kstPlus(-1)}"`), '도구 상수 기한 지남'],
   ['production', '도구 상수 기한 14일 이내', edit(TOOL, VALID, `data-valid-until="${kstPlus(7)}"`), '도구 상수 기한 임박', 0],
   ['preview', 'preview는 도구 기한을 막지 않음', edit(TOOL, VALID, `data-valid-until="${kstPlus(-1)}"`), 'OK (preview', 0],
-  ['production', '빈 카테고리(benefits)를 메뉴에 링크', edit('business/index.html', '<nav id="site-nav" class="site-nav" popover aria-label="카테고리"', '<nav id="site-nav" class="site-nav" popover aria-label="카테고리"><a href="/benefits/">지원·혜택</a'), '공개 글 없는 카테고리 링크 /benefits/'],
-  ['production', '빈 카테고리 허브 색인', edit('benefits/index.html', '<meta name="robots" content="noindex, follow">', ''), 'benefits/index.html: robots noindex 0건'],
-  ['production', '빈 카테고리 허브가 sitemap에', edit('sitemap-benefits.xml', '</urlset>', `${loc('/benefits/')}\n</urlset>`), '/benefits/: 공개 글 없는 카테고리가 sitemap에 있음'],
-  ['production', '빈 카테고리 sitemap이 index에', edit('sitemap.xml', '</sitemapindex>', '<sitemap><loc>https://creatorjungbok.co.kr/sitemap-benefits.xml</loc></sitemap></sitemapindex>'), 'sitemap.xml: 하위 sitemap'],
+  ['production-empty', '빈 카테고리(benefits)를 메뉴에 링크', edit('business/index.html', '<nav id="site-nav" class="site-nav" popover aria-label="카테고리"', '<nav id="site-nav" class="site-nav" popover aria-label="카테고리"><a href="/benefits/">지원·혜택</a'), '공개 글 없는 카테고리 링크 /benefits/'],
+  ['production-empty', '빈 카테고리 허브 색인', edit('benefits/index.html', '<meta name="robots" content="noindex, follow">', ''), 'benefits/index.html: robots noindex 0건'],
+  ['production-empty', '빈 카테고리 허브가 sitemap에', edit('sitemap-benefits.xml', '</urlset>', `${loc('/benefits/')}\n</urlset>`), '/benefits/: 공개 글 없는 카테고리가 sitemap에 있음'],
+  ['production-empty', '빈 카테고리 sitemap이 index에', edit('sitemap.xml', '</sitemapindex>', '<sitemap><loc>https://creatorjungbok.co.kr/sitemap-benefits.xml</loc></sitemap></sitemapindex>'), 'sitemap.xml: 하위 sitemap'],
   ['production', '글 있는 카테고리가 메뉴에서 빠짐', dropNav('index.html', '/living/'), 'index.html: 메뉴에 없는 카테고리 /living/'],
-  ['production', '빈 카테고리(benefits) 검색 필터', edit('search/index.html', 'data-category="business"', 'data-category="benefits"></button><button data-category="business"'), 'search/index.html: 공개 글 없는 카테고리 검색 필터 /benefits/'],
+  ['production-empty', '빈 카테고리(benefits) 검색 필터', edit('search/index.html', 'data-category="business"', 'data-category="benefits"></button><button data-category="business"'), 'search/index.html: 공개 글 없는 카테고리 검색 필터 /benefits/'],
   ['preview', 'fixture 지원·혜택이 있으면 검색 필터 필수', edit('search/index.html', 'data-category="benefits"', 'data-category="x-benefits"'), 'search/index.html: 검색 필터에 없는 카테고리 /benefits/'],
-  ['production', 'benefit 없는데 신청 가능 필터 표시', (dir) => { const p = join(dir, 'search/index.html'); writeFileSync(p, readFileSync(p, 'utf8').replace(/<label class="open-only"[^>]*>\s*<input[^>]*data-open-only[^>]*>/, '<label class="open-only"><input type="checkbox" data-open-only>')); }, "'신청 가능한 지원만' 표시 (검색 데이터 benefit 없음)"],
+  ['production-empty', 'benefit 없는데 신청 가능 필터 표시', (dir) => { const p = join(dir, 'search/index.html'); writeFileSync(p, readFileSync(p, 'utf8').replace(/<label class="open-only"[^>]*>\s*<input[^>]*data-open-only[^>]*>/, '<label class="open-only"><input type="checkbox" data-open-only>')); }, "'신청 가능한 지원만' 표시 (검색 데이터 benefit 없음)"],
   ['preview', 'benefit 있는데 신청 가능 필터 숨김', edit('search/index.html', '<label class="open-only"', '<label class="open-only" hidden'), "'신청 가능한 지원만' 숨김 (검색 데이터 benefit 있음)"],
   ['preview', 'fixture 지원·혜택이 있으면 메뉴 필수', dropNav('index.html', '/benefits/'), 'index.html: 메뉴에 없는 카테고리 /benefits/'],
   ['production', 'sidebar에 슬롯', edit('business/index.html', '</aside>', '<div data-ad-slot="home-1"></div></aside>'), '광고 슬롯 home-1: main 본문 밖·sidebar'],
@@ -90,7 +100,11 @@ const cases = [
 
 let failed = 0;
 try {
-  const dists = { production: build('production', { SITE_ENV: 'production' }), preview: build('preview', { SHELL_PREVIEW: 'true' }) };
+  const dists = {
+    production: build('production', { SITE_ENV: 'production' }),
+    preview: build('preview', { SHELL_PREVIEW: 'true' }),
+    'production-empty': build('production-empty', { SITE_ENV: 'production' }, emptyBenefitsRepo()),
+  };
   for (const [env, dir] of Object.entries(dists)) {
     const r = check(env, dir);
     const ok = r.status === 0;

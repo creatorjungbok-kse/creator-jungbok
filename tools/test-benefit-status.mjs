@@ -40,3 +40,16 @@ test('상시 신청: 날짜 없음 → 신청 가능', () => check({ application
 test('시간대 경계: 한국 0시 30분(UTC 전날) → 시작일로 판단', () => check(p, kst('2026-10-05', '00:30'), 'open', 'D-26'));
 test('시간대 경계: 한국 23시 59분 종료일 → 오늘 마감', () => check(p, kst('2026-10-31', '23:59'), 'closing-soon', '오늘 마감'));
 test('시간대 경계: 한국 다음날 0시 → 종료', () => check(p, kst('2026-11-01', '00:00'), 'closed', undefined));
+
+// 공식 일시 중단 기간(신청 기간 안): 그 날짜에만 중단, 다음 날 자동으로 원래 상태
+const withPause = { application: { mode: 'period', start: d('2026-06-15'), end: d('2026-12-31'), pauses: [{ start: d('2026-10-01'), end: d('2026-10-02'), reason: '처리기간' }] } };
+test('일시 중단 전날 → 신청 가능', () => check(withPause, kst('2026-09-30'), 'open', 'D-92'));
+test('일시 중단 첫날 → 신청 일시 중단, 재개일 안내', () => check(withPause, kst('2026-10-01', '00:05'), 'paused', '10월 3일부터 재개'));
+test('일시 중단 마지막 날 → 신청 일시 중단 + 사유', () => {
+  check(withPause, kst('2026-10-02', '23:59'), 'paused', '10월 3일부터 재개');
+  assert.equal(benefitStatus(withPause, kst('2026-10-02')).pauseReason, '처리기간');
+});
+test('일시 중단 다음 날 → 신청 가능으로 자동 전환', () => check(withPause, kst('2026-10-03', '00:00'), 'open', 'D-89'));
+test('일시 중단은 마감 임박보다 우선, 종료일까지면 재개 안내 없음', () =>
+  check({ application: { ...withPause.application, pauses: [{ start: d('2026-12-30'), end: d('2026-12-31') }] } }, kst('2026-12-30'), 'paused', undefined));
+test('override가 일시 중단보다 우선', () => check({ ...withPause, statusOverride: { value: 'closed' } }, kst('2026-10-01'), 'closed', undefined));

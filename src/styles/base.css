@@ -226,6 +226,11 @@ details[open] > summary.disclosure::after {
   color: var(--color-link);
 }
 
+.badge--paused {
+  background: var(--color-status-closing-soft);
+  color: var(--color-status-closing);
+}
+
 .badge--closed {
   background: var(--color-surface-strong);
   color: var(--color-text-muted);

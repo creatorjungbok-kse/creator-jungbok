@@ -49,10 +49,10 @@ export const openBenefits = (items: ContentItem[]) =>
       byUrl(a, b),
   );
 
-// 곧 시작(시작일 빠른 순)
+// 곧 시작·재개(신청 예정 + 신청 일시 중단, 시작일 빠른 순)
 export const upcomingBenefits = (items: ContentItem[]) =>
   sorted(
-    items.filter((i) => statusOf(i) === 'upcoming'),
+    items.filter((i) => statusOf(i) === 'upcoming' || statusOf(i) === 'paused'),
     (a, b) => time(programOf(a)!.application.start, FAR) - time(programOf(b)!.application.start, FAR) || byUrl(a, b),
   );
 

@@ -9,6 +9,7 @@ export type LinkAction = (typeof linkActions)[number];
 const applicationLabels: Record<BenefitStatus, (org: string) => string> = {
   open: (org) => `${org}에서 신청하기`,
   'closing-soon': (org) => `${org}에서 신청하기`,
+  paused: (org) => `${org} 신청 안내 보기`,
   upcoming: (org) => `${org} 신청 안내 보기`,
   closed: (org) => `${org} 공고 보기`,
 };

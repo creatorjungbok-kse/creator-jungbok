@@ -170,6 +170,8 @@ const programSchema = z
       methods: z.array(text).optional(),
       documents: z.array(text).optional(),
       officialUrl: z.url(),
+      // 신청 기간 안의 공식 일시 중단 기간(그 날짜에만 상태가 '신청 일시 중단', 공식 S1 근거 필수)
+      pauses: z.array(z.strictObject({ start: date, end: date, reason: text, sourceId })).optional(),
     }),
     payoutSchedule: text.optional(),
     // 혜택 효력 기간(신청 기간과 별개)
@@ -189,6 +191,10 @@ const programSchema = z
     if (a.mode === 'period' && (!a.start || !a.end)) ctx.addIssue({ code: 'custom', path: ['application'], message: 'period 모드는 start·end가 필요하다' });
     if (a.mode === 'until-budget' && !a.start) ctx.addIssue({ code: 'custom', path: ['application', 'start'], message: 'until-budget 모드는 start가 필요하다' });
     if (a.start && a.end && a.end < a.start) ctx.addIssue({ code: 'custom', path: ['application', 'end'], message: 'end < start' });
+    a.pauses?.forEach((x, i) => {
+      if (x.end < x.start) ctx.addIssue({ code: 'custom', path: ['application', 'pauses', i, 'end'], message: '일시 중단 end < start' });
+      if ((a.start && x.start < a.start) || (a.end && x.end > a.end)) ctx.addIssue({ code: 'custom', path: ['application', 'pauses', i], message: '일시 중단 기간은 신청 기간 안에 있어야 한다' });
+    });
     if (p.validFrom && p.validTo && p.validTo < p.validFrom) ctx.addIssue({ code: 'custom', path: ['validTo'], message: 'validTo < validFrom' });
   });
 

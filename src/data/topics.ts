@@ -7,4 +7,5 @@ export const topics = [
   { id: 'telecom', name: '통신비' },
   { id: 'employment', name: '고용' },
   { id: 'housing', name: '주거' },
+  { id: 'tax', name: '세금·환급' },
 ] as const;

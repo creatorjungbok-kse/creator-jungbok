@@ -204,6 +204,10 @@ const cases = [
     edit('articles/business/test-startup-guide.md', 'contentType: guide', 'contentType: compare')(f);
     edit('articles/business/test-startup-guide.md', 'checklist:', 'compare:\n  caption: 테스트 비교\n  options: [A, B]\n  rows:\n    - label: 가격\n      values: [1만 원]\nchecklist:')(f);
   }, '값 1개 ≠ 선택지 2개'],
+  ['benefit-pause-valid', edit(B, '    officialUrl: https://www.gov.kr/\n  lastStatusCheckedAt', '    officialUrl: https://www.gov.kr/\n    pauses:\n      - start: 2026-10-01\n        end: 2026-10-02\n        reason: 처리기간\n        sourceId: gov24\n  lastStatusCheckedAt'), null],
+  ['benefit-pause-outside-period', edit(B, '    officialUrl: https://www.gov.kr/\n  lastStatusCheckedAt', '    officialUrl: https://www.gov.kr/\n    pauses:\n      - start: 2026-09-30\n        end: 2026-10-02\n        reason: 처리기간\n        sourceId: gov24\n  lastStatusCheckedAt'), '일시 중단 기간은 신청 기간 안에'],
+  ['benefit-pause-reversed', edit(B, '    officialUrl: https://www.gov.kr/\n  lastStatusCheckedAt', '    officialUrl: https://www.gov.kr/\n    pauses:\n      - start: 2026-10-03\n        end: 2026-10-02\n        reason: 처리기간\n        sourceId: gov24\n  lastStatusCheckedAt'), '일시 중단 end < start'],
+  ['benefit-pause-non-official', edit(B, '    officialUrl: https://www.gov.kr/\n  lastStatusCheckedAt', '    officialUrl: https://www.gov.kr/\n    pauses:\n      - start: 2026-10-01\n        end: 2026-10-02\n        reason: 처리기간\n        sourceId: local:blog\n  lastStatusCheckedAt'), '존재하지 않는 출처 local:blog'],
   ['benefit-checklist-field', edit(B, 'actionLinks:', 'checklist:\n  items: [x]\nactionLinks:'), 'program.application.documents에 쓴다'],
   // ── 공식 행동 링크 ──
   ['action-subdomain-ok', link('https://plus.gov.kr/service/1'), null],

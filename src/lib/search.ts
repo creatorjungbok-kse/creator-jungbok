@@ -21,7 +21,7 @@ export function queryTerms(q: string): string[] {
   return core.length ? core : terms;
 }
 
-type SearchStatus = 'upcoming' | 'open' | 'closing-soon' | 'closed';
+type SearchStatus = 'upcoming' | 'open' | 'closing-soon' | 'paused' | 'closed';
 
 // /search-index.json 한 항목. 화면 표시용 값 + 비교용 정규화 값(t·s·m)
 export interface SearchDoc {
