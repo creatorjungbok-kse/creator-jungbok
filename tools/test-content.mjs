@@ -254,6 +254,9 @@ const cases = [
   }, null],
   ['action-host-exception-non-official', edit(C, '    level: S2\n    checkedAt: 2026-09-20', '    level: S2\n    checkedAt: 2026-09-20\n    actionHosts: [form.example.com]'), 'actionHosts는 공식(S1) 출처에만'],
   ['thumbnail-local', edit(G, 'contentMode: evergreen', 'contentMode: evergreen\nthumbnail: /images/thumbnails/test-guide.svg'), null],
+  ['og-image-local', edit(G, 'contentMode: evergreen', 'contentMode: evergreen\nogImage: /images/og/test-guide.png'), null],
+  ['og-image-svg', edit(G, 'contentMode: evergreen', 'contentMode: evergreen\nogImage: /images/og/test-guide.svg'), '공유 이미지 경로 형식'],
+  ['og-image-remote', edit(G, 'contentMode: evergreen', 'contentMode: evergreen\nogImage: https://example.com/a.png'), '공유 이미지 경로 형식'],
   ['thumbnail-remote', edit(G, 'contentMode: evergreen', 'contentMode: evergreen\nthumbnail: https://example.com/a.png'), '대표 이미지 경로 형식'],
   ['broken-related-link', edit('articles/business/test-startup-guide.md', 'related: [/business/test-card-terminal/]', 'related: [/business/nope/]'), '존재하지 않는 글 링크 /business/nope/'],
 ];

@@ -15,6 +15,16 @@ if (!['development', 'preview', 'production'].includes(env)) {
 }
 
 const origin = new URL(config.site).origin;
+// PNG 가로·세로(IHDR). PNG가 아니면 null
+const pngSizes = new Map();
+const pngSize = (file) => {
+  if (!pngSizes.has(file)) {
+    const b = readFileSync(file);
+    const isPng = b.length > 24 && b.readUInt32BE(0) === 0x89504e47 && b.toString('ascii', 12, 16) === 'IHDR';
+    pngSizes.set(file, isPng ? { w: b.readUInt32BE(16), h: b.readUInt32BE(20) } : null);
+  }
+  return pngSizes.get(file);
+};
 const allFiles = (dir) =>
   readdirSync(dir).flatMap((name) => {
     const path = join(dir, name);
@@ -138,6 +148,18 @@ for (const file of htmlFiles) {
     if (meta('property', 'og:url') !== canonicalUrl) fail('og:url ≠ canonical');
     if (decode(meta('property', 'og:title') ?? '') !== title) fail('og:title ≠ title');
     if (decode(meta('property', 'og:description') ?? '') !== description) fail('og:description ≠ description');
+    // 공유 미리보기 이미지: 이 사이트의 실제 1200x630 PNG + large 카드
+    const ogImage = meta('property', 'og:image');
+    const ogPath = ogImage?.startsWith(`${origin}/`) ? decodeURIComponent(new URL(ogImage).pathname) : null;
+    if (!ogImage) fail('og:image 없음');
+    else if (!ogPath) fail(`og:image 다른 도메인·상대 경로 ${ogImage}`);
+    else if (!existsSync(join(dist, ogPath))) fail(`없는 og:image ${ogPath}`);
+    else {
+      const size = pngSize(join(dist, ogPath));
+      if (size?.w !== 1200 || size?.h !== 630) fail(`og:image가 1200x630 PNG가 아님 ${ogPath}`);
+    }
+    if (meta('property', 'og:image:width') !== '1200' || meta('property', 'og:image:height') !== '630') fail('og:image:width·height ≠ 1200x630');
+    if (meta('name', 'twitter:card') !== 'summary_large_image') fail('twitter:card ≠ summary_large_image');
   }
   if (indexable) {
     if (h1 !== 1) fail(`H1 ${h1}개`);
@@ -170,6 +192,7 @@ for (const file of htmlFiles) {
       for (const k of ['headline', 'datePublished', 'dateModified', 'author', 'publisher']) if (!article[k]) fail(`Article.${k} 누락`);
       const h1Text = decode(html.match(/<h1[^>]*>([^<]*)<\/h1>/)?.[1] ?? '');
       if (article.headline !== h1Text) fail('Article.headline ≠ 화면 H1');
+      if (JSON.stringify(article.image) !== JSON.stringify([meta('property', 'og:image')])) fail('Article.image ≠ og:image');
       const shown = html.match(/최종 업데이트 <time[^>]*datetime="([^"]+)"/)?.[1];
       if (!article.dateModified?.startsWith(shown)) fail(`Article.dateModified ≠ 화면 최종 업데이트(${shown})`);
     }

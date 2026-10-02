@@ -7,6 +7,8 @@ export const site = {
   // 홈 meta description·RSS 채널 설명
   description: '지원·혜택부터 생활비용, 사업·창업, 통신·디지털까지 알아두면 도움 되는 정보를 최신 기준으로 정리합니다.',
   lang: 'ko',
+  // 공유 미리보기 기본 이미지(1200x630 PNG). 글은 frontmatter ogImage가 있으면 그것을 쓴다
+  ogImage: '/images/og/default.png',
   // 공개 문의·개인정보 문의 이메일(/contact/, /privacy/)
   contactEmail: 'gkstjsghk1006@gmail.com',
   // 개인정보 보호책임자 실명. /privacy/의 보호책임자 항목에만 쓴다(About·Footer·작성자 영역에는 쓰지 않음).

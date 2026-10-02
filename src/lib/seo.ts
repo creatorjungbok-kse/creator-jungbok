@@ -51,6 +51,8 @@ export function articleJsonLd(item: ContentItem) {
     author: author.isSite ? organization() : { '@type': 'Person', name: author.name },
     publisher: organization(),
     mainEntityOfPage: absoluteUrl(item.url),
+    // og:image와 같은 이미지(글 전용이 없으면 사이트 기본)
+    image: [absoluteUrl(data.ogImage ?? site.ogImage)],
     inLanguage: site.lang,
   };
 }

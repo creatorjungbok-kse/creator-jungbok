@@ -104,7 +104,7 @@ const nextIsSafe = isArticle
 const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' : 'mid') && nextIsSafe;
 ---
 
-<BaseLayout title={data.seoTitle ?? data.title} description={data.description ?? data.summary} ogType="article" jsonLd={[articleJsonLd(item)]}>
+<BaseLayout title={data.seoTitle ?? data.title} description={data.description ?? data.summary} ogType="article" image={data.ogImage} jsonLd={[articleJsonLd(item)]}>
   <div class="container page-grid">
     <article class="article">
       <Breadcrumb items={[{ label: category.name, href: categoryHref(category) }]} />

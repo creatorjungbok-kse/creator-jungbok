@@ -14,6 +14,7 @@ synonyms:
   - 알뜰폰 요금제 비교 사이트
 summary: 알뜰폰은 화면에 보이는 프로모션 월요금만 비교하면 실제 유지비를 놓치기 쉽습니다. 비교하려는 두 요금제의 할인 월요금, 할인기간, 할인 종료 후 요금과 유심·eSIM 비용을 넣으면 12개월·24개월 예상 총액과 월평균을 바로 비교할 수 있습니다.
 thumbnail: /images/thumbnails/mvno-plan-comparison.svg
+ogImage: /images/og/mvno-plan-comparison.png
 datePublished: 2026-10-01
 dateModified: 2026-10-01
 researchedAt: 2026-10-01

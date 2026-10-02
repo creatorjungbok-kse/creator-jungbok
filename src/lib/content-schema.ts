@@ -15,6 +15,8 @@ const idsOf = (list: readonly { id: string }[]) => z.enum(list.map((x) => x.id) 
 // 내부 글 경로: /{category}/{slug}/
 const internalPath = z.string().regex(/^\/[a-z]+\/[a-z0-9]+(?:-[a-z0-9]+)*\/$/, '내부 글 경로 형식: /category/slug/');
 // 대표 이미지: public/images/thumbnails/의 로컬 파일만(원격 이미지 금지). 16:9로 만든다. 파일 존재는 check-build가 검사한다
+// 공유 미리보기(og:image) 이미지: public/images/og/의 1200x630 PNG만. 없으면 사이트 기본 이미지를 쓴다. 크기·존재는 check-build가 검사한다
+const ogImagePath = z.string().regex(/^\/images\/og\/[a-z0-9]+(?:-[a-z0-9]+)*\.png$/, '공유 이미지 경로 형식: /images/og/{kebab-case}.png');
 const thumbnailPath = z.string().regex(/^\/images\/thumbnails\/[a-z0-9]+(?:-[a-z0-9]+)*\.(?:svg|webp|avif|png|jpg)$/, '대표 이미지 경로 형식: /images/thumbnails/{kebab-case}.svg|webp|avif|png|jpg');
 
 // ── 출처 ─────────────────────────────────────────────
@@ -118,6 +120,8 @@ const baseShape = {
   summary: text,
   // 목록 카드·글 머리의 대표 이미지(없으면 대분류 색 칸으로 대신 표시)
   thumbnail: thumbnailPath.optional(),
+  // 카카오톡·SNS 공유 미리보기·Article.image 이미지(없으면 사이트 기본 이미지)
+  ogImage: ogImagePath.optional(),
   datePublished: date,
   dateModified: date,
   researchedAt: date,
