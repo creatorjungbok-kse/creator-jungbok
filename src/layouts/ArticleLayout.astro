@@ -311,6 +311,29 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
     white-space: nowrap;
   }
 
+  /* 본문 화면 캡처: 글 폭에 맞추고 테두리로 본문과 구분, 아래에 설명 한 줄 */
+  .article .prose figure.shot {
+    margin: var(--space-5) 0;
+  }
+
+  .article .prose figure.shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+  }
+
+  .article .prose figure.shot a {
+    display: block;
+  }
+
+  .article .prose figure.shot figcaption {
+    margin-top: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
   /* 목차로 이동했을 때 고정 헤더에 제목이 가리지 않게 */
   .article [id] {
     scroll-margin-top: calc(var(--header-h) + var(--space-4));

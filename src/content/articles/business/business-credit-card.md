@@ -101,6 +101,11 @@ localSources:
 
 로그인한 뒤 위 메뉴에서 카드번호를 입력해 등록합니다. 등록은 최대 50개까지 할 수 있습니다.
 
+<figure class="shot">
+  <a href="/images/articles/business-credit-card-register.webp" class="shot__zoom"><img src="/images/articles/business-credit-card-register.webp" width="1200" height="363" alt="홈택스 사업용신용카드 등록 화면. 사업자등록번호 선택, 카드번호 입력칸(최대 50장), 휴대전화번호 입력칸과 등록접수하기 버튼이 있습니다." loading="lazy" decoding="async"></a>
+  <figcaption>홈택스 사업용신용카드 등록 화면. 카드번호와 휴대전화번호를 넣고 ‘등록접수하기’를 누릅니다. (2026년 10월 2일 확인)</figcaption>
+</figure>
+
 ## 등록한 다음에 할 일
 
 1. **다음 달 중순경부터 사용내역 조회**: 홈택스 계산서·영수증·카드 → 신용카드 매입 → 사업용신용카드 사용내역에서 월별로 확인합니다.
@@ -114,5 +119,10 @@ localSources:
 | 매입세액 공제 | 일반과세자와의 거래 중 불공제 대상이 아닌 것 | 사업과 관련 없으면 불공제로 바꿀 수 있음 |
 | 선택 불공제 | 사업 무관, 접대성 지출, 가사 지출, 비영업용 승용차 관련 비용 등 | 실제로 사업에 쓴 거래면 공제로 바꿀 수 있음 |
 | 당연 불공제 | 간이과세자·면세사업자와의 거래 | 공제 불가 |
+
+<figure class="shot">
+  <a href="/images/articles/business-credit-card-deduction.webp" class="shot__zoom"><img src="/images/articles/business-credit-card-deduction.webp" width="1200" height="296" alt="홈택스 매입세액 공제 확인/변경 화면. 조회기간과 공제여부를 고르는 칸, 선택불공제 업종·당연불공제 업종 버튼, 승인일자·가맹점명·공급가액·세액·공제여부 결정 칸이 있는 표가 있습니다." loading="lazy" decoding="async"></a>
+  <figcaption>홈택스 ‘매입세액 공제 확인/변경’ 화면. 조회기간을 고르고 조회하면 거래마다 공제여부가 나오고, 여기서 바꿀 수 있습니다. (2026년 10월 2일 확인)</figcaption>
+</figure>
 
 국세청은 선택 불공제의 예로 음식, 숙박, 항공운송, 승차권, 주유소, 차량유지, 목욕, 이발, 승용차 구입, 골프연습장 등을 들고 있습니다. 이런 지출이라도 사업에 쓴 것이 확실하면 공제로 바꿀 수 있지만, 항공운송·승차권·목욕·이발처럼 매입세액 불공제 대상으로 안내된 항목도 있으니 확인 후 반영하세요.

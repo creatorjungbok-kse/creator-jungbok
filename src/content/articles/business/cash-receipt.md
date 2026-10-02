@@ -119,6 +119,11 @@ localSources:
 | 그 밖의 업종 | 부동산 중개업, 예식장업, 피부 미용업, 체력단련시설, 실내건축 공사업, 자동차 수리업, 가구·가전제품 소매업, 안경 소매업, 이사화물 운송주선업 등 |
 | 통신판매업 | 위 업종의 재화·용역을 통신판매로 공급하는 경우 |
 
+<figure class="shot">
+  <a href="/images/articles/cash-receipt-industry-table.webp" class="shot__zoom"><img src="/images/articles/cash-receipt-industry-table.webp" width="1200" height="505" alt="국세청 누리집의 현금영수증 의무발행업종 표(소득세법 시행령 별표 3의3) 첫 부분. 사업서비스업에 변호사업, 공인회계사업, 세무사업, 변리사업 등이 나열되어 있습니다." loading="lazy" decoding="async"></a>
+  <figcaption>국세청 누리집 ‘현금영수증발급의무’ 페이지 아래쪽의 의무발행업종 표 첫 부분입니다. (2026년 10월 2일 확인)</figcaption>
+</figure>
+
 ## 가산세는 이렇게 다릅니다
 
 | 상황 | 가산세 |
@@ -135,3 +140,8 @@ localSources:
 2. 받은 날부터 **5일 이내**에 가맹점 단말기나 홈택스에서 현금영수증을 발급합니다.
 3. 손님 번호 대신 국세청 지정 번호 **010-000-1234**를 입력합니다.
 4. 최종 소비자면 '현금(소득공제)', 사업자면 '현금(지출증빙)'으로 구분합니다.
+
+<figure class="shot">
+  <a href="/images/articles/cash-receipt-self-issue.webp" class="shot__zoom"><img src="/images/articles/cash-receipt-self-issue.webp" width="1370" height="119" alt="국세청 누리집 현금영수증발급의무 페이지의 자진발급 안내. 소비자가 발급을 요청하지 않아도 국세청 지정 코드 010-000-1234로 발급할 수 있고, 기한은 현금을 받은 날부터 5일 이내라고 적혀 있습니다." loading="lazy" decoding="async"></a>
+  <figcaption>국세청 누리집 ‘현금영수증발급의무’ 안내. 자진발급은 국세청 지정 코드 010-000-1234로, 현금을 받은 날부터 5일 이내에 합니다. (2026년 10월 2일 확인)</figcaption>
+</figure>
