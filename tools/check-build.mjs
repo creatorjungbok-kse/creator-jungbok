@@ -5,6 +5,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import config from '../astro.config.mjs';
 import { categories } from '../src/data/categories.ts';
+import { site } from '../src/config/site.ts';
 
 const env = process.argv[2];
 const dist = process.argv[3] ?? 'dist';
@@ -299,7 +300,7 @@ for (const link of rssItems) if (!pages.has(new URL(link).pathname) || !link.sta
 // ── robots.txt(04 10장, 05 10장) — meta robots와 모순 없게 ──
 const robots = existsSync(join(dist, 'robots.txt')) ? read(join(dist, 'robots.txt')) : '';
 const robotsRules = {
-  production: robots === `User-agent: *\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\n`,
+  production: robots === `#DaumWebMasterTool:${site.verification.daum}\nUser-agent: *\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\n`,
   preview: robots === 'User-agent: *\nAllow: /\n',
   development: robots === 'User-agent: *\nDisallow: /\n',
 };

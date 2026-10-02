@@ -15,6 +15,8 @@ export const site = {
   verification: {
     google: 'pRxHqc98SrcBbNmqe6Ifnc4787W96aQXpCt096UQNN4',
     naver: 'a75a175b725039ead1e7125e7717e581a82e14a2',
+    // 다음 웹마스터도구: production robots.txt 첫 줄 `#DaumWebMasterTool:{값}`(공개 값)
+    daum: 'c12cf1672dfdff7d7b2d1e9ae88d96a6dde3be20ac7d93f1fa5e51035a321aa6:TjfWRIg4AvRIXkF+EGam5Q==',
   },
   adsenseClient: 'ca-pub-4083301154077390',
   ga4Id: 'G-6B72N2BV55',
