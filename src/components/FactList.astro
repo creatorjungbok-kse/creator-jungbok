@@ -6,12 +6,13 @@ export interface Props {
   items: { label: string; value: string | string[] }[];
   variant?: 'list' | 'quick';
   notes?: string[];
+  id?: string;
 }
 
-const { title, items, variant = 'list', notes = [] } = Astro.props;
+const { title, items, variant = 'list', notes = [], id } = Astro.props;
 ---
 
-<section class:list={['fact-list', `fact-list--${variant}`]}>
+<section id={id} class:list={['fact-list', `fact-list--${variant}`]}>
   {title && <h2>{title}</h2>}
   <dl>
     {
@@ -77,6 +78,7 @@ const { title, items, variant = 'list', notes = [] } = Astro.props;
 
   .fact-list--quick dl > div {
     grid-template-columns: minmax(0, 1fr);
+    align-content: start;
     gap: 2px;
     padding: 0;
     border: 0;

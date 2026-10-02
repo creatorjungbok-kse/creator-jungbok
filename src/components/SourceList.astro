@@ -6,14 +6,16 @@ import { formatDate } from '../lib/format';
 
 export interface Props {
   sources: Source[];
+  // 목차 이동용 id
+  id?: string;
 }
 
-const { sources } = Astro.props;
+const { sources, id } = Astro.props;
 ---
 
 {
   sources.length > 0 && (
-    <section class="source-list">
+    <section id={id} class="source-list">
       <SectionTitle title="출처·참고자료" tier="secondary" />
       <ol>
         {sources.map((s) => (

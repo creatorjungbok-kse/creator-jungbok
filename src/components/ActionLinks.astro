@@ -12,13 +12,15 @@ export interface Props {
   status?: BenefitStatus;
   // 신청 방법 등 링크 아래 한 줄 정보
   methods?: string[];
+  // 목차 이동용 id
+  id?: string;
 }
 
-const { title, links, status, methods } = Astro.props;
+const { title, links, status, methods, id } = Astro.props;
 const isBenefit = status !== undefined;
 ---
 
-<section class="action-links" data-ad-protected={isBenefit ? 'official-cta' : 'action-links'}>
+<section id={id} class="action-links" data-ad-protected={isBenefit ? 'official-cta' : 'action-links'}>
   <h2>{title}</h2>
   <ul>
     {

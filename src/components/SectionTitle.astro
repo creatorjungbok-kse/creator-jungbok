@@ -3,7 +3,8 @@ export interface Props {
   title: string;
   href?: string;
   // primary: 홈 핵심 섹션 / secondary: 보조 섹션 / utility: 사이드바·목록 제목
-  tier?: 'primary' | 'secondary' | 'utility';
+  // article: 글 화면 구역 제목(본문 H2와 같은 크기)
+  tier?: 'primary' | 'secondary' | 'utility' | 'article';
 }
 
 const { title, href, tier = 'secondary' } = Astro.props;
@@ -43,6 +44,11 @@ const { title, href, tier = 'secondary' } = Astro.props;
 
   .section-title--primary h2 {
     font-size: var(--text-lg);
+  }
+
+  .section-title--article h2 {
+    font-size: var(--text-xl);
+    line-height: var(--leading-tight);
   }
 
   .section-title--secondary h2 {

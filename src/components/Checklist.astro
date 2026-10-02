@@ -6,12 +6,14 @@ export interface Props {
   items: string[];
   marker?: 'check' | 'note';
   protect?: string;
+  // 목차 이동용 id
+  id?: string;
 }
 
-const { title, items, marker = 'check', protect } = Astro.props;
+const { title, items, marker = 'check', protect, id } = Astro.props;
 ---
 
-<section class:list={['checklist', `checklist--${marker}`]} data-ad-protected={protect}>
+<section id={id} class:list={['checklist', `checklist--${marker}`]} data-ad-protected={protect}>
   <h2>{title}</h2>
   <ul>{items.map((item) => <li>{item}</li>)}</ul>
   <slot />

@@ -1,9 +1,11 @@
 ---
 // 글 상세 화면(cost·compare·guide·change·benefit 공통 틀). 블록 순서는 유형별로 고정이고, 내용이 있는 블록만 나온다.
-// - benefit: 상태 → 한눈에 보기 → 공식 신청·안내 링크 → 내가 해당되는지 → 준비할 것 → 꼭 알아둘 것 → (목차·본문) → FAQ
-// - 그 밖의 글: 결론 → (도구·한눈에 보기·적용 시점·가격표·비교표·guide 준비할 것) → (목차·본문) → 준비할 것 → 꼭 알아둘 것 → 공식 링크 → FAQ
+// - benefit: 상태 → 한눈에 보기 → 공식 신청·안내 링크 → 내가 해당되는지 → (본문) → 준비할 것 → 꼭 알아둘 것 → FAQ
+// - 그 밖의 글: 결론 → (도구·한눈에 보기·적용 시점·가격표·비교표·guide 준비할 것) → (본문) → 준비할 것 → 꼭 알아둘 것 → 공식 링크 → FAQ
 //   단 guide는 공식 링크를 본문 앞(정리 블록 바로 뒤)에 둔다
-// 공통 끝부분: 다음에 볼 정보(최대 3개, 없으면 숨김) → 출처 → 업데이트 기록. 목차는 본문 H2가 3개 이상일 때만.
+// 공통 끝부분: 다음에 볼 정보(최대 3개, 없으면 숨김) → 출처·업데이트 기록(한 칸).
+// 화면 규칙: 글 안의 모든 블록은 같은 폭(왼쪽·오른쪽 끝 정렬), 구역마다 같은 크기 제목 + 위 구분선.
+// 목차는 제목이 있는 모든 구역(블록 + 본문 H2 + FAQ + 출처)을 화면 순서대로 담고, 3개 이상일 때만 보인다.
 import BaseLayout from './BaseLayout.astro';
 import ActionLinks from '../components/ActionLinks.astro';
 import AdSlot from '../components/AdSlot.astro';
@@ -47,10 +49,8 @@ const category = categories.find((c) => c.slug === item.category)!;
 const nameOf = (id: string) => people.find((p) => p.id === id)!.name;
 const isoDate = (d: Date) => d.toISOString().slice(0, 10);
 
-// 목차: 본문 H2가 3개 이상일 때만(짧은 글은 블록 순서만으로 충분하다)
+// 본문 H2 수(광고 자리 계산에 쓴다)
 const sections = headings.filter((h) => h.depth === 2).length;
-const toc: TocProps['headings'] =
-  sections >= 3 ? (data.faq?.length ? [...headings, { id: 'faq', text: '자주 묻는 질문', depth: 2 }] : headings) : [];
 const history = [...(data.changelog ?? [])].sort((a, b) => +b.date - +a.date);
 
 // 지원·혜택: 한눈에 보기 4항목 + 보조 정보(스키마에 있는 값만)
@@ -84,6 +84,31 @@ const checklist = article?.checklist;
 // 사이트 도구(cost 글만): 결론 바로 아래. 도구가 없는 글에는 script가 하나도 붙지 않는다
 const Tool = article?.tool ? toolComponents[article.tool] : undefined;
 
+// 목차: 화면에 나오는 순서 그대로(제목이 있는 구역만)
+const sec = (id: string, text: string, show: unknown) => (show ? [{ id, text, depth: 2 as const }] : []);
+const hasDocs = (program?.application.documents?.length ?? 0) > 0;
+const tocAll: TocProps['headings'] = program
+  ? [
+      ...sec('apply', '공식 신청·안내', true),
+      ...sec('eligibility', '내가 해당되는지', true),
+      ...headings,
+      ...sec('documents', '준비할 것', hasDocs),
+      ...sec('notes', '꼭 알아둘 것', data.notes),
+      ...sec('faq', '자주 묻는 질문', data.faq?.length),
+      ...sec('sources', '출처·업데이트', true),
+    ]
+  : [
+      ...sec('checklist', checklist?.title ?? '준비할 것', isGuide && checklist),
+      ...sec('apply', '공식 사이트에서 확인', isGuide && data.actionLinks),
+      ...headings,
+      ...sec('checklist', checklist?.title ?? '준비할 것', !isGuide && checklist),
+      ...sec('notes', '꼭 알아둘 것', data.notes),
+      ...sec('apply', '공식 사이트에서 확인', !isGuide && data.actionLinks),
+      ...sec('faq', '자주 묻는 질문', data.faq?.length),
+      ...sec('sources', '출처·업데이트', true),
+    ];
+const toc = tocAll.filter((h) => h.depth === 2).length >= 3 ? tocAll : [];
+
 // 광고 슬롯(03 4~6장). 광고가 꺼져 있으면 contentAdSlots가 빈 집합이라 아래 자리는 모두 출력되지 않는다.
 // [후속] 분량 판단이 본문 H2 수 기준이라 블록 중심 글에서는 실제 길이와 어긋날 수 있다(docs/05 후속 항목).
 const adSlots = contentAdSlots(item, sections);
@@ -98,6 +123,7 @@ const bodyCuts = isArticle
 const bodyParts = bodyHtml ? splitBody(bodyHtml, bodyCuts) : [];
 // 본문 바로 뒤 자리(article-lower / benefit-mid): 다음 블록이 광고 금지 영역(공식 링크·관련 글)이면 생략한다
 const afterBodyAd: AdSlotId = isArticle ? 'article-lower' : 'benefit-mid';
+// benefit은 본문 뒤 준비할 것·꼭 알아둘 것(제외·주의 조건)까지 지난 다음 자리(01 F-2 ⑫ 뒤)
 const nextIsSafe = isArticle
   ? !!(checklist && !isGuide) || !!data.notes || ((isGuide || !data.actionLinks) && (!!data.faq?.length || related.length === 0))
   : !!data.faq?.length || related.length === 0;
@@ -111,7 +137,7 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
       <header class:list={['article__head', { 'article__head--thumb': data.thumbnail }]}>
         <div class="article__titles">
           <p class="article__category">
-            <a href={categoryHref(category)}>{category.name}</a> · {subcategoryName(category, data.subcategory)}{audienceNames.length > 0 && ` · ${audienceNames.join('·')}`}
+            <a href={categoryHref(category)}>{category.name}</a> · {subcategoryName(category, data.subcategory)}
           </p>
           <h1>{data.title}</h1>
           <p class="article__meta">
@@ -129,28 +155,27 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
           <>
             <StatusBanner program={program} />
             <FactList title="한눈에 보기" items={quickFacts!} variant="quick" notes={quickNotes} />
-            <ActionLinks title="공식 신청·안내" links={data.actionLinks!} status={status} methods={program.application.methods} />
-            <Checklist title="내가 해당되는지" items={program.eligibility.map((e) => e.text)} protect="eligibility">
+            <Toc headings={toc} variant="inline" />
+            <ActionLinks id="apply" title="공식 신청·안내" links={data.actionLinks!} status={status} methods={program.application.methods} />
+            <Checklist id="eligibility" title="내가 해당되는지" items={program.eligibility.map((e) => e.text)} protect="eligibility">
               {(program.exclusions?.length ?? 0) > 0 && <p class="article__exclusions">이런 경우는 제외: {program.exclusions!.map((e) => e.text).join(' / ')}</p>}
             </Checklist>
-            {(program.application.documents?.length ?? 0) > 0 && <Checklist title="준비할 것" items={program.application.documents!} />}
-            {data.notes && <Checklist title="꼭 알아둘 것" items={data.notes} marker="note" />}
           </>
         ) : (
           <>
             <SummaryBox summary={data.summary} />
+            <Toc headings={toc} variant="inline" />
             {Tool && <Tool />}
             {article?.quickFacts && <FactList title={article.quickFacts.title} items={article.quickFacts.items} variant="quick" />}
             {changeFacts && <FactList title="적용 시점" items={changeFacts} />}
             {priceItems && priceItems.length > 0 && <PriceTable caption="항목별 가격 범위" items={priceItems} researchedAt={data.researchedAt} />}
             {article?.compare && <CompareTable caption={article.compare.caption} options={article.compare.options} rows={article.compare.rows} />}
-            {isGuide && checklist && <Checklist title={checklist.title ?? '준비할 것'} items={checklist.items} />}
-            {isGuide && data.actionLinks && <ActionLinks title="공식 사이트에서 확인" links={data.actionLinks} />}
+            {isGuide && checklist && <Checklist id="checklist" title={checklist.title ?? '준비할 것'} items={checklist.items} />}
+            {isGuide && data.actionLinks && <ActionLinks id="apply" title="공식 사이트에서 확인" links={data.actionLinks} />}
           </>
         )
       }
 
-      <Toc headings={toc} variant="inline" />
       {
         bodyParts.map((part) => (
           <>
@@ -159,14 +184,20 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
           </>
         ))
       }
-      {showAfterBodyAd && <AdSlot id={afterBodyAd} />}
+      {isArticle && showAfterBodyAd && <AdSlot id={afterBodyAd} />}
 
       {
-        isArticle && (
+        isArticle ? (
           <>
-            {checklist && !isGuide && <Checklist title={checklist.title ?? '준비할 것'} items={checklist.items} />}
-            {data.notes && <Checklist title="꼭 알아둘 것" items={data.notes} marker="note" />}
-            {!isGuide && data.actionLinks && <ActionLinks title="공식 사이트에서 확인" links={data.actionLinks} />}
+            {checklist && !isGuide && <Checklist id="checklist" title={checklist.title ?? '준비할 것'} items={checklist.items} />}
+            {data.notes && <Checklist id="notes" title="꼭 알아둘 것" items={data.notes} marker="note" />}
+            {!isGuide && data.actionLinks && <ActionLinks id="apply" title="공식 사이트에서 확인" links={data.actionLinks} />}
+          </>
+        ) : (
+          <>
+            {hasDocs && <Checklist id="documents" title="준비할 것" items={program!.application.documents!} />}
+            {data.notes && <Checklist id="notes" title="꼭 알아둘 것" items={data.notes} marker="note" />}
+            {showAfterBodyAd && <AdSlot id={afterBodyAd} />}
           </>
         )
       }
@@ -174,7 +205,7 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
       {
         data.faq && data.faq.length > 0 && (
           <section id="faq" class="faq">
-            <SectionTitle title="자주 묻는 질문" />
+            <SectionTitle title="자주 묻는 질문" tier="article" />
             {data.faq.map((f) => (
               <div class="faq__item">
                 <h3>{f.question}</h3>
@@ -188,16 +219,17 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
       {
         related.length > 0 && (
           <section data-ad-protected="related">
-            <SectionTitle title="다음에 볼 정보" />
-            <div class="post-grid">
+            <SectionTitle title="다음에 볼 정보" tier="article" />
+            <div class="card-list">
               {related.map((r) => (
-                <ContentCard item={r} variant="stack" />
+                <ContentCard item={r} variant="row" />
               ))}
             </div>
           </section>
         )
       }
 
+      <footer id="sources" class="article__end">
       <SourceList sources={citedSources(data)} />
 
       <section class="history">
@@ -213,6 +245,7 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
           <li><time datetime={isoDate(data.datePublished)}>{formatDate(data.datePublished)}</time> 최초 작성</li>
         </ol>
       </section>
+      </footer>
     </article>
 
     {
@@ -229,13 +262,79 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
   </div>
 </BaseLayout>
 
+<style is:global>
+  /* ── 글 화면 구역 체계(블록·본문 공통) ─────────────────────────────
+     모든 요소가 같은 폭(왼쪽·오른쪽 끝 정렬)이고, 제목이 있는 구역은 같은 크기 제목 + 위 구분선 + 같은 여백.
+     컴포넌트의 기본 제목 크기보다 우선하도록 .article 아래에서만 덮어쓴다. */
+  .article > section:not(.fact-list--quick, .summary-box) {
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .article > section > h2,
+  .article .prose h2 {
+    font-size: var(--text-xl);
+    font-weight: var(--weight-bold);
+    letter-spacing: -0.01em;
+    line-height: var(--leading-tight);
+  }
+
+  .article .prose {
+    max-width: none;
+  }
+
+  .article .prose h2 {
+    margin-top: var(--space-7);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .article .prose > h2:first-child {
+    margin-top: 0;
+  }
+
+  /* 본문 표: 칸 안 글자는 줄바꿈(가로 스크롤은 정말 넓을 때만), 머리 칸은 한 줄 */
+  .article .prose table {
+    white-space: normal;
+  }
+
+  /* 한국어는 단어(어절) 단위로만 줄바꿈: 금액·날짜 숫자가 중간에 끊기지 않게 */
+  .article .prose :is(td, th) {
+    word-break: keep-all;
+    overflow-wrap: normal;
+  }
+
+  .article .prose th {
+    white-space: nowrap;
+  }
+
+  /* 목차로 이동했을 때 고정 헤더에 제목이 가리지 않게 */
+  .article [id] {
+    scroll-margin-top: calc(var(--header-h) + var(--space-4));
+  }
+
+  /* 글 끝: 출처·업데이트 기록을 옅은 칸 하나로 */
+  .article > .article__end {
+    display: grid;
+    gap: var(--space-5);
+    padding: var(--space-5);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+  }
+
+  .article__end .section-title {
+    margin-bottom: var(--space-3);
+  }
+</style>
+
 <style>
   .article {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     align-content: start;
-    gap: var(--space-5);
+    gap: var(--space-6);
     min-width: 0;
+    max-width: 47.5rem;
   }
 
   /* 글 머리: 분류 · 제목 · 작성 정보. 대표 이미지는 모바일에서 아래, 태블릿 이상에서 오른쪽 작은 칸 */
