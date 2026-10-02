@@ -74,6 +74,8 @@ const cases = [
   ['production', 'og:image 크기 틀림', edit('business/index.html', 'images/og/default.png', 'icon-512.png'), 'og:image가 1200x630 PNG가 아님 /icon-512.png'],
   ['production', 'twitter large 카드 아님', edit('business/index.html', 'content="summary_large_image"', 'content="summary"'), 'twitter:card ≠ summary_large_image'],
   ['production', 'Article.image ≠ og:image', edit(TOOL, '"image":["https://creatorjungbok.co.kr/images/og/electricity-bill-calculator.png"]', '"image":["https://creatorjungbok.co.kr/images/og/default.png"]'), 'Article.image ≠ og:image'],
+  ['production', '물결표가 만든 취소선', edit('benefits/energy-voucher/index.html', '</main>', '<p>6월 27일<del>30일, 10월 1일</del>2일</p></main>'), '의도하지 않은 취소선: "30일, 10월 1일"'],
+  ['production', '취소선 s 태그', edit('digital/telecom-refund/index.html', '</main>', '<p><s>x</s></p></main>'), '의도하지 않은 취소선: "x"'],
   ['production', '없는 이미지 파일', edit('index.html', '</main>', '<img src="/images/thumbnails/nope.svg" alt="" width="640" height="360"></main>'), '없는 이미지 /images/thumbnails/nope.svg'],
   ['production', 'width·height 없는 이미지', edit('index.html', '</main>', '<img src="/favicon.ico" alt=""></main>'), 'width·height 없는 이미지 /favicon.ico'],
   ['production', '원격 이미지', edit('index.html', '</main>', '<img src="https://example.com/a.png" alt="" width="1" height="1"></main>'), '원격·상대 경로 이미지 https://example.com/a.png'],

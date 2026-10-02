@@ -237,6 +237,10 @@ for (const file of htmlFiles) {
   const hasTool = /\sdata-tool="/.test(html);
   if (siteScripts > 0 && !SCRIPT_PAGES.has(path) && !hasTool) fail(`허용되지 않은 페이지 script ${siteScripts}건`);
 
+  // 취소선 금지: 본문에 물결표(~)가 한 문단에 둘 이상 있으면 Markdown이 그 사이를 취소선(<del>)으로 바꾼다
+  // (예: '6월 27일~30일, 10월 1일~2일'). 사이트는 취소선을 쓰지 않으므로 나오면 실패
+  for (const [tag, text] of html.matchAll(/<(?:del|s)\b[^>]*>([\s\S]*?)<\/(?:del|s)>/g)) fail(`의도하지 않은 취소선: "${text.replace(/<[^>]+>/g, '').slice(0, 40)}" (본문 물결표 ~ 를 '부터'로 바꾸거나 한 문단에 하나만)`);
+
   // 이미지: 로컬 파일만(원격 이미지 금지), 결과물에 실제로 있고, 레이아웃 이동(CLS)을 막는 width·height가 있어야 한다
   for (const [tag] of html.matchAll(/<img\b[^>]*>/g)) {
     const src = tag.match(/\ssrc="([^"]*)"/)?.[1] ?? '';
