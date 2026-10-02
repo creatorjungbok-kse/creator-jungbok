@@ -5,6 +5,7 @@
 import AdSlot from './AdSlot.astro';
 import BlogSidebar from './BlogSidebar.astro';
 import ContentCard from './ContentCard.astro';
+import Icon from './Icon.astro';
 import MiniList from './MiniList.astro';
 import SectionTitle from './SectionTitle.astro';
 import { site } from '../config/site';
@@ -28,7 +29,11 @@ const [lead, ...side] = featured;
   <div class="page-main">
     <section class="hero">
       <h1>{site.tagline}</h1>
-      <p>공식 자료를 먼저 확인하고, 확인한 날짜를 함께 적습니다.</p>
+      <ul class="trust" aria-label="꿀팁정복 정보 원칙">
+        <li><Icon name="check" size={18} /> 공식 출처만 사용</li>
+        <li><Icon name="check" size={18} /> 확인 날짜 표시</li>
+        <li><Icon name="check" size={18} /> 변경 내역 공개</li>
+      </ul>
       <form class="search-form" action="/search/" method="get" role="search">
         <label class="visually-hidden" for="home-q">검색어</label>
         <input id="home-q" name="q" type="search" placeholder="예: 전기요금 계산기, 사업자등록증" />
@@ -119,6 +124,25 @@ const [lead, ...side] = featured;
   .hero h1 {
     font-size: var(--text-xl);
     letter-spacing: -0.02em;
+  }
+
+  /* 신뢰 표시 3개: 실제로 지키는 원칙만(출처 필수는 빌드 검증, 확인일·업데이트 기록은 모든 글에 표시) */
+  .trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+  }
+
+  .trust li {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .trust :global(.icon) {
+    color: var(--color-status-open);
   }
 
   .hero p {

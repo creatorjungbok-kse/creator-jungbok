@@ -1,0 +1,36 @@
+---
+// 사이트 공통 선 아이콘(A안: 24px 격자, 2px 선, 둥근 끝 — 헤더 검색·메뉴 아이콘과 같은 스타일).
+// 꿀팁정복 전용으로 그린 아이콘이다(외부 아이콘 세트 아님). 색은 글자색(currentColor)을 따른다. 장식용이라 aria-hidden.
+export interface Props {
+  name: 'check' | 'thumb-up' | 'thumb-down';
+  size?: number;
+  class?: string;
+}
+
+const { name, size = 20, class: className } = Astro.props;
+const thumb = 'M7 10v10H4V10zM7 10l4-7c1.4 0 2.4 1.2 2.1 2.6L12.5 9H18a2 2 0 0 1 2 2.3l-1.2 7A2 2 0 0 1 16.8 20H7';
+---
+
+<svg
+  class:list={['icon', className]}
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+>
+  {name === 'check' && (<><circle cx="12" cy="12" r="9" /><path d="m8 12.5 2.6 2.6L16 9.5" /></>)}
+  {name === 'thumb-up' && <path d={thumb} />}
+  {name === 'thumb-down' && <path d={thumb} transform="rotate(180 12 12)" />}
+</svg>
+
+<style>
+  .icon {
+    flex-shrink: 0;
+  }
+</style>

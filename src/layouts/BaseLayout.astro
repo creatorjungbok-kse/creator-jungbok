@@ -84,6 +84,21 @@ const canonicalUrl = canonical ? absoluteUrl(Astro.url.pathname) : undefined;
             document.addEventListener('click', (e) => {
               if (e.target instanceof Element && e.target.closest('[data-official-cta]')) window.gtag('event', 'official_cta_click');
             });
+            // 글 끝 평가(ArticleFeedback): GA4가 있을 때만 보이고, 한 번만 누를 수 있다. 이벤트 이름만 보낸다(숫자를 화면에 보여주지 않음)
+            document.addEventListener('DOMContentLoaded', () => {
+              const box = document.querySelector('[data-feedback]');
+              if (!box) return;
+              box.hidden = false;
+              const buttons = box.querySelectorAll('[data-feedback-value]');
+              buttons.forEach((btn) =>
+                btn.addEventListener('click', () => {
+                  window.gtag('event', btn.dataset.feedbackValue === 'helpful' ? 'feedback_helpful' : 'feedback_not_helpful');
+                  buttons.forEach((b) => (b.disabled = true));
+                  btn.setAttribute('aria-pressed', 'true');
+                  box.querySelector('[data-feedback-thanks]').textContent = '의견 감사합니다';
+                }),
+              );
+            });
           </script>
           <script async src={`https://www.googletagmanager.com/gtag/js?id=${site.ga4Id}`} />
         </>

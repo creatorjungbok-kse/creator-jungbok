@@ -8,6 +8,7 @@
 // 목차는 제목이 있는 모든 구역(블록 + 본문 H2 + FAQ + 출처)을 화면 순서대로 담고, 3개 이상일 때만 보인다.
 import BaseLayout from './BaseLayout.astro';
 import ActionLinks from '../components/ActionLinks.astro';
+import ArticleFeedback from '../components/ArticleFeedback.astro';
 import AdSlot from '../components/AdSlot.astro';
 import BlogSidebar from '../components/BlogSidebar.astro';
 import ContentCard from '../components/ContentCard.astro';
@@ -216,6 +217,8 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
         )
       }
 
+      <ArticleFeedback />
+
       {
         related.length > 0 && (
           <section data-ad-protected="related">
@@ -266,7 +269,7 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
   /* ── 글 화면 구역 체계(블록·본문 공통) ─────────────────────────────
      모든 요소가 같은 폭(왼쪽·오른쪽 끝 정렬)이고, 제목이 있는 구역은 같은 크기 제목 + 위 구분선 + 같은 여백.
      컴포넌트의 기본 제목 크기보다 우선하도록 .article 아래에서만 덮어쓴다. */
-  .article > section:not(.fact-list--quick, .summary-box) {
+  .article > section:not(.fact-list--quick, .summary-box, .feedback) {
     padding-top: var(--space-6);
     border-top: 1px solid var(--color-border);
   }

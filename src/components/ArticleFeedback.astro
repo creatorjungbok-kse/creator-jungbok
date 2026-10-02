@@ -1,0 +1,87 @@
+---
+// 글 끝 "이 글이 도움이 되었나요?" 평가. 화면에 숫자를 보여주지 않고, 누른 결과는 GA4 이벤트 이름만 남긴다
+// (feedback_helpful / feedback_not_helpful, 페이지 주소 외의 값 없음). 동작 script는 production GA4 script 안에 있다(BaseLayout).
+// 그래서 GA4가 없는 환경(preview·JS 꺼짐)에서는 hidden 그대로라 누를 수 없는 버튼이 보이지 않는다.
+import Icon from './Icon.astro';
+---
+
+<section class="feedback" data-feedback hidden aria-labelledby="feedback-title">
+  <p id="feedback-title" class="feedback__q">이 글이 도움이 되었나요?</p>
+  <div class="feedback__buttons">
+    <button type="button" class="feedback__btn" data-feedback-value="helpful" aria-pressed="false">
+      <Icon name="thumb-up" size={18} /> 도움됐어요
+    </button>
+    <button type="button" class="feedback__btn" data-feedback-value="not_helpful" aria-pressed="false">
+      <Icon name="thumb-down" size={18} /> 아쉬워요
+    </button>
+  </div>
+  <p class="feedback__thanks" role="status" data-feedback-thanks></p>
+</section>
+
+<style>
+  .feedback {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3) var(--space-4);
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+  }
+
+  .feedback[hidden] {
+    display: none;
+  }
+
+  .feedback__q {
+    font-weight: var(--weight-semibold);
+  }
+
+  .feedback__buttons {
+    display: flex;
+    gap: var(--space-2);
+  }
+
+  .feedback__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--touch);
+    padding-inline: var(--space-4);
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-pill);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font: inherit;
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    cursor: pointer;
+  }
+
+  .feedback__btn:hover:not(:disabled) {
+    background: var(--color-surface-strong);
+  }
+
+  .feedback__btn[aria-pressed='true'] {
+    border-color: var(--color-brand);
+    background: var(--color-brand-soft);
+  }
+
+  .feedback__btn:disabled {
+    cursor: default;
+  }
+
+  .feedback__btn:disabled:not([aria-pressed='true']) {
+    opacity: 0.5;
+  }
+
+  .feedback__thanks {
+    color: var(--color-status-open);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+  }
+
+  .feedback__thanks:empty {
+    display: none;
+  }
+</style>
