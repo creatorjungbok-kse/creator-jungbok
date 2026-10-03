@@ -207,10 +207,8 @@ const { quick, benefits, tools, picks, sections, isEmpty } = Astro.props;
 
   /* 바로가기: 실제 글로 가는 작은 칩 */
   .quick {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-2) var(--space-3);
+    display: grid;
+    gap: var(--space-2);
     font-size: var(--text-sm);
   }
 
@@ -219,22 +217,48 @@ const { quick, benefits, tools, picks, sections, isEmpty } = Astro.props;
     font-weight: var(--weight-semibold);
   }
 
+  /* 바로가기 칩: 항상 한 줄. 모바일·태블릿은 옆으로 밀어서 보고(한 화면에 3개 안팎), 데스크톱은 5칸에 모두 보인다 */
   .quick ul {
     display: flex;
-    flex-wrap: wrap;
     gap: var(--space-2);
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .quick ul::-webkit-scrollbar {
+    display: none;
+  }
+
+  .quick li {
+    flex: 0 0 auto;
   }
 
   .quick a {
-    display: inline-flex;
+    display: flex;
     align-items: center;
+    justify-content: center;
+    text-align: center;
     min-height: 2.25rem;
-    padding: 0 var(--space-3);
+    padding: 0 var(--space-2);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: var(--text-xs);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-pill);
     background: var(--color-bg);
     color: var(--color-text);
     text-decoration: none;
+  }
+
+  /* 아주 좁은 화면(360px 미만)에서도 긴 이름이 잘리지 않게 여백만 줄인다 */
+  @media (max-width: 359.98px) {
+    .quick a {
+      padding: 0 var(--space-1);
+      letter-spacing: -0.02em;
+    }
   }
 
   .quick a:hover {
@@ -467,6 +491,10 @@ const { quick, benefits, tools, picks, sections, isEmpty } = Astro.props;
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
+    .quick a {
+      font-size: var(--text-sm);
+    }
+
     .cat__desc {
       display: -webkit-box;
       overflow: hidden;
@@ -486,19 +514,30 @@ const { quick, benefits, tools, picks, sections, isEmpty } = Astro.props;
 
   @media (min-width: 1024px) {
     .hero__inner {
-      max-width: 48rem;
+      max-width: 60rem;
       margin-inline: auto;
       text-align: center;
       justify-items: center;
+    }
+
+    .hero__inner > :is(h1, .hero__lead, .search-form) {
+      width: 100%;
+      max-width: 48rem;
+    }
+
+    .quick ul {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      overflow: visible;
     }
 
     .hero .search-form {
       width: 100%;
     }
 
-    .quick,
-    .quick ul {
-      justify-content: center;
+    .quick {
+      width: 100%;
+      justify-items: center;
     }
 
     .by-cat {

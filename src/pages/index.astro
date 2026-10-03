@@ -32,9 +32,9 @@ const sections = (await activeCategories()).map((c) => {
   return { category: c, href: categoryHref(c), count: items.length, items: items.slice(0, 3) };
 });
 
-// 검색창 아래 바로가기: 실제 글 URL로 연결(04 12·20장). 신청 가능한 지원 → 도구 → 최근 글 순, 최대 6개
+// 검색창 아래 바로가기: 실제 글 URL로 연결(04 12·20장). 신청 가능한 지원 → 도구 → 최근 글 순, 최대 5개(데스크톱 한 줄 5개, 모바일 한 줄 3개)
 const quick = [...new Set([...benefits, ...tools.map((t) => t.item), ...latestPublished(listed)])]
-  .slice(0, 6)
+  .slice(0, 5)
   .map((i) => ({ href: i.url, label: shortTitle(i) }));
 ---
 
