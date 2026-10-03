@@ -1,27 +1,50 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HomeView from '../components/HomeView.astro';
-import { getAllContent } from '../lib/content';
+import { categoryHref } from '../data/categories';
+import { activeCategories, getAllContent, type ContentItem } from '../lib/content';
 import { homeJsonLd } from '../lib/seo';
-import { featured, latestPublished, openBenefits, statusOf, timely } from '../lib/select';
+import { latestPublished, openBenefits, statusOf } from '../lib/select';
+import { toolIds, toolNames } from '../tools/registry';
 
-// 섹션별 개수(01 D). 선택 규칙은 lib/select.ts
+// 홈 섹션 구성(01 D). 선택 규칙은 lib/select.ts. 한 글이 홈에서 여러 번 반복되지 않게 위 섹션에 나온 글은 아래에서 뺀다.
 // 홈에는 신청 종료된 지원을 올리지 않는다(종료 지원은 /benefits/의 종료 목록에서 찾는다).
 const all = await getAllContent();
 const listed = all.filter((i) => statusOf(i) !== 'closed');
-const top = featured(listed, all).slice(0, 3);
-// 최근 글은 대표 글과 겹치지 않게 고른다. 글이 적어 3개가 안 되면 대표 글도 포함한 최신 순으로 보여 준다
-const latest = latestPublished(listed);
-const rest = latest.filter((i) => !top.includes(i));
-const recent = (rest.length >= 3 ? rest : latest).slice(0, 8);
+
+// 글 제목의 앞부분(｜ 앞)을 짧은 이름으로 쓴다
+const shortTitle = (i: ContentItem) => i.entry.data.title.split(/\s*[｜|]\s*/)[0];
+
+const benefits = openBenefits(listed).slice(0, 4);
+
+const tools = toolIds.flatMap((id) => {
+  const item = listed.find((i) => i.kind === 'article' && i.entry.data.tool === id);
+  return item ? [{ item, name: toolNames[id] }] : [];
+});
+
+// 새로 올라온 글: 최근 게시 순. 위에서 보여 준 지원·도구 글은 빼고 3개
+const shown = new Set([...benefits, ...tools.map((t) => t.item)]);
+const picks = latestPublished(listed).filter((i) => !shown.has(i)).slice(0, 3);
+
+// 대분류별 최신 글(최대 3개)
+const sections = (await activeCategories()).map((c) => {
+  const items = latestPublished(listed.filter((i) => i.category === c.slug));
+  return { category: c, href: categoryHref(c), count: items.length, items: items.slice(0, 3) };
+});
+
+// 검색창 아래 바로가기: 실제 글 URL로 연결(04 12·20장). 신청 가능한 지원 → 도구 → 최근 글 순, 최대 6개
+const quick = [...new Set([...benefits, ...tools.map((t) => t.item), ...latestPublished(listed)])]
+  .slice(0, 6)
+  .map((i) => ({ href: i.url, label: shortTitle(i) }));
 ---
 
 <BaseLayout jsonLd={homeJsonLd()}>
   <HomeView
-    featured={top}
-    benefits={openBenefits(listed).slice(0, 4)}
-    timely={timely(listed).slice(0, 5)}
-    recent={recent}
+    quick={quick}
+    benefits={benefits}
+    tools={tools.map((t) => ({ href: t.item.url, name: t.name, summary: t.item.entry.data.description ?? t.item.entry.data.summary }))}
+    picks={picks}
+    sections={sections}
     isEmpty={all.length === 0}
   />
 </BaseLayout>
