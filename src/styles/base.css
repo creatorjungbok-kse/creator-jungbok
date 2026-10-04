@@ -316,3 +316,68 @@ thead th {
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
+/* 모바일 카드형 표(본문 Markdown 표를 <div class="table-cards">로 감쌀 때만).
+   데스크톱은 그대로 표, 좁은 화면에서는 행 하나를 카드 하나로 보여 주고 칸 앞에 열 이름(data-label)을 붙인다. */
+@media (max-width: 599px) {
+  .table-cards .table-scroll {
+    overflow: visible;
+    border: 0;
+    background: none;
+  }
+
+  .table-cards table,
+  .table-cards tbody,
+  .table-cards tr,
+  .table-cards td {
+    display: block;
+    width: 100%;
+    white-space: normal;
+  }
+
+  .table-cards thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .table-cards tr {
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+  }
+
+  .table-cards tr + tr {
+    margin-top: var(--space-3);
+  }
+
+  .table-cards td {
+    display: grid;
+    grid-template-columns: 6.5rem minmax(0, 1fr);
+    gap: var(--space-3);
+    padding: var(--space-1) 0;
+    border: 0;
+  }
+
+  .table-cards td::before {
+    content: attr(data-label);
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+  }
+
+  /* 첫 칸은 카드 제목 */
+  .table-cards td:first-child {
+    display: block;
+    padding-bottom: var(--space-2);
+    margin-bottom: var(--space-1);
+    border-bottom: 1px solid var(--color-border);
+    font-weight: var(--weight-semibold);
+  }
+
+  .table-cards td:first-child::before {
+    content: none;
+  }
+}

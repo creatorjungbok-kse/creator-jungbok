@@ -7,6 +7,15 @@ const tableScroll = {
   element: {
     filter: ['table'],
     visit(node, ctx) {
+      // 각 칸에 열 제목(data-label)을 달아 둔다. 모바일 카드형 표(.table-cards, base.css)에서 칸 앞에 열 이름으로 보여 준다.
+      const kids = (n, tag) => (n.children ?? []).filter((c) => c.type === 'element' && c.tagName === tag);
+      const [thead] = kids(node, 'thead');
+      const labels = thead ? kids(kids(thead, 'tr')[0] ?? {}, 'th').map((th) => ctx.textContent(th).trim()) : [];
+      for (const tbody of kids(node, 'tbody')) {
+        for (const tr of kids(tbody, 'tr')) {
+          kids(tr, 'td').forEach((td, i) => labels[i] && ctx.setProperty(td, 'dataLabel', labels[i]));
+        }
+      }
       ctx.wrapNode(node, { raw: '<div class="table-scroll" tabindex="0" role="region" aria-label="표"></div>' });
     },
   },

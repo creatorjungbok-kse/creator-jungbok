@@ -11,7 +11,7 @@ synonyms:
   - 온라인 전입신고
   - 전입신고 과태료
   - 전입신고 세대주 확인
-summary: 이사하면 새 주소로 옮긴 날부터 14일 이내에 전입신고를 해야 합니다. 정부24에서 온라인으로 하거나 새 주소지 읍·면·동 주민센터에 방문해서 할 수 있고 수수료는 없습니다. 정당한 사유 없이 기한을 넘기면 5만원 이하의 과태료가 부과될 수 있습니다. 세입자는 전입신고를 해야 대항력이 생기므로 이사한 날 바로 하는 것이 좋습니다.
+summary: 이사하면 새 주소로 옮긴 날부터 14일 이내에 전입신고를 해야 합니다. 세입자는 전입신고를 해야 대항력이 생기므로 이사한 날 바로 하는 것이 좋습니다.
 thumbnail: /images/thumbnails/move-in-report.svg
 ogImage: /images/og/move-in-report.png
 datePublished: 2026-10-03
@@ -59,16 +59,10 @@ actionLinks:
     url: https://www.easylaw.go.kr/CSP/CnpClsMain.laf?csmSeq=666&ccfNo=4&cciNo=1&cnpClsNo=1
     sourceId: local:easylaw-move-in
 faq:
-  - question: 전입신고는 언제까지 해야 하나요?
-    answer: 주민등록법에 따라 새 거주지로 옮긴 날부터 14일 이내에 새 거주지의 시장·군수·구청장에게 신고해야 합니다. 실제로는 새 주소지 읍·면·동 주민센터나 정부24에서 신고합니다.
   - question: 전입신고를 늦게 하면 과태료가 얼마인가요?
     answer: 정당한 사유 없이 기간 안에 신고하지 않으면 5만원 이하의 과태료가 부과될 수 있습니다. 실제 금액은 늦어진 기간 등에 따라 시·군·구에서 정합니다.
   - question: 가족이 대신 전입신고를 할 수 있나요?
     answer: 주민센터 방문 신고는 대리인도 할 수 있지만, 정부24 온라인 신고는 대리인 신청이 안 됩니다. 대리인은 신분증 등 주민센터가 안내하는 서류를 챙겨 방문하세요.
-  - question: 온라인 전입신고에서 세대주 확인은 언제 필요한가요?
-    answer: 정부24는 세대주가 아닌 세대원이 새 세대를 꾸리며 신청하는 경우, 다른 세대로 들어가는(세대편입) 경우, 두 세대를 합치는(세대합가) 경우 등에 전입지나 전출지 세대주의 확인이 필요하다고 안내합니다. 혼자 이사해 본인이 세대주가 되면 보통 필요하지 않습니다.
-  - question: 전입신고를 하면 확정일자도 자동으로 받나요?
-    answer: 아닙니다. 전입신고만으로는 확정일자가 생기지 않습니다. 확정일자는 주민센터에서 임대차계약서에 따로 받을 수 있습니다. 또 전입신고할 때 임대차계약서를 함께 내면 전월세(임대차) 신고를 한 것으로 보고, 임대차 신고 때 계약서를 낸 경우 확정일자가 부여된 것으로 봅니다.
 related: [/living/rent-contract-report/]
 sourceIds: [local:gov24-move-in, local:gov24-move-in-faq-time, local:gov24-move-in-faq-head, local:law-resident-registration, local:law-housing-lease]
 localSources:

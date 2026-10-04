@@ -30,7 +30,6 @@ import { categories, categoryHref, subcategoryName } from '../data/categories';
 import { people } from '../data/people';
 import type { ContentItem } from '../lib/content';
 import { contentAdSlots, splitBody, topCut } from '../lib/ads';
-import { statusLabels } from '../lib/benefit-status';
 import { statusOf } from '../lib/select';
 import { applicationPeriod, formatDate } from '../lib/format';
 import { articleJsonLd } from '../lib/seo';
@@ -62,7 +61,7 @@ const quickFacts = program && [
   { label: '대상', value: `${audienceNames.join('·')} · ${program.region}` },
   { label: '금액·혜택', value: program.benefit.text },
   { label: '신청기간', value: applicationPeriod(program.application)! },
-  { label: '현재 상태', value: statusLabels[status!] },
+  // 현재 상태는 바로 위 StatusBanner가 보여 주므로 한눈에 보기에서는 빼고, 신청기간은 남긴다
 ];
 const quickNotes = program && [
   `운영 ${program.operator}`,
@@ -148,7 +147,11 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
             {isArticle && <span>조사 기준일 {formatDate(data.researchedAt)}</span>}
           </p>
         </div>
-        {data.thumbnail && <Thumbnail src={data.thumbnail} label={category.name} tone={category.slug} eager />}
+        {data.thumbnail && (
+          <div class:list={['article__thumb', { 'article__thumb--hide-mobile': !!program || data.contentMode === 'timely' || isGuide }]}>
+            <Thumbnail src={data.thumbnail} label={category.name} tone={category.slug} eager />
+          </div>
+        )}
       </header>
 
       {
@@ -156,8 +159,8 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
           <>
             <StatusBanner program={program} />
             <FactList title="한눈에 보기" items={quickFacts!} variant="quick" notes={quickNotes} />
-            <Toc headings={toc} variant="inline" />
             <ActionLinks id="apply" title="공식 신청·안내" links={data.actionLinks!} status={status} methods={program.application.methods} />
+            <Toc headings={toc} variant="inline" />
             <Checklist id="eligibility" title="내가 해당되는지" items={program.eligibility.map((e) => e.text)} protect="eligibility">
               {(program.exclusions?.length ?? 0) > 0 && <p class="article__exclusions">이런 경우는 제외: {program.exclusions!.map((e) => e.text).join(' / ')}</p>}
             </Checklist>
@@ -165,14 +168,16 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
         ) : (
           <>
             <SummaryBox summary={data.summary} />
-            <Toc headings={toc} variant="inline" />
+            {/* 행동형(guide) 글은 결론 → 한눈에 보기 → 공식 행동 → 목차 → 준비할 것 순으로 핵심 답과 공식 링크를 먼저 둔다 */}
+            {!isGuide && <Toc headings={toc} variant="inline" />}
             {Tool && <Tool />}
             {article?.quickFacts && <FactList title={article.quickFacts.title} items={article.quickFacts.items} variant="quick" />}
             {changeFacts && <FactList title="적용 시점" items={changeFacts} />}
             {priceItems && priceItems.length > 0 && <PriceTable caption="항목별 가격 범위" items={priceItems} researchedAt={data.researchedAt} />}
             {article?.compare && <CompareTable caption={article.compare.caption} options={article.compare.options} rows={article.compare.rows} />}
-            {isGuide && checklist && <Checklist id="checklist" title={checklist.title ?? '준비할 것'} items={checklist.items} />}
             {isGuide && data.actionLinks && <ActionLinks id="apply" title="공식 사이트에서 확인" links={data.actionLinks} />}
+            {isGuide && <Toc headings={toc} variant="inline" />}
+            {isGuide && checklist && <Checklist id="checklist" title={checklist.title ?? '준비할 것'} items={checklist.items} />}
           </>
         )
       }
@@ -367,6 +372,13 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
   .article__head {
     display: grid;
     gap: var(--space-4);
+  }
+
+  /* 지원·혜택·시기형·행동형(guide) 글은 모바일에서 장식용 대표 이미지를 숨겨 핵심 답을 첫 화면으로 올린다(데스크톱은 유지) */
+  @media (max-width: 767px) {
+    .article__thumb--hide-mobile {
+      display: none;
+    }
   }
 
   .article__titles {

@@ -12,7 +12,7 @@ synonyms:
   - 사업장 이전 신고
   - 상호 변경 신고
   - 업종 추가 변경
-summary: 사업자등록 내용 중 상호, 업종, 사업장 주소 등이 바뀌면 지체 없이 세무서에 사업자등록 정정신고를 해야 합니다. 홈택스에서 온라인으로 하거나 가까운 세무서 어디서나 방문 신고할 수 있고(일부 항목은 손택스 모바일도 가능) 수수료는 없습니다. 상호와 통신판매 사이버몰 명칭·도메인 변경은 신고 당일, 사업장 이전 등 나머지는 2일 이내에 정정된 사업자등록증이 다시 발급됩니다.
+summary: 상호·업종·사업장 주소 등이 바뀌면 지체 없이 사업자등록 정정신고를 해야 합니다. 홈택스 또는 가까운 세무서에서 신고할 수 있습니다.
 thumbnail: /images/thumbnails/business-registration-correction.svg
 ogImage: /images/og/business-registration-correction.png
 datePublished: 2026-10-04
@@ -62,12 +62,8 @@ actionLinks:
 faq:
   - question: 사업장 주소가 바뀌면 언제까지 정정신고를 해야 하나요?
     answer: 부가가치세법 시행령은 사업장을 이전하는 경우 '지체 없이' 사업자등록 정정신고서를 내도록 정하고 있습니다. 날짜로 정한 기한은 없으니 이전한 뒤 바로 신고하세요.
-  - question: 정정신고 처리는 얼마나 걸리나요?
-    answer: 상호 변경과 통신판매업자의 사이버몰 명칭·도메인 변경은 신고 당일, 사업장 이전·업종 변경 등 나머지는 신고일부터 2일 이내에 정정된 사업자등록증이 다시 발급됩니다. 정부24는 상호 등 변경을 즉시(근무시간 내 3시간), 그 밖에는 총 2일로 안내합니다.
   - question: 꼭 관할 세무서에 가야 하나요?
     answer: 아닙니다. 관할 세무서뿐 아니라 신고인이 편한 세무서 어디서나 낼 수 있고, 홈택스로 온라인 신고도 할 수 있습니다.
-  - question: 집에서 사업하는데 이사하면 정정신고를 따로 해야 하나요?
-    answer: 사업장과 주소지가 같고, 사업자등록 신청이나 정정신고 때 주소가 바뀌면 사업장 주소도 바뀌는 데 동의했다면 전입신고를 하는 것으로 정정신고를 한 것으로 봅니다. 동의하지 않았다면 따로 정정신고를 하세요.
 related: [/business/business-registration-certificate/, /living/move-in-report/]
 sourceIds: [local:nts-correction, local:law-vat-decree-14, local:law-vat-decree-11]
 localSources:

@@ -13,7 +13,7 @@ synonyms:
   - 사업자등록증명
   - 사업자등록증 PDF
   - 홈택스 사업자등록증
-summary: 이미 사업자등록이 되어 있고 사업자등록증을 다시 출력하려면 홈택스의 사업자등록증 재발급 메뉴를 이용하면 됩니다. 처음 사업자를 등록하는 경우에는 사업자등록 신청을 해야 하고, 제출처에서 사업자등록증명을 요구했다면 별도의 사업자등록증명 발급을 이용해야 합니다.
+summary: 이미 사업자라면 홈택스에서 사업자등록증을 다시 출력하면 되고, 제출처가 사업자등록증명을 요구했다면 별도의 사업자등록증명을 발급받아야 합니다.
 thumbnail: /images/thumbnails/business-registration-certificate.svg
 ogImage: /images/og/business-registration-certificate.png
 datePublished: 2026-10-01
