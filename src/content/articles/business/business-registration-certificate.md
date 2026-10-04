@@ -17,7 +17,7 @@ summary: 이미 사업자등록이 되어 있고 사업자등록증을 다시 �
 thumbnail: /images/thumbnails/business-registration-certificate.svg
 ogImage: /images/og/business-registration-certificate.png
 datePublished: 2026-10-01
-dateModified: 2026-10-01
+dateModified: 2026-10-04
 researchedAt: 2026-10-01
 author: operator
 ymyl: medium
@@ -60,6 +60,10 @@ faq:
     answer: 정부24에도 사업자등록증 재발급 민원 안내 페이지가 있습니다. 온라인 신청은 홈택스로 연결됩니다. 사업자등록증명은 사업내역을 증명하기 위한 별도의 민원입니다.
   - question: 사업자등록증과 사업자등록증명 중 무엇을 제출해야 하나요?
     answer: 제출처가 요구한 서류명을 먼저 확인하세요. 사업자등록증명은 사업내역을 증명하기 위한 별도의 국세 민원입니다.
+related: [/business/business-registration-correction/, /business/business-credit-card/]
+changelog:
+  - date: 2026-10-04
+    summary: 홈택스 메뉴 개편에 맞춰 사업자등록증 재발급 메뉴 경로를 현재 경로로 수정했습니다.
 sourceIds: [local:gov24-reissue, local:gov24-register, local:gov24-certificate, local:hometax-status, local:hometax-register, local:hometax-correction]
 localSources:
   - id: local:gov24-reissue
@@ -102,9 +106,9 @@ localSources:
 
 ## 사업자등록증을 다시 출력하려면
 
-이미 사업자등록이 되어 있다면 홈택스에서 사업자등록증을 다시 출력할 수 있습니다. 국세청 홈택스 공식 안내의 현재 메뉴 경로는 다음과 같습니다.
+이미 사업자등록이 되어 있다면 홈택스에서 사업자등록증을 다시 출력할 수 있습니다. 2026년 10월 4일 확인한 홈택스의 현재 메뉴 경로는 다음과 같습니다.
 
-**국세증명·사업자등록·세금관련 신청/신고 → 즉시발급 증명 → 사업자등록증 재발급**
+**전체메뉴 → 증명·등록·신청·사업장현황 → 민원증명 → 즉시발급 증명 → 사업자등록증 재발급**
 
 정부24에도 사업자등록증 재발급 민원 안내가 있습니다. 인터넷·방문으로 신청할 수 있고 수수료는 없으며, 온라인 신청은 홈택스로 연결됩니다.
 
