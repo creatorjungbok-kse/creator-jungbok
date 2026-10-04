@@ -1,5 +1,6 @@
 ---
 title: 전월세 신고 방법｜대상 금액·30일 기한과 과태료
+cardTitle: 전월세 신고 대상·기한
 description: 전월세 계약 신고 대상 지역과 금액, 30일 기한, 온라인 신고 방법, 전입신고로 한 번에 끝내는 법과 과태료를 정리했습니다.
 subcategory: moving
 contentType: guide

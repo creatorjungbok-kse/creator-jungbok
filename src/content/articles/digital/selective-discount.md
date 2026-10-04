@@ -1,5 +1,6 @@
 ---
 title: 선택약정 25% 요금할인｜대상 확인과 신청 방법
+cardTitle: 선택약정 25% 할인 신청
 description: 휴대폰 선택약정 25% 요금할인을 받을 수 있는 경우, 대상 단말기 확인, 1년·2년 약정 차이와 통신사별 신청 방법을 정리했습니다.
 subcategory: mobile
 contentType: guide

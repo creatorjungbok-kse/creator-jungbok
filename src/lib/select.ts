@@ -1,6 +1,6 @@
 // 홈·대분류·benefits 허브의 목록 선택 규칙(01 D·E, 02 5·13·14장). 같은 입력이면 항상 같은 결과.
 // 인기·검색량 데이터가 없으므로 "많이 찾는" 류의 선택은 하지 않는다(01 D: 근거 없는 인기 표기 금지).
-import { benefitStatus, type BenefitStatus } from './benefit-status';
+import { benefitStatus, startsWithin, STARTING_SOON_DAYS, type BenefitStatus } from './benefit-status';
 import type { ContentItem } from './content';
 
 export const statusOf = (i: ContentItem): BenefitStatus | undefined =>
@@ -62,3 +62,19 @@ export const closedBenefits = (items: ContentItem[]) =>
     items.filter((i) => statusOf(i) === 'closed'),
     (a, b) => time(programOf(b)!.application.end, 0) - time(programOf(a)!.application.end, 0) || byUrl(a, b),
   );
+
+// 홈 '지금 확인할 혜택': 마감 임박 → 7일 안에 시작 → 신청 가능(종료일 빠른 순, 상시는 뒤) → 일시 중단.
+// 7일보다 뒤에 시작하는 지원은 /benefits/의 '곧 시작' 목록에서만 보인다.
+export const urgentBenefits = (items: ContentItem[], now: Date = new Date()) => {
+  const startsSoon = (i: ContentItem) => !!programOf(i) && startsWithin(programOf(i)!, STARTING_SOON_DAYS, now);
+  const rank = (i: ContentItem) => ({ 'closing-soon': 0, upcoming: 1, open: 2, paused: 3 } as Record<string, number>)[statusOf(i)!];
+  return sorted(
+    items.filter((i) => ['closing-soon', 'open', 'paused'].includes(statusOf(i) ?? '') || startsSoon(i)),
+    (a, b) =>
+      rank(a) - rank(b) ||
+      (statusOf(a) === 'upcoming'
+        ? time(programOf(a)!.application.start, FAR) - time(programOf(b)!.application.start, FAR)
+        : time(programOf(a)!.application.end, FAR) - time(programOf(b)!.application.end, FAR)) ||
+      byUrl(a, b),
+  );
+};

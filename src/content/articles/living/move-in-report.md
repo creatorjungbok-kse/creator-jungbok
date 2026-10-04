@@ -1,5 +1,6 @@
 ---
 title: 전입신고 방법｜정부24 온라인 신고와 14일 기한
+cardTitle: 전입신고 온라인 방법
 description: 이사한 뒤 전입신고를 언제까지, 어디서 하는지와 정부24 온라인 신고에서 세대주 확인이 필요한 경우, 확정일자까지 정리했습니다.
 subcategory: moving
 contentType: guide

@@ -230,7 +230,7 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
             <SectionTitle title="다음에 볼 정보" tier="article" />
             <div class="card-list">
               {related.map((r) => (
-                <ContentCard item={r} variant="row" />
+                <ContentCard item={r} variant="row" short />
               ))}
             </div>
           </section>

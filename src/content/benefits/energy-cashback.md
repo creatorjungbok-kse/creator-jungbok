@@ -1,5 +1,6 @@
 ---
 title: 에너지캐시백｜신청방법과 2026년 12월 검침분까지 한시 확대 단가
+cardTitle: 에너지캐시백 신청방법
 description: 한전 주택용 에너지캐시백 신청 대상과 방법, 절감률별 단가, 2026년 12월 검침분까지 1%만 줄여도 받는 한시 확대 내용을 정리했습니다.
 subcategory: bill-relief
 contentMode: evergreen

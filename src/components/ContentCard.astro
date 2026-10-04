@@ -13,10 +13,13 @@ export interface Props {
   eager?: boolean;
   // 카드 위 분류 글자: full = 대분류(· 세부 분류) / sub = 세부 분류만 / none = 없음(세부 분류 구획 안)
   label?: 'full' | 'sub' | 'none';
+  // 카드형 UI(홈·관련 글)에서 cardTitle(짧은 표시 제목)이 있으면 그것을 쓴다. 카테고리 목록·사이드바는 끈다
+  short?: boolean;
 }
 
-const { item, variant = 'text', eager = false, label: labelMode = 'full' } = Astro.props;
+const { item, variant = 'text', eager = false, label: labelMode = 'full', short = false } = Astro.props;
 const { data } = item.entry;
+const title = (short && data.cardTitle) || data.title;
 const category = categories.find((c) => c.slug === item.category)!;
 const sub = subcategoryName(category, data.subcategory);
 const label = { full: variant === 'text' ? category.name : `${category.name} · ${sub}`, sub, none: undefined }[labelMode];
@@ -29,8 +32,8 @@ const thumbnail = { src: data.thumbnail, label: category.name, tone: category.sl
 
 {
   item.kind === 'benefit' ? (
-    <BenefitCard href={item.url} title={data.title} program={item.entry.data.program} audience={item.entry.data.audience} variant={variant} thumbnail={thumbnail} />
+    <BenefitCard href={item.url} title={title} program={item.entry.data.program} audience={item.entry.data.audience} variant={variant} thumbnail={thumbnail} />
   ) : (
-    <ArticleCard href={item.url} title={data.title} category={label} excerpt={data.summary} meta={meta} variant={variant} thumbnail={thumbnail} />
+    <ArticleCard href={item.url} title={title} category={label} excerpt={data.summary} meta={meta} variant={variant} thumbnail={thumbnail} />
   )
 }

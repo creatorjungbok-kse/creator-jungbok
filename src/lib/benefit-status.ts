@@ -5,6 +5,8 @@ export type BenefitStatus = 'upcoming' | 'open' | 'closing-soon' | 'paused' | 'c
 
 // 종료일까지 남은 날이 이 값 이하면 마감 임박(D-7 ~ D-0). 이 상수 한 곳에서만 관리한다.
 export const CLOSING_SOON_DAYS = 7;
+// 시작일까지 남은 날이 이 값 이하인 신청 예정 지원은 홈 '지금 확인할 혜택'에 올린다.
+export const STARTING_SOON_DAYS = 7;
 
 export const statusLabels: Record<BenefitStatus, string> = {
   upcoming: '신청 예정',
@@ -66,4 +68,12 @@ export function benefitStatus(program: StatusInput, now: Date = new Date()): Sta
     return { status: 'paused', detail: endDay !== undefined && contentDay(resume) > endDay ? undefined : `${monthDay(resume)}부터 재개`, overridden: false, pauseReason: pause.reason };
   }
   return { status, detail: detailFor(status), overridden: false };
+}
+
+// 신청 예정 지원이 오늘(한국 날짜)부터 days일 안에 시작하는지(D-0 ~ D-days)
+export function startsWithin(program: StatusInput, days: number, now: Date = new Date()): boolean {
+  const { start } = program.application;
+  if (!start || benefitStatus(program, now).status !== 'upcoming') return false;
+  const left = contentDay(start) - seoulDay(now);
+  return left >= 0 && left <= days;
 }

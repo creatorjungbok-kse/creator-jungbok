@@ -1,5 +1,6 @@
 ---
 title: 근로장려금｜기한 후 신청 12월 1일까지·신청방법과 지급액
+cardTitle: 근로장려금 기한 후 신청
 description: 근로장려금 기한 후 신청은 2026년 12월 1일까지, 산정액의 95%를 받습니다. 소득·재산 요건과 홈택스 신청방법을 정리했습니다.
 subcategory: tax-refunds
 contentMode: evergreen

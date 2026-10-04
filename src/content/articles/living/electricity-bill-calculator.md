@@ -1,5 +1,6 @@
 ---
 title: 전기요금 계산기｜주택용 월 사용량별 예상 요금 계산
+cardTitle: 전기요금 계산기
 description: 월 사용량(kWh)과 사용 시기만 넣으면 주택용 저압 일반가구의 예상 전기요금을 누진 구간·부가세·기금까지 계산합니다.
 subcategory: utilities
 contentType: cost

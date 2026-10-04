@@ -1,5 +1,6 @@
 ---
 title: 사업용 신용카드 등록 방법｜홈택스·손택스 경로와 매입세액공제
+cardTitle: 사업용 신용카드 등록 방법
 description: 개인사업자의 사업용 신용카드 홈택스 등록 경로, 등록 가능한 카드, 사용내역 조회와 부가세 공제 확인 방법을 정리했습니다.
 subcategory: tax
 contentType: guide

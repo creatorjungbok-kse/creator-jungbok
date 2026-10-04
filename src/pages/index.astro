@@ -4,44 +4,47 @@ import HomeView from '../components/HomeView.astro';
 import { categoryHref } from '../data/categories';
 import { activeCategories, getAllContent, type ContentItem } from '../lib/content';
 import { homeJsonLd } from '../lib/seo';
-import { latestPublished, openBenefits, statusOf } from '../lib/select';
+import { latestPublished, statusOf, urgentBenefits } from '../lib/select';
 import { toolIds, toolNames } from '../tools/registry';
 
-// 홈 섹션 구성(01 D). 선택 규칙은 lib/select.ts. 한 글이 홈에서 여러 번 반복되지 않게 위 섹션에 나온 글은 아래에서 뺀다.
+// 홈 섹션 구성(01 D). 선택 규칙은 lib/select.ts.
+// 한 글은 홈에서 한 번만 보인다: 위 섹션에 나온 글은 아래 섹션에서 뺀다(shown).
 // 홈에는 신청 종료된 지원을 올리지 않는다(종료 지원은 /benefits/의 종료 목록에서 찾는다).
 const all = await getAllContent();
 const listed = all.filter((i) => statusOf(i) !== 'closed');
+const shown = new Set<ContentItem>();
+const take = (items: ContentItem[], n: number) => {
+  const out = items.filter((i) => !shown.has(i)).slice(0, n);
+  out.forEach((i) => shown.add(i));
+  return out;
+};
 
-// 글 제목의 앞부분(｜ 앞)을 짧은 이름으로 쓴다
-const shortTitle = (i: ContentItem) => i.entry.data.title.split(/\s*[｜|]\s*/)[0];
+// 1. 지금 확인할 혜택: 마감 임박 → 7일 안에 시작 → 신청 가능 순, 최대 4개
+const urgentAll = urgentBenefits(listed);
+const urgent = take(urgentAll, 4);
 
-const benefits = openBenefits(listed).slice(0, 4);
-
+// 2. 계산기: 도구가 들어 있는 글
 const tools = toolIds.flatMap((id) => {
   const item = listed.find((i) => i.kind === 'article' && i.entry.data.tool === id);
-  return item ? [{ item, name: toolNames[id] }] : [];
+  if (!item || shown.has(item)) return [];
+  shown.add(item);
+  return [{ item, name: toolNames[id] }];
 });
 
-// 새로 올라온 글: 최근 게시 순. 위에서 보여 준 지원·도구 글은 빼고 3개
-const shown = new Set([...benefits, ...tools.map((t) => t.item)]);
-const picks = latestPublished(listed).filter((i) => !shown.has(i)).slice(0, 3);
+// 3. 새로 올라온 글: 최근 게시 순, 위에 나온 글 제외 3개
+const picks = take(latestPublished(listed), 3);
 
-// 대분류별 최신 글(최대 3개)
+// 4. 분야별: 분야 이름·전체 글 수는 그대로, 목록은 위에 안 나온 글만(최대 3개). 남은 글이 없으면 목록 없이 분야 링크만
 const sections = (await activeCategories()).map((c) => {
   const items = latestPublished(listed.filter((i) => i.category === c.slug));
-  return { category: c, href: categoryHref(c), count: items.length, items: items.slice(0, 3) };
+  return { category: c, href: categoryHref(c), count: items.length, items: take(items, 3) };
 });
-
-// 검색창 아래 바로가기: 실제 글 URL로 연결(04 12·20장). 신청 가능한 지원 → 도구 → 최근 글 순, 최대 5개(데스크톱 한 줄 5개, 모바일 한 줄 3개)
-const quick = [...new Set([...benefits, ...tools.map((t) => t.item), ...latestPublished(listed)])]
-  .slice(0, 5)
-  .map((i) => ({ href: i.url, label: shortTitle(i) }));
 ---
 
 <BaseLayout jsonLd={homeJsonLd()}>
   <HomeView
-    quick={quick}
-    benefits={benefits}
+    urgent={urgent}
+    moreUrgent={urgentAll.length > urgent.length}
     tools={tools.map((t) => ({ href: t.item.url, name: t.name, summary: t.item.entry.data.description ?? t.item.entry.data.summary }))}
     picks={picks}
     sections={sections}

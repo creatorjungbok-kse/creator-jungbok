@@ -1,7 +1,7 @@
 ---
 // 홈 화면. 목록 선택은 src/pages/index.astro(lib/select.ts 규칙)에서 하고, 여기서는 표시만 한다.
-// 순서(01 D): 소개·검색·바로가기 → 대분류 4개 → 지금 신청 가능한 지원 → 계산기·도구 → 새로 올라온 글 → [광고] → 분야별 최신 글 → 조사 원칙.
-// 한 글은 홈에서 한 번만 크게 보이고, 항목이 없는 섹션은 숨긴다. 슬라이더·움직이는 요소 없음.
+// 순서(01 D): 소개·검색 → 지금 확인할 혜택 → 계산기 → 새로 올라온 글 → [광고] → 분야별로 보기(분야 4개 + 위에 안 나온 글) → 조사 원칙.
+// 한 글은 홈에서 한 번만 보이고, 항목이 없는 섹션은 숨긴다. 슬라이더·움직이는 요소 없음.
 import AdSlot from './AdSlot.astro';
 import ContentCard from './ContentCard.astro';
 import Icon from './Icon.astro';
@@ -11,42 +11,32 @@ import type { Category } from '../data/categories';
 import type { ContentItem } from '../lib/content';
 import { formatDate } from '../lib/format';
 
+// 홈 첫 문장. 홈 <title>(site.tagline)과는 따로 둔다
+const headline = '받을 수 있는 혜택과 놓치기 쉬운 기한부터 먼저 확인하세요';
+const lead = '지원금 신청 기간, 사업자 신고, 공과금·통신비까지 정부·공공기관 공식 자료를 직접 확인해 정리합니다.';
+
 export interface Props {
-  quick: { href: string; label: string }[];
-  benefits: ContentItem[];
+  urgent: ContentItem[];
+  moreUrgent: boolean;
   tools: { href: string; name: string; summary?: string }[];
   picks: ContentItem[];
   sections: { category: Category; href: string; count: number; items: ContentItem[] }[];
   isEmpty: boolean;
 }
 
-const { quick, benefits, tools, picks, sections, isEmpty } = Astro.props;
+const { urgent, moreUrgent, tools, picks, sections, isEmpty } = Astro.props;
 ---
 
 <div class="home">
   <section class="hero">
     <div class="container hero__inner">
-      <h1>{site.tagline}</h1>
-      <p class="hero__lead">지원금 신청 기간, 사업자 세무, 공과금·통신비까지 공식 자료를 직접 확인해 정리합니다.</p>
+      <h1>{headline}</h1>
+      <p class="hero__lead">{lead}</p>
       <form class="search-form" action="/search/" method="get" role="search">
         <label class="visually-hidden" for="home-q">검색어</label>
         <input id="home-q" name="q" type="search" placeholder="예: 전기요금 계산기, 사업자등록증" />
         <button type="submit">검색</button>
       </form>
-      {
-        quick.length > 0 && (
-          <nav class="quick" aria-label="바로가기">
-            <span class="quick__label">바로가기</span>
-            <ul>
-              {quick.map((q) => (
-                <li>
-                  <a href={q.href}>{q.label}</a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        )
-      }
     </div>
   </section>
 
@@ -54,34 +44,18 @@ const { quick, benefits, tools, picks, sections, isEmpty } = Astro.props;
     {isEmpty && <p class="empty">첫 정보를 준비하고 있습니다. 아래 분야에서 다룰 주제를 확인해 보세요.</p>}
 
     {
-      sections.length > 0 && (
-        <nav class="cats" aria-label="분야">
-          <ul>
-            {sections.map(({ category, href, count }) => (
-              <li class={`cat cat--${category.slug}`}>
-                <a href={href}>
-                  <span class="cat__name">{category.name}</span>
-                  <span class="cat__desc">{category.description}</span>
-                  <span class="cat__count">
-                    글 {count}개 <span aria-hidden="true">›</span>
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      )
-    }
-
-    {
-      benefits.length > 0 && (
+      urgent.length > 0 && (
         <section class="block" data-open-list>
-          <SectionTitle title="지금 신청 가능한 지원·혜택" href="/benefits/" tier="primary" />
+          <SectionTitle title="지금 확인할 혜택" tier="primary" />
+          <p class="block__note">마감이 가까운 혜택, 7일 안에 신청이 시작되는 혜택, 지금 신청할 수 있는 혜택 순서입니다.</p>
           <div class="card-grid">
-            {benefits.map((item) => (
-              <ContentCard item={item} />
+            {urgent.map((item) => (
+              <ContentCard item={item} short />
             ))}
           </div>
+          <a class="more-link" href="/benefits/">
+            {moreUrgent ? '지금 확인할 혜택 더 보기' : '지원·혜택 전체 보기'} <span aria-hidden="true">›</span>
+          </a>
         </section>
       )
     }
@@ -113,7 +87,7 @@ const { quick, benefits, tools, picks, sections, isEmpty } = Astro.props;
           <SectionTitle title="새로 올라온 글" tier="primary" />
           <div class="post-grid picks">
             {picks.map((item, i) => (
-              <ContentCard item={item} variant="feature" eager={i === 0} />
+              <ContentCard item={item} variant="feature" eager={i === 0} short />
             ))}
           </div>
         </section>
@@ -125,27 +99,46 @@ const { quick, benefits, tools, picks, sections, isEmpty } = Astro.props;
     {
       sections.length > 0 && (
         <section class="block">
-          <SectionTitle title="분야별 최신 글" tier="primary" />
-          <div class="by-cat">
-            {sections.map(({ category, href, items }) => (
-              <section class="by-cat__col" aria-labelledby={`latest-${category.slug}`}>
-                <div class="by-cat__head">
-                  <h3 id={`latest-${category.slug}`}>{category.name}</h3>
+          <SectionTitle title="분야별로 보기" tier="primary" />
+          <nav class="cats" aria-label="분야">
+            <ul>
+              {sections.map(({ category, href, count }) => (
+                <li class={`cat cat--${category.slug}`}>
                   <a href={href}>
-                    전체 보기 <span aria-hidden="true">›</span>
+                    <span class="cat__name">{category.name}</span>
+                    <span class="cat__desc">{category.description}</span>
+                    <span class="cat__count">
+                      글 {count}개 <span aria-hidden="true">›</span>
+                    </span>
                   </a>
-                </div>
-                <ol>
-                  {items.map((item) => (
-                    <li>
-                      <a href={item.url}>{item.entry.data.title}</a>
-                      <span>업데이트 {formatDate(item.entry.data.dateModified)}</span>
-                    </li>
-                  ))}
-                </ol>
-              </section>
-            ))}
-          </div>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          {sections.some((s) => s.items.length > 0) && (
+            <div class="by-cat">
+              {sections
+                .filter(({ items }) => items.length > 0)
+                .map(({ category, href, items }) => (
+                  <section class="by-cat__col" aria-labelledby={`latest-${category.slug}`}>
+                    <div class="by-cat__head">
+                      <h3 id={`latest-${category.slug}`}>{category.name} 다른 글</h3>
+                      <a href={href}>
+                        전체 보기 <span aria-hidden="true">›</span>
+                      </a>
+                    </div>
+                    <ol>
+                      {items.map((item) => (
+                        <li>
+                          <a href={item.url}>{item.entry.data.cardTitle ?? item.entry.data.title}</a>
+                          <span>업데이트 {formatDate(item.entry.data.dateModified)}</span>
+                        </li>
+                      ))}
+                    </ol>
+                  </section>
+                ))}
+            </div>
+          )}
         </section>
       )
     }
@@ -205,64 +198,25 @@ const { quick, benefits, tools, picks, sections, isEmpty } = Astro.props;
     background: var(--color-bg);
   }
 
-  /* 바로가기: 실제 글로 가는 작은 칩 */
-  .quick {
-    display: grid;
-    gap: var(--space-2);
+  /* 지금 확인할 혜택: 고르는 기준 한 줄 + 전체 보기 */
+  .block__note {
+    margin-top: calc(-1 * var(--space-2));
+    margin-bottom: var(--space-4);
+    color: var(--color-text-muted);
     font-size: var(--text-sm);
   }
 
-  .quick__label {
-    color: var(--color-text-muted);
+  .more-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch);
+    margin-top: var(--space-2);
+    font-size: var(--text-sm);
     font-weight: var(--weight-semibold);
   }
 
-  /* 바로가기 칩: 항상 한 줄. 모바일·태블릿은 옆으로 밀어서 보고(한 화면에 3개 안팎), 데스크톱은 5칸에 모두 보인다 */
-  .quick ul {
-    display: flex;
-    gap: var(--space-2);
-    width: 100%;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .quick ul::-webkit-scrollbar {
-    display: none;
-  }
-
-  .quick li {
-    flex: 0 0 auto;
-  }
-
-  .quick a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    min-height: 2.25rem;
-    padding: 0 var(--space-2);
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    font-size: var(--text-xs);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-pill);
-    background: var(--color-bg);
-    color: var(--color-text);
-    text-decoration: none;
-  }
-
-  /* 아주 좁은 화면(360px 미만)에서도 긴 이름이 잘리지 않게 여백만 줄인다 */
-  @media (max-width: 359.98px) {
-    .quick a {
-      padding: 0 var(--space-1);
-      letter-spacing: -0.02em;
-    }
-  }
-
-  .quick a:hover {
-    border-color: var(--color-outline);
+  .cats + .by-cat {
+    margin-top: var(--space-6);
   }
 
   /* 대분류 4개: 모바일 2칸, 태블릿 이상 4칸. 분야 색은 썸네일과 같은 톤 */
@@ -491,10 +445,6 @@ const { quick, benefits, tools, picks, sections, isEmpty } = Astro.props;
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
-    .quick a {
-      font-size: var(--text-sm);
-    }
-
     .cat__desc {
       display: -webkit-box;
       overflow: hidden;
@@ -525,19 +475,8 @@ const { quick, benefits, tools, picks, sections, isEmpty } = Astro.props;
       max-width: 48rem;
     }
 
-    .quick ul {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      overflow: visible;
-    }
-
     .hero .search-form {
       width: 100%;
-    }
-
-    .quick {
-      width: 100%;
-      justify-items: center;
     }
 
     .by-cat {

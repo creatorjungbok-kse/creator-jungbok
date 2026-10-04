@@ -1,5 +1,6 @@
 ---
 title: 사업자등록 정정신고｜상호·주소·업종 바꿀 때 방법과 처리기간
+cardTitle: 사업자등록 정정신고 방법
 description: 상호·사업장 주소·업종이 바뀌었을 때 하는 사업자등록 정정신고 대상, 홈택스 메뉴 경로, 준비서류와 처리기간을 공식 안내로 정리했습니다.
 subcategory: tax
 contentType: guide

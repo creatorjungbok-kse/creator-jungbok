@@ -1,5 +1,6 @@
 ---
 title: 통신 미환급금 조회｜스마트초이스에서 미환급액 환급받는 방법
+cardTitle: 통신 미환급금 조회·환급
 description: 휴대폰·인터넷 해지 뒤 남은 통신 미환급액을 스마트초이스에서 조회하고 환급받는 방법을 공식 안내 기준으로 정리했습니다.
 subcategory: mobile
 contentType: guide

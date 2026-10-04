@@ -1,5 +1,6 @@
 ---
 title: 청년미래적금 2차｜10월 7일 신청·조건·갈아타기
+cardTitle: 청년미래적금 2차 신청
 description: 청년미래적금 2차 신청기간·홀짝제, 가입 조건, 정부기여금 0%·6%·12% 차이, 소상공인확인서와 청년도약계좌 갈아타기 순서를 정리했습니다.
 subcategory: grants
 contentMode: timely

@@ -112,6 +112,9 @@ const baseShape = {
   title: text,
   // <title>·OG 제목이 H1과 달라야 할 때만(없으면 title)
   seoTitle: text.optional(),
+  // 카드형 UI용 짧은 표시 제목(홈 카드·관련 글 카드). 없으면 title.
+  // H1·<title>·meta·구조화 데이터·검색·카테고리 목록·사이드바는 항상 title을 쓴다
+  cardTitle: text.refine((v) => [...v].length <= 22, '카드 제목은 22자 이하').optional(),
   // 없으면 summary를 meta description으로 쓴다
   description: text.optional(),
   contentMode: z.enum(['evergreen', 'timely']),
