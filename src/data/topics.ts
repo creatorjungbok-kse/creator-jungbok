@@ -9,4 +9,5 @@ export const topics = [
   { id: 'housing', name: '주거' },
   { id: 'tax', name: '세금·환급' },
   { id: 'health', name: '건강·의료' },
+  { id: 'culture', name: '문화·여가' },
 ] as const;
