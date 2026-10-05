@@ -13,13 +13,15 @@ const build = (name, env, cwd) => {
   if (r.status !== 0) throw new Error(`${name} 빌드 실패\n${r.stdout}${r.stderr}`);
   return out;
 };
-// 지원·혜택 글이 하나도 없는 production(빈 카테고리 규칙 검사용): 저장소를 임시 폴더에 복사하고 benefits 글만 지운 뒤 빌드한다
+// 지원·혜택 글이 하나도 없는 production(빈 카테고리 규칙 검사용): 저장소를 임시 폴더에 복사하고 지원·혜택 분류 글(benefits·articles/benefits)만 지운 뒤 빌드한다
 const emptyBenefitsRepo = () => {
   const repo = join(work, 'repo-empty-benefits');
   cpSync(process.cwd(), repo, { recursive: true, filter: (src) => !/[\\/](node_modules|dist|\.git|\.astro)$/.test(src) });
   symlinkSync(join(process.cwd(), 'node_modules'), join(repo, 'node_modules'), 'junction');
   const dir = join(repo, 'src/content/benefits');
   for (const f of readdirSync(dir)) if (f.endsWith('.md')) rmSync(join(dir, f));
+  // 지원·혜택 분류의 일반 글(articles/benefits/)도 함께 지운다
+  rmSync(join(repo, 'src/content/articles/benefits'), { recursive: true, force: true });
   return repo;
 };
 const check = (env, dir) => {

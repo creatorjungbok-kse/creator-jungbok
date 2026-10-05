@@ -52,7 +52,7 @@ notes:
 actionLinks:
   - org: 국세청 홈택스
     action: check
-    purpose: 홈택스에서 정정 신고하기
+    purpose: 정정 신고하기
     url: https://hometax.go.kr/
     sourceId: local:hometax-main
   - org: 정부24

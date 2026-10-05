@@ -29,6 +29,7 @@ export const categories: Category[] = [
       { slug: 'bill-relief', name: '요금·생활비 감면' },
       { slug: 'housing', name: '주거 지원' },
       { slug: 'business-support', name: '소상공인·사업자 지원' },
+      { slug: 'health-support', name: '건강·의료 지원' },
     ],
   },
   {
