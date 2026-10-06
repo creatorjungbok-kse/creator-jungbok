@@ -80,9 +80,47 @@ const canonicalUrl = canonical ? absoluteUrl(Astro.url.pathname) : undefined;
             };
             window.gtag('js', new Date());
             window.gtag('config', ga4Id);
-            // 공식 신청 버튼 클릭(지원·혜택 글). 페이지 주소 외의 값은 보내지 않는다
+            // 클릭 측정(02 1-E Action·Continue). 보내는 값은 이벤트 이름과 우리 사이트 글 경로(pathname)·위치 번호뿐이다.
+            // 링크 글자·query·hash·검색어·계산기 입력값은 보내지 않는다. 기본 click만 본다(가운데 버튼 auxclick은 제외).
             document.addEventListener('click', (e) => {
-              if (e.target instanceof Element && e.target.closest('[data-official-cta]')) window.gtag('event', 'official_cta_click');
+              if (!(e.target instanceof Element)) return;
+              // 공식 신청 버튼 클릭(지원·혜택 글)
+              if (e.target.closest('[data-official-cta]')) {
+                window.gtag('event', 'official_cta_click');
+                return;
+              }
+              const a = e.target.closest('a[href]');
+              if (!a) return;
+              const area = a.closest('[data-track]');
+              if (!area) return;
+              let url;
+              try {
+                url = new URL(a.getAttribute('href'), location.href);
+              } catch {
+                return;
+              }
+              // 같은 사이트의 다른 페이지만(이미지 확대·같은 페이지 안 이동 제외)
+              if (url.origin !== location.origin || url.pathname.startsWith('/images/') || url.pathname === location.pathname) return;
+              const link_path = url.pathname;
+              if (area.dataset.track === 'related') {
+                const list = area.querySelector('.card-list');
+                const card = list && [...list.children].find((c) => c.contains(a));
+                const pos = card ? [...list.children].indexOf(card) + 1 : 0;
+                window.gtag('event', 'related_click', pos >= 1 && pos <= 3 ? { link_path, link_position: pos } : { link_path });
+              } else if (area.dataset.track === 'body') {
+                window.gtag('event', 'internal_link_click', { link_path });
+              }
+            });
+            // 계산기 사용: 계산기는 GA를 모르고 'kkultip:tool-use' 신호만 보낸다. 허용된 이름이 자기 계산기 페이지에서 왔을 때만,
+            // 페이지당 이름별 1번만 보낸다(입력·결과 값 없음). 이름·경로 목록은 tools/test-tracking.mjs가 계산기 글과 대조한다
+            const toolPages = { 'electricity-bill': '/living/electricity-bill-calculator/', 'mvno-plan-cost': '/digital/mvno-plan-comparison/' };
+            const toolSent = new Set();
+            document.addEventListener('kkultip:tool-use', (e) => {
+              const tool_name = e.detail;
+              if (typeof tool_name !== 'string' || !Object.hasOwn(toolPages, tool_name)) return;
+              if (toolPages[tool_name] !== location.pathname || toolSent.has(tool_name)) return;
+              toolSent.add(tool_name);
+              window.gtag('event', 'tool_use', { tool_name });
             });
             // 글 끝 평가(ArticleFeedback): GA4가 있을 때만 보이고, 한 번만 누를 수 있다. 이벤트 이름만 보낸다(숫자를 화면에 보여주지 않음)
             document.addEventListener('DOMContentLoaded', () => {

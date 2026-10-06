@@ -218,6 +218,7 @@ const range = (l: { min: number; max: number; unit: string }) => `${l.min.toLoca
     // 같은 값이 표(넓은 화면)와 목록(좁은 화면)에 함께 있다
     const cell = (key: string, text: string) => root.querySelectorAll(`[data-mv="${key}"]`).forEach((e) => (e.textContent = text));
 
+    let usedSignal = false;
     const run = () => {
       const plansRead = plans.map((p) => {
         const r = readPlan({
@@ -262,6 +263,11 @@ const range = (l: { min: number; max: number; unit: string }) => `${l.min.toLoca
       result.hidden = false;
       status.textContent = sentences.join(' ');
       shown = true;
+      // 사용 측정 신호는 첫 계산 성공 때 1번만(이름만 보낸다. 입력·결과는 보내지 않음)
+      if (!usedSignal) {
+        usedSignal = true;
+        document.dispatchEvent(new CustomEvent('kkultip:tool-use', { detail: 'mvno-plan-cost' }));
+      }
     };
 
     // form이 아니라 native 제출이 없다(입력값이 URL에 붙지 않음). 버튼은 스크립트가 준비된 뒤에만 켜진다

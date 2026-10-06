@@ -186,7 +186,7 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
         bodyParts.map((part) => (
           <>
             {part.adBefore && <AdSlot id={part.adBefore} />}
-            <div class="prose" set:html={part.html} />
+            <div class="prose" data-track="body" set:html={part.html} />
           </>
         ))
       }
@@ -226,7 +226,7 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
 
       {
         related.length > 0 && (
-          <section data-ad-protected="related">
+          <section data-ad-protected="related" data-track="related">
             <SectionTitle title="다음에 볼 정보" tier="article" />
             <div class="card-list">
               {related.map((r) => (

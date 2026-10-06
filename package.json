@@ -16,6 +16,7 @@
     "test:search": "node --test tools/test-search.mjs",
     "test:links": "node --test tools/test-action-links.mjs",
     "test:related": "node --test tools/test-related.mjs",
+    "test:tracking": "node --test tools/test-tracking.mjs",
     "test:tools": "node --test tools/test-electricity.mjs tools/test-mvno.mjs",
     "test:seo": "node tools/test-check-build.mjs"
   },
