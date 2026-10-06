@@ -133,6 +133,8 @@ const baseShape = {
   topics: z.array(idsOf(topics)).min(1),
   // 수동 지정이 필요할 때만. 기본은 topics·category·audience로 자동 계산
   related: z.array(internalPath).optional(),
+  // false면 관련 글을 related에 직접 적은 것만 쓴다(pillar·같은 주제 자동 채움 안 함, 비어 있으면 영역 숨김). 없거나 true면 기존 자동 채움
+  relatedAuto: z.boolean().optional(),
   faq: z.array(z.strictObject({ question: text, answer: text })).optional(),
   changelog: z.array(z.strictObject({ date, summary: text })).optional(),
   // 글 전체에서 인용한 공통 출처

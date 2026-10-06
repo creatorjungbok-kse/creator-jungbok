@@ -263,6 +263,7 @@ const cases = [
   ['og-image-remote', edit(G, 'contentMode: evergreen', 'contentMode: evergreen\nogImage: https://example.com/a.png'), '공유 이미지 경로 형식'],
   ['thumbnail-remote', edit(G, 'contentMode: evergreen', 'contentMode: evergreen\nthumbnail: https://example.com/a.png'), '대표 이미지 경로 형식'],
   ['broken-related-link', edit('articles/business/test-startup-guide.md', 'related: [/business/test-card-terminal/]', 'related: [/business/nope/]'), '존재하지 않는 글 링크 /business/nope/'],
+  ['related-auto-not-boolean', edit('articles/business/test-startup-guide.md', 'related: [/business/test-card-terminal/]', 'related: [/business/test-card-terminal/]\nrelatedAuto: "no"'), 'relatedAuto'],
 ];
 
 const only = process.argv.slice(2);

@@ -21,6 +21,7 @@ dateModified: 2026-10-02
 researchedAt: 2026-10-02
 author: operator
 topics: [tax, employment]
+relatedAuto: false
 audience: [low-income, individual, household, sole-proprietor]
 program:
   officialName: 근로장려금
