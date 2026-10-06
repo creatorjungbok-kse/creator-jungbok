@@ -22,6 +22,22 @@ const emptyBenefitsRepo = () => {
   for (const f of readdirSync(dir)) if (f.endsWith('.md')) rmSync(join(dir, f));
   // 지원·혜택 분류의 일반 글(articles/benefits/)도 함께 지운다
   rmSync(join(repo, 'src/content/articles/benefits'), { recursive: true, force: true });
+  // 남은 글이 지운 지원·혜택 글을 가리키면 링크 검사에 걸리므로, 그 연결(related 항목·본문 링크)만 걷어낸다
+  const articlesDir = join(repo, 'src/content/articles');
+  for (const sub of readdirSync(articlesDir)) {
+    for (const f of readdirSync(join(articlesDir, sub))) {
+      if (!f.endsWith('.md')) continue;
+      const path = join(articlesDir, sub, f);
+      const src = readFileSync(path, 'utf8');
+      const out = src
+        .replace(/^related: \[(.*)\]$/m, (_, list) => {
+          const kept = list.split(',').map((x) => x.trim()).filter((x) => x && !x.startsWith('/benefits/'));
+          return kept.length ? `related: [${kept.join(', ')}]` : '';
+        })
+        .replace(/\[([^\]]+)\]\(\/benefits\/[^)]*\)/g, '$1');
+      if (out !== src) writeFileSync(path, out);
+    }
+  }
   return repo;
 };
 const check = (env, dir) => {

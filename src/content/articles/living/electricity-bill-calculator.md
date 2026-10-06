@@ -42,6 +42,7 @@ faq:
     answer: 일반가구의 필수사용량 보장공제는 2022년 7월에 폐지되어 계산하지 않습니다. 취약계층 할인 등 각종 할인도 이 계산기에는 반영하지 않았습니다.
   - question: 우리 집 실제 전기요금은 어디서 확인하나요?
     answer: 한국전력공사의 한전ON에서 조회할 수 있습니다. 이 계산기 결과는 예상 금액이므로 실제 청구액과 다를 수 있습니다.
+related: [/benefits/electricity-welfare-discount/, /benefits/energy-cashback/, /benefits/energy-voucher/]
 sourceIds: [kepco-online, local:korea-kr-fuel-cost-linkage, local:kepco-essential-deduction]
 localSources:
   - id: local:korea-kr-fuel-cost-linkage
@@ -65,3 +66,5 @@ localSources:
 - 1,000kWh를 넘는 사용량
 - 주택용 고압, 일반용·산업용·교육용·농사용 등 다른 계약종별
 - 검침기간이 7~8월과 다른 달에 걸친 경우의 날짜별 나눠 계산
+
+복지할인·대가족·출산가구 할인 등도 반영하지 않습니다. 할인 대상과 월 한도는 [전기요금 복지할인](/benefits/electricity-welfare-discount/)에서 확인하세요.

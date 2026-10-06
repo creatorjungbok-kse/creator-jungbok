@@ -45,6 +45,7 @@ faq:
     answer: 할인 방식에서 '종료 시점 없음'을 선택하고 현재 월요금을 입력하면 됩니다.
   - question: 상품권이나 제휴카드 할인도 계산되나요?
     answer: 이 계산기에는 포함하지 않습니다. 지급 조건과 사용 방식이 서로 달라 통신요금과 분리해 확인하는 편이 정확합니다.
+related: [/digital/selective-discount/, /digital/telecom-refund/]
 sourceIds: [local:mvnohub, local:sk7mobile-usim-plan]
 localSources:
   - id: local:mvnohub

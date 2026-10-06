@@ -64,7 +64,7 @@ faq:
     answer: 정당한 사유 없이 기간 안에 신고하지 않으면 5만원 이하의 과태료가 부과될 수 있습니다. 실제 금액은 늦어진 기간 등에 따라 시·군·구에서 정합니다.
   - question: 가족이 대신 전입신고를 할 수 있나요?
     answer: 주민센터 방문 신고는 대리인도 할 수 있지만, 정부24 온라인 신고는 대리인 신청이 안 됩니다. 대리인은 신분증 등 주민센터가 안내하는 서류를 챙겨 방문하세요.
-related: [/living/rent-contract-report/]
+related: [/living/lease-fixed-date/, /living/rent-contract-report/]
 sourceIds: [local:gov24-move-in, local:gov24-move-in-faq-time, local:gov24-move-in-faq-head, local:law-resident-registration, local:law-housing-lease]
 localSources:
   - id: local:gov24-move-in
@@ -142,7 +142,7 @@ localSources:
 ## 세입자라면 같이 챙길 것
 
 - **대항력**: 집을 넘겨받고 전입신고를 마친 **다음 날**부터 생깁니다. 다만 전입신고만으로 우선변제권까지 생기지는 않습니다.
-- **확정일자**: 대항력에 더해 확정일자까지 갖추면 경매·공매 때 보증금을 우선해서 돌려받을 수 있습니다(우선변제권). 주민센터 확정일자 수수료는 1건 600원입니다.
+- **확정일자**: 대항요건에 더해 확정일자까지 갖추면 경매·공매 때 후순위 권리자나 다른 채권자보다 보증금을 우선변제받을 수 있습니다. 주민센터 확정일자 수수료는 1건 600원입니다. 받는 곳과 인터넷 신청은 [확정일자 받는 법](/living/lease-fixed-date/)에 정리했습니다.
 - **전월세 신고**: 신고 대상 계약이면 전입신고 때 계약서를 함께 내면 임대차 신고를 한 것으로 보고, 이렇게 계약서를 낸 경우 확정일자도 부여된 것으로 봅니다. 대상과 기한은 [전월세 신고 방법](/living/rent-contract-report/)에서 확인하세요.
 
 꿀팁정복은 주소나 개인정보를 받지 않습니다. 신고는 정부24나 주민센터에서 하세요.

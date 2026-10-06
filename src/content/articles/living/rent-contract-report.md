@@ -66,7 +66,7 @@ faq:
     answer: 한쪽이 신고를 거부하면 단독으로 신고할 수 있습니다. 또 임대인과 임차인이 서명·날인한 계약서를 내면 한쪽만 신고해도 공동으로 신고한 것으로 봅니다.
   - question: 월세 25만원에 보증금 5천만원이면 신고해야 하나요?
     answer: 보증금 6천만원 초과, 월세 30만원 초과 중 어느 쪽에도 해당하지 않으므로 신고 대상이 아닙니다. 다만 둘 중 하나라도 기준을 넘으면 대상입니다.
-related: [/living/move-in-report/]
+related: [/living/lease-fixed-date/, /living/move-in-report/]
 sourceIds: [local:law-real-estate-report, local:law-real-estate-report-decree, local:korea-rent-report-2025, local:korea-rent-fine-2025]
 localSources:
   - id: local:rtms
@@ -130,7 +130,7 @@ localSources:
 2. **온라인**: 부동산거래관리시스템(PC·모바일)에 접속해 계약 내용을 입력하고 신고합니다.
 3. **방문**: 집이 있는 곳 읍·면·동 주민센터에 계약서를 가지고 방문합니다.
 
-정리하면 두 단계입니다. ① 전입신고할 때 임대차계약서를 함께 내면 임대차 신고를 한 것으로 봅니다. ② 임대차 신고 때 계약서를 내면 확정일자도 부여된 것으로 봅니다. 계약서 없이 전입신고만 하면 둘 다 해당하지 않습니다.
+정리하면 두 단계입니다. ① 전입신고할 때 임대차계약서를 함께 내면 임대차 신고를 한 것으로 봅니다. ② 임대차 신고 때 계약서를 내면 확정일자도 부여된 것으로 봅니다. 신고 대상이 아니거나 계약서를 내지 않았다면 확정일자는 따로 받아야 합니다([확정일자 받는 법](/living/lease-fixed-date/)). 계약서 없이 전입신고만 하면 둘 다 해당하지 않습니다.
 
 ## 과태료는 이렇게 다릅니다
 

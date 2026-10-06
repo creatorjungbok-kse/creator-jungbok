@@ -59,7 +59,7 @@ faq:
     answer: 아닙니다. 부가가치세법은 사업장 관할 세무서가 아닌 다른 세무서에 신청해도 관할 세무서에 신청한 것으로 봅니다. 홈택스로 온라인 신청도 할 수 있습니다.
   - question: 사업 시작 전에 산 물건의 부가세도 공제받을 수 있나요?
     answer: 등록 전 매입세액은 원칙적으로 공제되지 않습니다. 다만 물건을 산 날이 속한 과세기간이 끝난 뒤 20일 이내에 등록을 신청하면, 등록 신청일부터 그 과세기간 시작일까지 거슬러 올라간 기간의 매입세액은 이 제한에서 빠집니다. 다른 공제 요건도 충족하면 공제 대상이 될 수 있습니다(부가가치세법 제39조).
-related: [/business/business-registration-certificate/, /business/business-registration-correction/, /business/business-credit-card/]
+related: [/business/business-registration-certificate/, /business/business-credit-card/, /business/cash-receipt/]
 sourceIds: [local:nts-registration-docs, local:law-vat-8, local:law-vat-decree-11-5, local:law-vat-60, local:law-vat-39]
 localSources:
   - id: local:nts-registration-docs

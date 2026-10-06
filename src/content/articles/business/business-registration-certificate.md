@@ -61,7 +61,7 @@ faq:
     answer: 정부24에도 사업자등록증 재발급 민원 안내 페이지가 있습니다. 온라인 신청은 홈택스로 연결됩니다. 사업자등록증명은 사업내역을 증명하기 위한 별도의 민원입니다.
   - question: 사업자등록증과 사업자등록증명 중 무엇을 제출해야 하나요?
     answer: 제출처가 요구한 서류명을 먼저 확인하세요. 사업자등록증명은 사업내역을 증명하기 위한 별도의 국세 민원입니다.
-related: [/business/business-registration-correction/, /business/business-credit-card/]
+related: [/business/business-registration-correction/, /business/business-credit-card/, /business/business-registration-application/]
 changelog:
   - date: 2026-10-04
     summary: 홈택스 메뉴 개편에 맞춰 사업자등록증 재발급 메뉴 경로를 현재 경로로 수정했습니다.
@@ -113,7 +113,7 @@ localSources:
 
 정부24에도 사업자등록증 재발급 민원 안내가 있습니다. 인터넷·방문으로 신청할 수 있고 수수료는 없으며, 온라인 신청은 홈택스로 연결됩니다.
 
-처음 사업자등록을 신청한 경우에는 처리상태가 처리완료(등록완료)가 된 뒤 세무서에서 수령하거나 홈택스에서 직접 발급할 수 있습니다.
+처음 사업자등록을 신청한 경우에는 처리상태가 처리완료(등록완료)가 된 뒤 세무서에서 수령하거나 홈택스에서 직접 발급할 수 있습니다. 아직 등록 전이라면 [사업자등록 신청 방법](/business/business-registration-application/)부터 확인하세요.
 
 ## 사업자등록증명은 다른 서류
 

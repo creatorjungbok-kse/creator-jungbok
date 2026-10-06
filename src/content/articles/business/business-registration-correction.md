@@ -65,7 +65,7 @@ faq:
     answer: 부가가치세법 시행령은 사업장을 이전하는 경우 '지체 없이' 사업자등록 정정신고서를 내도록 정하고 있습니다. 날짜로 정한 기한은 없으니 이전한 뒤 바로 신고하세요.
   - question: 꼭 관할 세무서에 가야 하나요?
     answer: 아닙니다. 관할 세무서뿐 아니라 신고인이 편한 세무서 어디서나 낼 수 있고, 홈택스로 온라인 신고도 할 수 있습니다.
-related: [/business/business-registration-certificate/, /living/move-in-report/]
+related: [/business/business-registration-certificate/, /living/move-in-report/, /business/business-registration-application/]
 sourceIds: [local:nts-correction, local:law-vat-decree-14, local:law-vat-decree-11]
 localSources:
   - id: local:nts-correction
@@ -114,6 +114,8 @@ localSources:
 | 공동사업자 구성원이나 출자지분 변경 | 신고일부터 2일 이내 |
 | 상가 임대차 내용 변경(임대인·면적·보증금·임차료·기간 등)이나 상가건물 새로 임차 | 신고일부터 2일 이내 |
 | 법인의 대표자 변경, 고유번호를 받은 단체의 대표자 변경 | 신고일부터 2일 이내 |
+
+사업장을 옮기는 것이 아니라 다른 곳에 사업장을 하나 더 내는 경우에는 원칙적으로 사업장마다 사업자등록이 필요합니다. 사업자 단위 과세를 적용받는 경우 등은 처리 방식이 다를 수 있으니, 새로 등록하는 방법은 [사업자등록 신청 방법](/business/business-registration-application/)에서 확인하세요.
 
 사업자 단위 과세 사업자의 적용 사업장 변경, 종된 사업장 신설·이전·휴폐업도 정정신고 대상입니다. 상가 임대차 내용 변경은 상가건물 임대차보호법상 확정일자를 받으려 하거나 이미 받은 임차인에게 변경이 있는 경우 등에 해당합니다.
 

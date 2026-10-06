@@ -104,6 +104,7 @@ localSources:
     url: https://en-ter.co.kr/ec/apply/app/list.do
     level: S1
     checkedAt: 2026-10-04
+related: [/living/electricity-bill-calculator/, /benefits/electricity-welfare-discount/]
 sourceIds: [local:entr-cashback-faq]
 ---
 
