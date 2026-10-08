@@ -74,6 +74,7 @@ export const categories: Category[] = [
     subcategories: [
       { slug: 'internet', name: '인터넷' },
       { slug: 'mobile', name: '휴대폰·알뜰폰' },
+      { slug: 'security', name: '보안·개인정보' },
       { slug: 'ai', name: 'AI 서비스' },
       { slug: 'cloud', name: '클라우드' },
       { slug: 'software', name: '소프트웨어' },
