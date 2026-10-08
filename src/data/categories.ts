@@ -26,6 +26,7 @@ export const categories: Category[] = [
     subcategories: [
       { slug: 'grants', name: '지원금·보조금' },
       { slug: 'tax-refunds', name: '환급·세금 혜택' },
+      { slug: 'refunds', name: '환급·숨은돈' },
       { slug: 'bill-relief', name: '요금·생활비 감면' },
       { slug: 'housing', name: '주거 지원' },
       { slug: 'business-support', name: '소상공인·사업자 지원' },
