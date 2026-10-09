@@ -1,11 +1,11 @@
 ---
 import { site } from '../config/site';
 import { categoryHref } from '../data/categories';
-import { activeCategories } from '../lib/content';
+import { primaryNavCategories } from '../lib/content';
 
 const path = Astro.url.pathname;
-// 공개 글이 없는 대분류는 메뉴에 두지 않는다(lib/content.ts activeCategories)
-const navCategories = await activeCategories();
+// 공개 글이 노출 기준(primaryNavMinPosts, 기본 1) 미만인 대분류는 메뉴에 두지 않는다(lib/content.ts primaryNavCategories)
+const navCategories = await primaryNavCategories();
 // 헤더 검색(01 B): 홈은 Hero 검색창, 검색 페이지는 자체 검색창이 있으므로 숨긴다. JavaScript 없이 /search/로 이동한다
 const showSearch = path !== '/' && path !== '/search/';
 ---

@@ -113,7 +113,7 @@ const canonicalUrl = canonical ? absoluteUrl(Astro.url.pathname) : undefined;
             });
             // 계산기 사용: 계산기는 GA를 모르고 'kkultip:tool-use' 신호만 보낸다. 허용된 이름이 자기 계산기 페이지에서 왔을 때만,
             // 페이지당 이름별 1번만 보낸다(입력·결과 값 없음). 이름·경로 목록은 tools/test-tracking.mjs가 계산기 글과 대조한다
-            const toolPages = { 'electricity-bill': '/living/electricity-bill-calculator/', 'mvno-plan-cost': '/digital/mvno-plan-comparison/' };
+            const toolPages = { 'electricity-bill': '/living/electricity-bill-calculator/', 'mvno-plan-cost': '/digital/mvno-plan-comparison/', 'weekly-holiday-pay': '/work/weekly-holiday-pay/' };
             const toolSent = new Set();
             document.addEventListener('kkultip:tool-use', (e) => {
               const tool_name = e.detail;

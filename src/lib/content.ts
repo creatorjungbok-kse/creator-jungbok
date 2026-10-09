@@ -3,7 +3,7 @@
 // dev·test fixture(src/dev/content/)는 isShellPreview일 때만 포함한다. production에는 절대 들어가지 않는다.
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { isShellPreview } from '../config/env';
-import { categories, categoryHref, type Category } from '../data/categories';
+import { categories, categoryHref, primaryNavMinPosts, type Category } from '../data/categories';
 import { genericTerms } from '../data/synonyms';
 import { normalize } from './search';
 
@@ -102,5 +102,13 @@ export async function activeCategories(): Promise<Category[]> {
 }
 
 export const activeCategoryLinks = async () => (await activeCategories()).map((c) => ({ href: categoryHref(c), title: c.name }));
+
+// 상단 메뉴·홈 카테고리 영역·footer에 보일 대분류: 공개 글 수가 primaryNavMinPosts(기본 1) 이상(categories 배열 순서 유지).
+// 기준 미달이어도 카테고리 페이지·글·sidebar·sitemap·사이트 검색에는 정상 노출된다(activeCategories)
+export async function primaryNavCategories(): Promise<Category[]> {
+  const all = await getAllContent();
+  return categories.filter((c) => all.filter((i) => i.category === c.slug).length >= primaryNavMinPosts(c));
+}
+export const primaryNavCategoryLinks = async () => (await primaryNavCategories()).map((c) => ({ href: categoryHref(c), title: c.name }));
 
 export const hasPublicContent = async (slug: string) => (await getAllContent()).some((i) => i.category === slug);

@@ -18,6 +18,7 @@ const ALLOWED_EVENTS = {
 const TOOL_PAGES = {
   'electricity-bill': '/living/electricity-bill-calculator/',
   'mvno-plan-cost': '/digital/mvno-plan-comparison/',
+  'weekly-holiday-pay': '/work/weekly-holiday-pay/',
 };
 const FORBIDDEN = /\b(link_text|link_url|text|value|kwh|kWh|price|amount|bill|result|query|search_term|q|name|input)\s*:/;
 

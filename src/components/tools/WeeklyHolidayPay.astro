@@ -241,8 +241,8 @@ const years = minimumWages.map((m) => m.year);
     };
     // 사용자가 결과를 한 번이라도 봤는가(이후 입력이 바뀌면 다시 계산)
     let shown = false;
-    // 정상 결과 상태(계산됨·비대상·추가 확인)에 처음 도달했는가. 계산기 사용 신호(tool_use, 도구 이름만)는
-    // 이 시점에 1번 보낸다 — 신호 발송 줄은 계산기 글(URL)이 정해지는 커밋에서 BaseLayout toolPages·test-tracking과 함께 추가한다
+    // 정상 결과 상태(계산됨·비대상·추가 확인)에 처음 도달했는가. 이때 계산기 사용 신호를 1번만 보낸다
+    // (도구 이름만 — 입력값·금액·판정 결과는 보내지 않는다. 입력 오류는 정상 결과가 아니라 보내지 않는다)
     let reachedResult = false;
 
     // ── 적용연도: 한국 날짜 기준 기본값, 그 해 상수가 없으면 자동 선택하지 않는다 ──
@@ -382,7 +382,7 @@ const years = minimumWages.map((m) => m.year);
       shown = true;
       if (!reachedResult) {
         reachedResult = true;
-        // (글 연결 커밋에서) document.dispatchEvent(new CustomEvent(<계산기 사용 신호>, { detail: 'weekly-holiday-pay' }));
+        document.dispatchEvent(new CustomEvent('kkultip:tool-use', { detail: 'weekly-holiday-pay' }));
       }
       return true;
     };

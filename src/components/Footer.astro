@@ -1,10 +1,10 @@
 ---
 import { site } from '../config/site';
 import { infoPages } from '../data/pages';
-import { activeCategoryLinks } from '../lib/content';
+import { primaryNavCategoryLinks } from '../lib/content';
 
 const year = new Date().getFullYear();
-const categoryLinks = await activeCategoryLinks();
+const categoryLinks = await primaryNavCategoryLinks();
 ---
 
 <footer class="site-footer">

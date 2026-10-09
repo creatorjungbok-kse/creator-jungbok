@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HomeView from '../components/HomeView.astro';
 import { categoryHref } from '../data/categories';
-import { activeCategories, getAllContent, type ContentItem } from '../lib/content';
+import { getAllContent, primaryNavCategories, type ContentItem } from '../lib/content';
 import { homeJsonLd } from '../lib/seo';
 import { latestPublished, statusOf, urgentBenefits } from '../lib/select';
 import { toolIds, toolNames } from '../tools/registry';
@@ -35,7 +35,7 @@ const tools = toolIds.flatMap((id) => {
 const picks = take(latestPublished(listed), 3);
 
 // 4. 분야별: 분야 이름·전체 글 수는 그대로, 목록은 위에 안 나온 글만(최대 3개). 남은 글이 없으면 목록 없이 분야 링크만
-const sections = (await activeCategories()).map((c) => {
+const sections = (await primaryNavCategories()).map((c) => {
   const items = latestPublished(listed.filter((i) => i.category === c.slug));
   return { category: c, href: categoryHref(c), count: items.length, items: take(items, 3) };
 });

@@ -13,6 +13,9 @@ export interface Category {
   description: string;
   // 중분류(01 A-1). 글 URL에는 들어가지 않고 메타데이터로만 쓴다.
   subcategories: Subcategory[];
+  // 상단 메뉴·홈 카테고리 영역·footer에 보이기 시작하는 공개 글 수(없으면 1).
+  // 카테고리 페이지·글·breadcrumb·sidebar·sitemap·사이트 검색은 이 값과 관계없이 글이 1편이면 정상 공개된다
+  primaryNavMinPosts?: number;
 }
 
 // 배열 순서 = 헤더·홈·푸터 표시 순서
@@ -48,6 +51,16 @@ export const categories: Category[] = [
       { slug: 'operations', name: '운영·업무' },
       { slug: 'startup', name: '창업 초기비용' },
     ],
+  },
+  {
+    slug: 'work',
+    name: '근로·급여',
+    title: '근로·급여',
+    seoTitle: '근로·급여 계산·정보',
+    description: '주휴수당처럼 일하는 사람이 받는 임금·수당과 권리를 공식 기준으로 정리하고 계산합니다.',
+    subcategories: [{ slug: 'wages', name: '임금·수당' }],
+    // 공개 글 3편 전까지 상단 메뉴·홈·footer에 노출하지 않는다(2026-10-09 결정)
+    primaryNavMinPosts: 3,
   },
   {
     slug: 'living',
@@ -86,6 +99,9 @@ export const categories: Category[] = [
 ];
 
 export const categoryHref = (c: Category) => `/${c.slug}/`;
+
+// 상단 메뉴 등에 보이기 시작하는 공개 글 수
+export const primaryNavMinPosts = (c: Category) => c.primaryNavMinPosts ?? 1;
 
 // 세부 분류 표시 이름. 글 frontmatter에는 slug(예: utilities)만 쓰고, 화면 이름은 위 registry 한 곳에서 바꾼다
 export const subcategoryName = (c: Category, slug: string) => c.subcategories.find((s) => s.slug === slug)!.name;

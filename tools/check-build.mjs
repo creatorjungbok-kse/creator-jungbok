@@ -46,6 +46,10 @@ const pages = new Set(htmlFiles.map(pathOf));
 // 글이 생기면 자동으로 일반 허브가 된다(색인·메뉴 필수)
 const hubs = categories.map((c) => `/${c.slug}/`);
 const emptyHubs = new Set(hubs.filter((hub) => ![...pages].some((p) => p !== hub && p.startsWith(hub))));
+// 상단 메뉴 노출 기준(categories.ts primaryNavMinPosts, 기본 1): 공개 글 수가 기준 미만인 대분류는 메뉴에 두지 않는다(카테고리 페이지·sitemap·검색은 정상)
+const postCount = (hub) => [...pages].filter((p) => p !== hub && p.startsWith(hub)).length;
+const navMin = new Map(categories.map((c) => [`/${c.slug}/`, c.primaryNavMinPosts ?? 1]));
+const navHubs = new Set(hubs.filter((hub) => postCount(hub) >= navMin.get(hub)));
 
 // 색인 정책(04 1장): 404·검색은 항상 noindex, sitemap 제외. 신뢰 페이지 4종은 index지만 sitemap 제외
 const ALWAYS_NOINDEX = new Set(['/404.html', '/search/']);
@@ -209,12 +213,14 @@ for (const file of htmlFiles) {
   }
   // 필터·검색 URL(?status= ?q= 등)은 링크로 만들지 않는다(색인·sitemap 대상 아님, 크롤 트랩 방지)
   if (/href="[^"]*\?[^"]*\b(status|q|category|open)=/.test(html)) fail('필터·검색 URL 링크');
-  // 대분류 메뉴: 글이 있는 대분류는 모두, 글이 없는 대분류는 어디에서도 링크하지 않는다
+  // 대분류 메뉴: 노출 기준 이상인 대분류는 모두 메뉴에, 기준 미만(글은 있음)은 메뉴에 두지 않고, 글이 없는 대분류는 어디에서도 링크하지 않는다
   const nav = html.match(/<nav id="site-nav"[\s\S]*?<\/nav>/)?.[0] ?? '';
   for (const hub of hubs) {
     if (emptyHubs.has(hub)) {
       if (path !== hub && html.includes(`href="${hub}"`)) fail(`공개 글 없는 카테고리 링크 ${hub}`);
-    } else if (!nav.includes(`href="${hub}"`)) fail(`메뉴에 없는 카테고리 ${hub}`);
+    } else if (navHubs.has(hub)) {
+      if (!nav.includes(`href="${hub}"`)) fail(`메뉴에 없는 카테고리 ${hub}`);
+    } else if (nav.includes(`href="${hub}"`)) fail(`메뉴 노출 기준(공개 글 ${navMin.get(hub)}편) 미만 카테고리가 메뉴에 있음 ${hub}`);
   }
   // 검색 카테고리 필터 칩도 같은 규칙
   if (path === '/search/') {

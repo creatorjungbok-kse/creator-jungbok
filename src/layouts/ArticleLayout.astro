@@ -83,6 +83,8 @@ const isGuide = article?.contentType === 'guide';
 const checklist = article?.checklist;
 // 사이트 도구(cost 글만): 결론 바로 아래. 도구가 없는 글에는 script가 하나도 붙지 않는다
 const Tool = article?.tool ? toolComponents[article.tool] : undefined;
+// 도구를 목차보다 먼저(글 frontmatter toolBeforeToc)
+const toolFirst = !!(Tool && article?.toolBeforeToc);
 
 // 목차: 화면에 나오는 순서 그대로(제목이 있는 구역만)
 const sec = (id: string, text: string, show: unknown) => (show ? [{ id, text, depth: 2 as const }] : []);
@@ -169,8 +171,9 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
           <>
             <SummaryBox summary={data.summary} />
             {/* 행동형(guide) 글은 결론 → 한눈에 보기 → 공식 행동 → 목차 → 준비할 것 순으로 핵심 답과 공식 링크를 먼저 둔다 */}
-            {!isGuide && <Toc headings={toc} variant="inline" />}
+            {!isGuide && !toolFirst && <Toc headings={toc} variant="inline" />}
             {Tool && <Tool />}
+            {!isGuide && toolFirst && <Toc headings={toc} variant="inline" />}
             {article?.quickFacts && <FactList title={article.quickFacts.title} items={article.quickFacts.items} variant="quick" />}
             {changeFacts && <FactList title="적용 시점" items={changeFacts} />}
             {priceItems && priceItems.length > 0 && <PriceTable caption="항목별 가격 범위" items={priceItems} researchedAt={data.researchedAt} />}

@@ -275,6 +275,8 @@ export const articleSchema = z
     priceItems: z.array(priceItemSchema).optional(),
     // 사이트 도구(계산기 등). 도구의 요금표·상수는 src/tools에만 두고 priceItems에 중복으로 쓰지 않는다
     tool: z.enum(toolIds).optional(),
+    // 계산하러 온 검색자가 바로 쓰도록 도구를 목차보다 먼저 둔다(선택). tool이 있을 때만
+    toolBeforeToc: z.boolean().optional(),
     // 한눈에 보기(결론 바로 아래): 상황·항목별 핵심 답
     quickFacts: z.strictObject({ title: text, items: z.array(z.strictObject({ label: text, value: text })).min(1) }).optional(),
     compare: compareSchema.optional(),
@@ -285,6 +287,7 @@ export const articleSchema = z
   })
   .superRefine((d, ctx) => {
     if (d.contentType === 'cost' && !d.priceItems?.length && !d.tool) ctx.addIssue({ code: 'custom', path: ['priceItems'], message: 'cost 글은 priceItems 또는 tool이 필요하다' });
+    if (d.toolBeforeToc && !d.tool) ctx.addIssue({ code: 'custom', path: ['toolBeforeToc'], message: 'toolBeforeToc는 tool이 있는 글에만 둔다' });
     if (d.tool && toolContentTypes[d.tool] !== d.contentType) ctx.addIssue({ code: 'custom', path: ['tool'], message: `tool ${d.tool}은 ${toolContentTypes[d.tool]} 글에만 둔다` });
     if ((d.contentType === 'change') !== (d.change !== undefined)) ctx.addIssue({ code: 'custom', path: ['change'], message: 'change 블록은 change 글에만, change 글에는 필수' });
     // compare 글: 고정 비교표(compare) 또는 비교 도구(tool) 중 하나만(v1)
