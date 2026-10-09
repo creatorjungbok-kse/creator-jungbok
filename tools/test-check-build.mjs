@@ -64,9 +64,11 @@ const addToMain = (xml) => edit('sitemap-main.xml', '</urlset>', `${xml}\n</urls
 const TOOL = 'living/electricity-bill-calculator/index.html';
 const VALID = 'data-valid-until="2026-12-31"';
 const kstPlus = (days) => new Date(Date.now() + 9 * 3600e3 + days * 864e5).toISOString().slice(0, 10);
+// 도구 틀에 재확인일 속성을 붙인다(선택 속성 data-review-from·data-review-note)
+const review = (from) => edit(TOOL, '<section class="tool-shell"', `<section class="tool-shell" data-review-from="${from}" data-review-note="2028년 최저임금 확인 필요"`);
 
 // 환경 production-empty = 지원·혜택 글이 없는 production 빌드
-// [환경, 이름, 망가뜨리기, 기대 문구, 기대 종료 코드(기본 1 = Fail, 0 = Warning만)]
+// [환경, 이름, 망가뜨리기, 기대 문구, 기대 종료 코드(기본 1 = Fail, 0 = Warning만), 나오면 안 되는 문구(선택)]
 const cases = [
   ['production', 'title 없음', edit('business/index.html', '<title>', '<title data-x>'), 'title 없음'],
   ['production', 'description 없음', edit('business/index.html', '<meta name="description"', '<meta name="x-description"'), 'description 없음'],
@@ -101,6 +103,9 @@ const cases = [
   ['production', '도구 상수 기한 지남', edit(TOOL, VALID, `data-valid-until="${kstPlus(-1)}"`), '도구 상수 기한 지남'],
   ['production', '도구 상수 기한 14일 이내', edit(TOOL, VALID, `data-valid-until="${kstPlus(7)}"`), '도구 상수 기한 임박', 0],
   ['preview', 'preview는 도구 기한을 막지 않음', edit(TOOL, VALID, `data-valid-until="${kstPlus(-1)}"`), 'OK (preview', 0],
+  ['production', '도구 상수 재확인일 당일: 도구·대상 표시 경고만', review(kstPlus(0)), `[electricity-bill] 2028년 최저임금 확인 필요 (reviewFrom ${kstPlus(0)}`, 0],
+  ['production', '도구 상수 재확인일 전날: 경고 없음', review(kstPlus(1)), 'OK (production', 0, '2028년 최저임금 확인 필요'],
+  ['production', '도구 상수 재확인일 형식 오류', review('2027-8-31'), '[electricity-bill] 도구 상수 재확인일 형식 오류 2027-8-31'],
   ['production-empty', '빈 카테고리(benefits)를 메뉴에 링크', edit('business/index.html', '<nav id="site-nav" class="site-nav" popover aria-label="카테고리"', '<nav id="site-nav" class="site-nav" popover aria-label="카테고리"><a href="/benefits/">지원·혜택</a'), '공개 글 없는 카테고리 링크 /benefits/'],
   ['production-empty', '빈 카테고리 허브 색인', edit('benefits/index.html', '<meta name="robots" content="noindex, follow">', ''), 'benefits/index.html: robots noindex 0건'],
   ['production-empty', '빈 카테고리 허브가 sitemap에', edit('sitemap-benefits.xml', '</urlset>', `${loc('/benefits/')}\n</urlset>`), '/benefits/: 공개 글 없는 카테고리가 sitemap에 있음'],
@@ -131,12 +136,12 @@ try {
     if (!ok) failed++;
     console.log(`${ok ? 'PASS' : 'FAIL'}  정상 ${env} 빌드 통과${ok ? '' : `\n${r.out.slice(-1500)}`}`);
   }
-  for (const [env, name, mutate, expected, status = 1] of cases) {
+  for (const [env, name, mutate, expected, status = 1, absent] of cases) {
     const dir = join(work, `case-${cases.findIndex((c) => c[1] === name)}`);
     cpSync(dists[env], dir, { recursive: true });
     mutate(dir);
     const r = check(env, dir);
-    const ok = r.status === status && r.out.includes(expected);
+    const ok = r.status === status && r.out.includes(expected) && !(absent && r.out.includes(absent));
     if (!ok) failed++;
     const evidence = r.out.split('\n').find((l) => l.includes(expected))?.trim();
     console.log(`${ok ? 'PASS' : 'FAIL'}  ${name}${ok ? `  ← ${evidence}` : `\n${r.out.slice(-1500)}`}`);

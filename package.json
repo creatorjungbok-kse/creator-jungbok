@@ -17,7 +17,7 @@
     "test:links": "node --test tools/test-action-links.mjs",
     "test:related": "node --test tools/test-related.mjs",
     "test:tracking": "node --test tools/test-tracking.mjs",
-    "test:tools": "node --test tools/test-electricity.mjs tools/test-mvno.mjs",
+    "test:tools": "node --test tools/test-electricity.mjs tools/test-mvno.mjs tools/test-payroll-shared.mjs tools/test-weekly-holiday-pay.mjs",
     "test:seo": "node tools/test-check-build.mjs"
   },
   "dependencies": {

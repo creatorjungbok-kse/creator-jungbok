@@ -1,0 +1,561 @@
+---
+// 주휴수당 계산기 v1. 확정 문서(docs/ready/weekly-holiday-pay/spec.md)를 그대로 옮긴다 — 계산식·판정·문구를 여기서 바꾸지 않는다.
+// 계산·판정은 src/lib/payroll/에만 있고, 이 컴포넌트는 결과를 그리기만 한다.
+// 입력값·금액·판정 결과는 저장·전송하지 않는다(form 제출 없음, 텍스트 입력칸에 name 없음, URL·GA 전송 없음).
+// JavaScript가 없으면 data-js-only로 입력을 숨기고 noscript 안의 정적 예시(주 20시간·통상근로자 주 5일)만 보인다.
+import ToolShell from '../ToolShell.astro';
+import { weeklyHolidayPay as c } from '../../tools/weekly-holiday-pay/constants';
+import { commonSources } from '../../data/sources';
+import { minimumWages, minimumWageFor, defaultYear } from '../../lib/payroll/shared/minimum-wage.ts';
+import { kstDate } from '../../lib/payroll/shared/korea-time.ts';
+import { roundHalfUpWon } from '../../lib/payroll/shared/money.ts';
+import { calcAmounts, hoursLabel } from '../../lib/payroll/weekly-holiday-pay/calculation.ts';
+import { formatDate } from '../../lib/format';
+
+const won = (n: number) => `${n.toLocaleString('ko-KR')}원`;
+const day = (s: string) => formatDate(new Date(s));
+// noscript 예시: 빌드 날짜의 연도 최저임금(없으면 마지막 연도), 주 20시간, 개근, 통상근로자 주 5일
+const exampleWage = (minimumWageFor(defaultYear(kstDate()) ?? 0) ?? minimumWages[minimumWages.length - 1]).hourly;
+const exampleHours10 = 200;
+const ex = calcAmounts(exampleWage, exampleHours10);
+const sources = c.sourceIds.map((id) => commonSources.find((s) => s.id === id)).filter((s) => s !== undefined);
+const years = minimumWages.map((m) => m.year);
+---
+
+<ToolShell id="weekly-holiday-pay" title="주휴수당 계산기" validUntil={c.validUntil} reviewFrom={c.reviewFrom} reviewNote={c.reviewNote}>
+  <p class="tool-scope">일반적인 단시간근로 사례용 · 매주 같은 시간을 일하고 그 주를 개근한 근로자 기준</p>
+  <noscript><p class="tool-noscript">계산기는 JavaScript가 켜져 있어야 동작합니다. 아래 예시 결과와 계산 근거를 참고하세요.</p></noscript>
+
+  <div class="tool-form" data-whp-form data-js-only>
+    <fieldset>
+      <legend class="tool-label">적용연도</legend>
+      <div class="tool-choices">
+        {
+          years.map((y) => (
+            <label class="tool-choice">
+              <input type="radio" name="whp-year" value={y} />
+              <span>
+                {y}년{y === years[years.length - 1] && y !== years[0] ? <small class="whp-from"> ({day(minimumWageFor(y)!.from)}부터 적용)</small> : null}
+                <small class="whp-ended" data-whp-ended={y} hidden> (적용기간 종료)</small>
+              </span>
+            </label>
+          ))
+        }
+      </div>
+      <p class="tool-notice whp-stale" data-whp-stale hidden></p>
+    </fieldset>
+
+    <div class="tool-field">
+      <label class="tool-label" for="whp-wage">시급</label>
+      <div class="tool-input">
+        <input id="whp-wage" type="text" inputmode="numeric" autocomplete="off" maxlength="9" aria-describedby="whp-wage-error" />
+        <span aria-hidden="true">원</span>
+      </div>
+      <button class="whp-fill" type="button" data-whp-fill hidden></button>
+      <p id="whp-wage-error" class="tool-error" data-whp-error="wage"></p>
+    </div>
+
+    <div class="tool-field">
+      <label class="tool-label" for="whp-hours">1주 소정근로시간</label>
+      <div class="tool-input">
+        <input id="whp-hours" type="text" inputmode="decimal" autocomplete="off" maxlength="5" aria-describedby="whp-hours-hint whp-hours-error" />
+        <span aria-hidden="true">시간</span>
+      </div>
+      <p id="whp-hours-hint" class="tool-hint">계약서상 매주 일하기로 한 시간. 연장근로는 빼고 입력</p>
+      <p id="whp-hours-error" class="tool-error" data-whp-error="hours"></p>
+    </div>
+
+    <fieldset data-whp-branch="five-day-standard" hidden aria-describedby="whp-five-hint whp-five-error">
+      <legend class="tool-label">같은 종류의 업무를 하는 일반적인 통상근로자는 주 5일 근무하나요?</legend>
+      <p id="whp-five-hint" class="tool-hint whp-hint-top">같은 업무를 하는 일반 근로자의 근무일수를 기준으로 확인합니다.</p>
+      <div class="tool-choices">
+        <label class="tool-choice"><input type="radio" name="whp-five" value="yes" /><span>예</span></label>
+        <label class="tool-choice"><input type="radio" name="whp-five" value="no-or-unknown" /><span>아니오·모름</span></label>
+      </div>
+      <p id="whp-five-error" class="tool-error" data-whp-error="five"></p>
+    </fieldset>
+
+    <fieldset data-whp-branch="work-pattern-40" hidden aria-describedby="whp-pattern-error">
+      <legend class="tool-label">근무 형태</legend>
+      <div class="tool-choices">
+        <label class="tool-choice"><input type="radio" name="whp-pattern" value="five-days-8h" /><span>주 5일, 하루 8시간씩</span></label>
+        <label class="tool-choice"><input type="radio" name="whp-pattern" value="uneven" /><span>요일마다 시간이 달라요</span></label>
+      </div>
+      <p id="whp-pattern-error" class="tool-error" data-whp-error="pattern"></p>
+    </fieldset>
+
+    <fieldset aria-describedby="whp-attendance-hint whp-attendance-error">
+      <legend class="tool-label">이번 주 개근</legend>
+      <div class="tool-choices">
+        <label class="tool-choice"><input type="radio" name="whp-attendance" value="full" /><span>개근했어요</span></label>
+        <label class="tool-choice"><input type="radio" name="whp-attendance" value="absent" /><span>결근이 있어요</span></label>
+      </div>
+      <p id="whp-attendance-hint" class="tool-hint">지각·조퇴·휴가·휴일·휴업은 결근이 아닙니다</p>
+      <p id="whp-attendance-error" class="tool-error" data-whp-error="attendance"></p>
+    </fieldset>
+
+    <button class="tool-submit" type="button" disabled>계산하기</button>
+  </div>
+
+  <div class="whp-output" data-whp-output>
+    <p class="whp-warning" data-whp-warning hidden></p>
+    <div aria-live="polite" aria-atomic="true">
+      <div class="tool-result" data-whp-view="amount" hidden>
+        <div class="whp-headline">
+          <p class="whp-headline__label">이번 주 예상 주휴수당</p>
+          <p class="whp-headline__value"><strong data-whp="holidayPay"></strong></p>
+          <p class="whp-headline__formula" data-whp="formula"></p>
+        </div>
+        <dl class="whp-breakdown">
+          <div class="whp-breakdown__total">
+            <dt>이번 주 예상 세전 임금</dt>
+            <dd data-whp="gross"></dd>
+          </div>
+          <div>
+            <dt>소정근로 임금 <span data-whp="regularFormula"></span></dt>
+            <dd data-whp="regularPay"></dd>
+          </div>
+          <div>
+            <dt>주휴수당</dt>
+            <dd data-whp="holidayPayRow"></dd>
+          </div>
+        </dl>
+        <p class="tool-notice">연장·야간·휴일근로수당, 각종 수당·상여금, 세금·4대보험 공제는 포함하지 않습니다.</p>
+        <div class="whp-rounding" data-whp-rounding hidden>
+          <p>표시 편의를 위해 원 단위로 반올림한 예상액입니다. 원 미만 처리 방식은 법령으로 정해진 규칙이 아니라 이 계산기의 표시 방식입니다.</p>
+          <p>항목별 반올림 때문에 합계와 1원 차이가 날 수 있습니다.</p>
+        </div>
+        <p class="whp-conditions" data-whp="conditions"></p>
+      </div>
+      <div class="tool-result whp-message" data-whp-view="message" hidden>
+        <p class="whp-message__title" data-whp="messageTitle"></p>
+        <p class="whp-message__body" data-whp="messageBody"></p>
+      </div>
+    </div>
+  </div>
+
+  <noscript>
+    <div class="tool-result">
+      <div class="whp-headline">
+        <p class="whp-headline__label">예시 · 이번 주 예상 주휴수당</p>
+        <p class="whp-headline__value"><strong>{won(roundHalfUpWon(ex.holidayPay))}</strong></p>
+        <p class="whp-headline__formula">주휴시간 {hoursLabel(ex.holidayHours10)}시간 × 시급 {won(exampleWage)}</p>
+      </div>
+      <dl class="whp-breakdown">
+        <div class="whp-breakdown__total">
+          <dt>이번 주 예상 세전 임금</dt>
+          <dd>{won(roundHalfUpWon(ex.grossWeekly))}</dd>
+        </div>
+        <div>
+          <dt>소정근로 임금 {hoursLabel(exampleHours10)}시간 × {won(exampleWage)}</dt>
+          <dd>{won(roundHalfUpWon(ex.regularPay))}</dd>
+        </div>
+        <div>
+          <dt>주휴수당</dt>
+          <dd>{won(roundHalfUpWon(ex.holidayPay))}</dd>
+        </div>
+      </dl>
+      <p class="tool-notice">연장·야간·휴일근로수당, 각종 수당·상여금, 세금·4대보험 공제는 포함하지 않습니다.</p>
+      <p class="whp-conditions">입력한 조건: 주 {hoursLabel(exampleHours10)}시간 · 개근 · 같은 종류 업무 통상근로자 주 5일 근무</p>
+    </div>
+  </noscript>
+
+  <div class="whp-limits">
+    <p class="whp-limits__lead">이 계산기는 일반적인 단시간근로 사례용입니다. 입·퇴사 주, 월급제, 불규칙 근무 등은 계산 결과를 확정하지 않습니다.</p>
+    <p class="whp-limits__title">이 계산기로 판단하지 않는 경우</p>
+    <ul>
+      <li>주마다 근무시간이 바뀌어 4주 평균을 따져야 하는 경우</li>
+      <li>입사한 주·퇴사하는 주, 7일이 안 되는 단기 근무 — 1주간 근로관계가 유지되고 개근했다면 다음 주 근무 예정이 없어도 발생한다는 것이 고용노동부 안내입니다</li>
+      <li>그 주 소정근로일을 전부 연차·유급휴일로 쉰 경우</li>
+      <li>병가·휴직 등 결근인지 애매한 사유</li>
+      <li>월급제(월급에 주휴수당이 포함됐는지)</li>
+      <li>근로기준법상 근로자인지 애매한 경우(3.3% 프리랜서 등)</li>
+    </ul>
+    <p>이런 경우는 근로계약서와 사업장 규정을 확인하고, 고용노동부 고객상담센터(1350)에 문의하세요.</p>
+  </div>
+
+  <details class="whp-basis">
+    <summary class="disclosure">계산 근거</summary>
+    <div class="whp-basis__body">
+      <p class="whp-basis__term">계산식</p>
+      <ul>
+        <li>주휴시간 = 1주 소정근로시간 ÷ 5 (같은 종류 업무의 통상근로자가 주 5일 근무할 때 시행령 별표2 계산과 같은 값)</li>
+        <li>주휴수당 = 주휴시간 × 시급</li>
+        <li>이번 주 예상 세전 임금 = 소정근로 임금(1주 소정근로시간 × 시급) + 주휴수당</li>
+      </ul>
+      <p class="whp-basis__term">적용 조건</p>
+      <ul>
+        <li>계산함: 매주 같은 시간을 일하는 단시간근로자(1주 소정근로시간 15시간 이상 40시간 미만), 그 주 개근, 같은 종류 업무의 통상근로자 주 5일 근무</li>
+        <li>계산함: 주 40시간이면서 주 5일·하루 8시간으로 매일 같은 경우 → 주휴 8시간</li>
+        <li>비대상: 주 15시간 미만, 개근 아님</li>
+        <li>계산하지 않음: 통상근로자 주 5일 여부 아니오·모름, 주 40시간인데 요일별 시간이 다름</li>
+      </ul>
+      <p class="whp-basis__term">표시 규칙</p>
+      <ul>
+        <li>원 단위 반올림(0.5원 이상 올림, 0.5원 미만 내림)은 이 계산기의 표시 방식입니다.</li>
+      </ul>
+      <p class="whp-basis__term">최저임금</p>
+      <ul>
+        {minimumWages.map((m) => <li>{m.year}년 시간급 {won(m.hourly)} (적용 {day(m.from)}~{day(m.to)})</li>)}
+      </ul>
+      <p class="whp-basis__term">출처</p>
+      <ul>
+        {sources.map((s) => <li>{s.title} — {s.publisher}</li>)}
+      </ul>
+      <p>법률·시행령은 법적 근거이고, 고용노동부 고객상담센터 상담 안내는 고용노동부의 공식 안내입니다(법령과 같은 효력은 아닙니다).</p>
+      <p>확인일 {day(c.checkedAt)}</p>
+    </div>
+  </details>
+</ToolShell>
+
+<script>
+  // 입력값은 이 페이지 안에서만 계산한다(저장·전송 없음). 계산·판정은 lib/payroll의 함수만 쓴다.
+  import { kstDate } from '../../lib/payroll/shared/korea-time.ts';
+  import { isWholeWon, roundHalfUpWon } from '../../lib/payroll/shared/money.ts';
+  import { parseScaled, parseWonInt } from '../../lib/payroll/shared/validation.ts';
+  import { belowMinimumWage, defaultYear, hasEnded, isStale, minimumWageFor, minimumWages } from '../../lib/payroll/shared/minimum-wage.ts';
+  import { branchFor, type FiveDayStandard, type WorkPattern40 } from '../../lib/payroll/weekly-holiday-pay/eligibility.ts';
+  import { evaluate, hoursLabel } from '../../lib/payroll/weekly-holiday-pay/calculation.ts';
+  import { HOURS_DECIMALS, HOURS_MAX10, HOURS_MIN10, HOURS_STEP10, WAGE_MAX, WAGE_MIN } from '../../lib/payroll/weekly-holiday-pay/rules.ts';
+
+  const won = (n: number) => `${n.toLocaleString('ko-KR')}원`;
+
+  const root = document.querySelector<HTMLElement>('[data-tool="weekly-holiday-pay"]');
+  const form = root?.querySelector<HTMLElement>('[data-whp-form]');
+  if (root && form) {
+    const $ = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
+    const radios = (name: string) => [...form.querySelectorAll<HTMLInputElement>(`input[name="${name}"]`)];
+    const checked = (name: string) => radios(name).find((r) => r.checked)?.value;
+    const wageInput = $<HTMLInputElement>('#whp-wage');
+    const hoursInput = $<HTMLInputElement>('#whp-hours');
+    const fill = $<HTMLButtonElement>('[data-whp-fill]');
+    const warning = $('[data-whp-warning]');
+    const views = { amount: $('[data-whp-view="amount"]'), message: $('[data-whp-view="message"]') };
+    const set = (key: string, text: string) => {
+      for (const el of root.querySelectorAll<HTMLElement>(`[data-whp="${key}"]`)) el.textContent = text;
+    };
+    const errorEl = (key: string) => $(`[data-whp-error="${key}"]`);
+    const branchEls = {
+      'five-day-standard': $('[data-whp-branch="five-day-standard"]'),
+      'work-pattern-40': $('[data-whp-branch="work-pattern-40"]'),
+    };
+    // 사용자가 결과를 한 번이라도 봤는가(이후 입력이 바뀌면 다시 계산)
+    let shown = false;
+    // 정상 결과 상태(계산됨·비대상·추가 확인)에 처음 도달했는가. 계산기 사용 신호(tool_use, 도구 이름만)는
+    // 이 시점에 1번 보낸다 — 신호 발송 줄은 계산기 글(URL)이 정해지는 커밋에서 BaseLayout toolPages·test-tracking과 함께 추가한다
+    let reachedResult = false;
+
+    // ── 적용연도: 한국 날짜 기준 기본값, 그 해 상수가 없으면 자동 선택하지 않는다 ──
+    const today = kstDate();
+    const initialYear = defaultYear(today);
+    for (const r of radios('whp-year')) r.checked = Number(r.value) === initialYear;
+    for (const el of root.querySelectorAll<HTMLElement>('[data-whp-ended]')) el.hidden = !hasEnded(Number(el.dataset.whpEnded), today);
+    if (isStale(today) && today > minimumWages[minimumWages.length - 1].to) {
+      const stale = $('[data-whp-stale]');
+      stale.textContent = `${today.slice(0, 4)}년 최저임금이 아직 반영되지 않았습니다. 시급을 직접 입력해 계산하세요.`;
+      stale.hidden = false;
+    }
+    const year = () => {
+      const v = checked('whp-year');
+      return v === undefined ? undefined : Number(v);
+    };
+    const updateFill = () => {
+      const y = year();
+      const m = y === undefined ? undefined : minimumWageFor(y);
+      fill.hidden = m === undefined;
+      if (m) fill.textContent = `${m.year}년 최저임금 ${won(m.hourly)}으로 채우기`;
+    };
+    updateFill();
+    fill.addEventListener('click', () => {
+      const m = minimumWageFor(year() ?? 0);
+      if (!m) return;
+      wageInput.value = m.hourly.toLocaleString('ko-KR');
+      onChange();
+    });
+
+    // ── 분기 질문: 주 시간에 따라 하나만 보인다. 범위가 바뀌면 숨긴 질문의 선택은 초기화 ──
+    let currentBranch: string = 'none';
+    const updateBranch = () => {
+      const p = parseScaled(hoursInput.value, { decimals: HOURS_DECIMALS, step: HOURS_STEP10, min: HOURS_MIN10, max: HOURS_MAX10 });
+      const branch = p.ok ? branchFor(p.value) : 'none';
+      if (branch === currentBranch) return;
+      currentBranch = branch;
+      for (const [key, el] of Object.entries(branchEls)) {
+        const visible = key === branch;
+        if (!visible) {
+          for (const r of el.querySelectorAll<HTMLInputElement>('input')) r.checked = false;
+          el.querySelector<HTMLElement>('.tool-error')!.textContent = '';
+        }
+        el.hidden = !visible;
+      }
+    };
+
+    const showMessage = (title: string, body: string) => {
+      set('messageTitle', title);
+      set('messageBody', body);
+      views.amount.hidden = true;
+      views.message.hidden = false;
+    };
+    const hideResult = () => {
+      views.amount.hidden = true;
+      views.message.hidden = true;
+      warning.hidden = true;
+    };
+
+    // 입력 검사(스펙 2번). 오류가 있으면 null
+    const read = (showErrors: boolean) => {
+      const errors: Record<string, string> = { wage: '', hours: '', five: '', pattern: '', attendance: '' };
+      const w = parseWonInt(wageInput.value, { min: WAGE_MIN, max: WAGE_MAX });
+      // 범위 초과(숫자만 입력했는데 상한보다 큼)만 상한 문구, 나머지(빈 칸·0·소수·문자)는 원 단위 문구
+      const wageDigits = wageInput.value.trim().replace(/,/g, '');
+      const overWage = w.ok === false && w.code === 'range' && /^\d+$/.test(wageDigits) && wageDigits.replace(/^0+/, '').length > 0 && Number(wageDigits) > WAGE_MAX;
+      if (!w.ok) errors.wage = overWage ? '시급은 1,000,000원 이하로 입력해 주세요.' : '시급을 원 단위 숫자로 입력해 주세요.';
+      const h = parseScaled(hoursInput.value, { decimals: HOURS_DECIMALS, step: HOURS_STEP10, min: HOURS_MIN10, max: HOURS_MAX10 });
+      if (!h.ok) {
+        const over = h.code === 'range' && /^\d+(\.\d+)?$/.test(hoursInput.value.trim()) && Number(hoursInput.value.trim()) > HOURS_MAX10 / 10;
+        errors.hours = over ? '1주 소정근로시간은 40시간까지입니다. 연장근로는 빼고 입력해 주세요.' : '0.5시간 단위로 입력해 주세요.';
+      }
+      const attendance = checked('whp-attendance');
+      if (attendance === undefined) errors.attendance = '이번 주 개근 여부를 골라 주세요.';
+      const five = checked('whp-five') as FiveDayStandard | undefined;
+      const pattern = checked('whp-pattern') as WorkPattern40 | undefined;
+      if (h.ok) {
+        const branch = branchFor(h.value);
+        if (branch === 'five-day-standard' && five === undefined) errors.five = '같은 업무 통상근로자의 주 근무일을 골라 주세요.';
+        if (branch === 'work-pattern-40' && pattern === undefined) errors.pattern = '근무 형태를 골라 주세요.';
+      }
+      if (showErrors) {
+        for (const [key, msg] of Object.entries(errors)) errorEl(key).textContent = msg;
+        for (const [el, msg] of [[wageInput, errors.wage], [hoursInput, errors.hours]] as const) {
+          if (msg) el.setAttribute('aria-invalid', 'true');
+          else el.removeAttribute('aria-invalid');
+        }
+      }
+      if (!w.ok || !h.ok || Object.values(errors).some(Boolean)) return null;
+      return { wage: w.value, hours10: h.value, fullAttendance: attendance === 'full', fiveDayStandard: five, workPattern40: pattern };
+    };
+
+    const render = (input: NonNullable<ReturnType<typeof read>>) => {
+      const y = year();
+      const m = y === undefined ? undefined : minimumWageFor(y);
+      warning.hidden = !(m && belowMinimumWage(input.wage, m.year));
+      if (m) warning.textContent = `입력한 시급이 ${m.year}년 최저임금(${won(m.hourly)})보다 낮습니다.`;
+
+      const r = evaluate(input.wage, input);
+      if (r.kind === 'amount') {
+        const amounts = [r.holidayPay, r.regularPay, r.grossWeekly];
+        const approx = (x: (typeof amounts)[number]) => `${isWholeWon(x) ? '' : '약 '}${won(roundHalfUpWon(x))}`;
+        set('holidayPay', approx(r.holidayPay));
+        set('holidayPayRow', approx(r.holidayPay));
+        set('formula', `주휴시간 ${hoursLabel(r.holidayHours10)}시간 × 시급 ${won(input.wage)}`);
+        set('regularFormula', `${hoursLabel(input.hours10)}시간 × ${won(input.wage)}`);
+        set('regularPay', approx(r.regularPay));
+        set('gross', approx(r.grossWeekly));
+        $('[data-whp-rounding]').hidden = amounts.every(isWholeWon);
+        const shape = input.hours10 === 400 ? '주 5일, 하루 8시간 근무' : '같은 종류 업무 통상근로자 주 5일 근무';
+        set('conditions', `입력한 조건: 주 ${hoursLabel(input.hours10)}시간 · 개근 · ${shape}`);
+        views.message.hidden = true;
+        views.amount.hidden = false;
+      } else if (r.kind === 'not-eligible' && r.reason === 'under-15h') {
+        showMessage(
+          '입력한 조건에서는 주휴일 규정 적용 대상이 아닙니다',
+          '4주 평균 1주 소정근로시간이 15시간 미만이면 근로기준법 제55조(유급휴일)가 적용되지 않습니다 (근로기준법 제18조제3항).',
+        );
+      } else if (r.kind === 'not-eligible') {
+        showMessage(
+          '소정근로일 개근 요건을 충족하지 않아 일반적인 주휴수당 계산을 진행하지 않습니다',
+          "1주 소정근로일을 개근해야 주휴수당이 생깁니다 (근로기준법 시행령 제30조). 지각·조퇴·휴가·휴일·휴업은 결근이 아니니, 해당한다면 '개근했어요'로 다시 계산해 보세요.",
+        );
+      } else if (r.kind === 'stop' && r.reason === 'standard-not-5day') {
+        showMessage(
+          '근무일 구조에 따라 계산식이 달라질 수 있어 이 계산기에서는 금액을 확정하지 않습니다',
+          "단시간근로자의 1일 소정근로시간은 '4주 소정근로시간 ÷ 같은 종류 업무 통상근로자의 4주 총 소정근로일수'로 정합니다 (근로기준법 시행령 별표2). 통상근로자의 근무일수를 확인한 뒤 이 식으로 계산하거나, 고용노동부 1350에 문의하세요.",
+        );
+      } else if (r.kind === 'stop') {
+        showMessage(
+          '이 경우는 계산기로 확정하지 않습니다',
+          "고용노동부 안내는 주휴시간을 '정상근로일의 소정근로시간'으로 봅니다. 예: 월~금 7시간 + 토 5시간이면 주휴는 7시간입니다. 사업장 기준을 확인하거나 고용노동부 1350에 문의하세요.",
+        );
+      } else {
+        return false;
+      }
+      shown = true;
+      if (!reachedResult) {
+        reachedResult = true;
+        // (글 연결 커밋에서) document.dispatchEvent(new CustomEvent(<계산기 사용 신호>, { detail: 'weekly-holiday-pay' }));
+      }
+      return true;
+    };
+
+    const run = () => {
+      const input = read(true);
+      if (!input) {
+        hideResult();
+        return;
+      }
+      if (!render(input)) return;
+      // 모바일에서 결과가 화면 밖이면 결과로 스크롤
+      const output = $('[data-whp-output]');
+      if (output.getBoundingClientRect().top > window.innerHeight) {
+        const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        output.scrollIntoView({ block: 'start', behavior: smooth ? 'smooth' : 'auto' });
+      }
+    };
+
+    // 결과를 본 뒤 입력이 바뀌면: 유효하면 다시 계산, 아니면 이전 결과를 숨긴다(오류 문구는 계산하기를 누를 때만)
+    const onChange = () => {
+      updateBranch();
+      if (!shown) return;
+      const input = read(false);
+      if (input) render(input);
+      else hideResult();
+    };
+
+    const submit = form.querySelector<HTMLButtonElement>('.tool-submit')!;
+    submit.addEventListener('click', run);
+    // 입력칸에서 Enter = 계산
+    form.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && e.target instanceof HTMLInputElement) {
+        e.preventDefault();
+        run();
+      }
+    });
+    wageInput.addEventListener('input', onChange);
+    hoursInput.addEventListener('input', onChange);
+    for (const name of ['whp-five', 'whp-pattern', 'whp-attendance']) for (const r of radios(name)) r.addEventListener('change', onChange);
+    for (const r of radios('whp-year')) {
+      r.addEventListener('change', () => {
+        updateFill();
+        onChange();
+      });
+    }
+    submit.disabled = false;
+  }
+</script>
+
+<style>
+  .whp-from,
+  .whp-ended {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    font-weight: normal;
+  }
+
+  .whp-hint-top {
+    margin: 0 0 var(--space-2);
+  }
+
+  .whp-fill {
+    justify-self: start;
+    min-height: var(--touch);
+    margin-top: var(--space-2);
+    padding-inline: var(--space-4);
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-pill);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font: inherit;
+    font-size: var(--text-sm);
+    cursor: pointer;
+  }
+
+  .whp-output {
+    display: grid;
+    gap: var(--space-3);
+    scroll-margin-top: var(--space-6);
+  }
+
+  .whp-warning {
+    padding: var(--space-3) var(--space-4);
+    border-left: 3px solid var(--color-status-closing);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+  }
+
+  .whp-headline__label,
+  .whp-message__title {
+    font-weight: var(--weight-semibold);
+  }
+
+  .whp-headline__value strong {
+    display: block;
+    font-size: var(--text-2xl);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+
+  .whp-headline__formula,
+  .whp-conditions,
+  .whp-rounding,
+  .whp-message__body {
+    font-size: var(--text-sm);
+  }
+
+  .whp-headline__formula,
+  .whp-conditions,
+  .whp-rounding {
+    color: var(--color-text-muted);
+  }
+
+  .whp-rounding {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .whp-breakdown {
+    display: grid;
+    font-size: var(--text-sm);
+  }
+
+  .whp-breakdown div {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-block: var(--space-2);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .whp-breakdown dd {
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .whp-breakdown__total {
+    font-weight: var(--weight-bold);
+  }
+
+  .whp-limits,
+  .whp-basis__body {
+    display: grid;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+  }
+
+  .whp-limits ul,
+  .whp-basis__body ul {
+    display: grid;
+    gap: var(--space-1);
+    padding-left: 1.25em;
+    list-style: disc;
+  }
+
+  .whp-limits__title,
+  .whp-basis__term {
+    font-weight: var(--weight-semibold);
+  }
+
+  .whp-basis summary {
+    display: flex;
+    align-items: center;
+    min-height: var(--touch);
+    font-weight: var(--weight-semibold);
+    cursor: pointer;
+  }
+
+  .whp-basis__body {
+    margin-top: var(--space-3);
+  }
+</style>

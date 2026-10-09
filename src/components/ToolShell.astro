@@ -2,16 +2,27 @@
 // 사이트 도구(계산기 등) 공통 틀. 틀 전체가 광고 금지 영역(data-ad-protected="tool")이다.
 // 입력값은 저장·전송하지 않는다: form을 제출하지 않고(입력칸에 name 없음), GA 이벤트도 보내지 않는다.
 // data-valid-until: 도구 상수의 유효 기한. production check-build가 기한 14일 전부터 Warning, 지나면 Fail로 막는다.
+// data-review-from·data-review-note(선택): 상수 재확인 시작일과 확인할 내용. 그날부터 production check-build가 Warning만 낸다(빌드는 통과).
 export interface Props {
   id: string;
   title: string;
   validUntil?: string;
+  reviewFrom?: string;
+  reviewNote?: string;
 }
 
-const { id, title, validUntil } = Astro.props;
+const { id, title, validUntil, reviewFrom, reviewNote } = Astro.props;
 ---
 
-<section class="tool-shell" data-ad-protected="tool" data-tool={id} data-valid-until={validUntil} aria-labelledby={`${id}-title`}>
+<section
+  class="tool-shell"
+  data-ad-protected="tool"
+  data-tool={id}
+  data-valid-until={validUntil}
+  data-review-from={reviewFrom}
+  data-review-note={reviewNote}
+  aria-labelledby={`${id}-title`}
+>
   <h2 id={`${id}-title`}>{title}</h2>
   <slot />
 </section>

@@ -2,8 +2,10 @@
 import type { ToolId } from '../../tools/registry';
 import ElectricityBill from './ElectricityBill.astro';
 import MvnoPlanCost from './MvnoPlanCost.astro';
+import WeeklyHolidayPay from './WeeklyHolidayPay.astro';
 
 export const toolComponents: Record<ToolId, typeof ElectricityBill> = {
   'electricity-bill': ElectricityBill,
   'mvno-plan-cost': MvnoPlanCost,
+  'weekly-holiday-pay': WeeklyHolidayPay,
 };

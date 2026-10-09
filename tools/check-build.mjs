@@ -257,6 +257,15 @@ for (const file of htmlFiles) {
       else if (until < todayKst) fail(`도구 상수 기한 지남(${until}, 오늘 ${todayKst}): src/tools 상수를 갱신하세요`);
       else if ((Date.parse(until) - Date.parse(todayKst)) / 864e5 <= TOOL_EXPIRY_WARN_DAYS) warn(`도구 상수 기한 임박(${until}까지, 오늘 ${todayKst})`);
     }
+    // 도구 상수 재확인일(선택 속성): 그날부터 Warning만(빌드는 통과). 어느 도구·무엇을 확인할지 함께 보여 준다
+    for (const [tag] of html.matchAll(/<section\b[^>]*\sdata-review-from="[^"]*"[^>]*>/g)) {
+      const attr = (name) => tag.match(new RegExp(`\\s${name}="([^"]*)"`))?.[1];
+      const from = attr('data-review-from');
+      const tool = attr('data-tool') ?? '도구';
+      const note = attr('data-review-note') ?? '상수 재확인 필요';
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(from)) fail(`[${tool}] 도구 상수 재확인일 형식 오류 ${from}`);
+      else if (from <= todayKst) warn(`[${tool}] ${decode(note)} (reviewFrom ${from}, 오늘 ${todayKst})`);
+    }
   }
 
   // 광고 슬롯(03 3·5·12·13장): 꺼져 있으면 0개. 켜져 있어도 광고 없는 페이지·main 밖·sidebar·보호 영역 안이나 바로 옆·공식 신청 버튼 위 금지
