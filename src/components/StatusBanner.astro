@@ -1,6 +1,6 @@
 ---
 // 지원사업 상세 상단의 상태 표시. 색이 아니라 문구로 상태를 전달한다. 광고 금지 영역.
-import { benefitStatus, statusLabels } from '../lib/benefit-status';
+import { benefitStatus, statusLabelFor } from '../lib/benefit-status';
 import { formatDate } from '../lib/format';
 import type { CollectionEntry } from 'astro:content';
 
@@ -15,8 +15,9 @@ const end = program.application.end;
 
 <div class={`status-banner status-banner--${status}`} data-ad-protected="status">
   <p class="status-banner__state">
-    <strong>{statusLabels[status]}</strong>{detail && <span> · {detail}</span>}
+    <strong>{statusLabelFor(status, program)}</strong>{detail && <span> · {detail}</span>}
   </p>
+  {program.statusNote && status !== 'closed' && status !== 'upcoming' && <p class="status-banner__note">{program.statusNote.text}</p>}
   {overridden && program.statusOverride && <p>{program.statusOverride.reason}</p>}
   {pauseReason && <p>{pauseReason}</p>}
   {!overridden && status === 'closed' && end && <p>이 지원사업은 {formatDate(end)} 신청이 종료되었습니다.</p>}

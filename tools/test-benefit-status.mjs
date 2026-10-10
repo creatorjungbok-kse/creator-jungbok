@@ -1,7 +1,7 @@
 // 지원사업 상태 계산 경계 테스트. 사용: npm run test:status
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { benefitStatus, CLOSING_SOON_DAYS } from '../src/lib/benefit-status.ts';
+import { benefitStatus, CLOSING_SOON_DAYS, statusLabelFor, statusLabels } from '../src/lib/benefit-status.ts';
 
 // frontmatter 날짜와 같은 형식(UTC 자정)
 const d = (ymd) => new Date(`${ymd}T00:00:00Z`);
@@ -53,3 +53,11 @@ test('일시 중단 다음 날 → 신청 가능으로 자동 전환', () => che
 test('일시 중단은 마감 임박보다 우선, 종료일까지면 재개 안내 없음', () =>
   check({ application: { ...withPause.application, pauses: [{ start: d('2026-12-30'), end: d('2026-12-31') }] } }, kst('2026-12-30'), 'paused', undefined));
 test('override가 일시 중단보다 우선', () => check({ ...withPause, statusOverride: { value: 'closed' } }, kst('2026-10-01'), 'closed', undefined));
+
+// 지역·예산별 조기 마감 제도(statusNote): 열려 있어도 '신청 가능'이라고 단정하지 않는다
+const note = { statusNote: { text: '지역 예산 소진 시 조기 마감', sourceId: 'x' } };
+test('statusNote + 신청 중 → 신청기간 중', () => assert.equal(statusLabelFor('open', note), '신청기간 중'));
+test('statusNote가 있어도 마감 임박·종료·예정·중단은 기본 문구', () => {
+  for (const s of ['closing-soon', 'closed', 'upcoming', 'paused']) assert.equal(statusLabelFor(s, note), statusLabels[s]);
+});
+test('statusNote 없으면 신청 가능', () => assert.equal(statusLabelFor('open', {}), '신청 가능'));

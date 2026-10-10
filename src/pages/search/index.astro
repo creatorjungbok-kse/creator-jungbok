@@ -101,7 +101,7 @@ const hasBenefitDocs = (await getAllContent()).some((i) => i.kind === 'benefit')
     const field = (name: string) => node.querySelector<HTMLElement>(`[data-f="${name}"]`)!;
     const badge = field('status');
     if (doc.status) {
-      badge.textContent = statusLabels[doc.status];
+      badge.textContent = doc.statusLabel ?? statusLabels[doc.status];
       badge.classList.add(`badge--${doc.status}`);
     } else badge.remove();
     field('type').textContent = typeLabels[doc.type];

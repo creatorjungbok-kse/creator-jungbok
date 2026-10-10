@@ -23,6 +23,7 @@ interface SourceFields {
     exclusions?: { sourceId: string }[];
     benefit: { sourceId: string };
     statusOverride?: { sourceId: string };
+    statusNote?: { sourceId: string };
     application?: { pauses?: { sourceId: string }[] };
   };
 }
@@ -46,6 +47,7 @@ export function sourceRefs(d: SourceFields): SourceRef[] {
           ...(p.exclusions ?? []).map((e, i) => s1(['program', 'exclusions', i, 'sourceId'], e.sourceId)),
           s1(['program', 'benefit', 'sourceId'], p.benefit.sourceId),
           ...(p.statusOverride ? [s1(['program', 'statusOverride', 'sourceId'], p.statusOverride.sourceId)] : []),
+          ...(p.statusNote ? [s1(['program', 'statusNote', 'sourceId'], p.statusNote.sourceId)] : []),
           ...(p.application?.pauses ?? []).map((x, i) => s1(['program', 'application', 'pauses', i, 'sourceId'], x.sourceId)),
         ]
       : []),

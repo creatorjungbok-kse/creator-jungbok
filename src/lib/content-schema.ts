@@ -186,6 +186,9 @@ const programSchema = z
     statusOverride: z
       .strictObject({ value: z.enum(['upcoming', 'open', 'closing-soon', 'closed']), reason: text, sourceId })
       .optional(),
+    // 전국 신청기간은 열려 있지만 지역·예산별로 먼저 닫힐 수 있는 제도(공식 S1 근거 필수).
+    // 있으면 '신청 가능' 대신 '신청기간 중'으로 표시하고, 상태 배너에 이 문구를 함께 보여준다
+    statusNote: z.strictObject({ text, sourceId }).optional(),
     lastStatusCheckedAt: date,
     officialSourceIds: z.array(sourceId).min(1),
     successorUrl: z.union([internalPath, z.url()]).optional(),

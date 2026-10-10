@@ -59,6 +59,7 @@ actionLinks:
     purpose: 카드 사용 안내 보기
     url: https://www.mnuri.kr/useOfCard/useInfo.do
     sourceId: local:mnuri-use
+related: [/benefits/youth-culture-pass/]
 faq:
   - question: 올해 다 못 쓴 문화누리카드 잔액은 내년에 쓸 수 있나요?
     answer: 아닙니다. 문화누리카드 누리집은 사용하지 않고 남은 지원금이 사업종료일(2026년 12월 31일 23시 59분)이 지나면 국고로 자동 반납되고 다음 연도로 이월되지 않는다고 안내합니다.

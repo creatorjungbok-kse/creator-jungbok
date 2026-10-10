@@ -2,7 +2,7 @@
 // 지원·혜택 목록 카드. 표시는 ArticleCard를 그대로 쓰고, 상태·기간·대상 요약만 계산한다.
 import ArticleCard, { type Props as ArticleCardProps } from './ArticleCard.astro';
 import { audiences } from '../data/audiences';
-import { benefitStatus } from '../lib/benefit-status';
+import { benefitStatus, statusLabelFor } from '../lib/benefit-status';
 import { applicationPeriod } from '../lib/format';
 import type { CollectionEntry } from 'astro:content';
 
@@ -27,6 +27,7 @@ const period = applicationPeriod(program.application);
   href={href}
   title={title}
   status={status}
+  statusLabel={statusLabelFor(status, program)}
   excerpt={`대상: ${who} · 혜택: ${program.benefit.text}`}
   meta={[period, detail].filter((m): m is string => Boolean(m))}
   variant={variant}

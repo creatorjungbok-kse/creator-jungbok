@@ -16,6 +16,12 @@ export const statusLabels: Record<BenefitStatus, string> = {
   closed: '신청 종료',
 };
 
+// 지역·예산별로 먼저 마감될 수 있는 제도(program.statusNote)는 '신청 가능'이라고 단정하지 않는다
+export const OPEN_WITH_NOTE_LABEL = '신청기간 중';
+export function statusLabelFor(status: BenefitStatus, program?: { statusNote?: unknown }): string {
+  return status === 'open' && program?.statusNote ? OPEN_WITH_NOTE_LABEL : statusLabels[status];
+}
+
 interface StatusInput {
   // pauses: 신청 기간 안의 공식 일시 중단 기간(예: 포인트 생성 처리기간). 그 날짜에만 '신청 일시 중단'
   application: { mode: 'period' | 'rolling' | 'until-budget'; start?: Date; end?: Date; pauses?: { start: Date; end: Date; reason?: string }[] };

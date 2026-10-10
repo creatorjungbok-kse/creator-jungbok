@@ -16,6 +16,8 @@ export interface Props {
   category?: string;
   // 지원·혜택 카드의 상태(BenefitCard가 계산해 넘긴다)
   status?: BenefitStatus;
+  // 상태 문구(없으면 기본 문구). 지역·예산별 마감 제도는 BenefitCard가 '신청기간 중'을 넘긴다
+  statusLabel?: string;
   excerpt?: string;
   meta?: string[];
   variant?: 'text' | 'feature' | 'stack' | 'row' | 'mini';
@@ -23,7 +25,7 @@ export interface Props {
   thumbnail?: Omit<ThumbnailProps, 'class'>;
 }
 
-const { href, title, category, status, excerpt, meta = [], variant = 'text', thumbnail } = Astro.props;
+const { href, title, category, status, statusLabel, excerpt, meta = [], variant = 'text', thumbnail } = Astro.props;
 const showThumb = variant !== 'text' && thumbnail;
 const showTop = (status || category) && variant !== 'mini';
 const showExcerpt = excerpt && (variant === 'text' || variant === 'feature' || variant === 'row');
@@ -36,7 +38,7 @@ const showMeta = meta.length > 0 && variant !== 'mini' && variant !== 'stack';
     {
       showTop && (
         <p class="card__top">
-          {status && <span class={`badge badge--${status}`}>{statusLabels[status]}</span>}
+          {status && <span class={`badge badge--${status}`}>{statusLabel ?? statusLabels[status]}</span>}
           {category && <span>{category}</span>}
         </p>
       )

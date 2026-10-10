@@ -5,6 +5,7 @@ import { getAllContent } from '../lib/content';
 import { applicationPeriod, formatDate, formatPrice } from '../lib/format';
 import { normalize, type SearchDoc } from '../lib/search';
 import { statusOf } from '../lib/select';
+import { statusLabelFor, statusLabels } from '../lib/benefit-status';
 
 export async function GET() {
   const docs: SearchDoc[] = (await getAllContent()).map((item) => {
@@ -24,6 +25,11 @@ export async function GET() {
       type: item.kind === 'benefit' ? 'benefit' : item.entry.data.contentType,
       summary: data.summary,
       status: statusOf(item),
+      statusLabel: (() => {
+        const st = statusOf(item);
+        const label = st && program ? statusLabelFor(st, program) : undefined;
+        return label && label !== statusLabels[st!] ? label : undefined;
+      })(),
       detail,
       updated: formatDate(data.dateModified),
       t: normalize(data.title),

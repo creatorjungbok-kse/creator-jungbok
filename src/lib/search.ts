@@ -33,6 +33,8 @@ export interface SearchDoc {
   summary: string;
   // 지원사업: 빌드 시점 상태·신청 기간·혜택 요약 / cost: 첫 가격 항목
   status?: SearchStatus;
+  // 상태 문구가 기본과 다를 때만(예: 지역별 조기 마감 제도의 '신청기간 중')
+  statusLabel?: string;
   detail?: string;
   updated: string;
   t: string;
