@@ -11,4 +11,5 @@ export const topics = [
   { id: 'health', name: '건강·의료' },
   { id: 'culture', name: '문화·여가' },
   { id: 'security', name: '보안·개인정보' },
+  { id: 'ai', name: 'AI 서비스' },
 ] as const;
