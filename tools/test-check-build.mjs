@@ -111,7 +111,15 @@ const cases = [
   ['production-empty', '빈 카테고리 허브가 sitemap에', edit('sitemap-benefits.xml', '</urlset>', `${loc('/benefits/')}\n</urlset>`), '/benefits/: 공개 글 없는 카테고리가 sitemap에 있음'],
   ['production-empty', '빈 카테고리 sitemap이 index에', edit('sitemap.xml', '</sitemapindex>', '<sitemap><loc>https://creatorjungbok.co.kr/sitemap-benefits.xml</loc></sitemap></sitemapindex>'), 'sitemap.xml: 하위 sitemap'],
   ['production', '글 있는 카테고리가 메뉴에서 빠짐', dropNav('index.html', '/living/'), 'index.html: 메뉴에 없는 카테고리 /living/'],
-  ['production', '메뉴 노출 기준 미만 카테고리를 메뉴에 넣음', edit('index.html', '<nav id="site-nav" class="site-nav" popover aria-label="카테고리"', '<nav id="site-nav" class="site-nav" popover aria-label="카테고리"><a href="/work/">근로·급여</a'), 'index.html: 메뉴 노출 기준(공개 글 3편) 미만 카테고리가 메뉴에 있음 /work/'],
+  // 근로·급여 글을 1편만 남겨 기준(3편) 미만으로 만들고, 메뉴에 링크가 없으면 넣는다(실제 글 수와 무관하게 검사)
+  ['production', '메뉴 노출 기준 미만 카테고리를 메뉴에 넣음', (dir) => {
+    const hub = join(dir, 'work');
+    readdirSync(hub, { withFileTypes: true }).filter((e) => e.isDirectory()).slice(1).forEach((e) => rmSync(join(hub, e.name), { recursive: true, force: true }));
+    const p = join(dir, 'index.html');
+    const html = readFileSync(p, 'utf8');
+    const open = '<nav id="site-nav" class="site-nav" popover aria-label="카테고리">';
+    if (!html.slice(html.indexOf(open), html.indexOf('</nav>', html.indexOf(open))).includes('href="/work/"')) writeFileSync(p, html.replace(open, `${open}<a href="/work/">근로·급여</a>`));
+  }, 'index.html: 메뉴 노출 기준(공개 글 3편) 미만 카테고리가 메뉴에 있음 /work/'],
   ['production-empty', '빈 카테고리(benefits) 검색 필터', edit('search/index.html', 'data-category="business"', 'data-category="benefits"></button><button data-category="business"'), 'search/index.html: 공개 글 없는 카테고리 검색 필터 /benefits/'],
   ['preview', 'fixture 지원·혜택이 있으면 검색 필터 필수', edit('search/index.html', 'data-category="benefits"', 'data-category="x-benefits"'), 'search/index.html: 검색 필터에 없는 카테고리 /benefits/'],
   ['production-empty', 'benefit 없는데 신청 가능 필터 표시', (dir) => { const p = join(dir, 'search/index.html'); writeFileSync(p, readFileSync(p, 'utf8').replace(/<label class="open-only"[^>]*>\s*<input[^>]*data-open-only[^>]*>/, '<label class="open-only"><input type="checkbox" data-open-only>')); }, "'신청 가능한 지원만' 표시 (검색 데이터 benefit 없음)"],

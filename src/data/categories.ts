@@ -57,8 +57,11 @@ export const categories: Category[] = [
     name: '근로·급여',
     title: '근로·급여',
     seoTitle: '근로·급여 계산·정보',
-    description: '주휴수당처럼 일하는 사람이 받는 임금·수당과 권리를 공식 기준으로 정리하고 계산합니다.',
-    subcategories: [{ slug: 'wages', name: '임금·수당' }],
+    description: '주휴수당·실업급여처럼 일하는 사람이 받는 임금·수당과 권리를 공식 기준으로 정리하고 계산합니다.',
+    subcategories: [
+      { slug: 'wages', name: '임금·수당' },
+      { slug: 'job-loss', name: '실업·퇴직' },
+    ],
     // 공개 글 3편 전까지 상단 메뉴·홈·footer에 노출하지 않는다(2026-10-09 결정)
     primaryNavMinPosts: 3,
   },
