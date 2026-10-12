@@ -2,7 +2,7 @@
 title: 2026년 2기 부가세 예정신고·예정고지｜법인 10월 26일·개인 11월 2일
 cardTitle: 부가세 예정신고·예정고지
 seoTitle: 2026년 2기 부가세 예정신고·예정고지｜10/26·11/2
-description: 2026년 2기 부가세 예정신고·예정고지 대상과 기한, 매출이 줄었을 때 예정신고 선택, 피해기업 납부기한 연장을 국세청 발표로 정리했습니다.
+description: 2026년 2기 부가세 예정신고·예정고지 기한과 대상, 1년 부가세 신고기간 일정, 매출 감소 시 예정신고 선택과 납부 방법을 정리했습니다.
 subcategory: tax
 contentType: guide
 contentMode: timely
@@ -13,12 +13,16 @@ synonyms:
   - 부가세 예정신고 대상
   - 부가세 예정고지 납부기한
   - 부가가치세 예정신고
+  - 부가세 신고기간
+  - 부가세 납부기간
+  - 부가세 납부
+  - 부가세 확정신고
 summary: 2026년 2기 예정분은 법인이 7~9월 실적을 10월 26일까지 신고·납부하고, 개인 일반과세자와 소규모 법인은 신고 없이 고지된 세액을 11월 2일까지 내면 됩니다. 공급가액이나 납부세액이 직전 과세기간의 3분의 1에 못 미치면 예정신고를 선택할 수 있습니다.
 thumbnail: /images/thumbnails/vat-preliminary-return.svg
 ogImage: /images/og/vat-preliminary-return.png
 datePublished: 2026-10-05
-dateModified: 2026-10-05
-researchedAt: 2026-10-05
+dateModified: 2026-10-12
+researchedAt: 2026-10-12
 author: operator
 ymyl: medium
 topics: [small-business, tax]
@@ -57,7 +61,10 @@ faq:
   - question: 7~9월에 매출이 없는 법인도 신고해야 하나요?
     answer: 네. 예정신고 대상 법인은 실적이 없어도 신고합니다. 국세청은 실적이 없는 법인이 홈택스 부가가치세 정기신고 화면에서 몇 번의 클릭으로 무실적 신고를 마칠 수 있다고 안내합니다.
 related: [/business/business-credit-card/, /business/cash-receipt/]
-sourceIds: [local:nts-vat-2026-2-pre, local:law-vat-48, local:law-vat-decree-90, local:law-vat-66, local:nts-tax-schedule-2026-10]
+changelog:
+  - date: 2026-10-12
+    summary: 일반과세자·간이과세자의 1년 부가세 신고기간 일정(예정·확정)과 기한이 주말이면 다음 날로 넘어가는 원칙을 부가가치세법 제5조·제48조·제49조·제67조 기준으로 추가했습니다.
+sourceIds: [local:nts-vat-2026-2-pre, local:law-vat-48, local:law-vat-decree-90, local:law-vat-66, local:nts-tax-schedule-2026-10, local:law-vat-5, local:law-vat-49, local:law-vat-67, local:law-basic-5]
 localSources:
   - id: local:nts-vat-2026-2-pre
     title: 10월 부가세, 호우·홈플러스 피해기업 2개월 납부 연장(보도참고자료)
@@ -89,6 +96,30 @@ localSources:
     url: https://www.nts.go.kr/nts/ad/taxSchdul/selectList.do?mi=135747
     level: S1
     checkedAt: 2026-10-05
+  - id: local:law-vat-5
+    title: 부가가치세법 제5조(과세기간)
+    publisher: 법제처 국가법령정보센터
+    url: https://www.law.go.kr/법령/부가가치세법/제5조
+    level: S1
+    checkedAt: 2026-10-12
+  - id: local:law-vat-49
+    title: 부가가치세법 제49조(확정신고와 납부)
+    publisher: 법제처 국가법령정보센터
+    url: https://www.law.go.kr/법령/부가가치세법/제49조
+    level: S1
+    checkedAt: 2026-10-12
+  - id: local:law-vat-67
+    title: 부가가치세법 제67조(간이과세자의 신고와 납부)
+    publisher: 법제처 국가법령정보센터
+    url: https://www.law.go.kr/법령/부가가치세법/제67조
+    level: S1
+    checkedAt: 2026-10-12
+  - id: local:law-basic-5
+    title: 국세기본법 제5조(기한의 특례)
+    publisher: 법제처 국가법령정보센터
+    url: https://www.law.go.kr/법령/국세기본법/제5조
+    level: S1
+    checkedAt: 2026-10-12
   - id: local:hometax
     title: 국세청 홈택스
     publisher: 국세청
@@ -113,6 +144,24 @@ localSources:
 </div>
 
 직전 과세기간은 2026년 1월 1일부터 6월 30일까지입니다. 간이과세자 줄은 국세청 이번 발표가 아니라 부가가치세법 제66조(간이과세자는 1월부터 6월까지를 예정부과기간으로 7월에 납부)를 근거로 정리했습니다.
+
+## 부가세 신고기간 1년 일정
+
+부가세는 과세기간이 끝난 뒤(예정신고는 예정신고기간이 끝난 뒤) **25일 안에** 신고·납부합니다. 기한이 토요일·일요일·공휴일(대체공휴일·노동절 포함)이면 그다음 날까지입니다.
+
+<div class="table-cards">
+
+| 구분 | 대상 기간 | 신고·납부 기한 | 누가 |
+|---|---|---|---|
+| 1기 예정 | 1월 1일 ~ 3월 31일 | 4월 25일 | 법인 신고(개인·소규모 법인은 고지 납부) |
+| 1기 확정 | 1월 1일 ~ 6월 30일 | 7월 25일 | 일반과세자 모두 |
+| 2기 예정 | 7월 1일 ~ 9월 30일 | 10월 25일 | 법인 신고(개인·소규모 법인은 고지 납부) |
+| 2기 확정 | 7월 1일 ~ 12월 31일 | 다음 해 1월 25일 | 일반과세자 모두 |
+| 간이과세자 | 1월 1일 ~ 12월 31일 | 다음 해 1월 25일 | 간이과세자(7월에 예정부과분 납부) |
+
+</div>
+
+확정신고 때는 예정신고로 이미 신고한 부분은 다시 신고하지 않습니다. 올해 2기 예정분은 10월 25일이 일요일이라 신고·납부 기한이 10월 26일(월)이고, 예정고지 납부는 국세청 일괄 연장으로 11월 2일(월)입니다. 2기 확정신고는 2027년 1월 25일(월)까지입니다.
 
 ## 예정고지 금액과 11월 2일 기한
 
