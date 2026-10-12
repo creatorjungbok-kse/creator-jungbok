@@ -41,7 +41,7 @@ quickFacts:
 checklist:
   title: 발급 전에 준비할 것
   items:
-    - 사업자범용·전자세금계산서용 공동인증서, 또는 세무서에서 받은 보안카드
+    - 사업자용 간편인증(카카오뱅크·기업은행·국민은행 앱 등), 공동·금융인증서, 또는 세무서에서 받은 보안카드
     - 거래처 사업자등록번호와 받을 이메일 주소
     - 공급가액·세액, 작성일자(공급시기 또는 월합계 말일자)
 actionLinks:
@@ -57,17 +57,17 @@ actionLinks:
     sourceId: local:nts-etax-how
 notes:
   - 한번 의무발급 대상이 된 개인사업자는 이후 공급가액이 8천만원 아래로 줄어도 계속 전자로 발급해야 합니다.
-  - 의무자가 아니어도 전자세금계산서를 발급할 수 있습니다.
+  - 세금계산서를 발급하는 개인사업자 중 전자발급 의무 기준에 해당하지 않는 경우에는 전자발급을 선택할 수 있습니다.
   - 홈택스 메뉴 경로는 2026년 10월 12일 화면 기준입니다.
 faq:
   - question: 인증서가 없으면 발급할 수 없나요?
-    answer: 공동인증서 발급이 어렵다면 세무서에서 보안카드를 받아 홈택스에서 발급할 수 있습니다. 국세청은 손택스(모바일)에서 지문 인증 등으로 발급하는 방법, 보안카드로 전화 ARS(126)에서 발급하는 방법, 세무서 대리발급도 안내합니다.
+    answer: 사업자용 간편인증을 이용하거나, 세무서에서 전자세금계산서 발급용 보안카드를 받을 수 있습니다. 국세청은 2026년 4월부터 사업자용 간편인증으로 홈택스에서 전자(세금)계산서를 발급할 수 있게 했습니다. 모바일 홈택스에서는 생체인증 방식도 지원하며, 보안카드를 이용한 ARS 발급이나 세무서 대리발급도 가능합니다.
   - question: 월합계 세금계산서는 언제까지 발급하나요?
     answer: 1일부터 말일까지의 거래를 합쳐 말일자로 작성하는 월합계 세금계산서는 공급일이 속한 달의 다음 달 10일까지 발급할 수 있습니다. 10일이 공휴일이나 토요일이면 바로 다음 영업일까지입니다.
   - question: 금액을 잘못 적었으면 어떻게 하나요?
     answer: 홈택스 수정발급 메뉴에서 수정세금계산서를 발급합니다. 기재사항을 착오로 잘못 적었다면 처음 것을 음(-)으로, 고친 것을 정(+)으로 발급합니다. 다만 세무조사 통지 등으로 경정을 미리 알고 있는 경우에는 수정발급할 수 없습니다.
 related: [/business/vat-preliminary-return/, /business/business-number-lookup/, /business/simplified-taxpayer/]
-sourceIds: [local:law-vat-32, local:law-vat-34, local:law-vat-36, local:law-vat-47, local:law-vat-60, local:law-vat-decree-68, local:law-vat-decree-70, local:nts-etax-target, local:nts-etax-how, local:nts-etax-faq]
+sourceIds: [local:nts-simple-auth, local:law-vat-32, local:law-vat-34, local:law-vat-36, local:law-vat-47, local:law-vat-60, local:law-vat-decree-68, local:law-vat-decree-70, local:nts-etax-target, local:nts-etax-how, local:nts-etax-faq]
 localSources:
   - id: local:law-vat-32
     title: 부가가치세법 제32조(세금계산서 등)
@@ -129,6 +129,12 @@ localSources:
     url: https://www.nts.go.kr/nts/na/ntt/selectNttInfo.do?mi=12363&nttSn=1330706
     level: S1
     checkedAt: 2026-10-12
+  - id: local:nts-simple-auth
+    title: 유료 인증서 없어도 OK! (세금)계산서 발급이 쉬워집니다(보도참고자료, 2026.4.22.)
+    publisher: 국세청
+    url: https://s.nts.go.kr/yeoksam/na/ntt/selectNttInfo.do?mi=5913&nttSn=1352014
+    level: S1
+    checkedAt: 2026-10-12
   - id: local:hometax
     title: 국세청 홈택스
     publisher: 국세청 홈택스
@@ -143,7 +149,7 @@ localSources:
 |---|---|
 | 법인사업자 | 의무 |
 | 개인사업자, 직전 연도 사업장별 공급가액(과세+면세) 합계 8천만원 이상 | 의무. 기준을 넘긴 해의 다음 해 7월 1일부터 |
-| 그 밖의 개인 일반과세자 | 의무는 아니지만 전자로 발급할 수 있음 |
+| 세금계산서를 발급하는 개인사업자 중 의무 기준에 해당하지 않는 경우 | 전자발급을 선택할 수 있음 |
 
 - 8천만원 기준은 2024년 7월 1일부터 적용되고 있습니다. 관할 세무서가 의무 시작 1개월 전까지 통지합니다.
 - 한번 의무 대상이 되면 이후 공급가액이 8천만원 아래로 줄어도 계속 전자로 발급해야 합니다.
@@ -161,7 +167,7 @@ localSources:
 1. 홈택스에 로그인합니다.
 2. **계산서·영수증·카드 → 전자(세금)계산서 발급 → 전자(세금)계산서 건별발급**으로 들어갑니다.
 3. 거래처 사업자등록번호, 작성일자, 품목, 공급가액·세액, 거래처 이메일을 입력합니다.
-4. 공동인증서(사업자범용·전자세금계산서용 등) 또는 보안카드로 전자서명해 발급합니다.
+4. 인증 후 발급합니다. 홈택스에서는 사업자용 간편인증, 공동·금융인증서, 보안카드 등으로 전자세금계산서를 발급할 수 있습니다. 사용할 수 있는 간편인증 기관은 홈택스 화면에서 확인하세요.
 
 같은 메뉴에 **수정발급, 반복·복사 발급, 일괄·공동매입분 발급**이 있습니다. 발급한 내역은 **계산서·영수증·카드 → 전자(세금)계산서 조회**에서 확인합니다. 홈택스 외에도 손택스(모바일), 보안카드를 이용한 전화 ARS(126), 세무서 대리발급, 등록된 ERP·발급대행 사업자 시스템으로 발급할 수 있습니다.
 
