@@ -1,0 +1,805 @@
+---
+// 부가세 계산기 v1. 확정 문서(docs/ready/vat-calculator/spec.md)를 그대로 옮긴다 — 계산식·판정·문구를 여기서 바꾸지 않는다.
+// 계산·판정은 src/lib/vat/에만 있고, 이 컴포넌트는 결과를 그리기만 한다.
+// 입력값·금액·업종·판정 결과는 저장·전송하지 않는다(form 제출 없음, 입력칸에 name 없음, URL·GA 전송 없음. 결과 복사는 브라우저 클립보드만).
+// JavaScript가 없으면 data-js-only로 입력을 숨기고 noscript 안의 정적 예시만 보인다.
+import ToolShell from '../ToolShell.astro';
+import { vatCalculator as c } from '../../tools/vat-calculator/constants';
+import { commonSources } from '../../data/sources';
+import { quickConvert } from '../../lib/vat/calculation.ts';
+import { cardCreditByYear, EXEMPTION_THRESHOLD, industryRates, SIMPLIFIED_THRESHOLD, simplifiedYears } from '../../lib/vat/rules.ts';
+import { formatDate } from '../../lib/format';
+
+const won = (n: number) => `${n.toLocaleString('ko-KR')}원`;
+const manwon = (n: number) => `${(n / 10_000).toLocaleString('ko-KR')}만원`;
+const pct = (permille: number) => `${permille / 10}%`;
+const day = (s: string) => formatDate(new Date(s));
+const ex1 = quickConvert('total', 55_000);
+const ex2 = quickConvert('total', 50_000);
+const sources = c.sourceIds.map((id) => commonSources.find((s) => s.id === id)).filter((s) => s !== undefined);
+const prechecks = [
+  { key: 'multi-industry', label: '두 가지 이상 업종을 함께 하고 있어요' },
+  { key: 'open-close', label: '올해 사업을 시작했거나 휴업·폐업했어요' },
+  { key: 'type-change', label: '올해 간이과세자와 일반과세자 사이에서 과세유형이 바뀌었어요' },
+  { key: 'tax-exempt-mix', label: '부가세 면세 사업도 함께 해요' },
+  { key: 'zero-rated', label: '수출 등 영세율 매출이 있어요' },
+];
+---
+
+<ToolShell id="vat-calculator" title="부가세 계산기" validUntil={c.validUntil} reviewFrom={c.reviewFrom} reviewNote={c.reviewNote}>
+  <noscript><p class="tool-noscript">계산기는 JavaScript가 켜져 있어야 동작합니다. 아래 예시 결과와 계산 근거를 참고하세요.</p></noscript>
+
+  <div class="vat-tabs" role="tablist" aria-label="계산 방식" data-js-only>
+    <button type="button" role="tab" id="vat-tab-quick" aria-controls="vat-panel-quick" aria-selected="true" data-vat-tab="quick">빠른 계산</button>
+    <button type="button" role="tab" id="vat-tab-simple" aria-controls="vat-panel-simple" aria-selected="false" tabindex="-1" data-vat-tab="simple">간이과세자 예상세액</button>
+  </div>
+
+  <!-- ① 빠른 부가세 계산 -->
+  <div class="vat-panel" role="tabpanel" id="vat-panel-quick" aria-labelledby="vat-tab-quick" data-vat-panel="quick" data-js-only>
+    <p class="tool-scope">금액 1건의 공급가액·부가세(10%)·합계를 바로 나눕니다</p>
+    <div class="tool-form">
+      <fieldset>
+        <legend class="tool-label">가지고 있는 금액</legend>
+        <div class="tool-choices">
+          <label class="tool-choice"><input type="radio" name="vat-basis" value="total" checked /><span>합계(부가세 포함)</span></label>
+          <label class="tool-choice"><input type="radio" name="vat-basis" value="supply" /><span>공급가액(부가세 별도)</span></label>
+          <label class="tool-choice"><input type="radio" name="vat-basis" value="vat" /><span>부가세</span></label>
+        </div>
+      </fieldset>
+      <div class="tool-field">
+        <label class="tool-label" for="vat-amount">금액</label>
+        <div class="tool-input">
+          <input id="vat-amount" type="text" inputmode="numeric" autocomplete="off" maxlength="17" aria-describedby="vat-amount-error" />
+          <span aria-hidden="true">원</span>
+        </div>
+        <p id="vat-amount-error" class="tool-error" data-vat-error="amount"></p>
+      </div>
+    </div>
+
+    <div aria-live="polite" aria-atomic="true">
+      <div class="tool-result" data-vat-quick-result hidden>
+        <dl class="vat-lines">
+          <div><dt>공급가액</dt><dd data-vat-q="supply"></dd></div>
+          <div><dt>부가세</dt><dd data-vat-q="vat"></dd></div>
+          <div class="vat-lines__total"><dt>합계</dt><dd data-vat-q="total"></dd></div>
+        </dl>
+        <p class="vat-note" data-vat-q-rounding hidden>원 단위 표시는 이 계산기의 표시 방식이며, 세금계산서 작성 시 실제 발급 시스템의 금액을 확인하세요.</p>
+        <p class="vat-note" data-vat-q-vatnote hidden>부가세가 공급가액의 정확히 10%일 때의 금액입니다.</p>
+        <div class="vat-copy">
+          <button type="button" class="vat-copy__button" data-vat-copy>결과 복사</button>
+          <span class="vat-copy__status" data-vat-copy-status role="status"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ② 간이과세자 예상 연간 부가세 -->
+  <div class="vat-panel" role="tabpanel" id="vat-panel-simple" aria-labelledby="vat-tab-simple" data-vat-panel="simple" data-js-only hidden>
+    <p class="tool-scope">간이과세자 · 1개 업종 · 1년 과세기간 · 일반적인 조건의 예상 연간 부가세</p>
+    <p class="tool-result vat-stale" data-vat-stale hidden>현재 연도의 간이과세자 공제 기준이 아직 반영되지 않았습니다. 빠른 부가세 계산은 사용할 수 있지만 간이과세자 예상세액은 최신 기준 확인 후 이용하세요.</p>
+
+    <div class="tool-form" data-vat-simple-form>
+      <fieldset aria-describedby="vat-pre-error">
+        <legend class="tool-label">아래 중 해당하는 것이 있나요?</legend>
+        <div class="vat-checks">
+          {
+            prechecks.map((p) => (
+              <label class="vat-check">
+                <input type="checkbox" value={p.key} data-vat-pre />
+                <span>{p.label}</span>
+              </label>
+            ))
+          }
+          <label class="vat-check vat-check--none">
+            <input type="checkbox" data-vat-pre-none />
+            <span>해당 없음</span>
+          </label>
+        </div>
+        <p id="vat-pre-error" class="tool-error" data-vat-error="pre"></p>
+      </fieldset>
+
+      <div class="vat-stage" data-vat-stage="1" hidden>
+        <fieldset>
+          <legend class="tool-label">계산 기준 연도</legend>
+          <div class="tool-choices">
+            {
+              simplifiedYears.map((y) => (
+                <label class="tool-choice">
+                  <input type="radio" name="vat-year" value={y} />
+                  <span>{y}년</span>
+                </label>
+              ))
+            }
+          </div>
+        </fieldset>
+        <div class="tool-field">
+          <label class="tool-label" for="vat-sales">1년 매출(공급대가, 부가세 포함)</label>
+          <div class="tool-input">
+            <input id="vat-sales" type="text" inputmode="numeric" autocomplete="off" maxlength="17" aria-describedby="vat-sales-error" />
+            <span aria-hidden="true">원</span>
+          </div>
+          <p id="vat-sales-error" class="tool-error" data-vat-error="sales"></p>
+        </div>
+      </div>
+
+      <div class="vat-stage" data-vat-stage="2" hidden>
+        <fieldset aria-describedby="vat-industry-hint vat-industry-error">
+          <legend class="tool-label">업종</legend>
+          <div class="vat-industries">
+            {
+              industryRates.map((i) => (
+                <label class="vat-industry">
+                  <input type="radio" name="vat-industry" value={i.key} />
+                  <span class="vat-industry__label">{i.label}</span>
+                  <span class="vat-industry__rate">{i.rate}%</span>
+                </label>
+              ))
+            }
+          </div>
+          <p id="vat-industry-hint" class="tool-hint">어느 업종에 해당하는지 확실하지 않다면 사업자등록 정보와 국세청 안내를 확인한 뒤 선택하세요.</p>
+          <p id="vat-industry-error" class="tool-error" data-vat-error="industry"></p>
+        </fieldset>
+        <div class="tool-field">
+          <label class="tool-label" for="vat-purchases">세금계산서 등을 받은 매입(부가세 포함)</label>
+          <div class="tool-input">
+            <input id="vat-purchases" type="text" inputmode="numeric" autocomplete="off" maxlength="17" placeholder="0" aria-describedby="vat-purchases-hint vat-purchases-error" />
+            <span aria-hidden="true">원</span>
+          </div>
+          <p id="vat-purchases-hint" class="tool-hint">세금계산서·카드·현금영수증으로 증빙된 사업 관련 매입. 없으면 비워 두세요.</p>
+          <p id="vat-purchases-error" class="tool-error" data-vat-error="purchases"></p>
+        </div>
+        <div class="tool-field">
+          <label class="tool-label" for="vat-card">카드·현금영수증 등으로 받은 매출</label>
+          <div class="tool-input">
+            <input id="vat-card" type="text" inputmode="numeric" autocomplete="off" maxlength="17" placeholder="0" aria-describedby="vat-card-error" />
+            <span aria-hidden="true">원</span>
+          </div>
+          <p id="vat-card-error" class="tool-error" data-vat-error="card"></p>
+        </div>
+        <fieldset data-vat-card-eligible hidden aria-describedby="vat-eligible-hint vat-eligible-error">
+          <legend class="tool-label">카드·현금영수증 발행세액공제 대상인가요?</legend>
+          <p id="vat-eligible-hint" class="tool-hint vat-hint-top">소매·음식점·숙박업 등 주로 소비자를 상대하는 업종(직전 연도 공급가액 10억원 이하) 또는 직전 연도 공급대가 4,800만원 미만인 간이과세자가 대상입니다.</p>
+          <div class="tool-choices">
+            <label class="tool-choice"><input type="radio" name="vat-eligible" value="yes" /><span>예</span></label>
+            <label class="tool-choice"><input type="radio" name="vat-eligible" value="no-or-unknown" /><span>아니오·모름</span></label>
+          </div>
+          <p id="vat-eligible-error" class="tool-error" data-vat-error="eligible"></p>
+        </fieldset>
+      </div>
+
+      <p class="tool-notice" data-vat-stage2-hint hidden>업종과 매입·카드 매출을 입력한 뒤 다시 계산하기를 눌러 주세요.</p>
+      <button class="tool-submit" type="button" data-vat-submit hidden disabled>계산하기</button>
+    </div>
+
+    <div class="vat-output" data-vat-output aria-live="polite" aria-atomic="true">
+      <div class="tool-result" data-vat-view="amount" hidden>
+        <div class="vat-headline">
+          <p class="vat-headline__label" data-vat-s="title"></p>
+          <p class="vat-headline__value"><strong data-vat-s="tax"></strong></p>
+        </div>
+        <dl class="vat-lines">
+          <div><dt>기본 세액 <span class="vat-formula" data-vat-s="baseFormula"></span></dt><dd data-vat-s="base"></dd></div>
+          <div><dt>매입 공제 <span class="vat-formula" data-vat-s="purchaseFormula"></span></dt><dd data-vat-s="purchase"></dd></div>
+          <div><dt>카드·현금영수증 발행세액공제 <span class="vat-formula" data-vat-s="cardFormula"></span></dt><dd data-vat-s="card"></dd></div>
+        </dl>
+        <p class="vat-note" data-vat-s="cardCapped" hidden></p>
+        <p class="vat-note" data-vat-s-exceeded hidden>공제액 합계가 기본 세액보다 커서 0원입니다. 넘는 공제액은 환급되지 않습니다(부가가치세법 제63조제6항).</p>
+        <p class="vat-note" data-vat-s-cardunknown hidden>발행세액공제 대상이라면 예상 납부세액이 더 낮아질 수 있습니다. 대상 여부를 확인한 뒤 다시 계산하세요.</p>
+        <p class="vat-note vat-note--strong">올해 예정부과·예정신고 등으로 이미 납부한 세액은 반영하지 않았습니다. 실제 확정신고 때 납부할 금액은 이 결과보다 달라질 수 있습니다.</p>
+        <p class="vat-note" data-vat-s-rounding hidden>원 단위 표시는 이 계산기의 표시 방식입니다. 항목별 반올림 때문에 합계와 소액 차이가 날 수 있습니다.</p>
+        <p class="vat-note">가산세, 전자세금계산서 발급세액공제, 의제매입세액공제 등은 반영하지 않았습니다. 실제 신고는 홈택스에서 확인하세요.</p>
+      </div>
+      <div class="tool-result vat-message" data-vat-view="message" hidden>
+        <p class="vat-message__title" data-vat-s="messageTitle"></p>
+        <div class="vat-message__body" data-vat-s-body></div>
+      </div>
+    </div>
+  </div>
+
+  <noscript>
+    <div class="tool-result">
+      <p class="vat-headline__label">예시 · 합계(부가세 포함) 55,000원</p>
+      <dl class="vat-lines">
+        <div><dt>공급가액</dt><dd>{won(ex1.supply.disp)}</dd></div>
+        <div><dt>부가세</dt><dd>{won(ex1.vat.disp)}</dd></div>
+        <div class="vat-lines__total"><dt>합계</dt><dd>{won(ex1.total.disp)}</dd></div>
+      </dl>
+      <p class="vat-headline__label">예시 · 합계(부가세 포함) 50,000원</p>
+      <dl class="vat-lines">
+        <div><dt>공급가액</dt><dd>약 {won(ex2.supply.disp)}</dd></div>
+        <div><dt>부가세</dt><dd>약 {won(ex2.vat.disp)}</dd></div>
+        <div class="vat-lines__total"><dt>합계</dt><dd>{won(ex2.total.disp)}</dd></div>
+      </dl>
+    </div>
+  </noscript>
+
+  <details class="vat-basis">
+    <summary class="disclosure">계산 근거</summary>
+    <div class="vat-basis__body">
+      <p class="vat-basis__term">빠른 계산</p>
+      <ul>
+        <li>부가세 = 공급가액 × 10% (부가가치세법 제30조·제31조)</li>
+        <li>합계(부가세 포함)에서: 공급가액 = 합계 × 100/110, 부가세 = 합계 − 공급가액 (제63조제7항의 환산식)</li>
+        <li>부가세에서: 공급가액 = 부가세 × 10 (부가세가 정확히 10%일 때)</li>
+      </ul>
+      <p class="vat-basis__term">간이과세자 예상 연간 부가세</p>
+      <ul>
+        <li>기본 세액 = 1년 공급대가 × 업종별 부가가치율 × 10% (제63조제2항, 시행령 제111조제2항)</li>
+        <li>매입 공제 = 세금계산서 등을 받은 매입 공급대가 × 0.5% (제63조제3항)</li>
+        <li>
+          카드·현금영수증 발행세액공제 = 발급금액 × {cardCreditByYear.map((r) => `${pct(r.permille)}(${r.year}년, 연 ${manwon(r.cap)} 한도)`).join(' / ')} (제46조제1항)
+        </li>
+        <li>공제 합계가 기본 세액보다 크면 0원 — 넘는 부분은 없는 것으로 봄 (제63조제6항)</li>
+        <li>1년 공급대가 {manwon(EXEMPTION_THRESHOLD)} 미만: 납부의무 면제, 확정신고는 해야 함 (제67조제1항·제69조제1항)</li>
+        <li>예정부과·예정신고로 이미 낸 세액은 반영하지 않음 (제66조·제67조제2항)</li>
+        <li>계산하지 않음: 두 업종 이상, 개업·휴업·폐업, 과세유형 전환, 면세 사업 겸영, 영세율 매출</li>
+        <li>간이과세자: 직전 연도 공급대가 {manwon(SIMPLIFIED_THRESHOLD)} 미만인 개인사업자 (제61조, 시행령 제109조, 일부 업종 제외)</li>
+      </ul>
+      <p class="vat-basis__term">표시 규칙</p>
+      <ul>
+        <li>원 단위 반올림(0.5원 이상 올림, 0.5원 미만 내림)은 법령에 정해진 끝수 규칙이 아니라 이 계산기의 표시 방식입니다. 원 미만이 생긴 금액은 앞에 '약'을 붙입니다.</li>
+      </ul>
+      <p class="vat-basis__term">출처</p>
+      <ul>
+        {sources.map((s) => <li>{s.title} — {s.publisher}</li>)}
+      </ul>
+      <p>확인일 {day(c.checkedAt)}</p>
+    </div>
+  </details>
+</ToolShell>
+
+<script>
+  // 입력값은 이 페이지 안에서만 계산한다(저장·전송 없음). 계산·판정은 lib/vat의 함수만 쓴다.
+  import { kstYear } from '../../lib/payroll/shared/korea-time.ts';
+  import { isWholeWon, roundHalfUpWon, type Exact } from '../../lib/payroll/shared/money.ts';
+  import { parseWonInt } from '../../lib/payroll/shared/validation.ts';
+  import { evaluateSimplified, isExempt, quickConvert, quickCopyText, type PrecheckKey, type QuickBasis, type QuickResult } from '../../lib/vat/calculation.ts';
+  import { AMOUNT_MAX, AMOUNT_MIN, cardCreditFor, isSimplifiedStale, OPTIONAL_AMOUNT_MIN } from '../../lib/vat/rules.ts';
+
+  const won = (n: number) => `${n.toLocaleString('ko-KR')}원`;
+  const approx = (x: Exact) => `${isWholeWon(x) ? '' : '약 '}${won(roundHalfUpWon(x))}`;
+  const pct = (permille: number) => `${permille / 10}%`;
+
+  const root = document.querySelector<HTMLElement>('[data-tool="vat-calculator"]');
+  if (root) {
+    const $ = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
+    const $$ = <T extends HTMLElement>(sel: string) => [...root.querySelectorAll<T>(sel)];
+
+    // 정상 결과(빠른 계산 결과·간이 계산됨·납부면제·추가확인필요)에 처음 도달했을 때 계산기 사용 신호를 1번만 보낸다.
+    // 도구 이름만 — 입력값·금액·업종·모드·판정 결과는 보내지 않는다. 입력 오류·복사는 보내지 않는다
+    let signaled = false;
+    const signalUse = () => {
+      if (signaled) return;
+      signaled = true;
+      document.dispatchEvent(new CustomEvent('kkultip:tool-use', { detail: 'vat-calculator' }));
+    };
+
+    // 금액 입력 검사: 빈 칸은 'empty'(오류 문구 없이 결과만 숨김)
+    const readAmount = (raw: string, min: number) => {
+      const p = parseWonInt(raw, { min, max: AMOUNT_MAX });
+      if (p.ok) return { ok: true as const, value: p.value };
+      if (p.code === 'empty') return { ok: false as const, empty: true, msg: '' };
+      const digits = raw.trim().replace(/,/g, '');
+      const over = p.code === 'range' && /^\d+$/.test(digits) && digits.replace(/^0+/, '').length > 0 && Number(digits) > AMOUNT_MAX;
+      return { ok: false as const, empty: false, msg: over ? '1,000억원 이하로 입력해 주세요.' : '금액을 원 단위 숫자로 입력해 주세요.' };
+    };
+    const markInvalid = (input: HTMLInputElement, msg: string) => {
+      if (msg) input.setAttribute('aria-invalid', 'true');
+      else input.removeAttribute('aria-invalid');
+    };
+
+    // ── 탭 ──
+    const tabs = $$<HTMLButtonElement>('[data-vat-tab]');
+    const panels = { quick: $('[data-vat-panel="quick"]'), simple: $('[data-vat-panel="simple"]') };
+    const selectTab = (key: 'quick' | 'simple', focus = false) => {
+      for (const t of tabs) {
+        const on = t.dataset.vatTab === key;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        if (on && focus) t.focus();
+      }
+      panels.quick.hidden = key !== 'quick';
+      panels.simple.hidden = key !== 'simple';
+    };
+    for (const t of tabs) {
+      t.addEventListener('click', () => selectTab(t.dataset.vatTab as 'quick' | 'simple'));
+      t.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        e.preventDefault();
+        selectTab(t.dataset.vatTab === 'quick' ? 'simple' : 'quick', true);
+      });
+    }
+
+    // ── ① 빠른 계산: 입력 즉시 계산 ──
+    const amountInput = $<HTMLInputElement>('#vat-amount');
+    const amountError = $('[data-vat-error="amount"]');
+    const quickResult = $('[data-vat-quick-result]');
+    const copyStatus = $('[data-vat-copy-status]');
+    let lastQuick: QuickResult | null = null;
+    const basis = () => ($$<HTMLInputElement>('input[name="vat-basis"]').find((r) => r.checked)?.value ?? 'total') as QuickBasis;
+    const runQuick = () => {
+      copyStatus.textContent = '';
+      const a = readAmount(amountInput.value, AMOUNT_MIN);
+      amountError.textContent = a.ok ? '' : a.msg;
+      markInvalid(amountInput, a.ok ? '' : a.msg);
+      if (!a.ok) {
+        quickResult.hidden = true;
+        lastQuick = null;
+        return;
+      }
+      const b = basis();
+      const q = quickConvert(b, a.value);
+      lastQuick = q;
+      const f = (l: QuickResult['supply']) => `${l.approx ? '약 ' : ''}${won(l.disp)}`;
+      $('[data-vat-q="supply"]').textContent = f(q.supply);
+      $('[data-vat-q="vat"]').textContent = f(q.vat);
+      $('[data-vat-q="total"]').textContent = f(q.total);
+      $('[data-vat-q-rounding]').hidden = !(q.supply.approx || q.vat.approx || q.total.approx);
+      $('[data-vat-q-vatnote]').hidden = b !== 'vat';
+      quickResult.hidden = false;
+      signalUse();
+    };
+    amountInput.addEventListener('input', runQuick);
+    for (const r of $$<HTMLInputElement>('input[name="vat-basis"]')) r.addEventListener('change', runQuick);
+
+    // 결과 복사(브라우저 클립보드만). 실패하면 직접 복사 안내
+    const copyFallback = (text: string) => {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.append(ta);
+      ta.select();
+      let ok = false;
+      try {
+        ok = document.execCommand('copy');
+      } catch {
+        ok = false;
+      }
+      ta.remove();
+      return ok;
+    };
+    let copyTimer: ReturnType<typeof setTimeout> | undefined;
+    $('[data-vat-copy]').addEventListener('click', async () => {
+      if (!lastQuick) return;
+      const text = quickCopyText(lastQuick);
+      let ok = false;
+      try {
+        await navigator.clipboard.writeText(text);
+        ok = true;
+      } catch {
+        ok = copyFallback(text);
+      }
+      copyStatus.textContent = ok ? '복사했어요' : '복사하지 못했어요. 결과를 직접 선택해 복사해 주세요.';
+      clearTimeout(copyTimer);
+      if (ok) copyTimer = setTimeout(() => (copyStatus.textContent = ''), 2000);
+    });
+
+    // ── ② 간이과세자 예상 연간 부가세 ──
+    const thisYear = kstYear();
+    const form = $('[data-vat-simple-form]');
+    if (isSimplifiedStale(thisYear)) {
+      // 오늘 연도 규칙이 없으면 간이과세자 모드만 막는다(지난 연도 규칙을 자동 적용하지 않음)
+      $('[data-vat-stale]').hidden = false;
+      form.hidden = true;
+    } else {
+      const preBoxes = $$<HTMLInputElement>('[data-vat-pre]');
+      const preNone = $<HTMLInputElement>('[data-vat-pre-none]');
+      const stage1 = $('[data-vat-stage="1"]');
+      const stage2 = $('[data-vat-stage="2"]');
+      const stage2Hint = $('[data-vat-stage2-hint]');
+      const submit = $<HTMLButtonElement>('[data-vat-submit]');
+      const salesInput = $<HTMLInputElement>('#vat-sales');
+      const purchasesInput = $<HTMLInputElement>('#vat-purchases');
+      const cardInput = $<HTMLInputElement>('#vat-card');
+      const eligibleBox = $('[data-vat-card-eligible]');
+      const views = { amount: $('[data-vat-view="amount"]'), message: $('[data-vat-view="message"]') };
+      const errorEl = (key: string) => $(`[data-vat-error="${key}"]`);
+      const set = (key: string, text: string) => ($(`[data-vat-s="${key}"]`).textContent = text);
+      const radioValue = (name: string) => $$<HTMLInputElement>(`input[name="${name}"]`).find((r) => r.checked)?.value;
+      for (const r of $$<HTMLInputElement>('input[name="vat-year"]')) r.checked = Number(r.value) === thisYear;
+
+      let shown = false;
+      const hideResult = () => {
+        views.amount.hidden = true;
+        views.message.hidden = true;
+      };
+      const showMessage = (title: string, paragraphs: string[], list: string[] = []) => {
+        set('messageTitle', title);
+        const body = $('[data-vat-s-body]');
+        body.replaceChildren();
+        for (const p of paragraphs.slice(0, 1)) body.append(Object.assign(document.createElement('p'), { textContent: p }));
+        if (list.length) {
+          const ul = document.createElement('ul');
+          for (const li of list) ul.append(Object.assign(document.createElement('li'), { textContent: li }));
+          body.append(ul);
+        }
+        for (const p of paragraphs.slice(1)) body.append(Object.assign(document.createElement('p'), { textContent: p }));
+        views.amount.hidden = true;
+        views.message.hidden = false;
+        shown = true;
+        signalUse();
+      };
+
+      const STOP_REASONS: Record<PrecheckKey, string> = {
+        'multi-industry': '두 업종 이상: 업종별로 따로 계산해 합산해야 합니다(부가가치세법 제63조제2항).',
+        'open-close': '개업·휴업·폐업: 과세기간 공급대가를 12개월로 환산하는 규칙이 적용됩니다(제69조제3항).',
+        'type-change': '과세유형 전환: 전환 시점에 따라 과세기간 공급대가를 따로 계산하고, 일반과세자에서 간이과세자로 바뀐 경우 재고납부세액이 더해질 수 있습니다(제64조).',
+        'tax-exempt-mix': '면세 사업 겸영: 공제액을 과세·면세로 나눠 계산합니다(시행령 제111조제7항).',
+        'zero-rated': '영세율 매출: 이 계산기 범위 밖입니다.',
+      };
+
+      const prechecked = () => preBoxes.filter((b) => b.checked).map((b) => b.value as PrecheckKey);
+      const updateStages = () => {
+        const any = prechecked().length > 0;
+        const open = preNone.checked && !any;
+        stage1.hidden = !open;
+        submit.hidden = !open;
+        if (!open) {
+          stage2.hidden = true;
+          stage2Hint.hidden = true;
+        }
+        eligibleBox.hidden = stage2.hidden || !(readAmount(cardInput.value, OPTIONAL_AMOUNT_MIN).ok && Number(cardInput.value.replace(/,/g, '')) > 0);
+        if (eligibleBox.hidden) errorEl('eligible').textContent = '';
+      };
+
+      const onPrecheck = (e: Event) => {
+        const t = e.target as HTMLInputElement;
+        if (t === preNone && preNone.checked) for (const b of preBoxes) b.checked = false;
+        if (t !== preNone && t.checked) preNone.checked = false;
+        errorEl('pre').textContent = '';
+        updateStages();
+        const reasons = prechecked();
+        if (reasons.length) {
+          const r = evaluateSimplified(reasons, { year: Number(radioValue('vat-year') ?? thisYear), sales: 0 });
+          if (r.kind === 'stop') {
+            showMessage(
+              '이 경우는 계산기로 예상 세액을 내지 않습니다',
+              ['아래 경우에는 계산 방식이 달라집니다.', '홈택스 신고 화면이나 국세상담센터(국번 없이 126)에서 확인하세요.'],
+              r.reasons.map((k) => STOP_REASONS[k]),
+            );
+          }
+        } else hideResult();
+      };
+      for (const b of [...preBoxes, preNone]) b.addEventListener('change', onPrecheck);
+
+      // 입력 검사 + 판정(스펙 §2-4 순서). showErrors=false면 문구 없이 조용히 판단(결과를 본 뒤 입력이 바뀔 때)
+      const run = (showErrors: boolean) => {
+        const errors: Record<string, string> = { sales: '', industry: '', purchases: '', card: '', eligible: '' };
+        const flush = () => {
+          if (!showErrors) return;
+          for (const [k, m] of Object.entries(errors)) errorEl(k).textContent = m;
+          markInvalid(salesInput, errors.sales);
+          markInvalid(purchasesInput, errors.purchases);
+          markInvalid(cardInput, errors.card);
+        };
+        const year = Number(radioValue('vat-year'));
+        if (!cardCreditFor(year)) {
+          hideResult();
+          return;
+        }
+        const s = readAmount(salesInput.value, AMOUNT_MIN);
+        if (!s.ok) {
+          errors.sales = s.msg === '1,000억원 이하로 입력해 주세요.' ? s.msg : '1년 매출을 원 단위 숫자로 입력해 주세요.';
+          flush();
+          hideResult();
+          return;
+        }
+        // 4,800만원 미만: 업종 등 나머지 입력을 묻지 않고 바로 면제 결과
+        if (isExempt(s.value)) {
+          stage2.hidden = true;
+          stage2Hint.hidden = true;
+          updateStages();
+          flush();
+          showMessage('입력한 일반 조건에서는 부가가치세 납부의무 면제 대상입니다.', [
+            '납부할 세금이 없더라도 간이과세자는 확정신고를 해야 합니다. 간이과세자는 해당 과세기간 공급대가 합계가 4,800만원 미만이면 납부의무가 면제됩니다(부가가치세법 제69조). 일반과세자에서 간이과세자로 바뀐 경우의 재고납부세액 등은 예외입니다.',
+          ]);
+          return;
+        }
+        // 4,800만원 이상: 2단계 입력을 연다(처음 열 때는 입력을 기다린다)
+        if (stage2.hidden) {
+          stage2.hidden = false;
+          updateStages();
+          flush();
+          hideResult();
+          if (showErrors) {
+            stage2Hint.hidden = false;
+            stage2.querySelector<HTMLInputElement>('input')?.focus();
+          }
+          return;
+        }
+        stage2Hint.hidden = true;
+        const industry = radioValue('vat-industry');
+        if (!industry) errors.industry = '업종을 골라 주세요.';
+        const p = readAmount(purchasesInput.value, OPTIONAL_AMOUNT_MIN);
+        if (!p.ok && !p.empty) errors.purchases = p.msg;
+        const cd = readAmount(cardInput.value, OPTIONAL_AMOUNT_MIN);
+        if (!cd.ok && !cd.empty) errors.card = cd.msg;
+        const purchases = p.ok ? p.value : 0;
+        const cardSales = cd.ok ? cd.value : 0;
+        if (cd.ok && cardSales > s.value) errors.card = '카드·현금영수증 매출은 1년 매출보다 클 수 없습니다.';
+        const eligible = radioValue('vat-eligible');
+        if (cardSales > 0 && eligible === undefined) errors.eligible = '발행세액공제 대상 여부를 골라 주세요.';
+        flush();
+        if (Object.values(errors).some(Boolean)) {
+          hideResult();
+          return;
+        }
+        const r = evaluateSimplified([], {
+          year,
+          sales: s.value,
+          industry,
+          purchases,
+          cardSales,
+          cardEligible: cardSales > 0 ? eligible === 'yes' : undefined,
+        });
+        if (r.kind !== 'amount') return;
+        const card = cardCreditFor(year)!;
+        set('title', `${year}년 기준 예상 연간 부가세 (예정부과·기납부세액 반영 전)`);
+        set('tax', approx(r.tax));
+        set('baseFormula', `${won(s.value)} × ${r.rate}% × 10%`);
+        set('base', approx(r.base));
+        set('purchaseFormula', `${won(purchases)} × 0.5%`);
+        set('purchase', `− ${approx(r.purchaseCredit)}`);
+        set('cardFormula', cardSales > 0 && eligible === 'yes' ? `${won(cardSales)} × ${pct(card.permille)}` : '반영 안 함');
+        set('card', `− ${approx(r.cardCredit)}`);
+        const capped = $('[data-vat-s="cardCapped"]');
+        capped.hidden = !r.cardCapped;
+        capped.textContent = `${year}년 연간 한도 ${won(card.cap)}을 적용했습니다(부가가치세법 제46조제1항).`;
+        $('[data-vat-s-exceeded]').hidden = !r.creditExceeded;
+        $('[data-vat-s-cardunknown]').hidden = !r.cardNotApplied;
+        $('[data-vat-s-rounding]').hidden = [r.tax, r.base, r.purchaseCredit, r.cardCredit].every(isWholeWon);
+        views.message.hidden = true;
+        views.amount.hidden = false;
+        shown = true;
+        signalUse();
+        if (showErrors) {
+          const output = $('[data-vat-output]');
+          if (output.getBoundingClientRect().top > window.innerHeight) {
+            const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            output.scrollIntoView({ block: 'start', behavior: smooth ? 'smooth' : 'auto' });
+          }
+        }
+      };
+
+      submit.addEventListener('click', () => run(true));
+      form.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && e.target instanceof HTMLInputElement && e.target.type === 'text') {
+          e.preventDefault();
+          run(true);
+        }
+      });
+      // 결과를 본 뒤 입력이 바뀌면 조용히 다시 판단(오류 문구는 계산하기를 누를 때만)
+      const onChange = () => {
+        updateStages();
+        if (!shown || prechecked().length) return;
+        run(false);
+      };
+      for (const el of [salesInput, purchasesInput, cardInput]) el.addEventListener('input', onChange);
+      for (const name of ['vat-year', 'vat-industry', 'vat-eligible']) for (const r of $$<HTMLInputElement>(`input[name="${name}"]`)) r.addEventListener('change', onChange);
+      submit.disabled = false;
+    }
+  }
+</script>
+
+<style>
+  .vat-tabs {
+    display: flex;
+    gap: var(--space-2);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .vat-tabs button {
+    min-height: var(--touch);
+    padding-inline: var(--space-3);
+    border: 0;
+    border-bottom: 3px solid transparent;
+    background: none;
+    color: var(--color-text-muted);
+    font: inherit;
+    font-weight: var(--weight-semibold);
+    cursor: pointer;
+  }
+
+  .vat-tabs button[aria-selected='true'] {
+    border-bottom-color: var(--color-brand);
+    color: var(--color-text);
+  }
+
+  .vat-panel {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .vat-panel[hidden],
+  .vat-stage[hidden],
+  .tool-form[hidden] {
+    display: none;
+  }
+
+  .vat-stage {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .vat-checks,
+  .vat-industries {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .vat-check,
+  .vat-industry {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    min-height: var(--touch);
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+  }
+
+  .vat-check input,
+  .vat-industry input {
+    flex: none;
+    margin-top: 0.3em;
+    accent-color: var(--color-brand-text);
+  }
+
+  .vat-check:has(input:checked),
+  .vat-industry:has(input:checked) {
+    border-color: var(--color-brand);
+    background: var(--color-brand-soft);
+  }
+
+  .vat-check--none {
+    font-weight: var(--weight-semibold);
+  }
+
+  .vat-industry__label {
+    flex: 1;
+    font-size: var(--text-sm);
+  }
+
+  .vat-industry__rate {
+    flex: none;
+    font-weight: var(--weight-bold);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .vat-hint-top {
+    margin: 0 0 var(--space-2);
+  }
+
+  .vat-output {
+    display: grid;
+    gap: var(--space-3);
+    scroll-margin-top: var(--space-6);
+  }
+
+  .vat-headline__label,
+  .vat-message__title {
+    font-weight: var(--weight-semibold);
+  }
+
+  .vat-headline__value strong {
+    display: block;
+    font-size: var(--text-2xl);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+
+  .vat-lines {
+    display: grid;
+  }
+
+  .vat-lines div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-3);
+    padding-block: var(--space-2);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .vat-lines div:first-child {
+    border-top: 0;
+  }
+
+  .vat-lines dd {
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .vat-lines__total {
+    font-size: var(--text-md);
+    font-weight: var(--weight-bold);
+  }
+
+  .vat-formula {
+    display: block;
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    font-weight: normal;
+  }
+
+  .vat-note,
+  .vat-message__body {
+    font-size: var(--text-sm);
+  }
+
+  .vat-note {
+    color: var(--color-text-muted);
+  }
+
+  .vat-note--strong {
+    color: var(--color-text);
+    font-weight: var(--weight-semibold);
+  }
+
+  .vat-message__body {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .vat-message__body ul {
+    display: grid;
+    gap: var(--space-1);
+    padding-left: 1.25em;
+    list-style: disc;
+  }
+
+  .vat-copy {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .vat-copy__button {
+    min-height: var(--touch);
+    padding-inline: var(--space-4);
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-pill);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font: inherit;
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    cursor: pointer;
+  }
+
+  .vat-copy__status {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .vat-basis__body {
+    display: grid;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+  }
+
+  .vat-basis__body ul {
+    display: grid;
+    gap: var(--space-1);
+    padding-left: 1.25em;
+    list-style: disc;
+  }
+
+  .vat-basis__term {
+    font-weight: var(--weight-semibold);
+  }
+
+  .vat-basis summary {
+    display: flex;
+    align-items: center;
+    min-height: var(--touch);
+    font-weight: var(--weight-semibold);
+    cursor: pointer;
+  }
+</style>

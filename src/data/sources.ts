@@ -80,6 +80,23 @@ export const commonSources: Source[] = [
     level: 'S1',
     checkedAt: new Date('2026-10-01'),
   },
+  // 부가세 계산기(src/lib/vat) 근거 — 법률·시행령 원문(2026-10-12 확인)
+  {
+    id: 'law-vat-act',
+    title: '부가가치세법 제29조·제31조·제39조·제46조·제61조·제63조·제64조·제66조·제67조·제69조',
+    publisher: '법제처 국가법령정보센터',
+    url: 'https://www.law.go.kr/법령/부가가치세법',
+    level: 'S1',
+    checkedAt: new Date('2026-10-12'),
+  },
+  {
+    id: 'law-vat-decree',
+    title: '부가가치세법 시행령 제73조·제88조·제109조·제111조(간이과세자 업종별 부가가치율)',
+    publisher: '법제처 국가법령정보센터',
+    url: 'https://www.law.go.kr/법령/부가가치세법시행령',
+    level: 'S1',
+    checkedAt: new Date('2026-10-12'),
+  },
   { id: 'kepco-online', title: '한전ON', publisher: '한국전력공사', url: 'https://online.kepco.co.kr', level: 'S1', checkedAt: new Date('2026-10-01') },
   // 주휴수당 계산기(src/lib/payroll/weekly-holiday-pay) 근거. 권위 수준을 제목으로 구분한다:
   // 법률·시행령 = 법적 근거 / 고용노동부 지침·행정해석 = 행정 기준 / 1350 상담 답변 = 공식 상담 안내(법령과 같은 효력 아님)

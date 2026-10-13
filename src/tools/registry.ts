@@ -2,8 +2,9 @@
 // 도구 상수가 인용하는 출처(공통 출처 registry id)는 그 글의 출처 목록·S1 검증에 자동으로 들어간다(lib/sources.ts).
 import { electricityBill } from './electricity-bill/constants';
 import { weeklyHolidayPay } from './weekly-holiday-pay/constants';
+import { vatCalculator } from './vat-calculator/constants';
 
-export const toolIds = ['electricity-bill', 'mvno-plan-cost', 'weekly-holiday-pay'] as const;
+export const toolIds = ['electricity-bill', 'mvno-plan-cost', 'weekly-holiday-pay', 'vat-calculator'] as const;
 export type ToolId = (typeof toolIds)[number];
 
 // 사이드바 '계산기·도구' 목록에 쓰는 짧은 이름(도구가 들어 있는 글로 연결된다)
@@ -11,6 +12,7 @@ export const toolNames: Record<ToolId, string> = {
   'electricity-bill': '전기요금 계산기',
   'mvno-plan-cost': '알뜰폰 총비용 비교',
   'weekly-holiday-pay': '주휴수당 계산기',
+  'vat-calculator': '부가세 계산기',
 };
 
 // 도구를 둘 수 있는 글 유형(도구마다 하나)
@@ -18,6 +20,7 @@ export const toolContentTypes: Record<ToolId, 'cost' | 'compare'> = {
   'electricity-bill': 'cost',
   'mvno-plan-cost': 'compare',
   'weekly-holiday-pay': 'cost',
+  'vat-calculator': 'cost',
 };
 
 const eb = electricityBill;
@@ -28,4 +31,5 @@ export const toolSourceIds: Record<ToolId, string[]> = {
   // 사용자가 입력한 값만 계산한다(도구 자체가 인용하는 가격·법령 없음)
   'mvno-plan-cost': [],
   'weekly-holiday-pay': [...weeklyHolidayPay.sourceIds],
+  'vat-calculator': [...vatCalculator.sourceIds],
 };
