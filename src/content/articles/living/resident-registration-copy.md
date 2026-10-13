@@ -49,7 +49,7 @@ faq:
   - question: 가족 등본을 제가 인터넷으로 대신 뽑을 수 있나요?
     answer: 같은 세대원이면 인터넷으로 신청할 수 있습니다. 세대원이 아닌 사람이 대신 받으려면 온라인 대리 신청이 안 되므로, 위임장과 대리인·위임인 신분증을 가지고 주민센터 등에 방문해야 합니다.
   - question: 수수료를 안 내도 되는 경우가 있나요?
-    answer: 주민등록법 시행규칙 제18조에서 정한 경우에는 방문 발급 수수료가 면제되고, 일부는 지방자치단체 조례에 따라 면제될 수 있습니다. 해당 여부는 발급 기관에 확인하세요.
+    answer: 법령에서 정한 경우에는 방문 발급 수수료가 면제되고, 일부는 지방자치단체 조례에 따라 면제될 수 있습니다. 해당 여부는 발급 기관에 확인하세요.
 related: [/living/move-in-report/, /living/rent-contract-report/, /living/lease-fixed-date/]
 sourceIds: [local:gov24-resident-copy]
 localSources:
