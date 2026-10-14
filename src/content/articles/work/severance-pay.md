@@ -12,7 +12,6 @@ synonyms:
   - 퇴직금 지급기한
   - 퇴직금 1년 미만
   - 퇴직금 계산
-  - 퇴직금 중간정산
   - 알바 퇴직금
 summary: 퇴직금은 계속근로기간이 1년 이상이고 4주 평균 1주 소정근로시간이 15시간 이상이면 받을 수 있으며, 5인 미만 사업장과 알바·계약직도 같은 조건이면 대상입니다. 금액은 1년에 30일분 이상의 평균임금이고, 회사는 퇴직일부터 14일 안에 지급해야 합니다(당사자 합의로 연장 가능). 정확한 금액은 고용노동부 퇴직금 계산기로 확인하세요.
 ogImage: /images/og/severance-pay.png
@@ -59,7 +58,7 @@ faq:
     answer: 네. 고용노동부는 근로계약서 작성이나 4대보험 가입과 관계없이 계속근로기간 1년 이상, 4주 평균 1주 소정근로시간 15시간 이상이면 퇴직금을 받을 수 있다고 안내합니다.
   - question: 회사가 14일이 지나도 퇴직금을 안 주면 어떻게 하나요?
     answer: 노동포털에서 온라인으로 임금체불 진정을 내거나 관할 고용노동관서를 방문해 진정할 수 있습니다. 상담은 고용노동부 고객상담센터 1350에서 받을 수 있습니다. 14일이 지난 다음 날부터는 연 20%의 지연이자도 붙습니다.
-related: [/work/unemployment-benefit/]
+related: [/work/severance-interim-settlement/, /work/unemployment-benefit/]
 sourceIds: [local:law-rbsa, local:law-rbsa-decree, local:law-lsa, local:law-lsa-decree, local:law-equal, local:law-wage-claim, local:moel-faq-89, local:moel-faq-123, local:moel-faq-77, local:moel-counsel-bonus, local:moel-calc, local:labor-wage]
 localSources:
   - id: local:law-rbsa
@@ -183,7 +182,7 @@ localSources:
 - 임금피크제를 시행하는 경우, 합의로 근로시간을 줄인 경우, 법 개정에 따른 근로시간 단축으로 퇴직금이 줄어드는 경우
 - 재난으로 피해를 입은 경우(고용노동부장관 고시 사유)
 
-중간정산 후 퇴직금 산정을 위한 계속근로기간은 정산시점부터 새로 계산합니다.
+중간정산 후 퇴직금 산정을 위한 계속근로기간은 정산시점부터 새로 계산합니다. 사유별 신청 시기와 서류, 회사가 거절할 수 있는지는 [퇴직금 중간정산 사유·요건](/work/severance-interim-settlement/)에 정리했습니다.
 
 **퇴직연금에 가입한 회사**라면 받는 방식이 다릅니다. 확정급여형(DB)은 퇴직급여가 미리 정해져 있고 퇴직 후 14일 안에 지급됩니다. 확정기여형(DC)은 회사가 매년 연간 임금총액의 12분의 1 이상을 계좌에 넣고 근로자가 운용하며, 퇴직할 때 회사가 넣지 않은 부담금이 있으면 14일 안에 지연이자와 함께 납입해야 합니다.
 
