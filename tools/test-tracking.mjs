@@ -20,6 +20,7 @@ const TOOL_PAGES = {
   'mvno-plan-cost': '/digital/mvno-plan-comparison/',
   'weekly-holiday-pay': '/work/weekly-holiday-pay/',
   'vat-calculator': '/business/vat-calculator/',
+  'social-insurance-calculator': '/work/social-insurance-calculator/',
 };
 const FORBIDDEN = /\b(link_text|link_url|text|value|kwh|kWh|price|amount|bill|result|query|search_term|q|name|input)\s*:/;
 

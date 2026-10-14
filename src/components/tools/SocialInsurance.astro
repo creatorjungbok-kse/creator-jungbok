@@ -1,0 +1,390 @@
+---
+// 4대보험 계산기 v1. 확정 문서(docs/ready/social-insurance-calculator/spec.md)를 그대로 옮긴다 — 계산식·문구를 여기서 바꾸지 않는다.
+// 계산은 src/lib/social-insurance/에만 있고, 이 컴포넌트는 결과를 그리기만 한다.
+// 입력값·규모·체크·결과는 저장·전송하지 않는다(form 제출 없음, 입력칸에 name 없음, URL·GA 전송 없음).
+import ToolShell from '../ToolShell.astro';
+import { socialInsuranceCalculator as c } from '../../tools/social-insurance-calculator/constants';
+import { commonSources } from '../../data/sources';
+import { calcSocialInsurance } from '../../lib/social-insurance/calculation.ts';
+import { companySizes, npsBaseRange, npsPrevBaseRange } from '../../lib/social-insurance/rules.ts';
+import { formatDate } from '../../lib/format';
+
+const won = (n: number) => `${n.toLocaleString('ko-KR')}원`;
+const manwon = (n: number) => `${(n / 10_000).toLocaleString('ko-KR')}만원`;
+const day = (s: string) => formatDate(new Date(s));
+const ex = calcSocialInsurance({ pay: 3_000_000, companySize: 'under150', age60: false, newHireAfter65: false });
+const sources = c.sourceIds.map((id) => commonSources.find((s) => s.id === id)).filter((s) => s !== undefined);
+const rows = [
+  { key: 'nps', label: '국민연금' },
+  { key: 'nhi', label: '건강보험' },
+  { key: 'ltc', label: '장기요양보험' },
+  { key: 'ei', label: '고용보험' },
+] as const;
+---
+
+<ToolShell id="social-insurance-calculator" title="4대보험 계산기" validUntil={c.validUntil} reviewFrom={c.reviewFrom} reviewNote={c.reviewNote}>
+  <p class="tool-scope">
+    <strong>2026년 7월 이후 현재 기준</strong> · 근로자 몫 국민연금 4.75%, 건강보험 3.595%, 장기요양(건강보험료의 13.14%), 고용보험 0.9%
+  </p>
+  <noscript><p class="tool-noscript">계산기는 JavaScript가 켜져 있어야 동작합니다. 아래 예시 결과와 계산 근거를 참고하세요.</p></noscript>
+
+  <p class="tool-result si-stale" data-si-stale hidden>2027년 요율 반영 전입니다. 공단 안내를 확인해 주세요. <a href="https://www.4insure.or.kr/pbiz/ntcn/inscSmlCalcView.do" rel="noopener" target="_blank">4대사회보험 정보연계센터 모의계산</a></p>
+
+  <div class="tool-form" data-si-form data-js-only>
+    <div class="tool-field">
+      <label class="tool-label" for="si-pay">월 보험료 계산 기준 보수</label>
+      <div class="tool-input">
+        <input id="si-pay" type="text" inputmode="numeric" autocomplete="off" maxlength="17" aria-describedby="si-pay-hint si-pay-error" />
+        <span aria-hidden="true">원</span>
+      </div>
+      <p id="si-pay-hint" class="tool-hint">
+        급여명세서나 회사가 신고한 보수월액을 알고 있다면 그 금액을 넣으세요. 모른다면 세전 월급에서 일반적인 비과세 급여를 뺀 금액으로 예상할 수 있습니다. 실제 보험료는 공단에 신고된 기준소득월액·보수월액과 달라질 수 있습니다. 이 계산기는 입력한 한 금액을 각 보험의 계산 기준으로 공통 적용한 예상치입니다. 실제 국민연금 기준소득월액과 건강보험·고용보험의 보수 기준은 서로 다를 수 있습니다.
+      </p>
+      <p id="si-pay-error" class="tool-error" data-si-error></p>
+    </div>
+
+    <fieldset aria-describedby="si-size-hint">
+      <legend class="tool-label">회사 규모</legend>
+      <div class="si-options">
+        {
+          companySizes.map((s, i) => (
+            <label class="si-option">
+              <input type="radio" name="si-size" value={s.key} checked={i === 0} />
+              <span>{s.label}</span>
+            </label>
+          ))
+        }
+      </div>
+      <p id="si-size-hint" class="tool-hint">
+        사업장 규모와 우선지원대상기업 여부에 따라 선택하세요. 근로자 공제액은 회사 규모와 관계없이 같습니다. 상시근로자 수가 늘어난 사업장은 일정 기간 종전 요율이 적용되는 경우가 있어 실제 사업주 부담액과 다를 수 있습니다.
+      </p>
+    </fieldset>
+
+    <div class="si-options">
+      <label class="si-option">
+        <input type="checkbox" data-si-age60 />
+        <span>
+          만 60세 이상인가요?
+          <span class="si-option__hint">일반적인 국민연금 사업장가입 대상에서 제외해 계산합니다. 임의계속가입 등은 반영하지 않습니다.</span>
+        </span>
+      </label>
+      <label class="si-option">
+        <input type="checkbox" data-si-age65 />
+        <span>
+          만 65세 이후 새로 고용됐나요?
+          <span class="si-option__hint">65세 이전부터 고용보험 피보험자격을 계속 유지한 경우는 선택하지 마세요.</span>
+        </span>
+      </label>
+    </div>
+  </div>
+
+  <div aria-live="polite" aria-atomic="true">
+    <div class="tool-result si-result" data-si-result hidden>
+      <section class="si-block" aria-labelledby="si-worker-title">
+        <div class="si-head">
+          <h3 id="si-worker-title">근로자 월 공제 예상액</h3>
+          <p class="si-total" data-si-out="workerTotal"></p>
+        </div>
+        <dl class="si-lines">
+          {
+            rows.map((r) => (
+              <div>
+                <dt>{r.label}</dt>
+                <dd data-si-out={`${r.key}-worker`} />
+              </div>
+            ))
+          }
+        </dl>
+      </section>
+      <section class="si-block" aria-labelledby="si-employer-title">
+        <div class="si-head">
+          <h3 id="si-employer-title">사업주 월 부담 예상액 · 산재보험 제외</h3>
+          <p class="si-total" data-si-out="employerTotal"></p>
+        </div>
+        <dl class="si-lines">
+          {
+            rows.map((r) => (
+              <div>
+                <dt>{r.label}</dt>
+                <dd data-si-out={`${r.key}-employer`} />
+              </div>
+            ))
+          }
+          <div class="si-lines__muted">
+            <dt>산재보험</dt>
+            <dd>계산 안 함 (업종별 요율, 사업주만 부담)</dd>
+          </div>
+        </dl>
+      </section>
+      <ul class="si-notes si-notes--alert" data-si-notices hidden></ul>
+      <ul class="si-notes">
+        <li>4대사회보험 정보연계센터 모의계산과 같은 방식으로 10원 미만을 버렸습니다.</li>
+        <li>실제 고지액은 공단에 신고된 기준소득월액·보수월액, 정산, 감면·지원 여부에 따라 달라질 수 있습니다.</li>
+        <li>
+          국민연금 기준소득월액 상·하한은 2026년 6월까지 {manwon(npsPrevBaseRange.min)}~{manwon(npsPrevBaseRange.max)}이었습니다. 2026년 1~6월 급여는 이 계산과 다를 수 있습니다.
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <noscript>
+    <div class="tool-result">
+      <p class="si-example">예시 · 월 3,000,000원, 150명 미만</p>
+      <dl class="si-lines">
+        <div><dt>근로자 월 공제 예상액</dt><dd>{won(ex.workerTotal)}</dd></div>
+        <div><dt>사업주 월 부담 예상액 · 산재보험 제외</dt><dd>{won(ex.employerTotal)}</dd></div>
+      </dl>
+    </div>
+  </noscript>
+
+  <details class="si-basis">
+    <summary class="disclosure">계산 근거</summary>
+    <div class="si-basis__body">
+      <ul>
+        <li>
+          국민연금 = 기준소득월액(천원 미만 절사, {manwon(npsBaseRange.min)}~{manwon(npsBaseRange.max)}, {day(npsBaseRange.from)}~{day(npsBaseRange.to)}) × 4.75%, 근로자·사업주 같은 금액
+        </li>
+        <li>건강보험 = 보수월액 × 3.595%(2026년 7.19%의 절반), 근로자·사업주 같은 금액</li>
+        <li>장기요양보험 = 근로자 건강보험료 × (0.9448% ÷ 7.19%), 근로자·사업주 같은 금액</li>
+        <li>고용보험 근로자 = 보수 × 0.9%(실업급여 1.8%의 절반)</li>
+        <li>고용보험 사업주 = 보수 × 0.9% + 보수 × 회사 규모별 고용안정·직업능력개발 요율(0.25% / 0.45% / 0.65% / 0.85%)을 각각 계산해 더함</li>
+        <li>만 60세 이상: 국민연금 제외 / 만 65세 이후 새로 고용: 실업급여 보험료 없음(사업주 고용안정·직업능력개발 몫은 남음)</li>
+        <li>산재보험은 업종별 요율로 사업주만 내므로 계산하지 않음</li>
+        <li>각 금액은 4대사회보험 정보연계센터 모의계산과 같은 방식으로 10원 미만을 버림(법정 끝수 규칙이라는 뜻은 아님)</li>
+        <li>18세 미만, 일용직, 외국인, 단시간 근로자, 두루누리 지원, 보험료 감면은 반영하지 않음</li>
+      </ul>
+      <p class="si-basis__term">출처</p>
+      <ul>
+        {sources.map((s) => <li>{s.title} — {s.publisher}</li>)}
+      </ul>
+      <p>확인일 {day(c.checkedAt)}</p>
+    </div>
+  </details>
+</ToolShell>
+
+<script>
+  // 입력값은 이 페이지 안에서만 계산한다(저장·전송 없음). 계산은 lib/social-insurance의 함수만 쓴다.
+  import { kstDate } from '../../lib/payroll/shared/korea-time.ts';
+  import { parseWonInt } from '../../lib/payroll/shared/validation.ts';
+  import { calcSocialInsurance, type Notice } from '../../lib/social-insurance/calculation.ts';
+  import { isStale, PAY_MAX, PAY_MIN, type CompanySizeKey } from '../../lib/social-insurance/rules.ts';
+
+  const won = (n: number) => `${n.toLocaleString('ko-KR')}원`;
+  const noticeText: Record<Notice, string> = {
+    'nps-min': '국민연금 기준소득월액 하한(41만원)이 적용됐습니다.',
+    'nps-max': '국민연금 기준소득월액 상한(659만원)이 적용됐습니다.',
+    'nhi-min': '건강보험 보수월액 하한이 적용됐습니다.',
+    'nhi-max': '건강보험 보수월액 상한이 적용됐습니다.',
+  };
+
+  const root = document.querySelector<HTMLElement>('[data-tool="social-insurance-calculator"]');
+  if (root) {
+    const $ = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
+    const $$ = <T extends HTMLElement>(sel: string) => [...root.querySelectorAll<T>(sel)];
+    const form = $('[data-si-form]');
+    const result = $('[data-si-result]');
+
+    if (isStale(kstDate())) {
+      // 기한이 지난 요율로 계산하지 않는다
+      $('[data-si-stale]').hidden = false;
+      form.hidden = true;
+    } else {
+      // 처음 정상 결과가 나왔을 때 계산기 사용 신호를 1번만 보낸다. 도구 이름만 — 보수·규모·체크·결과는 보내지 않는다
+      let signaled = false;
+      const signalUse = () => {
+        if (signaled) return;
+        signaled = true;
+        document.dispatchEvent(new CustomEvent('kkultip:tool-use', { detail: 'social-insurance-calculator' }));
+      };
+
+      const payInput = $<HTMLInputElement>('#si-pay');
+      const payError = $('[data-si-error]');
+      const age60 = $<HTMLInputElement>('[data-si-age60]');
+      const age65 = $<HTMLInputElement>('[data-si-age65]');
+      const notices = $('[data-si-notices]');
+      const out = (key: string, text: string) => ($(`[data-si-out="${key}"]`).textContent = text);
+      const size = () => ($$<HTMLInputElement>('input[name="si-size"]').find((r) => r.checked)?.value ?? 'under150') as CompanySizeKey;
+
+      const run = () => {
+        const p = parseWonInt(payInput.value, { min: PAY_MIN, max: PAY_MAX });
+        if (!p.ok) {
+          let msg = '';
+          if (p.code !== 'empty') {
+            const digits = payInput.value.trim().replace(/,/g, '');
+            const over = /^\d+$/.test(digits) && digits.replace(/^0+/, '').length > 0 && Number(digits) > PAY_MAX;
+            msg = over ? '10억원 이하로 입력해 주세요.' : '보수를 원 단위 숫자로 입력해 주세요.';
+          }
+          payError.textContent = msg;
+          if (msg) payInput.setAttribute('aria-invalid', 'true');
+          else payInput.removeAttribute('aria-invalid');
+          result.hidden = true;
+          return;
+        }
+        payError.textContent = '';
+        payInput.removeAttribute('aria-invalid');
+
+        const r = calcSocialInsurance({ pay: p.value, companySize: size(), age60: age60.checked, newHireAfter65: age65.checked });
+        out('workerTotal', won(r.workerTotal));
+        out('employerTotal', won(r.employerTotal));
+        out('nps-worker', age60.checked ? '0원 (만 60세 이상 — 계산에서 제외)' : won(r.nps.worker));
+        out('nps-employer', age60.checked ? '0원 (만 60세 이상 — 계산에서 제외)' : won(r.nps.employer));
+        out('nhi-worker', won(r.nhi.worker));
+        out('nhi-employer', won(r.nhi.employer));
+        out('ltc-worker', won(r.ltc.worker));
+        out('ltc-employer', won(r.ltc.employer));
+        out('ei-worker', age65.checked ? '0원 (65세 이후 새로 고용 — 실업급여 보험료 없음)' : won(r.ei.worker));
+        out('ei-employer', won(r.ei.employer));
+
+        notices.replaceChildren(...r.notices.map((n) => Object.assign(document.createElement('li'), { textContent: noticeText[n] })));
+        notices.hidden = r.notices.length === 0;
+        result.hidden = false;
+        signalUse();
+      };
+
+      payInput.addEventListener('input', run);
+      for (const el of [...$$<HTMLInputElement>('input[name="si-size"]'), age60, age65]) el.addEventListener('change', run);
+    }
+  }
+</script>
+
+<style>
+  .tool-form[hidden],
+  .si-stale[hidden] {
+    display: none;
+  }
+
+  .si-options {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .si-option {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    min-height: var(--touch);
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+  }
+
+  .si-option input {
+    flex: none;
+    margin-top: 0.3em;
+    accent-color: var(--color-brand-text);
+  }
+
+  .si-option:has(input:checked) {
+    border-color: var(--color-brand);
+    background: var(--color-brand-soft);
+  }
+
+  .si-option__hint {
+    display: block;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .si-result {
+    gap: var(--space-5);
+  }
+
+  .si-block {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .si-head h3 {
+    font-size: var(--text-md);
+    font-weight: var(--weight-semibold);
+  }
+
+  .si-total {
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+
+  .si-lines {
+    display: grid;
+  }
+
+  .si-lines div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-3);
+    padding-block: var(--space-2);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .si-lines div:first-child {
+    border-top: 0;
+  }
+
+  .si-lines dt {
+    flex: none;
+    white-space: nowrap;
+  }
+
+  .si-lines dd {
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+
+  .si-lines__muted {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .si-notes {
+    display: grid;
+    gap: var(--space-1);
+    padding-left: 1.25em;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    list-style: disc;
+  }
+
+  .si-notes[hidden] {
+    display: none;
+  }
+
+  .si-notes--alert {
+    color: var(--color-text);
+    font-weight: var(--weight-semibold);
+  }
+
+  .si-example {
+    font-weight: var(--weight-semibold);
+  }
+
+  .si-basis__body {
+    display: grid;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+  }
+
+  .si-basis__body ul {
+    display: grid;
+    gap: var(--space-1);
+    padding-left: 1.25em;
+    list-style: disc;
+  }
+
+  .si-basis__term {
+    font-weight: var(--weight-semibold);
+  }
+
+  .si-basis summary {
+    display: flex;
+    align-items: center;
+    min-height: var(--touch);
+    font-weight: var(--weight-semibold);
+    cursor: pointer;
+  }
+</style>
