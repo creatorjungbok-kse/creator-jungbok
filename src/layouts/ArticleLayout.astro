@@ -143,7 +143,7 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
           </p>
           <h1>{data.title}</h1>
           <p class="article__meta">
-            <span>작성 {nameOf(data.author)}</span>
+            <span>작성·검수 {nameOf(data.author)} · <a href="/editorial-policy/">작성 원칙 보기</a></span>
             {data.reviewer && <span>검수 {nameOf(data.reviewer)}</span>}
             <span>최종 업데이트 <time datetime={isoDate(data.dateModified)}>{formatDate(data.dateModified)}</time></span>
             {isArticle && <span>조사 기준일 {formatDate(data.researchedAt)}</span>}

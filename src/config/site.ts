@@ -2,6 +2,8 @@
 // 브랜드 문자열의 유일한 출처: title·OG·RSS·WebSite·Organization·manifest·헤더·푸터가 여기서 읽는다(P9 확정).
 export const site = {
   name: '꿀팁정복',
+  // 글 작성자 표시명(운영자명). 실명은 쓰지 않는다(2026-10-15 사용자 확정)
+  operatorName: '크리에이터 정복',
   // 홈 title의 한 줄 정의(`{name}: {tagline}`), 헤더 아래·푸터 설명
   tagline: '생활에 필요한 정보를 쉽고 정확하게',
   // 홈 meta description·RSS 채널 설명
