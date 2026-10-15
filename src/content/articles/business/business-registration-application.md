@@ -2,7 +2,7 @@
 title: 사업자등록 신청 방법｜개인사업자 홈택스 신청·준비서류·20일 기한
 cardTitle: 사업자등록 신청 방법
 seoTitle: 사업자등록 신청 방법｜홈택스·준비서류·20일 기한
-description: 개인사업자 사업자등록 신청 기한(사업 시작 후 20일), 홈택스 신청 경로, 준비서류와 처리기간, 늦었을 때 불이익을 정리했습니다.
+description: 사업을 시작했다면 20일 안에 사업자등록을 해야 합니다. 홈택스 신청 경로, 준비서류, 처리기간, 늦을 때 불이익을 보세요.
 subcategory: tax
 contentType: guide
 contentMode: evergreen
@@ -145,5 +145,3 @@ localSources:
 - **사업용 신용카드 등록**: 사업에 쓸 카드를 등록해 두면 부가세 신고가 편해집니다. [사업용 신용카드 등록 방법](/business/business-credit-card/)
 - **현금영수증 의무 확인**: 업종에 따라 10만원 이상 현금 거래에 발급 의무가 있습니다. [현금영수증 의무발행업종](/business/cash-receipt/)
 - **바뀌면 정정 신고**: 상호·주소·업종이 바뀌면 지체 없이 정정합니다. [사업자등록 정정신고](/business/business-registration-correction/)
-
-꿀팁정복은 사업자 정보나 개인정보를 받지 않습니다. 신청은 홈택스나 세무서에서 하세요.

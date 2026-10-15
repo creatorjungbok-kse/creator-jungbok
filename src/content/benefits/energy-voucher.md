@@ -1,7 +1,7 @@
 ---
 title: 에너지바우처｜동절기 요금차감·국민행복카드 사용기간과 신청방법
 cardTitle: 에너지바우처 신청·사용기간
-description: 2026년 에너지바우처 대상·금액·신청방법과 동절기 사용기간(요금차감 10월 1일, 국민행복카드 10월 3일부터)을 공식 안내로 정리했습니다.
+description: 에너지바우처 대상인지, 얼마를 받는지 확인하세요. 2026년 동절기 요금차감은 10월 1일, 국민행복카드는 10월 3일부터 씁니다.
 subcategory: bill-relief
 contentMode: evergreen
 primaryQuery: 에너지바우처

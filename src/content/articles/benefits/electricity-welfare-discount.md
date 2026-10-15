@@ -2,7 +2,7 @@
 title: 전기요금 복지할인｜대상·할인 한도·한전 신청 방법
 cardTitle: 전기요금 복지할인
 seoTitle: 전기요금 복지할인 대상·한도｜한전 신청 방법
-description: 한전 전기요금 복지할인 대상(장애인·수급자·차상위·대가족·출산가구), 월 할인 한도, 중복 기준과 신청 방법을 한전 약관으로 정리했습니다.
+description: 장애인·수급자·차상위·대가족·출산가구라면 전기요금이 한 달에 얼마까지 깎이는지, 겹치면 어떻게 되는지 확인하세요.
 subcategory: bill-relief
 contentType: guide
 contentMode: evergreen
@@ -151,5 +151,3 @@ localSources:
 - 우리 집 사용량으로 요금이 얼마인지는 [전기요금 계산기](/living/electricity-bill-calculator/)로 미리 계산해 볼 수 있습니다.
 - 기초생활수급자 등 에너지 취약계층은 [에너지바우처](/benefits/energy-voucher/)도 따로 확인하세요.
 - 전기를 아껴 쓰면 받는 [에너지캐시백](/benefits/energy-cashback/)도 있습니다.
-
-꿀팁정복은 고객번호나 개인정보를 받지 않습니다. 할인 신청은 한전ON, 고객센터 123, 행정복지센터에서 하세요.

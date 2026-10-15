@@ -1,7 +1,7 @@
 ---
 title: 현금영수증 의무발행업종｜10만원 이상 발급 의무와 자진발급
 cardTitle: 현금영수증 의무발행업종
-description: 현금영수증을 꼭 발급해야 하는 경우, 의무발행업종 확인법, 자진발급 방법과 가산세 기준을 국세청 기준으로 정리했습니다.
+description: 손님이 요청하지 않아도 현금영수증을 꼭 발급해야 하는 업종인지, 깜빡했을 때 자진발급하는 법과 가산세 기준을 알아 두세요.
 subcategory: tax
 contentType: guide
 contentMode: evergreen

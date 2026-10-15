@@ -2,7 +2,7 @@
 title: 전기요금 누진제 구간｜200·400kWh 기준과 여름철 300·450kWh
 cardTitle: 전기요금 누진제 구간
 seoTitle: 전기요금 누진제 구간｜200·400kWh와 여름철 기준
-description: 주택용 전기요금 누진제 3단계 구간과 단가, 여름철 완화 구간, 슈퍼유저 요금, 400kWh를 넘으면 요금이 뛰는 이유를 한전 요금표로 정리했습니다.
+description: 주택용 전기요금은 400kWh를 넘으면 왜 크게 뛸까요? 누진제 3단계 구간과 단가, 여름철 완화, 슈퍼유저 요금을 비교합니다.
 subcategory: utilities
 contentType: guide
 contentMode: evergreen

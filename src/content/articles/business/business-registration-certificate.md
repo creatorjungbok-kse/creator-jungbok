@@ -2,7 +2,7 @@
 title: 사업자등록증 발급·재발급 방법｜홈택스 출력과 사업자등록증명 차이
 cardTitle: 사업자등록증 발급·재발급
 seoTitle: 사업자등록증 발급·재발급 방법｜홈택스 출력·사업자등록증명 차이
-description: 사업자등록증 신규 발급, 재발급·출력, 사업자등록증명 발급을 구분해 홈택스·정부24 공식 경로와 차이를 한눈에 안내합니다.
+description: 처음 발급, 다시 출력, 제출용 사업자등록증명 중 내 경우에 맞는 홈택스·정부24 발급 경로를 찾아 드립니다.
 subcategory: tax
 contentType: guide
 contentMode: evergreen

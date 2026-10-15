@@ -2,7 +2,7 @@
 title: 연차 발생 기준과 연차수당｜1년 미만 11일·15일·25일, 퇴직 시 미사용수당
 cardTitle: 연차 발생 기준·연차수당
 seoTitle: 연차 발생 기준·연차수당｜11일·15일·25일 계산
-description: 연차가 며칠 생기는지(1년 미만 월 1일, 15일, 최대 25일), 1년만 일하고 퇴사할 때와 미사용 연차수당 계산법을 정리했습니다.
+description: 1년 미만은 한 달에 1일, 1년이 지나면 15일, 최대 25일까지 연차가 생깁니다. 1년만 일하고 퇴사할 때와 연차수당 계산법도 보세요.
 subcategory: wages
 contentType: guide
 contentMode: evergreen

@@ -2,7 +2,7 @@
 title: 숨은 금융자산 찾기｜잠자는 예금·보험금·카드포인트 조회
 cardTitle: 숨은 금융자산 찾기
 seoTitle: 숨은 금융자산 찾기｜예금·보험금·카드포인트 조회
-description: 잊고 있던 예·적금, 보험금, 증권계좌 예탁금, 카드포인트를 파인·어카운트인포·내보험찾아줌에서 조회하고 돌려받는 방법을 금융위원회 안내로 정리했습니다.
+description: 잊고 있던 예·적금, 보험금, 증권 예탁금, 카드포인트를 어디서 찾는지, 찾은 돈은 어떻게 돌려받는지 알려 드립니다.
 subcategory: refunds
 contentType: guide
 contentMode: evergreen
@@ -60,7 +60,7 @@ faq:
   - question: 보험금은 왜 따로 찾아야 하나요?
     answer: 아직 청구하지 않은 중도보험금·만기보험금은 내계좌 통합조회에 나오지 않습니다. 보험협회가 운영하는 '내보험찾아줌'에서 조회하고 청구할 수 있습니다.
   - question: 찾아가지 않으면 어떻게 되나요?
-    answer: 금융위원회는 예·적금, 보험금 등이 만기 이후 적용금리가 점차 줄다가 소멸시효가 완성되면 이자를 지급하지 않는 구조라고 안내합니다. 예를 들어 보험은 만기 후 1년까지 평균공시이율의 50%, 1년 이후 3년까지 40%, 3년 후에는 0%가 적용됩니다.
+    answer: 네. 예·적금, 보험금 등은 만기 이후 적용금리가 점차 줄다가 소멸시효가 완성되면 이자가 붙지 않습니다. 예를 들어 보험은 만기 후 1년까지 평균공시이율의 50%, 1년 이후 3년까지 40%, 3년 후에는 0%가 적용됩니다.
 related: [/digital/telecom-refund/, /digital/personal-info-leak-response/]
 relatedAuto: false
 sourceIds: [local:fsc-hidden-2025, local:fsc-hidden-2026, local:fsc-insurance-2026, local:fine]
@@ -139,5 +139,3 @@ localSources:
 ## 같이 찾아볼 돈
 
 휴대폰·인터넷을 해지하고 돌려받지 못한 요금은 [통신 미환급금 조회](/digital/telecom-refund/)에서 따로 확인할 수 있습니다.
-
-꿀팁정복은 계좌나 개인정보를 받지 않습니다. 조회와 환급은 파인, 어카운트인포, 각 금융회사에서 하세요.

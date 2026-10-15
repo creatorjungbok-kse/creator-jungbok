@@ -2,7 +2,7 @@
 title: 퇴직금 중간정산 사유·요건｜주택·전세·의료비·회생, 회사가 거절할 수 있나
 cardTitle: 퇴직금 중간정산 사유·요건
 seoTitle: 퇴직금 중간정산 사유·요건｜주택·전세·의료비·회생
-description: 퇴직금 중간정산은 법정 사유가 있어도 회사가 꼭 승인해야 하는 건 아닙니다. 주택·전세·의료비·회생 요건과 신청 시기, DC형 중도인출을 정리했습니다.
+description: 퇴직금 중간정산은 법정 사유가 있어도 회사가 꼭 승인해야 하는 건 아닙니다. 주택·전세·의료비·회생 요건과 DC형 중도인출을 비교합니다.
 subcategory: job-loss
 contentType: guide
 contentMode: evergreen

@@ -2,7 +2,7 @@
 title: 전자세금계산서 발행 방법｜발급 대상·기한·홈택스 절차·수정발급
 cardTitle: 전자세금계산서 발행 방법
 seoTitle: 전자세금계산서 발행 방법｜대상·기한·홈택스·수정발급
-description: 전자세금계산서 의무발급 대상과 발급·전송 기한, 홈택스 발급 순서, 가산세, 수정세금계산서 사유를 법령 기준으로 정리했습니다.
+description: 전자세금계산서 의무 발급 대상인지, 언제까지 발급·전송하는지 확인하세요. 홈택스 발급 순서와 가산세, 수정발급 사유도 봅니다.
 subcategory: tax
 contentType: guide
 contentMode: evergreen

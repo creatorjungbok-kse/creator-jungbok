@@ -2,7 +2,7 @@
 title: 주민등록등본 인터넷 발급｜정부24 무료 발급과 초본 차이
 cardTitle: 주민등록등본 인터넷 발급
 seoTitle: 주민등록등본 인터넷 발급｜정부24 무료·초본 차이
-description: 주민등록등본·초본을 정부24에서 무료로 발급받는 방법, 방문·무인발급기 수수료, 등본과 초본 차이, 대리 발급 준비물을 정리했습니다.
+description: 주민등록등본과 초본 중 무엇이 필요한지 먼저 구분하세요. 정부24 무료 발급법과 방문·무인발급기 수수료, 대리 발급 준비물을 담았습니다.
 subcategory: services
 contentType: guide
 contentMode: evergreen
@@ -105,5 +105,3 @@ localSources:
 - 이사 뒤 14일 안에 하는 [전입신고 방법](/living/move-in-report/)
 - 보증금 기준에 해당하면 해야 하는 [전월세 신고 방법](/living/rent-contract-report/)
 - 보증금을 지키는 [확정일자 받는 법](/living/lease-fixed-date/)
-
-꿀팁정복은 주민등록 정보나 개인정보를 받지 않습니다. 발급은 정부24나 주민센터에서 하세요.
