@@ -70,7 +70,7 @@ faq:
     answer: 선택약정 할인은 약정 기간 동안 적용됩니다. 기간이 끝난 뒤에도 할인받으려면 다시 신청하세요. 약정이 끝나기 전에도 재약정할 수 있는데 조건은 통신사마다 다릅니다.
   - question: 요금할인을 받으면 추가지원금은 못 받나요?
     answer: 2025년 7월 22일부터는 받을 수 있습니다. 과학기술정보통신부는 요금할인 혜택을 받으면서 유통점의 추가지원금도 받을 수 있다고 안내했습니다. 다만 추가지원금은 유통점이 자율적으로 정하므로 지급 여부와 금액은 판매처마다 다르고, 반드시 받을 수 있는 혜택은 아닙니다. 통신사 공통지원금과는 함께 받을 수 없습니다.
-related: [/digital/telecom-refund/, /digital/mvno-plan-comparison/]
+related: [/digital/mvno-plan-comparison/, /benefits/hidden-financial-assets/]
 sourceIds: [local:smartchoice-discount-device, local:korea-dantong-repeal]
 localSources:
   - id: local:smartchoice-discount-target

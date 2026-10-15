@@ -14,11 +14,17 @@ synonyms:
   - 숨은 보험금 조회
   - 카드포인트 현금화
   - 내계좌 통합조회
-summary: 오래 잊고 있던 예·적금, 증권계좌 예탁금, 신탁, 카드포인트는 파인의 '내계좌 통합조회'나 '어카운트인포' 앱에서 조회할 수 있습니다. 1년 넘게 거래가 없고 잔고가 100만원 이하인 일부 계좌는 바로 환급받을 수 있고, 카드포인트도 현금화할 수 있습니다. 아직 청구하지 않은 중도·만기보험금은 '내보험찾아줌'에서 따로 확인하세요.
+  - 통신 미환급금
+  - 통신 미환급금 조회
+  - 통신 미환급액 조회
+  - 휴대폰 해지 환급금
+  - 통신비 환급금 조회
+  - 스마트초이스 미환급금
+summary: 오래 잊고 있던 예·적금, 증권계좌 예탁금, 신탁, 카드포인트는 파인의 '내계좌 통합조회'나 '어카운트인포' 앱에서 조회할 수 있습니다. 1년 넘게 거래가 없고 잔고가 100만원 이하인 일부 계좌는 바로 환급받을 수 있고, 카드포인트도 현금화할 수 있습니다. 아직 청구하지 않은 중도·만기보험금은 '내보험찾아줌'에서, 휴대폰·인터넷을 해지하고 돌려받지 못한 통신 미환급액은 스마트초이스에서 따로 확인하세요.
 thumbnail: /images/thumbnails/hidden-financial-assets.svg
 ogImage: /images/og/hidden-financial-assets.png
 datePublished: 2026-10-08
-dateModified: 2026-10-08
+dateModified: 2026-10-15
 researchedAt: 2026-10-08
 author: operator
 ymyl: medium
@@ -37,6 +43,8 @@ quickFacts:
       value: 같은 경로의 '내 카드 한눈에'에서 조회·현금화
     - label: 보험금
       value: 청구 안 한 중도·만기보험금은 '내보험찾아줌'에서 따로 조회
+    - label: 통신 미환급금
+      value: 해지한 휴대폰·인터넷·유선전화 요금·보증금은 스마트초이스에서 조회
 checklist:
   title: 조회 전에 알아둘 것
   items:
@@ -54,16 +62,26 @@ actionLinks:
     purpose: 숨은 금융자산 조회 방법 보도자료 보기
     url: https://www.fsc.go.kr/no010101/85281
     sourceId: local:fsc-hidden-2025
+  - org: 스마트초이스
+    action: check
+    purpose: 통신 미환급액 조회하기
+    url: https://www.smartchoice.or.kr/smc/service/refund.do
+    sourceId: local:smartchoice-refund
+changelog:
+  - date: 2026-10-15
+    summary: 통신 미환급금 조회 글을 이 글로 합쳐 스마트초이스 조회 대상·순서·조회가 안 되는 경우를 추가했습니다.
 faq:
   - question: 숨은 금융자산은 어떤 돈인가요?
     answer: 금융소비자가 오랫동안 잊고 찾아가지 않은 예·적금, 보험금, 투자자예탁금(증권계좌), 신탁, 카드포인트 같은 금융자산입니다. 금융위원회 집계로 2025년 6월 말 기준 18.4조원입니다.
   - question: 보험금은 왜 따로 찾아야 하나요?
     answer: 아직 청구하지 않은 중도보험금·만기보험금은 내계좌 통합조회에 나오지 않습니다. 보험협회가 운영하는 '내보험찾아줌'에서 조회하고 청구할 수 있습니다.
   - question: 찾아가지 않으면 어떻게 되나요?
-    answer: 네. 예·적금, 보험금 등은 만기 이후 적용금리가 점차 줄다가 소멸시효가 완성되면 이자가 붙지 않습니다. 예를 들어 보험은 만기 후 1년까지 평균공시이율의 50%, 1년 이후 3년까지 40%, 3년 후에는 0%가 적용됩니다.
-related: [/digital/telecom-refund/, /digital/personal-info-leak-response/]
+    answer: 예·적금, 보험금 등은 만기 이후 적용금리가 점차 줄다가 소멸시효가 완성되면 이자가 붙지 않습니다. 예를 들어 보험은 만기 후 1년까지 평균공시이율의 50%, 1년 이후 3년까지 40%, 3년 후에는 0%가 적용됩니다.
+  - question: 알뜰폰을 해지했는데 통신 미환급금은 어디서 확인하나요?
+    answer: 스마트초이스 미환급액 조회는 KT·SK텔레콤·LG유플러스·SK브로드밴드 서비스가 대상입니다. 알뜰폰 등 다른 사업자의 미환급액은 해지한 사업자 고객센터에 직접 문의하세요.
+related: [/digital/personal-info-leak-response/, /digital/mvno-plan-comparison/]
 relatedAuto: false
-sourceIds: [local:fsc-hidden-2025, local:fsc-hidden-2026, local:fsc-insurance-2026, local:fine]
+sourceIds: [local:fsc-hidden-2025, local:fsc-hidden-2026, local:fsc-insurance-2026, local:fine, local:smartchoice-guide, local:smartchoice-refund]
 localSources:
   - id: local:fsc-hidden-2025
     title: 깜빡 잊고 있던 숨은 금융자산, 클릭 한번으로 18.4조원을 찾아가세요!(보도자료, 2025.9.15.)
@@ -89,6 +107,18 @@ localSources:
     url: https://fine.fss.or.kr/
     level: S1
     checkedAt: 2026-10-08
+  - id: local:smartchoice-guide
+    title: 통신 미환급액 조회 서비스 안내
+    publisher: 스마트초이스
+    url: https://www.smartchoice.or.kr/smc/service/refund01.do
+    level: S1
+    checkedAt: 2026-10-02
+  - id: local:smartchoice-refund
+    title: 통신 미환급액 조회
+    publisher: 스마트초이스
+    url: https://www.smartchoice.or.kr/smc/service/refund.do
+    level: S1
+    checkedAt: 2026-10-02
 ---
 
 ## 숨은 금융자산이란
@@ -136,6 +166,25 @@ localSources:
 
 출처가 불분명한 주소는 누르지 말고, 파인이나 금융회사 공식 앱에 직접 들어가 조회하세요. 개인정보 유출 뒤 사기를 막는 방법은 [개인정보 유출됐을 때 할 일](/digital/personal-info-leak-response/)에 정리했습니다.
 
-## 같이 찾아볼 돈
+## 통신 미환급금도 따로 조회하세요
 
-휴대폰·인터넷을 해지하고 돌려받지 못한 요금은 [통신 미환급금 조회](/digital/telecom-refund/)에서 따로 확인할 수 있습니다.
+휴대폰·인터넷·유선전화를 해지(번호이동 포함)한 뒤 돌려받지 못한 요금이나 보증금은 금융권 통합조회에 나오지 않습니다. 한국통신사업자연합회가 운영하는 **스마트초이스**에서 따로 조회합니다.
+
+<div class="table-cards">
+
+| 돌려받는 돈 | 무엇인가 | 해당 통신사 |
+|---|---|---|
+| 과오납 요금 | 해지 뒤 할인 조건 미반영, 해지정산 요금 이중 납부 등으로 더 낸 요금 | KT, SK텔레콤, LG유플러스, SK브로드밴드 |
+| 단말기 할부보증보험료 | 낸 보증보험료 중 남은 기간에 해당하는 금액(이동전화만) | SK텔레콤 |
+| 설비보증금 | 유선전화 설비보증금 중 돌려받지 못한 금액(유선전화만) | KT(유선), LG유플러스(유선), SK브로드밴드 |
+
+</div>
+
+1. 스마트초이스 **통신 미환급액 조회** 화면에서 이름과 주민등록번호를 넣고 해지한 통신사를 고릅니다(전체 선택 가능). 조회는 회원가입 없이 할 수 있습니다.
+2. 개인정보 수집·이용에 동의하고 조회합니다. 오전 9시~오후 8시에만 조회되고 공휴일은 쉽니다.
+3. 미환급액이 있으면 회원가입 후 **본인 명의** 은행계좌로 환급을 신청합니다.
+4. 신청 결과는 **환급신청 결과 조회**에서 확인합니다.
+
+조회가 안 되는 경우도 있습니다. 법인·만 14세 미만·외국인·가명 가입자와 명의도용방지 서비스 가입자는 스마트초이스에서 조회할 수 없어 해지한 통신사 고객센터에 문의해야 합니다. 전화로는 조회할 수 없고, 유료방송(IPTV·케이블) 미환급액은 스마트초이스의 '유료방송 미환급액 조회'에서 따로 확인합니다.
+
+미납금액이 있으면 단말기 할부보증보험료 미환급액은 미납금액을 뺀 뒤 환급되고, 환급액은 통신사의 최종 확인을 거쳐 지급되어 금액이 달라질 수 있습니다. 미환급액 조회를 핑계로 링크를 보내는 문자는 누르지 말고 스마트초이스에 직접 접속하세요.
