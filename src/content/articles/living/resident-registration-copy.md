@@ -2,7 +2,7 @@
 title: 주민등록등본 인터넷 발급｜초본 차이·포함 항목 고르기
 cardTitle: 주민등록등본 인터넷 발급
 seoTitle: 주민등록등본 인터넷 발급｜초본 차이·주민번호 뒷자리
-description: 세대 구성을 보여야 하면 등본, 주소 이력이면 초본입니다. 주민번호 뒷자리·주소 변동·병역처럼 넣을 항목과 무료 발급 조건을 정리했습니다.
+description: 세대 구성을 보여야 하면 등본, 주소 이력이면 초본입니다. 주민번호 뒷자리·주소 변동·병역 중 무엇을 넣을지와 무료로 떼는 방법을 고르세요.
 subcategory: services
 contentType: guide
 contentMode: evergreen
