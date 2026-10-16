@@ -21,6 +21,7 @@ const TOOL_PAGES = {
   'weekly-holiday-pay': '/work/weekly-holiday-pay/',
   'vat-calculator': '/business/vat-calculator/',
   'social-insurance-calculator': '/work/social-insurance-calculator/',
+  'severance-pay': '/work/severance-pay/',
 };
 const FORBIDDEN = /\b(link_text|link_url|text|value|kwh|kWh|price|amount|bill|result|query|search_term|q|name|input)\s*:/;
 

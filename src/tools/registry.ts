@@ -4,8 +4,9 @@ import { electricityBill } from './electricity-bill/constants';
 import { weeklyHolidayPay } from './weekly-holiday-pay/constants';
 import { vatCalculator } from './vat-calculator/constants';
 import { socialInsuranceCalculator } from './social-insurance-calculator/constants';
+import { severancePay } from './severance-pay/constants';
 
-export const toolIds = ['electricity-bill', 'mvno-plan-cost', 'weekly-holiday-pay', 'vat-calculator', 'social-insurance-calculator'] as const;
+export const toolIds = ['electricity-bill', 'mvno-plan-cost', 'weekly-holiday-pay', 'vat-calculator', 'social-insurance-calculator', 'severance-pay'] as const;
 export type ToolId = (typeof toolIds)[number];
 
 // 사이드바 '계산기·도구' 목록에 쓰는 짧은 이름(도구가 들어 있는 글로 연결된다)
@@ -15,6 +16,7 @@ export const toolNames: Record<ToolId, string> = {
   'weekly-holiday-pay': '주휴수당 계산기',
   'vat-calculator': '부가세 계산기',
   'social-insurance-calculator': '4대보험 계산기',
+  'severance-pay': '퇴직금 계산기',
 };
 
 // 도구를 둘 수 있는 글 유형(도구마다 하나)
@@ -24,6 +26,7 @@ export const toolContentTypes: Record<ToolId, 'cost' | 'compare'> = {
   'weekly-holiday-pay': 'cost',
   'vat-calculator': 'cost',
   'social-insurance-calculator': 'cost',
+  'severance-pay': 'cost',
 };
 
 const eb = electricityBill;
@@ -36,4 +39,6 @@ export const toolSourceIds: Record<ToolId, string[]> = {
   'weekly-holiday-pay': [...weeklyHolidayPay.sourceIds],
   'vat-calculator': [...vatCalculator.sourceIds],
   'social-insurance-calculator': [...socialInsuranceCalculator.sourceIds],
+  // 계산 근거(퇴직급여법·근로기준법·평균임금산정 특례 고시·민법)는 글의 localSources에 둔다
+  'severance-pay': [...severancePay.sourceIds],
 };
