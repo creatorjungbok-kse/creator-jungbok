@@ -6,6 +6,7 @@ import WeeklyHolidayPay from './WeeklyHolidayPay.astro';
 import VatCalculator from './VatCalculator.astro';
 import SocialInsurance from './SocialInsurance.astro';
 import SeverancePay from './SeverancePay.astro';
+import TaxCalendar from './TaxCalendar.astro';
 
 export const toolComponents: Record<ToolId, typeof ElectricityBill> = {
   'electricity-bill': ElectricityBill,
@@ -14,4 +15,5 @@ export const toolComponents: Record<ToolId, typeof ElectricityBill> = {
   'vat-calculator': VatCalculator,
   'social-insurance-calculator': SocialInsurance,
   'severance-pay': SeverancePay,
+  'tax-calendar': TaxCalendar,
 };

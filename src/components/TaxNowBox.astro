@@ -1,0 +1,108 @@
+---
+// 부가세 관련 글 상단의 '지금 할 일' 한 줄 박스. 사업자 세금 달력과 같은 일정 데이터(src/lib/tax-calendar)를 쓴다.
+// 빌드한 날 기준으로 그리고, 화면 스크립트가 방문한 날(한국 날짜) 기준으로 다시 그린다. 일정이 없으면 달력 링크만 보인다.
+import { articleNowEvents, dateLabel, deadlineLine, dotDate, nextMonthlyInvoice, seoulToday } from '../lib/tax-calendar/calendar.ts';
+
+export interface Props {
+  path: string;
+}
+const { path } = Astro.props;
+const today = seoulToday();
+const list = articleNowEvents(path, today);
+// 전자세금계산서 글: 월합계 세금계산서 발급기한 한 줄(날짜를 확인할 수 없으면 표시하지 않음)
+const MONTHLY_PATH = '/business/e-tax-invoice/';
+const monthly = path === MONTHLY_PATH ? nextMonthlyInvoice(today) : null;
+const monthlyText = (m: { month: string; due: string }) => `${Number(m.month.slice(5))}월 거래분은 ${dateLabel(m.due)}까지 발급`;
+---
+
+<aside class="tax-now" data-tax-now={path} data-ad-protected="tool">
+  <p class="tax-now__label">지금 확인할 일 <span class="tax-now__asof" data-tax-now-asof>{dotDate(today)} 기준</span></p>
+  <ul class="tax-now__list" data-tax-now-list>
+    {list.map((e) => (
+      <li>
+        <strong>{e.title}</strong> · {deadlineLine(e, today)}
+        {e.condition && <span class="tax-now__who"> ({e.condition})</span>}
+      </li>
+    ))}
+  </ul>
+  {
+    path === MONTHLY_PATH && (
+      <p class="tax-now__monthly" data-tax-now-monthly hidden={!monthly}>
+        <strong>월합계 세금계산서 발급</strong> · <span data-tax-now-monthly-text>{monthly && monthlyText(monthly)}</span>
+        <span class="tax-now__who"> (한 달 거래를 모아 월합계로 발급하는 사업자에게 해당합니다. 날짜는 방문일 기준으로 갱신합니다.)</span>
+      </p>
+    )
+  }
+  <a href="/business/tax-calendar/">{path === MONTHLY_PATH ? '사업자 세금 달력에서 다음 일정 보기' : '사업자 세금 달력에서 내 유형별 일정 보기'}</a>
+</aside>
+
+<script>
+  import { articleNowEvents, dateLabel, deadlineLine, dotDate, nextMonthlyInvoice, seoulToday } from '../lib/tax-calendar/calendar.ts';
+
+  for (const box of document.querySelectorAll<HTMLElement>('[data-tax-now]')) {
+    const today = seoulToday();
+    const list = articleNowEvents(box.dataset.taxNow!, today);
+    box.querySelector('[data-tax-now-asof]')!.textContent = `${dotDate(today)} 기준`;
+    box.querySelector('[data-tax-now-list]')!.replaceChildren(
+      ...list.map((e) => {
+        const li = document.createElement('li');
+        const strong = Object.assign(document.createElement('strong'), { textContent: e.title });
+        li.append(strong, ` · ${deadlineLine(e, today)}`);
+        if (e.condition) li.append(Object.assign(document.createElement('span'), { className: 'tax-now__who', textContent: ` (${e.condition})` }));
+        return li;
+      }),
+    );
+    const monthlyEl = box.querySelector<HTMLElement>('[data-tax-now-monthly]');
+    if (monthlyEl) {
+      const m = nextMonthlyInvoice(today);
+      monthlyEl.hidden = !m;
+      if (m) monthlyEl.querySelector('[data-tax-now-monthly-text]')!.textContent = `${Number(m.month.slice(5))}월 거래분은 ${dateLabel(m.due)}까지 발급`;
+    }
+  }
+</script>
+
+<style>
+  .tax-now {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    border: 1px solid var(--color-brand);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    font-size: var(--text-sm);
+  }
+
+  .tax-now__label {
+    font-weight: var(--weight-semibold);
+  }
+
+  .tax-now__asof {
+    margin-left: var(--space-2);
+    color: var(--color-text-muted);
+    font-weight: normal;
+  }
+
+  .tax-now__list {
+    display: grid;
+    gap: var(--space-1);
+    padding: 0;
+    list-style: none;
+  }
+
+  .tax-now__monthly[hidden] {
+    display: none;
+  }
+
+  .tax-now__list:empty {
+    display: none;
+  }
+
+  :global(.tax-now__who) {
+    color: var(--color-text-muted);
+  }
+
+  .tax-now a {
+    justify-self: start;
+    font-weight: var(--weight-semibold);
+  }
+</style>

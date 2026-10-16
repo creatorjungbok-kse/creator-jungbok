@@ -22,6 +22,8 @@ import SectionTitle from '../components/SectionTitle.astro';
 import SourceList from '../components/SourceList.astro';
 import StatusBanner from '../components/StatusBanner.astro';
 import SummaryBox from '../components/SummaryBox.astro';
+import TaxNowBox from '../components/TaxNowBox.astro';
+import { linkedArticleUrls } from '../lib/tax-calendar/calendar.ts';
 import Toc, { type Props as TocProps } from '../components/Toc.astro';
 import { toolComponents } from '../components/tools';
 import type { AdSlotId } from '../config/ads';
@@ -170,6 +172,7 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
         ) : (
           <>
             <SummaryBox summary={data.summary} />
+            {linkedArticleUrls.includes(Astro.url.pathname) && <TaxNowBox path={Astro.url.pathname} />}
             {/* 행동형(guide) 글은 결론 → 한눈에 보기 → 공식 행동 → 목차 → 준비할 것 순으로 핵심 답과 공식 링크를 먼저 둔다 */}
             {!isGuide && !toolFirst && <Toc headings={toc} variant="inline" />}
             {Tool && <Tool />}

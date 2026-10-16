@@ -236,11 +236,12 @@ for (const file of htmlFiles) {
     if (hasBenefitDocs !== Boolean(shown)) fail(`'신청 가능한 지원만' ${shown ? '표시' : '숨김'} (검색 데이터 benefit ${hasBenefitDocs ? '있음' : '없음'})`);
   }
 
-  // 사이트 자체 script는 benefits 허브·검색 페이지·도구(data-tool)가 있는 글에만(production GA4 loader·JSON-LD 제외)
+  // 사이트 자체 script는 benefits 허브·검색 페이지·도구(data-tool)·세금 달력 박스(data-tax-now)가 있는 글에만(production GA4 loader·JSON-LD 제외)
   const siteScripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)].filter(
     ([, attrs, body]) => !attrs.includes('application/ld+json') && !attrs.includes('googletagmanager.com') && !body.includes('window.dataLayer'),
   ).length;
-  const hasTool = /\sdata-tool="/.test(html);
+  // 세금 달력 '지금 할 일' 박스(data-tax-now)도 방문한 날 기준으로 상태를 다시 그리는 화면 스크립트를 쓴다
+  const hasTool = /\sdata-tool="/.test(html) || /\sdata-tax-now="/.test(html);
   if (siteScripts > 0 && !SCRIPT_PAGES.has(path) && !hasTool) fail(`허용되지 않은 페이지 script ${siteScripts}건`);
 
   // 취소선 금지: 본문에 물결표(~)가 한 문단에 둘 이상 있으면 Markdown이 그 사이를 취소선(<del>)으로 바꾼다

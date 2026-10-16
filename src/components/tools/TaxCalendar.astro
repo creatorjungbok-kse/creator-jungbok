@@ -1,0 +1,260 @@
+---
+// 사업자 세금 달력 v1. 확정 설계(docs/ready/tax-calendar/design.md). 일정·판정은 src/lib/tax-calendar/calendar.ts에만 있다.
+// 빌드한 날 기준으로 먼저 그리고(JavaScript가 없으면 'YYYY.MM.DD 기준'으로 표시), 화면 스크립트가 방문한 날(한국 날짜) 기준으로 다시 그린다.
+// 고른 사업자 유형은 이 브라우저에만 저장한다(localStorage, 실패해도 동작). 서버·GA로 보내지 않는다.
+import ToolShell from '../ToolShell.astro';
+import { board, dateLabel, deadlineLine, dotDate, reviewFromDate, seoulToday, type TaxEvent } from '../../lib/tax-calendar/calendar.ts';
+
+const buildDay = seoulToday();
+const b = board('all', buildDay);
+const reviewNote = '세금 달력의 확정·법정 기준 일정이 60일 안에 끝납니다. 국세청 세무일정·보도자료로 다음 일정을 입력하세요.';
+const groups: [string, string, TaxEvent[]][] = [
+  ['now', '지금 확인할 일', b.now],
+  ['next', '다음 일정', b.next],
+  ['later', '이후 일정 (예상)', b.later],
+  ['past', '기한이 지난 일정', b.past],
+];
+---
+
+<ToolShell id="tax-calendar" title="사업자 세금 달력" reviewFrom={reviewFromDate} reviewNote={reviewNote}>
+  <p class="tool-scope">부가세 신고·납부와 세금계산서 일정만 담았습니다 · 원천세·종합소득세·법인세는 아래 국세청 세무일정에서 확인하세요</p>
+
+  <div class="tc-pick" data-tc-pick data-js-only>
+    <fieldset>
+      <legend class="tool-label">사업자 유형</legend>
+      <div class="tool-choices">
+        <label class="tool-choice"><input type="radio" name="tc-type" value="individual" /><span>개인 일반과세자</span></label>
+        <label class="tool-choice"><input type="radio" name="tc-type" value="simplified" /><span>간이과세자</span></label>
+        <label class="tool-choice"><input type="radio" name="tc-type" value="corp" /><span>법인사업자</span></label>
+      </div>
+    </fieldset>
+    <fieldset data-tc-corp hidden>
+      <legend class="tool-label">이번 부가세 예정 기간에</legend>
+      <div class="tool-choices tc-stack">
+        <label class="tool-choice"><input type="radio" name="tc-corp" value="corp-return" /><span>예정신고 대상(직전 과세기간 공급가액 1억5천만원 이상)</span></label>
+        <label class="tool-choice"><input type="radio" name="tc-corp" value="corp-notice" /><span>예정고지 대상(소규모 법인, 1억5천만원 미만)</span></label>
+        <label class="tool-choice"><input type="radio" name="tc-corp" value="corp-unknown" /><span>잘 모르겠음</span></label>
+      </div>
+      <p class="tool-hint">어느 쪽인지 모르면 두 경우를 모두 보여 드립니다. 홈택스나 국세청 126에서 확인하세요.</p>
+    </fieldset>
+  </div>
+
+  <p class="tc-asof" data-tc-asof>{dotDate(buildDay)} 기준 · 사업자 유형을 고르면 해당 일정만 보입니다</p>
+  <p class="tc-stale" data-tc-stale hidden>이 달력에 입력된 확정 일정이 모두 지났습니다. 최신 일정은 국세청 세무일정에서 확인하세요.</p>
+  <p class="tc-stale" data-tc-expired hidden>예상으로 표시했던 일정의 기한이 지났지만 아직 확정 정보로 갱신되지 않았습니다. 실제 기한은 국세청 세무일정·안내문에서 다시 확인하세요.</p>
+
+  <div class="tc-board" data-tc-board aria-live="polite">
+    {
+      groups.map(([key, title, list]) => (
+        <section class="tc-group" data-tc-group={key} hidden={list.length === 0}>
+          <h3>{title}</h3>
+          <ul class="tc-list">
+            {list.map((e) => (
+              <li class:list={['tc-card', `tc-card--${key}`]}>
+                <p class="tc-card__title">{e.title}</p>
+                <p class="tc-card__deadline">{deadlineLine(e, buildDay)}</p>
+                {e.condition && <p class="tc-card__who">대상: {e.condition}</p>}
+                <p class="tc-card__todo">{key === 'past' ? e.afterDeadline : e.todo}</p>
+                {e.paymentExtension && (key !== 'past' || buildDay <= e.paymentExtension.deadline) && <p class="tc-card__ext">납부기한 연장 대상자 안내: {e.paymentExtension.text}</p>}
+                {e.verificationNote && <p class="tc-card__note">{e.verificationNote}</p>}
+                <a class="tc-card__link" href={e.articleUrl}>{e.articleLabel}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+    <section class="tc-group" data-tc-group="monthly" hidden={!b.monthly}>
+      <h3>매월 확인할 일</h3>
+      <ul class="tc-list">
+        <li class="tc-card">
+          <p class="tc-card__title">월합계 세금계산서 발급</p>
+          <p class="tc-card__deadline" data-tc-monthly>{b.monthly && `${Number(b.monthly.month.slice(5))}월 거래분 · ${dateLabel(b.monthly.due)}까지`}</p>
+          <p class="tc-card__who">대상: 한 달 거래를 모아 월합계·기간합계 세금계산서를 발급하는 사업자</p>
+          <p class="tc-card__todo">거래한 달의 다음 달 10일까지 발급합니다. 10일이 토요일·공휴일이면 바로 다음 영업일까지입니다.</p>
+          <a class="tc-card__link" href="/business/e-tax-invoice/">전자세금계산서 발급 기한 보기</a>
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <p class="tool-notice">모든 날짜와 대상은 국세청 개별 안내와 실제 사업자 상황에 따라 다시 확인하세요. 원천세·종합소득세 등 전체 일정은 <a href="https://www.nts.go.kr/nts/ad/taxSchdul/selectList.do?mi=135747" target="_blank" rel="noopener">국세청 세무일정</a>에서 볼 수 있습니다.</p>
+</ToolShell>
+
+<script>
+  import { board, dateLabel, deadlineLine, dotDate, seoulToday, type Profile, type TaxEvent, type View } from '../../lib/tax-calendar/calendar.ts';
+
+  const root = document.querySelector<HTMLElement>('[data-tool="tax-calendar"]');
+  if (root) {
+    const $ = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
+    const radios = (name: string) => [...root.querySelectorAll<HTMLInputElement>(`input[name="${name}"]`)];
+    const checked = (name: string) => radios(name).find((r) => r.checked)?.value;
+    const corpBox = $('[data-tc-corp]');
+    const KEY = 'kkultip:tax-calendar-profile';
+    let reached = false;
+
+    const card = (e: TaxEvent, key: string, today: string) => {
+      const li = document.createElement('li');
+      li.className = `tc-card tc-card--${key}`;
+      const p = (cls: string, text: string) => Object.assign(document.createElement('p'), { className: cls, textContent: text });
+      li.append(p('tc-card__title', e.title), p('tc-card__deadline', deadlineLine(e, today)));
+      if (e.condition) li.append(p('tc-card__who', `대상: ${e.condition}`));
+      li.append(p('tc-card__todo', key === 'past' ? e.afterDeadline : e.todo));
+      if (e.paymentExtension && (key !== 'past' || today <= e.paymentExtension.deadline)) li.append(p('tc-card__ext', `납부기한 연장 대상자 안내: ${e.paymentExtension.text}`));
+      if (e.verificationNote) li.append(p('tc-card__note', e.verificationNote));
+      li.append(Object.assign(document.createElement('a'), { className: 'tc-card__link', href: e.articleUrl, textContent: e.articleLabel }));
+      return li;
+    };
+
+    const render = () => {
+      const type = checked('tc-type');
+      corpBox.hidden = type !== 'corp';
+      const view: View = type === 'corp' ? ((checked('tc-corp') as Profile | undefined) ?? 'corp-unknown') : ((type as Profile | undefined) ?? 'all');
+      const today = seoulToday();
+      const b = board(view, today);
+      $('[data-tc-asof]').textContent = view === 'all' ? `${dotDate(today)} 기준 · 사업자 유형을 고르면 해당 일정만 보입니다` : `${dotDate(today)} 기준`;
+      $('[data-tc-stale]').hidden = !b.stale;
+      $('[data-tc-expired]').hidden = b.expiredExpected.length === 0;
+      for (const [key, list] of [['now', b.now], ['next', b.next], ['later', b.later], ['past', b.past]] as const) {
+        const group = $(`[data-tc-group="${key}"]`);
+        group.querySelector('ul')!.replaceChildren(...list.map((e) => card(e, key, today)));
+        group.hidden = list.length === 0;
+      }
+      const monthly = $('[data-tc-group="monthly"]');
+      monthly.hidden = !b.monthly;
+      if (b.monthly) $('[data-tc-monthly]').textContent = `${Number(b.monthly.month.slice(5))}월 거래분 · ${dateLabel(b.monthly.due)}까지`;
+      if (view !== 'all' && !reached) {
+        reached = true;
+        // 도구 이름만 보낸다(고른 유형·일정 없음)
+        document.dispatchEvent(new CustomEvent('kkultip:tool-use', { detail: 'tax-calendar' }));
+      }
+    };
+
+    try {
+      const saved = localStorage.getItem(KEY);
+      if (saved) {
+        const [type, corp] = saved.split('|');
+        for (const r of radios('tc-type')) r.checked = r.value === type;
+        for (const r of radios('tc-corp')) r.checked = r.value === corp;
+      }
+    } catch {
+      /* 저장소를 못 써도 그대로 동작 */
+    }
+    for (const r of [...radios('tc-type'), ...radios('tc-corp')])
+      r.addEventListener('change', () => {
+        try {
+          localStorage.setItem(KEY, `${checked('tc-type') ?? ''}|${checked('tc-corp') ?? ''}`);
+        } catch {
+          /* 무시 */
+        }
+        render();
+      });
+    render();
+  }
+</script>
+
+<style>
+  .tc-stack {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tc-pick {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .tc-pick fieldset {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .tc-pick fieldset[hidden] {
+    display: none;
+  }
+
+  .tc-asof {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .tc-stale {
+    padding: var(--space-3) var(--space-4);
+    border-left: 3px solid var(--color-status-closing);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+  }
+
+  .tc-board {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .tc-group[hidden] {
+    display: none;
+  }
+
+  .tc-group h3 {
+    margin-bottom: var(--space-2);
+    font-size: var(--text-md);
+  }
+
+  .tc-list {
+    display: grid;
+    gap: var(--space-3);
+    padding: 0;
+    list-style: none;
+  }
+
+  :global(.tc-card) {
+    display: grid;
+    gap: var(--space-1);
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-bg);
+    font-size: var(--text-sm);
+  }
+
+  :global(.tc-card--now) {
+    border-color: var(--color-brand);
+    background: var(--color-surface);
+  }
+
+  :global(.tc-card--past) {
+    color: var(--color-text-muted);
+  }
+
+  :global(.tc-card__title) {
+    color: var(--color-text);
+    font-size: var(--text-md);
+    font-weight: var(--weight-semibold);
+  }
+
+  :global(.tc-card__deadline) {
+    color: var(--color-text);
+    font-weight: var(--weight-semibold);
+    font-variant-numeric: tabular-nums;
+  }
+
+  :global(.tc-card__who),
+  :global(.tc-card__note) {
+    color: var(--color-text-muted);
+  }
+
+  :global(.tc-card__ext) {
+    padding: var(--space-2) var(--space-3);
+    border-left: 3px solid var(--color-outline);
+    background: var(--color-surface);
+  }
+
+  :global(.tc-card__link) {
+    justify-self: start;
+    margin-top: var(--space-1);
+    font-weight: var(--weight-semibold);
+  }
+</style>
