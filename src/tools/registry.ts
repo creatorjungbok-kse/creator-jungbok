@@ -5,8 +5,9 @@ import { weeklyHolidayPay } from './weekly-holiday-pay/constants';
 import { vatCalculator } from './vat-calculator/constants';
 import { socialInsuranceCalculator } from './social-insurance-calculator/constants';
 import { severancePay } from './severance-pay/constants';
+import { annualLeave } from './annual-leave/constants';
 
-export const toolIds = ['electricity-bill', 'mvno-plan-cost', 'weekly-holiday-pay', 'vat-calculator', 'social-insurance-calculator', 'severance-pay', 'tax-calendar'] as const;
+export const toolIds = ['electricity-bill', 'mvno-plan-cost', 'weekly-holiday-pay', 'vat-calculator', 'social-insurance-calculator', 'severance-pay', 'tax-calendar', 'annual-leave'] as const;
 export type ToolId = (typeof toolIds)[number];
 
 // 사이드바 '계산기·도구' 목록에 쓰는 짧은 이름(도구가 들어 있는 글로 연결된다)
@@ -18,6 +19,7 @@ export const toolNames: Record<ToolId, string> = {
   'social-insurance-calculator': '4대보험 계산기',
   'severance-pay': '퇴직금 계산기',
   'tax-calendar': '사업자 세금 달력',
+  'annual-leave': '연차 계산기',
 };
 
 // 도구를 둘 수 있는 글 유형(도구마다 하나)
@@ -30,6 +32,7 @@ export const toolContentTypes: Record<ToolId, 'cost' | 'compare' | 'guide'> = {
   'severance-pay': 'cost',
   // 일정 달력은 계산 도구가 아니라 기존 세금 글을 잇는 안내 도구
   'tax-calendar': 'guide',
+  'annual-leave': 'cost',
 };
 
 const eb = electricityBill;
@@ -46,4 +49,6 @@ export const toolSourceIds: Record<ToolId, string[]> = {
   'severance-pay': [...severancePay.sourceIds],
   // 일정 근거(국세청 세무일정·보도자료·부가세법·국기법·월력요항)는 글의 localSources에 둔다
   'tax-calendar': [],
+  // 계산 근거(근로기준법·시행령 별표2·대법원 판결·민법)는 글의 localSources에 둔다
+  'annual-leave': [...annualLeave.sourceIds],
 };

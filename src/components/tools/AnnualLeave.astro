@@ -1,0 +1,666 @@
+---
+// 연차 계산기 v1. 설계 v2(docs/ready/annual-leave/calculator-design.md)를 옮긴다 — 계산식·판정·문구를 여기서 바꾸지 않는다.
+// 계산·판정은 src/lib/payroll/annual-leave/calculation.ts에만 있고, 이 컴포넌트는 결과를 그리기만 한다.
+// 입력값·결과는 저장·전송하지 않는다(form 제출 없음, 입력칸에 name 없음, URL·GA 전송 없음). 기본 선택값 없음(설계 D).
+// JavaScript가 없으면 입력을 숨기고 noscript 안의 대법원 사례 결과만 보인다.
+import ToolShell from '../ToolShell.astro';
+import { calculate, parseYmd, type Result } from '../../lib/payroll/annual-leave/calculation.ts';
+
+const ex11 = calculate({ workplace: 'five-plus', mineHoursT: 400, regularHoursT: 400, hireDay: parseYmd('2026-01-02')!, mode: 'retire', baseDay: parseYmd('2027-01-01')!, attendance80: null, missedMonths: 0, companyBasis: 'hire' }) as Result;
+const ex26 = calculate({ workplace: 'five-plus', mineHoursT: 400, regularHoursT: 400, hireDay: parseYmd('2026-01-02')!, mode: 'retire', baseDay: parseYmd('2027-01-02')!, attendance80: 'yes', missedMonths: 0, companyBasis: 'hire' }) as Result;
+---
+
+<ToolShell id="annual-leave" title="연차 계산기">
+  <p class="tool-scope">입사일 기준으로 법정 연차가 언제 며칠 생기는지 참고 계산합니다 · 입력값은 이 화면에서만 계산하고 저장하지 않습니다</p>
+  <noscript><p class="tool-noscript">계산기는 JavaScript가 켜져 있어야 동작합니다. 아래 예시 결과를 참고하세요.</p></noscript>
+
+  <div class="tool-form" data-al-form data-js-only>
+    <fieldset>
+      <legend class="tool-label">상시 근로자 5명 이상인 사업장인가요?</legend>
+      <div class="tool-choices al-stack">
+        <label class="tool-choice"><input type="radio" name="al-size" value="five-plus" /><span>근무하는 동안 내내 5명 이상</span></label>
+        <label class="tool-choice"><input type="radio" name="al-size" value="four-or-less" /><span>내내 4명 이하</span></label>
+        <label class="tool-choice"><input type="radio" name="al-size" value="changed" /><span>5명 이상·4명 이하가 바뀐 적 있음</span></label>
+        <label class="tool-choice"><input type="radio" name="al-size" value="unknown" /><span>잘 모르겠음</span></label>
+      </div>
+      <p class="tool-hint">지금 인원이 아니라 연차가 생기는 근거가 된 전년도 기준으로 판단합니다(대법원). 상시 근로자 수는 일정 기간의 평균으로 산정하는 인원입니다.</p>
+      <p class="tool-error" data-al-error="size"></p>
+    </fieldset>
+
+    <div class="al-pair">
+      <div class="tool-field">
+        <label class="tool-label" for="al-mine">내 주 소정근로시간 (4주 평균)</label>
+        <div class="tool-input"><input id="al-mine" type="text" inputmode="decimal" autocomplete="off" maxlength="4" aria-describedby="al-mine-hint" /><span aria-hidden="true">시간</span></div>
+        <p id="al-mine-hint" class="tool-hint">근로계약서상 일하기로 한 시간입니다. 연장근로는 넣지 않습니다. 0.5시간 단위까지.</p>
+        <p class="tool-error" data-al-error="mine"></p>
+      </div>
+      <div class="tool-field">
+        <label class="tool-label" for="al-regular">같은 일을 하는 통상근로자의 주 소정근로시간</label>
+        <div class="tool-input"><input id="al-regular" type="text" inputmode="decimal" autocomplete="off" maxlength="4" value="40" aria-describedby="al-regular-hint" /><span aria-hidden="true">시간</span></div>
+        <p id="al-regular-hint" class="tool-hint">보통 40시간입니다. 회사가 다르게 정했다면 고쳐 주세요. 내 시간이 이보다 짧으면 단시간근로자로 보고 시간 단위로 계산합니다.</p>
+        <p class="tool-error" data-al-error="regular"></p>
+      </div>
+    </div>
+
+    <div class="tool-field">
+      <label class="tool-label" for="al-hire">입사일</label>
+      <div class="tool-input"><input id="al-hire" type="date" autocomplete="off" min="1970-01-01" max="2099-12-31" aria-describedby="al-hire-hint" /></div>
+      <p id="al-hire-hint" class="tool-hint">회사가 단체협약·취업규칙으로 기준일을 따로 정하지 않았다면 일을 시작한 날입니다.</p>
+      <p class="tool-error" data-al-error="hire"></p>
+    </div>
+
+    <fieldset>
+      <legend class="tool-label">어느 날 기준으로 계산할까요?</legend>
+      <div class="tool-choices">
+        <label class="tool-choice"><input type="radio" name="al-mode" value="today" /><span>오늘까지</span></label>
+        <label class="tool-choice"><input type="radio" name="al-mode" value="retire" /><span>퇴직(마지막 근무일)</span></label>
+      </div>
+      <p class="tool-error" data-al-error="mode"></p>
+      <div class="tool-field al-sub" data-al-lastbox hidden>
+        <label class="tool-label" for="al-last">마지막 근무일</label>
+        <div class="tool-input"><input id="al-last" type="date" autocomplete="off" min="1970-01-01" max="2099-12-31" aria-describedby="al-last-hint" /></div>
+        <p id="al-last-hint" class="tool-hint">근로관계가 끝나는 마지막 날입니다. 예: 2026.1.2 입사, 1년 계약이면 2027.1.1</p>
+        <p class="tool-error" data-al-error="last"></p>
+      </div>
+    </fieldset>
+
+    <fieldset data-al-attbox hidden>
+      <legend class="tool-label">1년을 채운 해마다 출근율이 80% 이상이었나요?</legend>
+      <div class="tool-choices">
+        <label class="tool-choice"><input type="radio" name="al-att" value="yes" /><span>예</span></label>
+        <label class="tool-choice"><input type="radio" name="al-att" value="no" /><span>아니오</span></label>
+        <label class="tool-choice"><input type="radio" name="al-att" value="unknown" /><span>잘 모르겠음</span></label>
+      </div>
+      <p class="tool-hint">업무상 부상·질병으로 휴업한 기간, 출산전후휴가 등으로 휴업한 기간, 육아휴직 기간은 출근한 것으로 봅니다.</p>
+      <p class="tool-error" data-al-error="att"></p>
+    </fieldset>
+
+    <fieldset data-al-missbox>
+      <legend class="tool-label">입사 첫 1년(1~11번째 달) 중 개근하지 못한 달이 있나요?</legend>
+      <div class="tool-choices">
+        <label class="tool-choice"><input type="radio" name="al-miss" value="none" /><span>없음(확인함)</span></label>
+        <label class="tool-choice"><input type="radio" name="al-miss" value="some" /><span>있음</span></label>
+      </div>
+      <div class="tool-field al-sub" data-al-misscount hidden>
+        <label class="tool-label" for="al-missn">개근하지 못한 달 수</label>
+        <div class="tool-input al-short"><input id="al-missn" type="text" inputmode="numeric" autocomplete="off" maxlength="2" /><span aria-hidden="true">개월</span></div>
+      </div>
+      <p class="tool-hint">결근한 날이 하루라도 있는 달은 그 달 몫 1일이 생기지 않습니다. 기준일까지 지난 달만 셉니다.</p>
+      <p class="tool-error" data-al-error="miss"></p>
+    </fieldset>
+
+    <fieldset>
+      <legend class="tool-label">회사는 연차를 어떤 기준으로 주나요?</legend>
+      <div class="tool-choices">
+        <label class="tool-choice"><input type="radio" name="al-basis" value="hire" /><span>입사일 기준</span></label>
+        <label class="tool-choice"><input type="radio" name="al-basis" value="fiscal" /><span>회계연도(1.1~12.31) 기준</span></label>
+        <label class="tool-choice"><input type="radio" name="al-basis" value="unknown" /><span>잘 모르겠음</span></label>
+      </div>
+      <p class="tool-hint">어느 쪽이든 이 계산기는 입사일 기준으로 계산합니다.</p>
+      <p class="tool-error" data-al-error="basis"></p>
+    </fieldset>
+
+    <fieldset class="al-pay">
+      <legend class="tool-label">미사용 연차수당 <small class="al-optional">(선택)</small></legend>
+      <p class="tool-hint">회사 기록(급여명세서·연차 관리 화면)으로 확인한, 쓰지 못했고 아직 수당을 받지 않은 연차를 넣으면 예상 수당을 계산합니다.</p>
+      <div class="al-pair">
+        <div class="tool-field">
+          <label class="tool-label" for="al-unused" data-al-unused-label>미사용·미정산 연차 일수</label>
+          <div class="tool-input"><input id="al-unused" type="text" inputmode="decimal" autocomplete="off" maxlength="6" /><span aria-hidden="true" data-al-unused-unit>일</span></div>
+        </div>
+        <div class="tool-field">
+          <label class="tool-label" for="al-wage" data-al-wage-label>1일 통상임금</label>
+          <div class="tool-input"><input id="al-wage" type="text" inputmode="numeric" autocomplete="off" maxlength="10" /><span aria-hidden="true">원</span></div>
+        </div>
+      </div>
+      <p class="tool-error" data-al-error="pay"></p>
+    </fieldset>
+
+    <div class="al-actions">
+      <button class="tool-submit" type="button" data-al-submit>계산하기</button>
+      <button class="al-link-button" type="button" data-al-example>예시로 채워 보기</button>
+    </div>
+
+    <div class="al-output" data-al-output hidden aria-live="polite" tabindex="-1">
+      <div class="tool-result" data-al-view="result" hidden>
+        <p class="al-assume" data-al="assume" hidden>상시근로자 5명 이상 사업장이라는 가정으로 계산한 참고 결과입니다. 실제 법정 연차 적용 여부는 사업장 규모를 확인해야 합니다.</p>
+        <div class="al-block">
+          <p class="al-block__label" data-al="usableLabel"></p>
+          <p class="al-block__value"><strong data-al="usable"></strong></p>
+          <p class="al-block__note" data-al="usableNote"></p>
+        </div>
+        <div class="al-block" data-al="cumBox">
+          <p class="al-block__label" data-al="cumLabel"></p>
+          <p class="al-block__value"><strong data-al="cum"></strong></p>
+          <p class="al-block__note" data-al="cumNote"></p>
+        </div>
+        <div class="al-block" data-al="payBox">
+          <p class="al-block__label">입력한 미사용 연차 기준 예상 수당</p>
+          <p class="al-block__value"><strong data-al="pay"></strong></p>
+          <p class="al-block__note">확정 금액이 아닙니다. 회사가 법에 따라 사용을 촉진했다면 수당 지급 의무가 없을 수 있고, 취업규칙 등에서 평균임금으로 정했다면 그 기준으로 계산합니다.</p>
+        </div>
+        <dl class="al-breakdown" data-al="nextBox">
+          <div><dt>다음에 생기는 연차</dt><dd data-al="next"></dd></div>
+        </dl>
+        <ul class="al-cautions" data-al="cautions"></ul>
+        <details class="al-table">
+          <summary class="disclosure">날짜별 발생표 펼쳐 보기</summary>
+          <div class="table-cards">
+            <table>
+              <thead><tr><th>구분</th><th>발생일</th><th>연차</th><th>사용기간 끝</th></tr></thead>
+              <tbody data-al="rows"></tbody>
+            </table>
+          </div>
+        </details>
+      </div>
+      <div class="tool-result al-message" data-al-view="message" hidden>
+        <p class="al-message__title" data-al="messageTitle"></p>
+        <p class="al-message__body" data-al="messageBody"></p>
+      </div>
+      <p class="tool-notice">연차는 생긴 날부터 1년 안에 쓰지 않으면 사라지고, 첫해 월 단위 연차는 입사 1년이 될 때까지 쓸 수 있습니다. 회사 사정으로 못 쓴 경우는 사라지지 않습니다. 결과가 회사 계산과 다르면 근로계약서·취업규칙과 연차 기록을 챙겨 고용노동부 고객상담센터(1350)에 확인하세요.</p>
+    </div>
+  </div>
+
+  <noscript>
+    <div class="tool-result">
+      <p class="al-block__label">예시 · 2026년 1월 2일 입사(상시 5명 이상, 통상근로자, 매달 개근)</p>
+      <ul class="al-noscript">
+        <li>2027년 1월 1일까지 일하고 계약 종료: 퇴직일까지 발생한 연차 {ex11.cumulativeDays}일</li>
+        <li>2027년 1월 2일까지 근로관계 유지: 퇴직일까지 발생한 연차 {ex26.cumulativeDays}일(첫해 11일 + 1년 근속 15일)</li>
+      </ul>
+    </div>
+  </noscript>
+
+  <details class="al-basis">
+    <summary class="disclosure">계산 근거와 계산하지 않는 경우</summary>
+    <div class="al-basis__body">
+      <p class="al-basis__term">계산 방식</p>
+      <ul>
+        <li>첫 1년: 1개월 개근을 마친 다음 날 1일씩, 최대 11일(예: 1월 2일 입사 → 2월 2일, 3월 2일 …)</li>
+        <li>1년 근로를 마친 다음 날 15일, 3년 이상이면 최초 1년을 넘는 근속 2년마다 1일 가산, 최대 25일</li>
+        <li>그 발생일까지 근로관계가 있어야 생깁니다. 1년 근로를 마친 날 퇴직하면 15일은 생기지 않습니다(대법원 2021다227100·2022다245419).</li>
+        <li>1년은 입사일부터 달력으로 셉니다(민법 제160조). 입사일이 29~31일이라 그 달에 같은 날짜가 없으면 월 단위 발생일은 단정하지 않습니다.</li>
+        <li>단시간근로자: 통상근로자 연차일수 × (내 주 소정근로시간 ÷ 통상근로자 주 소정근로시간) × 8시간, 1시간 미만은 1시간(근로기준법 시행령 별표2). 첫해 월 단위 연차는 합계 시간의 끝수 처리 공식 사례를 확인하지 못해 1일분 시간만 보여 줍니다.</li>
+        <li>첫해 월 단위 연차의 사용기간: 2020년 3월 31일 이후 생긴 것은 입사 1년이 될 때까지, 그 전에 생긴 것은 각 발생일부터 1년(2020.3.31 개정 부칙 제2조)</li>
+        <li>미사용 연차수당: 취업규칙 등에 따로 정한 기준이 없으면 통상임금 기준(대법원 2018다239110). 원 미만은 버리고 표시합니다.</li>
+      </ul>
+      <p class="al-basis__term">계산하지 않고 안내만 하는 경우</p>
+      <ul>
+        <li>상시 4명 이하 사업장, 근무 중 사업장 규모가 바뀐 경우, 4주 평균 주 15시간 미만</li>
+        <li>출근율 80% 미만인 해가 있거나 모르는 경우</li>
+        <li>2017년 5월 29일 이전 입사자의 첫 2년 이력: 첫해 쓴 연차를 2년째 15일에서 빼던 옛 규정이 2018년 5월 29일 삭제됐고, 고용노동부는 2017년 5월 30일 입사자부터 개정 규정이 적용된다고 안내합니다. 이 경우 현재 근속연수의 연차만 계산합니다.</li>
+        <li>2020년 3월 30일 이전에 생긴 첫해 월 단위 연차 중 일부만 사용기간이 남았는데 개근하지 못한 달이 있는 경우</li>
+        <li>회계연도 기준 회사의 실제 부여 일수, 회사의 연차 사용 촉진 효력</li>
+        <li>2027년 6월 10일부터 시간 단위 연차 사용 청구가 시행됩니다. 일수 계산은 그대로이고, 시행 전에 다시 확인합니다.</li>
+      </ul>
+      <p>확인일 2026.10.16</p>
+    </div>
+  </details>
+</ToolShell>
+
+<script>
+  // 입력값은 이 페이지 안에서만 계산한다(저장·전송 없음). 계산·판정은 lib/payroll/annual-leave의 함수만 쓴다.
+  import { parseScaled, parseWonInt } from '../../lib/payroll/shared/validation.ts';
+  import {
+    DAILY_WAGE_MAX,
+    HOURLY_WAGE_MAX,
+    HOURS_MAX_T,
+    UNUSED_DAYS_MAX_T,
+    UNUSED_HOURS_MAX_T,
+    calculate,
+    dot,
+    isOldRule,
+    needsAttendance,
+    parseYmd,
+    seoulTodayDay,
+    tenthsLabel,
+    unusedPay,
+    type Attendance,
+    type Basis,
+    type CautionCode,
+    type Grant,
+    type Result,
+    type Workplace,
+  } from '../../lib/payroll/annual-leave/calculation.ts';
+
+  const root = document.querySelector<HTMLElement>('[data-tool="annual-leave"]');
+  const form = root?.querySelector<HTMLElement>('[data-al-form]');
+  if (root && form) {
+    const $ = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
+    const radios = (name: string) => [...form.querySelectorAll<HTMLInputElement>(`input[name="${name}"]`)];
+    const checked = (name: string) => radios(name).find((r) => r.checked)?.value;
+    const set = (key: string, text: string) => {
+      for (const el of root.querySelectorAll<HTMLElement>(`[data-al="${key}"]`)) el.textContent = text;
+    };
+    const box = (key: string) => $(`[data-al="${key}"]`);
+    const errorEl = (key: string) => $(`[data-al-error="${key}"]`);
+    const mine = $<HTMLInputElement>('#al-mine');
+    const regular = $<HTMLInputElement>('#al-regular');
+    const hire = $<HTMLInputElement>('#al-hire');
+    const last = $<HTMLInputElement>('#al-last');
+    const missN = $<HTMLInputElement>('#al-missn');
+    const unused = $<HTMLInputElement>('#al-unused');
+    const wage = $<HTMLInputElement>('#al-wage');
+    const output = $('[data-al-output]');
+    const views = { result: $('[data-al-view="result"]'), message: $('[data-al-view="message"]') };
+    const n = (v: number) => v.toLocaleString('ko-KR');
+    let reachedResult = false;
+    let shown = false;
+
+    const hoursOpt = { decimals: 1, step: 5, min: 5, max: HOURS_MAX_T };
+    const readHours = (el: HTMLInputElement) => parseScaled(el.value, hoursOpt);
+    const isPartTime = () => {
+      const a = readHours(mine);
+      const b = readHours(regular);
+      return a.ok && b.ok && a.value < b.value;
+    };
+    const baseDay = () => (checked('al-mode') === 'today' ? seoulTodayDay() : checked('al-mode') === 'retire' ? parseYmd(last.value) : null);
+
+    // 입력에 따라 보일 칸을 정한다
+    const sync = () => {
+      $('[data-al-lastbox]').hidden = checked('al-mode') !== 'retire';
+      const h = parseYmd(hire.value);
+      const b = baseDay();
+      $('[data-al-attbox]').hidden = !(h !== null && b !== null && b >= h && needsAttendance(h, b));
+      $('[data-al-missbox]').hidden = h !== null && isOldRule(h);
+      $('[data-al-misscount]').hidden = checked('al-miss') !== 'some';
+      const pt = isPartTime();
+      $('[data-al-unused-label]').textContent = pt ? '미사용·미정산 연차 시간' : '미사용·미정산 연차 일수';
+      $('[data-al-unused-unit]').textContent = pt ? '시간' : '일';
+      $('[data-al-wage-label]').textContent = pt ? '시간급 통상임금' : '1일 통상임금';
+    };
+
+    const showMessage = (title: string, body: string) => {
+      set('messageTitle', title);
+      set('messageBody', body);
+      views.result.hidden = true;
+      views.message.hidden = false;
+      output.hidden = false;
+    };
+
+    const stopText: Record<string, [string, string]> = {
+      'four-or-less': ['법정 연차가 적용되지 않습니다', '상시 4명 이하 사업장에는 근로기준법의 연차 규정이 적용되지 않습니다. 상시 근로자 수는 연차가 생기는 근거가 된 전년도를 기준으로 판단합니다(대법원). 회사 규정이나 근로계약으로 연차를 주기로 했다면 그에 따릅니다.'],
+      'size-changed': ['사업장 규모를 해마다 따로 확인해야 합니다', '근무하는 동안 상시 근로자 수가 5명 이상과 4명 이하를 오갔다면, 연차가 생기는 해마다 그 전년도 인원으로 따로 판단해야 해 자동 계산하지 않습니다. 고용노동부 고객상담센터(1350)에 연도별 인원을 알려 확인하세요.'],
+      under15: ['연차가 생기지 않습니다', '4주 평균 1주 소정근로시간이 15시간 미만이면 연차 규정이 적용되지 않습니다(근로기준법 제18조③). 근무 중 근로시간이 바뀐 적이 있다면 기간별로 따로 확인하세요.'],
+      attendance: ['별도 계산이 필요합니다', '1년간 출근율이 80%에 못 미친 해에는 15일 대신 1개월 개근마다 1일이 생겨, 해마다 따로 계산해야 합니다. 연차가 없다는 뜻은 아닙니다. 출근율을 따질 때 업무상 부상·질병으로 휴업한 기간, 출산전후휴가 등으로 휴업한 기간, 육아휴직 기간은 출근한 것으로 봅니다. 출근율을 모르면 회사의 출퇴근 기록으로 먼저 확인하고, 계산은 고용노동부 고객상담센터(1350)에 문의하세요.'],
+      'legacy-period-missed': ['남은 월 단위 연차를 자동으로 정할 수 없습니다', '2020년 3월 30일 이전에 생긴 첫해 월 단위 연차는 각각 발생일부터 1년 동안 쓸 수 있었습니다(2020.3.31 개정 부칙). 그래서 기준일에 일부 달의 연차만 사용기간이 남아 있는데, 개근하지 못한 달이 어느 달인지 몰라 남은 일수를 정할 수 없습니다. 회사 연차 기록으로 달마다 확인하거나 고용노동부 고객상담센터(1350)에 문의하세요.'],
+      'old-rule-early': ['2018년 5월 29일 이전 규정이 적용되는 기간입니다', '2017년 5월 29일 이전에 입사해 첫 2년 안의 연차를 따지려면, 첫해 쓴 연차를 2년째 15일에서 빼던 옛 규정(2018.5.29 삭제)을 함께 봐야 해 자동 계산하지 않습니다. 고용노동부 고객상담센터(1350)에 확인하세요.'],
+    };
+
+    const cautionText = (c: CautionCode, missed: number): string | null =>
+      ({
+        'workplace-unknown': null, // 맨 위 고정 문구로 표시
+        fiscal: '회사가 회계연도 기준으로 연차를 주는 경우의 참고 계산입니다. 결과는 입사일 기준이라 회사가 실제로 부여한 일수와 다를 수 있습니다. 퇴직할 때 입사일 기준으로 계산한 일수보다 적게 받았다면 부족분을 정산해야 한다는 것이 고용노동부 상담 안내입니다.',
+        'basis-unknown': '회사의 연차 기준을 몰라 입사일 기준으로 계산한 참고 결과입니다. 회사가 회계연도(1.1~12.31) 기준으로 준다면 실제 부여 일수와 다를 수 있습니다.',
+        'month-boundary': '입사일이 29~31일이라 해당 달에 같은 날짜가 없는 달이 있습니다. 기준일이 그 경계에 있어 하루 차이로 그 달 몫 1일이 들어가는지 달라질 수 있으니 회사나 1350에 확인하세요.',
+        'retire-on-completion': '마지막 근무일이 1개월 개근을 마친 날이라, 그 달 몫 1일이 생기는지는 확인이 필요합니다. 결과에는 넣지 않았습니다.',
+        'year-exact': '마지막 근무일이 1년 단위 근로를 마친 날이라 그 1년에 대한 연차는 생기지 않습니다. 그 연차는 다음 날까지 근로관계가 있어야 생깁니다(대법원 판결).',
+        'missed-months': `개근하지 못한 달 ${missed}개를 빼고 계산했습니다. 어느 달인지에 따라 날짜표의 발생일이 달라집니다.`,
+      })[c];
+
+    const daysHours = (g: Grant) => (g.hours !== null ? `${n(g.hours)}시간(${g.days}일분)` : `${g.days}일`);
+
+    const errText: Record<string, string> = {
+      'date-order': '기준일이 입사일보다 빠릅니다.',
+      'hire-range': '날짜를 다시 확인해 주세요.',
+      'hours-order': '내 근로시간이 통상근로자보다 깁니다. 통상근로자 주 소정근로시간을 확인해 주세요.',
+    };
+
+    const run = () => {
+      for (const el of root.querySelectorAll<HTMLElement>('[data-al-error]')) el.textContent = '';
+      views.result.hidden = true;
+      views.message.hidden = true;
+      output.hidden = true;
+      let bad = false;
+      const size = checked('al-size') as Workplace | undefined;
+      if (!size) (errorEl('size').textContent = '사업장 규모를 골라 주세요.'), (bad = true);
+      const m = readHours(mine);
+      const rg = readHours(regular);
+      if (!m.ok) (errorEl('mine').textContent = m.code === 'range' ? '0.5~40시간 사이로 입력해 주세요.' : '시간을 숫자로 입력해 주세요(0.5시간 단위).'), (bad = true);
+      if (!rg.ok) (errorEl('regular').textContent = rg.code === 'range' ? '0.5~40시간 사이로 입력해 주세요.' : '시간을 숫자로 입력해 주세요(0.5시간 단위).'), (bad = true);
+      if (bad) return;
+      if (size === 'four-or-less' || size === 'changed') return finish(() => showMessage(...stopText[size]));
+      if (m.ok && m.value < 150) return finish(() => showMessage(...stopText.under15));
+
+      const h = parseYmd(hire.value);
+      const mode = checked('al-mode') as 'today' | 'retire' | undefined;
+      if (h === null) (errorEl('hire').textContent = '입사일을 입력해 주세요.'), (bad = true);
+      if (!mode) (errorEl('mode').textContent = '기준을 골라 주세요.'), (bad = true);
+      const b = baseDay();
+      if (mode === 'retire' && b === null) (errorEl('last').textContent = '마지막 근무일을 입력해 주세요.'), (bad = true);
+      if (bad) return;
+      if (b! < h!) return void (errorEl(mode === 'today' ? 'hire' : 'last').textContent = mode === 'today' ? '입사일이 오늘보다 늦습니다.' : errText['date-order']);
+
+      const needAtt = needsAttendance(h!, b!);
+      const att = checked('al-att') as Attendance | undefined;
+      if (needAtt && !att) (errorEl('att').textContent = '출근율을 골라 주세요.'), (bad = true);
+      const oldRule = isOldRule(h!);
+      let missed: number | null = null;
+      if (!oldRule) {
+        const mv = checked('al-miss');
+        if (!mv) (errorEl('miss').textContent = '개근하지 못한 달이 있는지 골라 주세요.'), (bad = true);
+        else if (mv === 'none') missed = 0;
+        else {
+          const p = parseWonInt(missN.value, { min: 1, max: 11 });
+          if (!p.ok) (errorEl('miss').textContent = '1~11 사이의 달 수를 입력해 주세요.'), (bad = true);
+          else missed = p.value;
+        }
+      }
+      const basis = checked('al-basis') as Basis | undefined;
+      if (!basis) (errorEl('basis').textContent = '회사의 연차 기준을 골라 주세요.'), (bad = true);
+
+      // 수당(선택): 둘 다 넣었을 때만
+      const pt = m.ok && rg.ok && m.value < rg.value;
+      let pay: { units: number; wage: number } | null = null;
+      if (unused.value.trim() !== '' || wage.value.trim() !== '') {
+        const u = parseScaled(unused.value, pt ? { decimals: 1, step: 1, min: 1, max: UNUSED_HOURS_MAX_T } : { decimals: 1, step: 5, min: 5, max: UNUSED_DAYS_MAX_T });
+        const w = parseWonInt(wage.value, { min: 1, max: pt ? HOURLY_WAGE_MAX : DAILY_WAGE_MAX });
+        if (!u.ok || !w.ok) {
+          errorEl('pay').textContent = pt ? '미사용 시간(0.1시간 단위)과 시간급 통상임금을 모두 숫자로 입력해 주세요. 계산하지 않으려면 두 칸을 비워 두세요.' : '미사용 일수(0.5일 단위)와 1일 통상임금을 모두 숫자로 입력해 주세요. 계산하지 않으려면 두 칸을 비워 두세요.';
+          bad = true;
+        } else pay = { units: u.value, wage: w.value };
+      }
+      if (bad) return;
+
+      const r = calculate({
+        workplace: size!,
+        mineHoursT: m.ok ? m.value : 0,
+        regularHoursT: rg.ok ? rg.value : 0,
+        hireDay: h!,
+        mode: mode!,
+        baseDay: b!,
+        attendance80: needAtt ? att! : null,
+        missedMonths: missed,
+        companyBasis: basis!,
+      });
+      if (r.kind === 'error') {
+        if (r.code === 'missed-too-many') return void (errorEl('miss').textContent = '기준일까지 지난 달 수보다 많습니다. 다시 확인해 주세요.');
+        return void (errorEl(r.code === 'hours-order' ? 'regular' : 'hire').textContent = errText[r.code]);
+      }
+      if (r.kind === 'stop') return finish(() => showMessage(...stopText[r.reason]));
+      if (pay && !r.partTime && r.cumulativeDays !== null && pay.units > r.cumulativeDays * 10) {
+        return void (errorEl('pay').textContent = `입력한 일수가 계산된 누적 발생 연차(${r.cumulativeDays}일)보다 많습니다. 회사 기록을 다시 확인해 주세요.`);
+      }
+      render(r, mode!, missed ?? 0, pay);
+    };
+
+    const render = (r: Result, mode: 'today' | 'retire', missed: number, pay: { units: number; wage: number } | null) => {
+      box('assume').hidden = !r.cautions.includes('workplace-unknown');
+      // ① 새로 생겨 기준일에 쓸 수 있는 연차
+      set('usableLabel', mode === 'today' ? '사용기간이 남은 발생 연차 (사용한 연차 미차감)' : '퇴직일 기준 사용기간이 남은 발생 연차 (사용한 연차 미차감)');
+      const parts: string[] = [];
+      const notes: string[] = [];
+      if (r.monthlyUsable) {
+        const md = r.monthlyUsableDays;
+        parts.push(r.partTime ? `월 단위 ${md}일분` : `${md}일`);
+        notes.push(`첫해 월 단위 ${md}일${r.partTime ? `분(1일분 ${r.oneDayHours}시간 상당)` : ''} · ${r.monthlyLegacyPeriod ? `2020.3.30 이전 발생분은 각 발생일부터 1년, 늦게 끝나는 것은 ${dot(r.monthlyUsableUntil!)}까지` : `${dot(r.monthlyUsableUntil!)}까지`} 사용`);
+      }
+      const la = r.latestAnnual;
+      if (la) {
+        parts.push(la.hours !== null ? `${n(la.hours)}시간` : `${la.days}일`);
+        notes.push(`${la.n}년 근속 ${daysHours(la)} · ${dot(la.arise)} 발생 · ${dot(la.expires)}까지 사용`);
+      }
+      if (r.monthlyDays === 0 && !la) notes.push('기준일까지 생긴 연차가 없습니다.');
+      set('usable', r.partTime ? (parts.length ? parts.join(' + ') : '0일') : `${r.usableDays}일`);
+      notes.push('이미 쓴 연차는 빼지 않은 발생 기준입니다.');
+      if (r.partTime && r.monthlyUsable) notes.push('첫해 월 단위 연차의 합계 시간은 끝수 처리 방식이 확인되지 않아 자동으로 더하지 않았습니다.');
+      set('usableNote', notes.join(' '));
+
+      // ② 누적 이력
+      set('cumLabel', mode === 'today' ? '입사 후 발생한 연차(누적 이력)' : '퇴직일까지 발생한 연차');
+      if (r.cumulativeDays === null) {
+        set('cum', '계산하지 않음');
+        set('cumNote', '2017년 5월 29일 이전 입사자는 첫 2년에 옛 규정(2018.5.29 삭제)이 적용돼, 입사 후 전체 이력은 계산하지 않고 현재 근속연수의 연차만 보여 줍니다.');
+      } else {
+        const annualSum = r.annuals.reduce((s, g) => s + g.days, 0);
+        if (r.partTime) {
+          set('cum', r.annuals.length ? `월 단위 ${r.monthlyDays}일분 + 연 단위 ${n(r.cumulativeAnnualHours!)}시간` : `월 단위 ${r.monthlyDays}일분`);
+        } else set('cum', `${n(r.cumulativeDays)}일`);
+        const first = r.monthlyRows[0];
+        const lastArisen = r.monthlyRows[r.monthlyArisen - 1];
+        const monthlyPart = r.monthlyArisen > 0 ? `첫해 월 단위 ${r.monthlyDays}일(${first.uncertain ? '첫 달 경계' : dot(first.arise)}~${lastArisen.uncertain ? '달 말 경계' : dot(lastArisen.arise)}${missed ? `, 개근 못 한 ${missed}개월 제외` : ''})` : '첫해 월 단위 0일';
+        const annualPart = r.annuals.length ? ` + 연 단위 ${annualSum}일(${r.annuals.length}회)` : '';
+        set('cumNote', `${monthlyPart}${annualPart}. 이미 썼거나 사용기간이 지난 연차도 들어 있어 지금 남은 일수와 다릅니다.`);
+      }
+
+      // ③ 수당
+      box('payBox').hidden = pay === null;
+      if (pay) set('pay', `${tenthsLabel(pay.units)}${r.partTime ? '시간' : '일'} × ${n(pay.wage)}원 = ${n(unusedPay(pay.units, pay.wage))}원`);
+
+      // 다음 연차
+      box('nextBox').hidden = !r.nextGrant;
+      if (r.nextGrant) {
+        const g = r.nextGrant;
+        const when = g.uncertain ? `${dot(g.arise - 1).slice(0, 7)} 말~${dot(g.arise)} 사이(날짜 확인 필요)` : dot(g.arise);
+        set('next', g.kind === 'monthly' ? `${r.partTime ? `1일분(${r.oneDayHours}시간 상당)` : '1일'} · ${when} (그 달 개근 시)` : `${daysHours(g)} · ${when}`);
+      }
+
+      const cautions = r.cautions.map((c) => cautionText(c, missed)).filter((t): t is string => t !== null);
+      const list = box('cautions');
+      list.replaceChildren(...cautions.map((t) => Object.assign(document.createElement('li'), { textContent: t })));
+      list.hidden = cautions.length === 0;
+
+      // 날짜표
+      const rows: string[][] = [];
+      for (const g of r.monthlyRows) {
+        const arisen = g.n <= r.monthlyArisen;
+        rows.push([`첫해 ${g.n}번째 달`, g.uncertain ? `${dot(g.arise - 1).slice(0, 7)} 말~${dot(g.arise)}(확인 필요)` : dot(g.arise), arisen ? (r.partTime ? `1일분` : '1일') : '아직', dot(g.expires)]);
+      }
+      for (const g of r.annuals) rows.push([`${g.n}년 근속`, dot(g.arise), daysHours(g), dot(g.expires)]);
+      if (r.nextGrant && r.nextGrant.kind === 'annual') rows.push([`${r.nextGrant.n}년 근속(예정)`, dot(r.nextGrant.arise), daysHours(r.nextGrant), dot(r.nextGrant.expires)]);
+      box('rows').replaceChildren(
+        ...rows.map((cells) => {
+          const tr = document.createElement('tr');
+          cells.forEach((t, idx) => {
+            const td = document.createElement('td');
+            td.dataset.label = ['구분', '발생일', '연차', '사용기간 끝'][idx];
+            td.textContent = t;
+            tr.append(td);
+          });
+          return tr;
+        }),
+      );
+
+      finish(() => {
+        views.message.hidden = true;
+        views.result.hidden = false;
+        output.hidden = false;
+      });
+    };
+
+    const finish = (draw: () => void) => {
+      draw();
+      if (!shown) output.focus({ preventScroll: false });
+      shown = true;
+      if (!reachedResult) {
+        reachedResult = true;
+        // 도구 이름만 보낸다(입력값·결과 없음)
+        document.dispatchEvent(new CustomEvent('kkultip:tool-use', { detail: 'annual-leave' }));
+      }
+    };
+
+    const formatMoney = (el: HTMLInputElement) => {
+      const digits = el.value.replace(/[^\d]/g, '').replace(/^0+(?=\d)/, '');
+      el.value = digits === '' ? '' : Number(digits).toLocaleString('ko-KR');
+    };
+    wage.addEventListener('input', () => formatMoney(wage));
+    for (const el of [mine, regular, hire, last]) {
+      el.addEventListener('input', sync);
+      el.addEventListener('change', sync);
+    }
+    for (const name of ['al-mode', 'al-miss']) for (const r of radios(name)) r.addEventListener('change', sync);
+    $('[data-al-submit]').addEventListener('click', run);
+    $('[data-al-example]').addEventListener('click', () => {
+      for (const [name, v] of [['al-size', 'five-plus'], ['al-mode', 'retire'], ['al-att', 'yes'], ['al-miss', 'none'], ['al-basis', 'hire']] as const)
+        for (const r of radios(name)) r.checked = r.value === v;
+      mine.value = '40';
+      regular.value = '40';
+      hire.value = '2026-01-02';
+      last.value = '2027-01-02';
+      missN.value = '';
+      unused.value = '';
+      wage.value = '';
+      sync();
+      run();
+    });
+    sync();
+  }
+</script>
+
+<style>
+  .al-stack {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .al-optional {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    font-weight: normal;
+  }
+
+  .al-pair {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .al-sub {
+    margin-top: var(--space-3);
+  }
+
+  .al-sub[hidden],
+  fieldset[hidden] {
+    display: none;
+  }
+
+  .al-short {
+    max-width: 8rem;
+  }
+
+  .al-pay {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .al-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .al-link-button {
+    min-height: var(--touch);
+    padding-inline: var(--space-4);
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-pill);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font: inherit;
+    font-size: var(--text-sm);
+    cursor: pointer;
+  }
+
+  .al-output {
+    display: grid;
+    gap: var(--space-3);
+    scroll-margin-top: var(--space-6);
+  }
+
+  .al-assume {
+    padding: var(--space-3) var(--space-4);
+    border-left: 3px solid var(--color-status-closing);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+  }
+
+  .al-assume[hidden],
+  .al-block[hidden],
+  .al-breakdown[hidden],
+  .al-cautions[hidden] {
+    display: none;
+  }
+
+  .al-block {
+    display: grid;
+    gap: var(--space-1);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .al-block__label,
+  .al-message__title {
+    font-weight: var(--weight-semibold);
+  }
+
+  .al-block__value strong {
+    display: block;
+    font-size: var(--text-xl);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+
+  .al-block__note,
+  .al-message__body,
+  .al-cautions,
+  .al-noscript {
+    font-size: var(--text-sm);
+  }
+
+  .al-block__note {
+    color: var(--color-text-muted);
+  }
+
+  .al-breakdown {
+    margin: 0;
+  }
+
+  .al-breakdown div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+
+  .al-breakdown dd {
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+    font-weight: var(--weight-semibold);
+  }
+
+  .al-cautions {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    border-left: 3px solid var(--color-status-closing);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    list-style: none;
+  }
+
+  .al-table table {
+    font-size: var(--text-sm);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .al-noscript,
+  .al-basis__body ul {
+    display: grid;
+    gap: var(--space-1);
+    padding-left: 1.25em;
+    list-style: disc;
+  }
+
+  .al-basis__body {
+    display: grid;
+    gap: var(--space-2);
+    padding-top: var(--space-3);
+    font-size: var(--text-sm);
+  }
+
+  .al-basis__term {
+    font-weight: var(--weight-semibold);
+  }
+</style>

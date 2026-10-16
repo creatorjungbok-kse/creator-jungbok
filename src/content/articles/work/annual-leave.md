@@ -1,13 +1,14 @@
 ---
-title: 연차 발생 기준과 연차수당｜1년 미만 11일·15일·25일, 퇴직 시 미사용수당
-cardTitle: 연차 발생 기준·연차수당
-seoTitle: 연차 발생 기준·연차수당｜11일·15일·25일 계산
-description: 1년 미만은 한 달에 1일, 1년이 지나면 15일, 최대 25일까지 연차가 생깁니다. 1년만 일하고 퇴사할 때와 연차수당 계산법도 보세요.
+title: 연차 계산기｜입사일 기준 연차 일수와 연차수당
+cardTitle: 연차 계산기·연차수당
+seoTitle: 연차 계산기｜입사일 기준 연차 일수·연차수당
+description: 입사일과 기준일을 넣으면 연차가 언제 며칠 생기는지 계산합니다. 1년 미만 11일, 15일, 25일 기준과 미사용 연차수당도 보세요.
 subcategory: wages
-contentType: guide
+contentType: cost
 contentMode: evergreen
-primaryQuery: 연차 발생 기준
+primaryQuery: 연차 계산기
 synonyms:
+  - 연차 발생 기준
   - 연차 계산
   - 연차 계산법
   - 연차수당
@@ -17,15 +18,17 @@ synonyms:
   - 연차 26일
   - 5인 미만 연차
   - 회계연도 연차
-summary: 입사 첫해에는 1개월 개근마다 1일씩 최대 11일, 1년간 80% 이상 출근하면 15일의 연차가 생기고, 3년 이상 일하면 2년마다 1일씩 늘어 최대 25일입니다. 남은 연차에 미사용수당이 발생하는 경우, 취업규칙 등에 별도 산정 기준이 없으면 1일 통상임금 × 남은 연차일수로 계산합니다. 상시 4명 이하 사업장에는 법정 연차가 적용되지 않습니다.
+summary: 입사 첫해에는 1개월 개근마다 1일씩 최대 11일, 1년간 80% 이상 출근하면 15일의 연차가 생기고, 3년 이상 일하면 2년마다 1일씩 늘어 최대 25일입니다. 남은 연차에 미사용수당이 발생하는 경우, 취업규칙 등에 별도 산정 기준이 없으면 1일 통상임금 × 남은 연차일수로 계산합니다. 상시 4명 이하 사업장에는 법정 연차가 적용되지 않습니다. 아래 계산기에 입사일과 기준일을 넣으면 언제 며칠이 생기는지 날짜별로 볼 수 있습니다.
 ogImage: /images/og/annual-leave.png
 datePublished: 2026-10-13
-dateModified: 2026-10-13
-researchedAt: 2026-10-13
+dateModified: 2026-10-16
+researchedAt: 2026-10-16
 author: operator
 ymyl: high
 topics: [employment]
 audience: [individual, small-business-owner]
+tool: annual-leave
+toolBeforeToc: true
 quickFacts:
   title: 한눈에 보기
   items:
@@ -55,7 +58,10 @@ faq:
   - question: 연차수당은 언제까지 받아야 하나요?
     answer: 퇴직으로 남은 연차를 쓸 수 없게 되면 미사용수당을 받을 수 있고, 퇴직 때 받을 금품은 원칙적으로 지급 사유가 생긴 때부터 14일 안에 지급해야 합니다. 특별한 사정이 있으면 당사자 합의로 기한을 늦출 수 있습니다.
 related: [/work/weekly-holiday-pay/, /work/severance-pay/, /work/minimum-wage/]
-sourceIds: [local:law-lsa-60-61, local:law-lsa-18-36, local:law-lsa-decree-appendix1, local:scourt-2021da227100, local:scourt-2022da245419, local:scourt-2023do5476, local:scourt-2018da239110, local:moel-fastcounsel-annual-leave, local:moel-1350-call]
+changelog:
+  - date: 2026-10-16
+    summary: 입사일 기준으로 연차 발생일과 일수, 단시간근로자 시간, 미사용 연차 예상 수당을 계산하는 계산기를 추가했습니다. 2017.11.28 개정 근로기준법 부칙(제60조③ 삭제, 2018.5.29 시행, 고용노동부 안내상 2017.5.30 입사자부터 적용), 2020.3.31 개정 부칙(첫해 연차 사용기간), 민법 제160조를 확인했습니다.
+sourceIds: [local:law-lsa-60-61, local:law-lsa-18-36, local:law-lsa-decree-appendix1, local:law-lsa-decree-appendix2, local:law-lsa-15108, local:moel-counsel-20170530, local:law-lsa-17185, local:moel-2020-annual-leave, local:law-civil-160, local:scourt-2021da227100, local:scourt-2022da245419, local:scourt-2023do5476, local:scourt-2018da239110, local:moel-fastcounsel-annual-leave, local:moel-1350-call]
 localSources:
   - id: local:law-lsa-60-61
     title: 근로기준법 제60조(연차 유급휴가)·제61조(연차 유급휴가의 사용 촉진) — 2027.6.10 시행 개정 조문 포함
@@ -75,6 +81,42 @@ localSources:
     url: https://www.law.go.kr/법령/근로기준법시행령
     level: S1
     checkedAt: 2026-10-13
+  - id: local:law-lsa-decree-appendix2
+    title: 근로기준법 시행령 별표2(단시간근로자의 근로조건 결정기준) 4-나 연차유급휴가
+    publisher: 법제처 국가법령정보센터
+    url: https://www.law.go.kr/법령/근로기준법시행령
+    level: S1
+    checkedAt: 2026-10-13
+  - id: local:law-lsa-15108
+    title: 근로기준법 일부개정 법률 제15108호(2017.11.28) — 제60조③ 삭제, 부칙 제1조(2018.5.29 시행)
+    publisher: 법제처 국가법령정보센터
+    url: https://www.law.go.kr/법령/근로기준법/(15108,20171128)
+    level: S1
+    checkedAt: 2026-10-16
+  - id: local:moel-counsel-20170530
+    title: 고용노동부 빠른인터넷상담 — 회계연도 기준 연차 일수 문의(1년 미만 최대 11일, 2017.5.30 입사자부터 적용)
+    publisher: 고용노동부
+    url: https://www.moel.go.kr/minwon/fastcounsel/fastcounselView.do?inetDcssMngId=202507010417150800531
+    level: S1
+    checkedAt: 2026-10-16
+  - id: local:law-lsa-17185
+    title: 근로기준법 일부개정 법률 제17185호(2020.3.31) — 제60조⑦ 단서, 부칙 제2조(시행 전 발생 연차는 종전 규정)
+    publisher: 법제처 국가법령정보센터
+    url: https://www.law.go.kr/법령/근로기준법/(17185,20200331)
+    level: S1
+    checkedAt: 2026-10-16
+  - id: local:moel-2020-annual-leave
+    title: 개정 근로기준법 설명자료(1년미만 근로자 및 80%미만 출근자 연차휴가 제도), 2020.3.31
+    publisher: 고용노동부
+    url: https://www.moel.go.kr/policy/policydata/view.do?bbs_seq=20200301479
+    level: S1
+    checkedAt: 2026-10-16
+  - id: local:law-civil-160
+    title: 민법 제160조(역에 의한 계산)
+    publisher: 법제처 국가법령정보센터
+    url: https://www.law.go.kr/법령/민법/제160조
+    level: S1
+    checkedAt: 2026-10-16
   - id: local:scourt-2021da227100
     title: 대법원 2021. 10. 14. 선고 2021다227100 판결(1년 기간제 근로자의 연차 최대 11일)
     publisher: 법제처 국가법령정보센터
@@ -121,6 +163,8 @@ localSources:
 - **1년간 80% 이상 출근**: 15일입니다. 80%에 못 미치면 1개월 개근마다 1일입니다.
 - **3년 이상 근무**: 2년마다 1일씩 늘어나 최대 25일까지 받습니다.
 
+<div class="table-cards">
+
 | 계속근로를 마친 시점 | 다음에 발생하는 연차 |
 |---|---|
 | 1년·2년 | 15일 |
@@ -132,6 +176,8 @@ localSources:
 | 13년 이후 | 2년마다 1일씩 추가 |
 | 21년 이상 | 25일(최대) |
 
+</div>
+
 연차는 1년을 꽉 채운 **다음 날** 생깁니다. 그래서 표의 15일은 1년을 마친 다음 날부터 쓸 수 있는 연차예요. 업무상 다쳐서 쉰 기간, 출산휴가와 육아휴직 기간, 육아기·임신기 근로시간 단축으로 줄어든 시간은 출근율을 따질 때 출근한 것으로 봅니다.
 
 주 15시간 이상이더라도 같은 회사의 통상근로자보다 근로시간이 짧은 단시간근로자는 위 일수를 그대로 받는 것이 아니라, 근로시간 비율에 따라 **시간 단위로** 계산합니다. 통상근로자 연차일수 × (내 소정근로시간 ÷ 통상근로자 소정근로시간) × 8시간이고, 1시간 미만은 1시간으로 봅니다.
@@ -140,12 +186,28 @@ localSources:
 
 같은 1년 근무라도 마지막 하루 차이로 연차가 크게 달라집니다. 대법원은 딱 1년 일하고 계약이 끝난 사람에게는 연차가 최대 11일만 생기고, 1년을 넘겨 2년 이하로 일한 사람에게는 최대 26일이 생긴다고 판단했습니다.
 
+<div class="table-cards">
+
 | 예시: 2026년 1월 2일 입사 | 생기는 연차 |
 |---|---|
 | 2027년 1월 1일까지 정확히 1년 근무하고 계약 종료 | 1개월 개근마다 1일, **최대 11일** |
 | 2027년 1월 2일까지 근로관계가 이어짐 | 첫해 11일 + 1년을 마친 다음 날 15일, 쓰지 않았다면 **누적 최대 26일** |
 
+</div>
+
 1년은 회사가 단체협약이나 취업규칙으로 기준일을 따로 정하지 않았다면 일을 시작한 날부터 셉니다.
+
+## 계산 결과 읽는 법
+
+계산기는 결과를 세 가지로 나눠 보여 줍니다.
+
+- **사용기간이 남은 발생 연차(사용한 연차 미차감)**: 기준일에 사용기간이 남아 있는 연차입니다. 이미 쓴 일수는 빼지 않았으니, 예를 들어 20일이 나왔는데 12일을 썼다면 남은 연차는 8일입니다.
+- **입사 후 발생한 연차(누적 이력)**: 입사 후 생긴 연차를 모두 더한 값입니다. 이미 썼거나 사용기간이 지난 연차도 들어 있어 지금 남은 일수와 다릅니다. 퇴직 기준으로 계산하면 '퇴직일까지 발생한 연차'로 나옵니다.
+- **입력한 미사용 연차 기준 예상 수당**: 회사 기록으로 확인한 미사용·미정산 연차를 넣었을 때만 계산합니다. 확정 금액이 아니라 참고값입니다.
+
+예를 들어 2026년 1월 2일에 입사해 2027년 1월 2일에도 일하고 있다면, 누적 이력은 26일이지만 사용기간이 남은 발생 연차는 15일입니다. 첫해의 월 단위 11일은 2027년 1월 1일까지 써야 했기 때문입니다. 2020년 3월 30일 이전에 생긴 첫해 월 단위 연차는 그때 규정대로 각 발생일부터 1년 동안 쓸 수 있었던 것으로 계산합니다.
+
+회계연도 기준으로 연차를 주는 회사라도 계산기는 입사일 기준으로 계산합니다. 회사가 실제로 준 일수와 다를 수 있으니, 퇴직할 때 입사일 기준과 비교하는 용도로 쓰세요.
 
 ## 연차가 적용되지 않는 경우
 
