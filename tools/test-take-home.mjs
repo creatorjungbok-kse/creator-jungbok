@@ -114,3 +114,37 @@ test('입력 오류: 비과세 합계 ≥ 급여, 자녀 수 > 가족 − 1, 1,0
   assert.equal(calcTakeHome({ ...base, childrenUnder6: 20 }).ok, true);
   assert.equal(calcTakeHome({ ...base, gross: 10_200_000 }).ok, true); // 과세 정확히 1,000만원
 });
+
+test('화면: GA 신호는 도구 이름만 1곳, 저장·전송 없음, 지방소득세는 예상 표기, 연봉 가정 문구', async () => {
+  const { readFileSync } = await import('node:fs');
+  const src = readFileSync('src/components/tools/TakeHomePay.astro', 'utf8');
+  assert.equal((src.match(/dispatchEvent\(/g) ?? []).length, 1);
+  assert.match(src, /new CustomEvent\('kkultip:tool-use', \{ detail: 'take-home-pay' \}\)/);
+  assert.doesNotMatch(src, /localStorage|sessionStorage|fetch\(|sendBeacon|gtag/);
+  assert.match(src, /예상 지방소득세/);
+  assert.match(src, /퇴직금은 연봉에 포함되지 않는다고 가정/);
+  assert.doesNotMatch(src, /value="hour"|name="th-mode" value="(?!month|year)/); // 시급 모드 없음(v1)
+});
+
+test('월급↔연봉 전환 변환: 월 300만 → 연 3,600만 → 월 300만, 연 4,000만 → 월 3,333,333 → 연 39,999,996', async () => {
+  const { convertPay } = await import('../src/lib/payroll/take-home/calculation.ts');
+  assert.equal(convertPay(3_000_000, 'month', 'year'), 36_000_000);
+  assert.equal(convertPay(36_000_000, 'year', 'month'), 3_000_000);
+  assert.equal(convertPay(40_000_000, 'year', 'month'), 3_333_333);
+  assert.equal(convertPay(3_333_333, 'month', 'year'), 39_999_996);
+  assert.equal(convertPay(3_000_000, 'month', 'month'), 3_000_000);
+});
+
+test('아주 적은 급여: 공제가 급여보다 크면 실수령액을 내지 않고 범위 밖 오류', () => {
+  assert.deepEqual(calcTakeHome({ ...base, meal: 0, gross: 1 }), { ok: false, error: 'net-negative' });
+  assert.deepEqual(calcTakeHome({ ...base, meal: 0, gross: 20_000 }), { ok: false, error: 'net-negative' });
+  const r = calcTakeHome({ ...base, meal: 0, gross: 400_000 });
+  assert.equal(r.ok, true);
+  assert.ok(r.result.net >= 0);
+  // 1원부터 100만원까지 1천원 간격으로 음수 실수령액이 결과로 나오지 않는다
+  for (let g = 1; g <= 1_000_000; g += 1_000) {
+    const x = calcTakeHome({ ...base, meal: 0, gross: g });
+    if (x.ok) assert.ok(x.result.net >= 0, `gross ${g}`);
+    else assert.equal(x.error, 'net-negative');
+  }
+});

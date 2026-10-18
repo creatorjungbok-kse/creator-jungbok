@@ -20,6 +20,13 @@ export type Rate = (typeof RATES)[number];
 
 const floor10 = (n: number) => Math.floor(n / 10) * 10;
 
+// 월급·연봉 모드를 바꿀 때 입력 금액 변환(같은 급여 조건 유지): 월급 × 12 → 연봉, 연봉 ÷ 12(원 미만 버림) → 월급
+export type PayMode = 'month' | 'year';
+export function convertPay(value: number, from: PayMode, to: PayMode): number {
+  if (from === to) return value;
+  return to === 'year' ? value * 12 : Math.floor(value / 12);
+}
+
 export function childDeduction(children: number): number {
   if (children <= 0) return 0;
   if (children === 1) return CHILD_DEDUCTION.one;
@@ -80,7 +87,9 @@ export type TakeHomeError =
   | 'children-exceed-family'
   | 'exempt-invalid'
   | 'exempt-exceeds-gross'
-  | 'over-10m';
+  | 'over-10m'
+  // 공제액이 급여보다 커서 실수령액이 음수(4대보험 하한 등) — 적용 범위 밖
+  | 'net-negative';
 
 export type TakeHomeNotice = 'meal-over-limit' | 'childcare-over-limit' | 'below-table';
 
@@ -127,6 +136,7 @@ export function calcTakeHome(i: TakeHomeInput): { ok: true; result: TakeHomeResu
   // 개인지방소득세 특별징수 = 소득세의 10%(지방세법 제103조의13). 10원 미만 버림은 잠정 규칙
   const localTax = floor10(Math.floor(incomeTax / 10));
   const deductions = insurance.workerTotal + incomeTax + localTax;
+  if (deductions > i.gross) return { ok: false, error: 'net-negative' };
   return {
     ok: true,
     result: {

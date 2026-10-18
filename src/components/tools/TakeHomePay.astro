@@ -1,0 +1,549 @@
+---
+// 실수령액 계산기 v1(월급·연봉). 계산은 src/lib/payroll/take-home/calculation.ts에만 있고, 이 컴포넌트는 입력을 모아 결과를 그리기만 한다.
+// 범위(GPT 결정 2026-10-17): 4대보험 적용 대상 일반 월급 근로자, 한 달을 다 일한 달. 시급 모드 없음. 과세 월급여 1,000만원 초과는 계산하지 않음.
+// 입력값·결과는 저장·전송하지 않는다(form 제출 없음, 입력칸에 name 없음, URL·GA 전송 없음).
+import ToolShell from '../ToolShell.astro';
+import { takeHomePay as c } from '../../tools/take-home-pay/constants';
+import { calcTakeHome, CHILD_DEDUCTION } from '../../lib/payroll/take-home/calculation.ts';
+import { formatDate } from '../../lib/format';
+
+const won = (n: number) => `${n.toLocaleString('ko-KR')}원`;
+const day = (s: string) => formatDate(new Date(s));
+const ex = calcTakeHome({ gross: 3_200_000, meal: 200_000, childcare: 0, childrenUnder6: 0, otherExempt: 0, family: 1, children8to20: 0, rate: 100, companySize: 'under150', age60: false, newHireAfter65: false });
+const exr = ex.ok ? ex.result : null;
+const families = Array.from({ length: 20 }, (_, i) => i + 1);
+const kids = Array.from({ length: 11 }, (_, i) => i);
+const lines = [
+  { key: 'nps', label: '국민연금' },
+  { key: 'nhi', label: '건강보험' },
+  { key: 'ltc', label: '장기요양보험' },
+  { key: 'ei', label: '고용보험' },
+  { key: 'tax', label: '소득세' },
+  { key: 'local', label: '예상 지방소득세' },
+] as const;
+---
+
+<ToolShell id="take-home-pay" title="실수령액 계산기" validUntil={c.validUntil} reviewFrom={c.reviewFrom} reviewNote={c.reviewNote}>
+  <p class="tool-scope">
+    <strong>2026년 기준 예상액</strong> · 2026년 3월 개정 간이세액표와 7월 이후 4대보험 요율 기준입니다. 8~20세 자녀 공제액이 늘어난 것도 반영했습니다.
+  </p>
+  <noscript><p class="tool-noscript">계산기는 JavaScript가 켜져 있어야 동작합니다. 아래 예시 결과와 계산 근거를 참고하세요.</p></noscript>
+
+  <p class="tool-result th-stale" data-th-stale hidden>2027년 요율 반영 전입니다. 국세청 홈택스의 근로소득 간이세액표와 4대사회보험 정보연계센터 모의계산을 확인해 주세요.</p>
+
+  <div class="tool-form" data-th-form data-js-only>
+    <fieldset>
+      <legend class="tool-label">무엇으로 계산할까요?</legend>
+      <div class="th-seg">
+        <label class="th-seg__item"><input type="radio" name="th-mode" value="month" checked /><span>월급</span></label>
+        <label class="th-seg__item"><input type="radio" name="th-mode" value="year" /><span>연봉</span></label>
+      </div>
+    </fieldset>
+
+    <div class="tool-field">
+      <label class="tool-label" for="th-pay" data-th-pay-label>세전 월급</label>
+      <div class="tool-input">
+        <input id="th-pay" type="text" inputmode="numeric" autocomplete="off" maxlength="17" aria-describedby="th-pay-hint th-pay-error" />
+        <span aria-hidden="true">원</span>
+      </div>
+      <p id="th-pay-hint" class="tool-hint" data-th-pay-hint>식대 같은 비과세 급여를 포함한, 세금 떼기 전 한 달 급여를 넣으세요.</p>
+      <p id="th-pay-error" class="tool-error" data-th-error="pay"></p>
+    </div>
+
+    <div class="tool-field">
+      <label class="tool-label" for="th-meal">비과세 식대(월)</label>
+      <div class="tool-input">
+        <input id="th-meal" type="text" inputmode="numeric" autocomplete="off" maxlength="12" value="0" aria-describedby="th-meal-hint th-meal-error" />
+        <span aria-hidden="true">원</span>
+      </div>
+      <p id="th-meal-hint" class="tool-hint">회사가 식사를 주지 않고 식대를 따로 줄 때만 넣으세요. 월 20만원까지 비과세입니다.</p>
+      <p id="th-meal-error" class="tool-error" data-th-error="meal"></p>
+    </div>
+
+    <div class="th-row">
+      <div class="tool-field">
+        <label class="tool-label" for="th-family">공제대상가족 수(본인 포함)</label>
+        <select id="th-family" aria-describedby="th-family-hint">
+          {families.map((n) => <option value={n}>{n}명</option>)}
+        </select>
+      </div>
+      <div class="tool-field">
+        <label class="tool-label" for="th-kids">그중 8~20세 자녀</label>
+        <select id="th-kids">
+          {kids.map((n) => <option value={n}>{n}명</option>)}
+        </select>
+      </div>
+    </div>
+    <p id="th-family-hint" class="tool-hint">본인과 배우자를 각각 1명으로 셉니다. 연말정산에서 기본공제를 받는 가족만 넣으세요.</p>
+
+    <details class="th-more">
+      <summary class="disclosure">다른 비과세 급여·세율 선택·나이</summary>
+      <div class="th-more__body">
+        <div class="th-row">
+          <div class="tool-field">
+            <label class="tool-label" for="th-care">비과세 보육수당(월)</label>
+            <div class="tool-input">
+              <input id="th-care" type="text" inputmode="numeric" autocomplete="off" maxlength="12" value="0" aria-describedby="th-care-hint" />
+              <span aria-hidden="true">원</span>
+            </div>
+          </div>
+          <div class="tool-field">
+            <label class="tool-label" for="th-under6">6세 이하 자녀</label>
+            <select id="th-under6">
+              {kids.map((n) => <option value={n}>{n}명</option>)}
+            </select>
+          </div>
+        </div>
+        <p id="th-care-hint" class="tool-hint">회사에서 6세 이하 자녀 보육수당을 따로 받는 경우만 넣으세요. 자녀 1명당 월 20만원까지 비과세입니다.</p>
+        <p class="tool-error" data-th-error="care"></p>
+
+        <div class="tool-field">
+          <label class="tool-label" for="th-other">그 밖의 비과세 급여(월)</label>
+          <div class="tool-input">
+            <input id="th-other" type="text" inputmode="numeric" autocomplete="off" maxlength="12" value="0" aria-describedby="th-other-hint" />
+            <span aria-hidden="true">원</span>
+          </div>
+          <p id="th-other-hint" class="tool-hint">자가운전보조금처럼 급여명세서에 비과세로 표시된 다른 금액이 있을 때만 넣으세요.</p>
+          <p class="tool-error" data-th-error="other"></p>
+        </div>
+
+        <fieldset>
+          <legend class="tool-label">소득세 원천징수 비율</legend>
+          <div class="th-seg">
+            <label class="th-seg__item"><input type="radio" name="th-rate" value="80" /><span>80%</span></label>
+            <label class="th-seg__item"><input type="radio" name="th-rate" value="100" checked /><span>100%</span></label>
+            <label class="th-seg__item"><input type="radio" name="th-rate" value="120" /><span>120%</span></label>
+          </div>
+          <p class="tool-hint">따로 신청하지 않았다면 100%입니다. 회사에 신청하면 80%나 120%로 바꿀 수 있습니다.</p>
+        </fieldset>
+
+        <div class="th-checks">
+          <label class="th-check"><input type="checkbox" data-th-age60 /><span>만 60세 이상(국민연금 제외)</span></label>
+          <label class="th-check"><input type="checkbox" data-th-age65 /><span>만 65세 이후 새로 고용(고용보험 제외)</span></label>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div aria-live="polite" aria-atomic="true">
+    <p class="tool-result th-msg" data-th-msg hidden></p>
+    <div class="tool-result th-result" data-th-result hidden>
+      <div class="th-head">
+        <h3>월 예상 실수령액</h3>
+        <p class="th-total" data-th-out="net"></p>
+        <p class="th-sub" data-th-out="sub"></p>
+      </div>
+      <dl class="th-lines">
+        {
+          lines.map((l) => (
+            <div>
+              <dt>{l.label}</dt>
+              <dd data-th-out={l.key} />
+            </div>
+          ))
+        }
+        <div class="th-lines__sum">
+          <dt>공제 합계</dt>
+          <dd data-th-out="deductions"></dd>
+        </div>
+      </dl>
+      <ul class="th-notes th-notes--alert" data-th-notices hidden></ul>
+      <ul class="th-notes">
+        <li>급여명세서와 연말정산 결과는 이 예상액과 다를 수 있습니다. 실제 공제액은 회사가 신고한 보수월액과 원천징수 방식에 따라 달라집니다.</li>
+        <li data-th-year-note hidden>연봉을 12개월에 똑같이 나눠 받고, 퇴직금은 연봉에 포함되지 않는다고 가정했습니다. 상여금·성과급이 따로 나오면 달라질 수 있습니다.</li>
+        <li>입사·퇴사한 달은 계산하지 않습니다. 1일이 아닌 날 입사했다면 그 달 건강보험·국민연금은 보통 빠집니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <noscript>
+    {
+      exr && (
+        <div class="tool-result">
+          <p class="th-example">예시 · 세전 월급 3,200,000원(식대 200,000원), 본인 1명</p>
+          <dl class="th-lines">
+            <div><dt>월 예상 실수령액</dt><dd>{won(exr.net)}</dd></div>
+            <div><dt>4대보험</dt><dd>{won(exr.insurance.workerTotal)}</dd></div>
+            <div><dt>소득세</dt><dd>{won(exr.incomeTax)}</dd></div>
+            <div><dt>예상 지방소득세</dt><dd>{won(exr.localTax)}</dd></div>
+          </dl>
+        </div>
+      )
+    }
+  </noscript>
+
+  <details class="th-basis">
+    <summary class="disclosure">계산 근거</summary>
+    <div class="th-basis__body">
+      <ul>
+        <li>과세 대상 급여 = 세전 월급 − 비과세(식대 월 20만원까지, 보육수당 6세 이하 자녀 1명당 월 20만원까지, 그 밖에 입력한 금액)</li>
+        <li>4대보험 = 과세 대상 급여 기준, 근로자 몫(국민연금 4.75%, 건강보험 3.595%, 장기요양 건강보험료의 13.14%, 고용보험 0.9%). 4대보험 계산기와 같은 방식</li>
+        <li>소득세 = 근로소득 간이세액표(소득세법 시행령 별표 2, 2026년 2월 27일 개정)의 해당 칸 − 8~20세 자녀 공제(1명 {won(CHILD_DEDUCTION.one)}, 2명 {won(CHILD_DEDUCTION.two)}, 3명부터 1명당 {won(CHILD_DEDUCTION.perExtra)} 추가) → 원천징수 비율 적용 → 10원 미만 버림</li>
+        <li>예상 지방소득세 = 소득세의 10%, 10원 미만 버림(잠정 계산 방식)</li>
+        <li>연봉 모드 = 연봉 ÷ 12, 원 미만 버림</li>
+        <li>과세 대상 급여가 1,000만원을 넘으면 계산하지 않습니다(이 구간의 끝수 처리를 아직 확인하지 못함)</li>
+        <li>반영하지 않음: 상여금, 연말정산 환급·추가 납부, 두 곳 이상 근무, 일용직, 시급제, 입사·퇴사한 달, 보험료 감면·두루누리 지원</li>
+      </ul>
+      <p>확인일 {day(c.checkedAt)}</p>
+    </div>
+  </details>
+</ToolShell>
+
+<script>
+  // 입력값은 이 페이지 안에서만 계산한다(저장·전송 없음). 계산은 lib의 함수만 쓴다.
+  import { kstDate } from '../../lib/payroll/shared/korea-time.ts';
+  import { parseWonInt } from '../../lib/payroll/shared/validation.ts';
+  import { calcTakeHome, convertPay, type PayMode, type Rate, type TakeHomeError, type TakeHomeNotice } from '../../lib/payroll/take-home/calculation.ts';
+  import type { Notice } from '../../lib/social-insurance/calculation.ts';
+  import { isStale } from '../../lib/social-insurance/rules.ts';
+
+  const won = (n: number) => `${n.toLocaleString('ko-KR')}원`;
+  const MONTH_MAX = 1_000_000_000;
+  const YEAR_MAX = 12_000_000_000;
+  const errorText: Record<TakeHomeError, string> = {
+    'gross-invalid': '급여를 원 단위 숫자로 입력해 주세요.',
+    'family-invalid': '가족 수를 다시 선택해 주세요.',
+    'children-exceed-family': '8~20세 자녀 수는 공제대상가족 수에서 본인을 뺀 인원보다 많을 수 없습니다.',
+    'exempt-invalid': '비과세 금액을 원 단위 숫자로 입력해 주세요.',
+    'exempt-exceeds-gross': '비과세 금액의 합이 급여보다 크거나 같습니다. 금액을 확인해 주세요.',
+    'over-10m': '과세 대상 급여가 월 1,000만원을 넘으면 이 계산기로 계산하지 않습니다. 국세청 홈택스의 근로소득 간이세액표 조회를 이용해 주세요.',
+    'net-negative': '급여가 너무 적어 4대보험 최저 기준 등으로 공제액이 급여보다 많습니다. 이 계산기의 적용 범위를 벗어난 금액입니다.',
+  };
+  const noticeText: Record<TakeHomeNotice | Notice, string> = {
+    'meal-over-limit': '식대는 월 20만원까지만 비과세로 계산하고, 넘는 금액은 과세 대상에 넣었습니다.',
+    'childcare-over-limit': '보육수당은 6세 이하 자녀 1명당 월 20만원까지만 비과세로 계산했습니다.',
+    'below-table': '과세 대상 급여가 월 77만원 미만이라 소득세가 없습니다.',
+    'nps-min': '국민연금 기준소득월액 하한(41만원)이 적용됐습니다.',
+    'nps-max': '국민연금 기준소득월액 상한(659만원)이 적용됐습니다.',
+    'nhi-min': '건강보험 보수월액 하한이 적용됐습니다.',
+    'nhi-max': '건강보험 보수월액 상한이 적용됐습니다.',
+  };
+
+  const root = document.querySelector<HTMLElement>('[data-tool="take-home-pay"]');
+  if (root) {
+    const $ = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
+    const $$ = <T extends HTMLElement>(sel: string) => [...root.querySelectorAll<T>(sel)];
+    const form = $('[data-th-form]');
+    const result = $('[data-th-result]');
+    const msg = $('[data-th-msg]');
+
+    if (isStale(kstDate())) {
+      $('[data-th-stale]').hidden = false;
+      form.hidden = true;
+    } else {
+      let signaled = false;
+      const signalUse = () => {
+        if (signaled) return;
+        signaled = true;
+        document.dispatchEvent(new CustomEvent('kkultip:tool-use', { detail: 'take-home-pay' }));
+      };
+
+      const pay = $<HTMLInputElement>('#th-pay');
+      const meal = $<HTMLInputElement>('#th-meal');
+      const care = $<HTMLInputElement>('#th-care');
+      const other = $<HTMLInputElement>('#th-other');
+      const family = $<HTMLSelectElement>('#th-family');
+      const kidsSel = $<HTMLSelectElement>('#th-kids');
+      const under6 = $<HTMLSelectElement>('#th-under6');
+      const age60 = $<HTMLInputElement>('[data-th-age60]');
+      const age65 = $<HTMLInputElement>('[data-th-age65]');
+      const notices = $('[data-th-notices]');
+      const out = (key: string, text: string) => ($(`[data-th-out="${key}"]`).textContent = text);
+      const mode = (): PayMode => ($$<HTMLInputElement>('input[name="th-mode"]').find((r) => r.checked)?.value === 'year' ? 'year' : 'month');
+      // 금액 칸: 입력하는 동안 쉼표를 넣는다(커서 앞 숫자 개수를 유지)
+      const withCommas = (input: HTMLInputElement) => {
+        const raw = input.value;
+        if (!/^[\d,]*$/.test(raw)) return;
+        const caret = input.selectionStart ?? raw.length;
+        const digitsBefore = raw.slice(0, caret).replace(/,/g, '').length;
+        const digits = raw.replace(/,/g, '').replace(/^0+(?=\d)/, '');
+        const next = digits === '' ? '' : Number(digits).toLocaleString('ko-KR');
+        if (next === raw || digits.length > 15) return;
+        input.value = next;
+        let pos = 0;
+        for (let seen = 0; pos < next.length && seen < digitsBefore; pos++) if (next[pos] !== ',') seen++;
+        input.setSelectionRange(pos, pos);
+      };
+      const rate = () => Number($$<HTMLInputElement>('input[name="th-rate"]').find((r) => r.checked)?.value ?? 100) as Rate;
+      const fieldError = (key: string, text: string, input?: HTMLInputElement) => {
+        $(`[data-th-error="${key}"]`).textContent = text;
+        if (input) {
+          if (text) input.setAttribute('aria-invalid', 'true');
+          else input.removeAttribute('aria-invalid');
+        }
+      };
+      const hide = (text = '') => {
+        result.hidden = true;
+        msg.textContent = text;
+        msg.hidden = text === '';
+      };
+      // 비과세 칸: 비우면 0
+      const exempt = (input: HTMLInputElement, key: string): number | null => {
+        if (input.value.trim() === '') {
+          fieldError(key, '', input);
+          return 0;
+        }
+        const p = parseWonInt(input.value, { min: 0, max: MONTH_MAX });
+        fieldError(key, p.ok ? '' : '금액을 원 단위 숫자로 입력해 주세요.', input);
+        return p.ok ? p.value : null;
+      };
+
+      const syncMode = () => {
+        const y = mode() === 'year';
+        $('[data-th-pay-label]').textContent = y ? '세전 연봉' : '세전 월급';
+        $('[data-th-pay-hint]').textContent = y
+          ? '퇴직금을 뺀 연봉을 넣으세요. 12개월에 똑같이 나눠 받는다고 보고 한 달 급여를 계산합니다.'
+          : '식대 같은 비과세 급여를 포함한, 세금 떼기 전 한 달 급여를 넣으세요.';
+        $('[data-th-year-note]').hidden = !y;
+      };
+
+      const run = () => {
+        const y = mode() === 'year';
+        const p = parseWonInt(pay.value, { min: 1, max: y ? YEAR_MAX : MONTH_MAX });
+        if (!p.ok) {
+          fieldError('pay', p.code === 'empty' ? '' : y ? '연봉을 원 단위 숫자로 입력해 주세요(120억원 이하).' : '월급을 원 단위 숫자로 입력해 주세요(10억원 이하).', pay);
+          hide();
+          return;
+        }
+        fieldError('pay', '', pay);
+        const gross = y ? Math.floor(p.value / 12) : p.value;
+        const m = exempt(meal, 'meal');
+        const cc = exempt(care, 'care');
+        const o = exempt(other, 'other');
+        if (m === null || cc === null || o === null || gross < 1) {
+          hide();
+          return;
+        }
+        const r = calcTakeHome({
+          gross,
+          meal: m,
+          childcare: cc,
+          childrenUnder6: Number(under6.value),
+          otherExempt: o,
+          family: Number(family.value),
+          children8to20: Number(kidsSel.value),
+          rate: rate(),
+          companySize: 'under150',
+          age60: age60.checked,
+          newHireAfter65: age65.checked,
+        });
+        if (!r.ok) {
+          hide(errorText[r.error]);
+          return;
+        }
+        const x = r.result;
+        out('net', won(x.net));
+        out('sub', `${y ? `연봉 ÷ 12 = 월 ${won(gross)} · ` : ''}과세 대상 급여 ${won(x.taxable)}${x.exempt.total ? ` (비과세 ${won(x.exempt.total)})` : ''}`);
+        out('nps', age60.checked ? '0원 (만 60세 이상)' : won(x.insurance.nps.worker));
+        out('nhi', won(x.insurance.nhi.worker));
+        out('ltc', won(x.insurance.ltc.worker));
+        out('ei', age65.checked ? '0원 (65세 이후 새로 고용)' : won(x.insurance.ei.worker));
+        out('tax', won(x.incomeTax));
+        out('local', won(x.localTax));
+        out('deductions', won(x.deductions));
+        const all = [...x.notices, ...x.insurance.notices];
+        notices.replaceChildren(...all.map((n) => Object.assign(document.createElement('li'), { textContent: noticeText[n] })));
+        notices.hidden = all.length === 0;
+        msg.hidden = true;
+        result.hidden = false;
+        signalUse();
+      };
+
+      // 8~20세 자녀 선택지는 '가족 수 − 1'명까지만
+      const syncKids = () => {
+        const max = Number(family.value) - 1;
+        for (const opt of [...kidsSel.options]) opt.disabled = Number(opt.value) > max;
+        if (Number(kidsSel.value) > max) kidsSel.value = String(Math.max(0, max));
+      };
+
+      for (const el of [pay, meal, care, other])
+        el.addEventListener('input', () => {
+          withCommas(el);
+          run();
+        });
+      for (const el of [family, kidsSel, under6, age60, age65, ...$$<HTMLInputElement>('input[name="th-rate"]')]) el.addEventListener('change', run);
+      family.addEventListener('change', () => {
+        syncKids();
+        run();
+      });
+      // 월급↔연봉을 바꾸면 입력한 금액도 같은 급여 조건으로 바꾼다(월급 × 12 / 연봉 ÷ 12)
+      let lastMode: PayMode = mode();
+      for (const r of $$<HTMLInputElement>('input[name="th-mode"]'))
+        r.addEventListener('change', () => {
+          const next = mode();
+          const p = parseWonInt(pay.value, { min: 1, max: lastMode === 'year' ? YEAR_MAX : MONTH_MAX });
+          if (p.ok) pay.value = convertPay(p.value, lastMode, next).toLocaleString('ko-KR');
+          lastMode = next;
+          syncMode();
+          run();
+        });
+      syncKids();
+      syncMode();
+    }
+  }
+</script>
+
+<style>
+  .tool-form[hidden],
+  .th-stale[hidden],
+  .th-msg[hidden] {
+    display: none;
+  }
+
+  .th-seg {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .th-seg__item,
+  .th-check {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--touch);
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+  }
+
+  .th-seg__item input,
+  .th-check input {
+    flex: none;
+    accent-color: var(--color-brand-text);
+  }
+
+  .th-seg__item:has(input:checked),
+  .th-check:has(input:checked) {
+    border-color: var(--color-brand);
+    background: var(--color-brand-soft);
+  }
+
+  .th-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: var(--space-3);
+  }
+
+  .th-row select,
+  .tool-field select {
+    width: 100%;
+    min-height: var(--touch);
+    padding: 0 var(--space-3);
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface, #fff);
+    font: inherit;
+  }
+
+  .th-checks {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .th-more summary,
+  .th-basis summary {
+    display: flex;
+    align-items: center;
+    min-height: var(--touch);
+    font-weight: var(--weight-semibold);
+    cursor: pointer;
+  }
+
+  .th-more__body {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-3);
+  }
+
+  .th-result {
+    gap: var(--space-4);
+  }
+
+  .th-head h3 {
+    font-size: var(--text-md);
+    font-weight: var(--weight-semibold);
+  }
+
+  .th-total {
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+
+  .th-sub {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .th-lines {
+    display: grid;
+  }
+
+  .th-lines div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-3);
+    padding-block: var(--space-2);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .th-lines div:first-child {
+    border-top: 0;
+  }
+
+  .th-lines dt {
+    flex: none;
+    white-space: nowrap;
+  }
+
+  .th-lines dd {
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+
+  .th-lines__sum {
+    font-weight: var(--weight-semibold);
+  }
+
+  .th-notes {
+    display: grid;
+    gap: var(--space-1);
+    padding-left: 1.25em;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    list-style: disc;
+  }
+
+  .th-notes[hidden],
+  .th-notes li[hidden] {
+    display: none;
+  }
+
+  .th-notes--alert {
+    color: var(--color-text);
+    font-weight: var(--weight-semibold);
+  }
+
+  .th-example {
+    font-weight: var(--weight-semibold);
+  }
+
+  .th-basis__body {
+    display: grid;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+  }
+
+  .th-basis__body ul {
+    display: grid;
+    gap: var(--space-1);
+    padding-left: 1.25em;
+    list-style: disc;
+  }
+</style>
