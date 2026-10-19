@@ -19,7 +19,7 @@ summary: 조기재취업수당은 실업급여(구직급여)를 받던 사람이
 thumbnail: /images/thumbnails/early-reemployment-allowance.svg
 ogImage: /images/og/early-reemployment-allowance.png
 datePublished: 2026-10-18
-dateModified: 2026-10-18
+dateModified: 2026-10-19
 researchedAt: 2026-10-18
 author: operator
 ymyl: high
@@ -70,7 +70,10 @@ faq:
   - question: 일용직으로 재취업해도 받을 수 있나요?
     answer: 건설일용 등 일용근로자로 재취업한 경우에도 재취업한 날부터 매달(재취업일 기준 한 달 단위) 10일 이상 일한 달이 12개월 이상이어야 합니다.
 related: [/work/unemployment-benefit/, /work/national-employment-support/, /benefits/national-learning-card/]
-sourceIds: [local:law-eia-64, local:law-eia-decree-84, local:moel-early-wage, local:moel-early-counsel, local:moel-early-notice, local:ei-early]
+changelog:
+  - date: 2026-10-19
+    summary: 2026년 9월 22일 입법예고된 고용보험법 시행령 개정안의 조기재취업 수당 신청기한(청구권이 처음 생긴 날부터 12개월 이내, 확정 전)을 현재 3년 기준 아래에 추가했습니다.
+sourceIds: [local:law-eia-64, local:law-eia-decree-84, local:moel-early-wage, local:moel-early-counsel, local:moel-early-notice, local:moel-eia-decree-proposal, local:ei-early]
 localSources:
   - id: local:law-eia-64
     title: 고용보험법 제64조(조기재취업 수당)·제107조(소멸시효)
@@ -102,6 +105,12 @@ localSources:
     url: https://www.moel.go.kr/news/notice/noticeView.do?bbs_seq=20260900844
     level: S1
     checkedAt: 2026-10-18
+  - id: local:moel-eia-decree-proposal
+    title: 고용보험법 시행령 일부개정령(안) 입법예고(공고 제2026-446호)
+    publisher: 고용노동부
+    url: https://www.moel.go.kr/info/lawinfo/lawmaking/view.do?bbs_seq=20260900700
+    level: S1
+    checkedAt: 2026-10-19
   - id: local:ei-early
     title: 고용보험 제도 개인혜택 조기재취업수당 안내
     publisher: 고용노동부
@@ -186,3 +195,5 @@ localSources:
 4. **지급**: 청구 후 **1개월 안에** 지급됩니다.
 
 **청구기한**: 일반적인 12개월 계속 근무 요건을 충족한 경우에는 재취업일부터 12개월이 지난 다음 날부터 **3년 이내**에 청구해야 합니다. 이직 당시 65세 이상인 특례 대상자는 청구 가능 시점이 다르므로 별도로 확인해야 합니다.
+
+**신청기한 개정 예고(확정 전)**: 2026년 9월 22일 입법예고된 고용보험법 시행령 개정안에는 조기재취업 수당을 **청구권이 처음 생긴 날부터 12개월 이내**에 신청하도록 하는 내용(안 제86조제4항)이 들어 있습니다. 아직 확정되거나 시행된 규정이 아니어서 지금은 위의 3년 기준이 적용됩니다. 개정안이 확정되면 이 글을 고치겠습니다. 청구할 수 있게 되면 미루지 말고 신청하는 편이 안전합니다.
