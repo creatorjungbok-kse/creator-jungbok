@@ -9,6 +9,7 @@ import SeverancePay from './SeverancePay.astro';
 import TaxCalendar from './TaxCalendar.astro';
 import AnnualLeave from './AnnualLeave.astro';
 import TakeHomePay from './TakeHomePay.astro';
+import FreelancerTax from './FreelancerTax.astro';
 
 export const toolComponents: Record<ToolId, typeof ElectricityBill> = {
   'electricity-bill': ElectricityBill,
@@ -20,4 +21,5 @@ export const toolComponents: Record<ToolId, typeof ElectricityBill> = {
   'tax-calendar': TaxCalendar,
   'annual-leave': AnnualLeave,
   'take-home-pay': TakeHomePay,
+  'freelancer-tax': FreelancerTax,
 };

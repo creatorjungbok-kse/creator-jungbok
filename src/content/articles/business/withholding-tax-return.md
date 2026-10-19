@@ -68,7 +68,7 @@ faq:
     answer: 세무서는 신청한 반기의 다음 달 말일까지 승인 여부를 알려야 하고, 그때까지 통지가 없으면 승인한 것으로 봅니다. 예를 들어 12월에 신청했다면 다음 해 1월 31일까지 통지가 없을 때 승인된 것으로 봅니다. 확실하지 않다면 관할 세무서에 확인하세요.
   - question: 기한이 일요일이면 어떻게 되나요?
     answer: 신고·납부 기한이 토요일·일요일·공휴일(대체공휴일 포함)·노동절이면 그다음 날이 기한입니다. 예를 들어 2027년 1월 10일은 일요일이라 12월 지급분(반기납부라면 하반기분)의 기한은 1월 11일(월)입니다.
-related: [/work/withholding-receipt/, /business/tax-calendar/, /business/business-registration-application/]
+related: [/work/freelancer-tax-calculator/, /work/withholding-receipt/, /business/tax-calendar/, /business/business-registration-application/]
 sourceIds: [local:law-income-128, local:law-income-decree-185, local:law-income-decree-186, local:nts-withholding-deadline, local:nts-withholding-penalty, local:nts-withholding-rates, local:law-basic-47-5, local:law-basic-decree-27-4, local:law-basic-5, local:law-local-tax-103-13, local:law-income-86]
 localSources:
   - id: local:law-income-128
@@ -170,7 +170,7 @@ localSources:
 | 프리랜서 등 원천징수 대상 사업소득 | 3% |
 | 기타소득 | 20% |
 
-여기에 각각 소득세의 10%를 지방소득세로 함께 뗍니다. 3.3%가 소득세 3%와 지방소득세 0.3%인 이유입니다. 원천징수할 소득세가 1,000원 미만이면 떼지 않는 소액부징수 규정이 있지만, 이자소득과 2024년 7월 1일 이후 지급하는 인적용역 사업소득에는 적용하지 않습니다.
+여기에 각각 소득세의 10%를 지방소득세로 함께 뗍니다. 3.3%가 소득세 3%와 지방소득세 0.3%인 이유입니다. 원천징수할 소득세가 1,000원 미만이면 떼지 않는 소액부징수 규정이 있지만, 이자소득과 2024년 7월 1일 이후 지급하는 인적용역 사업소득에는 적용하지 않습니다. 프리랜서에게 줄 금액에서 3.3%를 뗀 금액이나, 원하는 금액을 맞춰 주려면 얼마로 계약해야 하는지는 [3.3% 계산기](/work/freelancer-tax-calculator/)로 계산할 수 있습니다.
 
 ## 반기납부로 바꾸려면
 
@@ -224,7 +224,7 @@ localSources:
 - **미납세액 × 0.67%(1만분의 67) × 지정납부기한이 지난 개월 수**(최대 5년)
 - 독촉장 등기우편 요금
 - 고지서별·세목별 체납액이 150만원 미만이면 이 두 가지는 붙지 않습니다.
-- ①과 ②를 합친 전체 가산세는 미납세액의 **50%**를 넘지 않습니다.
+- ①과 ②를 합친 전체 가산세는 미납세액의 **50%를** 넘지 않습니다.
 
 지방소득세를 늦게 낸 경우에는 지방세기본법에 따른 별도 가산세가 붙습니다.
 

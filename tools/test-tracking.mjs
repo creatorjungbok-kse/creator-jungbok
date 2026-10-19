@@ -25,6 +25,7 @@ const TOOL_PAGES = {
   'tax-calendar': '/business/tax-calendar/',
   'annual-leave': '/work/annual-leave/',
   'take-home-pay': '/work/take-home-pay-calculator/',
+  'freelancer-tax': '/work/freelancer-tax-calculator/',
 };
 const FORBIDDEN = /\b(link_text|link_url|text|value|kwh|kWh|price|amount|bill|result|query|search_term|q|name|input)\s*:/;
 

@@ -1,0 +1,382 @@
+---
+// 3.3% 계산기(프리랜서 원천징수, 3.3%·8.8%·양방향 역산). 계산은 src/lib/payroll/freelancer/calculation.ts에만 있고, 이 컴포넌트는 입력을 모아 결과를 그리기만 한다.
+// 범위(GPT 결정 2026-10-19): 사업소득 3.3%(계속·반복 인적용역, 소액부징수 미적용), 기타소득 8.8%(필요경비 60%), 지급액 10억원까지.
+// 입력값·결과는 저장·전송하지 않는다(form 제출 없음, 입력칸에 name 없음, URL·GA 전송 없음).
+import ToolShell from '../ToolShell.astro';
+import { freelancerTax as c } from '../../tools/freelancer-tax/constants';
+import { calcWithholding, OTHER_EXEMPT_MAX_PAY } from '../../lib/payroll/freelancer/calculation.ts';
+import { formatDate } from '../../lib/format';
+
+const won = (n: number) => `${n.toLocaleString('ko-KR')}원`;
+const day = (s: string) => formatDate(new Date(s));
+const ex = calcWithholding('business', 1_000_000);
+const exr = ex.ok ? ex.result : null;
+const lines = [
+  { key: 'tax', label: '소득세' },
+  { key: 'local', label: '예상 지방소득세' },
+] as const;
+---
+
+<ToolShell id="freelancer-tax" title="3.3% 계산기" reviewFrom={c.reviewFrom} reviewNote={c.reviewNote}>
+  <p class="tool-scope">
+    <strong>예상 원천징수액</strong> · 세금을 떼고 받는 금액과, 원하는 금액을 받으려면 얼마로 계약해야 하는지 계산합니다.
+  </p>
+  <noscript><p class="tool-noscript">계산기는 JavaScript가 켜져 있어야 동작합니다. 아래 예시 결과와 계산 근거를 참고하세요.</p></noscript>
+
+  <div class="tool-form" data-ft-form data-js-only>
+    <fieldset>
+      <legend class="tool-label">어떤 소득인가요?</legend>
+      <div class="ft-seg">
+        <label class="ft-seg__item"><input type="radio" name="ft-kind" value="business" checked /><span>사업소득 3.3%</span></label>
+        <label class="ft-seg__item"><input type="radio" name="ft-kind" value="other" /><span>기타소득 8.8%</span></label>
+      </div>
+      <p class="tool-hint" data-ft-kind-hint>계속·반복적으로 일하고 받는 프리랜서 용역 대가에 주로 적용됩니다.</p>
+    </fieldset>
+
+    <fieldset>
+      <legend class="tool-label">무엇을 계산할까요?</legend>
+      <div class="ft-seg">
+        <label class="ft-seg__item"><input type="radio" name="ft-dir" value="forward" checked /><span>계약금액 → 받는 금액</span></label>
+        <label class="ft-seg__item"><input type="radio" name="ft-dir" value="reverse" /><span>받을 금액 → 계약금액</span></label>
+      </div>
+    </fieldset>
+
+    <div class="tool-field">
+      <label class="tool-label" for="ft-amount" data-ft-amount-label>계약금액(세금 떼기 전)</label>
+      <div class="tool-input">
+        <input id="ft-amount" type="text" inputmode="numeric" autocomplete="off" maxlength="17" aria-describedby="ft-amount-hint ft-amount-error" />
+        <span aria-hidden="true">원</span>
+      </div>
+      <p id="ft-amount-hint" class="tool-hint" data-ft-amount-hint>세금을 떼기 전, 지급처와 약속한 금액을 넣으세요. 10억원까지 계산합니다.</p>
+      <p id="ft-amount-error" class="tool-error" data-ft-error></p>
+    </div>
+  </div>
+
+  <div aria-live="polite" aria-atomic="true">
+    <p class="tool-result ft-msg" data-ft-msg hidden></p>
+    <div class="tool-result ft-result" data-ft-result hidden>
+      <div class="ft-head">
+        <h3 data-ft-head>예상 받는 금액</h3>
+        <p class="ft-total" data-ft-out="main"></p>
+        <p class="ft-sub" data-ft-out="sub"></p>
+      </div>
+      <dl class="ft-lines">
+        <div data-ft-pay-row hidden>
+          <dt>계약금액</dt>
+          <dd data-ft-out="pay"></dd>
+        </div>
+        <div data-ft-income-row hidden>
+          <dt>기타소득금액(필요경비 60% 뺀 금액)</dt>
+          <dd data-ft-out="income"></dd>
+        </div>
+        {
+          lines.map((l) => (
+            <div>
+              <dt>{l.label}</dt>
+              <dd data-ft-out={l.key} />
+            </div>
+          ))
+        }
+        <div class="ft-lines__sum">
+          <dt>떼는 금액 합계</dt>
+          <dd data-ft-out="total"></dd>
+        </div>
+        <div data-ft-net-row hidden>
+          <dt>이 금액으로 계약하면 받는 금액</dt>
+          <dd data-ft-out="net"></dd>
+        </div>
+      </dl>
+      <ul class="ft-notes ft-notes--alert" data-ft-notices hidden></ul>
+      <ul class="ft-notes">
+        <li>3.3%는 계속·반복적으로 제공하는 인적용역의 사업소득에 주로 적용됩니다. 8.8%는 필요경비 60%가 인정되는 일시적인 강연료·원고료 등의 기타소득 계산입니다. 어느 쪽인지는 고르는 세율이 아니라 실제 소득의 성격으로 정해집니다.</li>
+        <li>계산 결과는 예상 원천징수액입니다. 지방소득세는 10원 미만 버림을 적용하며, 실제 지급처의 계산·처리와 차이가 있을 수 있습니다.</li>
+        <li>고용보험료, 부가가치세, 그 밖의 공제액은 포함하지 않습니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <noscript>
+    {
+      exr && (
+        <div class="tool-result">
+          <p class="ft-example">예시 · 사업소득 3.3%, 계약금액 1,000,000원</p>
+          <dl class="ft-lines">
+            <div><dt>예상 받는 금액</dt><dd>{won(exr.net)}</dd></div>
+            <div><dt>소득세</dt><dd>{won(exr.incomeTax)}</dd></div>
+            <div><dt>예상 지방소득세</dt><dd>{won(exr.localTax)}</dd></div>
+          </dl>
+        </div>
+      )
+    }
+  </noscript>
+
+  <details class="ft-basis">
+    <summary class="disclosure">계산 근거</summary>
+    <div class="ft-basis__body">
+      <ul>
+        <li>사업소득 3.3%: 소득세 = 계약금액 × 3%, 10원 미만 버림(소득세법 제129조, 국고금관리법 제47조). 계속·반복 인적용역은 소득세가 1천원 미만이어도 뗍니다(소득세법 시행령 제149조의3)</li>
+        <li>기타소득 8.8%: 필요경비 = 계약금액 × 60%(원 미만 버림), 기타소득금액 = 계약금액 − 필요경비, 소득세 = 기타소득금액 × 20%, 10원 미만 버림(소득세법 제129조, 시행령 제87조)</li>
+        <li>기타소득금액이 5만원 이하(계약금액 {won(OTHER_EXEMPT_MAX_PAY)} 이하)면 소득세가 없습니다. 넘으면 기타소득금액 전체에 20%를 적용합니다(소득세법 제84조)</li>
+        <li>예상 지방소득세 = 소득세의 10%, 10원 미만 버림(잠정 계산 방식)</li>
+        <li>역산: 받는 금액이 목표 이상이 되는 가장 작은 계약금액을 실제 계산으로 찾습니다. 10원 버림과 125,000원 경계 때문에 단순히 0.967이나 0.912로 나눈 값과 다를 수 있습니다</li>
+        <li>반영하지 않음: 실제 필요경비가 60%보다 많은 경우, 고용보험료, 부가가치세, 5월 종합소득세 정산</li>
+      </ul>
+      <p>확인일 {day(c.checkedAt)}</p>
+    </div>
+  </details>
+</ToolShell>
+
+<script>
+  // 입력값은 이 페이지 안에서만 계산한다(저장·전송 없음). 계산은 lib의 함수만 쓴다.
+  import { parseWonInt } from '../../lib/payroll/shared/validation.ts';
+  import { calcWithholding, reversePay, MAX_PAY, type CalcError, type IncomeKind, type WithholdingResult } from '../../lib/payroll/freelancer/calculation.ts';
+
+  const won = (n: number) => `${n.toLocaleString('ko-KR')}원`;
+  const pct = (tax: number, pay: number) => `${(Math.round((tax / pay) * 1000) / 10).toLocaleString('ko-KR')}%`;
+  const errorText: Record<CalcError, string> = {
+    'pay-invalid': '계약금액을 1원 이상 원 단위 숫자로 입력해 주세요.',
+    'target-invalid': '받을 금액을 1원 이상 원 단위 숫자로 입력해 주세요.',
+    'over-max': '계약금액이 10억원을 넘어야 하는 금액이라 계산 범위를 벗어났습니다.',
+  };
+
+  const root = document.querySelector<HTMLElement>('[data-tool="freelancer-tax"]');
+  if (root) {
+    const $ = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
+    const $$ = <T extends HTMLElement>(sel: string) => [...root.querySelectorAll<T>(sel)];
+    const result = $('[data-ft-result]');
+    const msg = $('[data-ft-msg]');
+    const amount = $<HTMLInputElement>('#ft-amount');
+    const notices = $('[data-ft-notices]');
+    let signaled = false;
+    const signalUse = () => {
+      if (signaled) return;
+      signaled = true;
+      document.dispatchEvent(new CustomEvent('kkultip:tool-use', { detail: 'freelancer-tax' }));
+    };
+    const out = (key: string, text: string) => ($(`[data-ft-out="${key}"]`).textContent = text);
+    const kind = (): IncomeKind => ($$<HTMLInputElement>('input[name="ft-kind"]').find((r) => r.checked)?.value === 'other' ? 'other' : 'business');
+    const reverse = () => $$<HTMLInputElement>('input[name="ft-dir"]').find((r) => r.checked)?.value === 'reverse';
+    const withCommas = (input: HTMLInputElement) => {
+      const raw = input.value;
+      if (!/^[\d,]*$/.test(raw)) return;
+      const caret = input.selectionStart ?? raw.length;
+      const digitsBefore = raw.slice(0, caret).replace(/,/g, '').length;
+      const digits = raw.replace(/,/g, '').replace(/^0+(?=\d)/, '');
+      const next = digits === '' ? '' : Number(digits).toLocaleString('ko-KR');
+      if (next === raw || digits.length > 15) return;
+      input.value = next;
+      let pos = 0;
+      for (let seen = 0; pos < next.length && seen < digitsBefore; pos++) if (next[pos] !== ',') seen++;
+      input.setSelectionRange(pos, pos);
+    };
+    const fieldError = (text: string) => {
+      $('[data-ft-error]').textContent = text;
+      if (text) amount.setAttribute('aria-invalid', 'true');
+      else amount.removeAttribute('aria-invalid');
+    };
+    const hide = (text = '') => {
+      result.hidden = true;
+      msg.textContent = text;
+      msg.hidden = text === '';
+    };
+
+    const sync = () => {
+      const o = kind() === 'other';
+      const rv = reverse();
+      $('[data-ft-kind-hint]').textContent = o
+        ? '일시적인 강연료·방송 출연료·원고료처럼 필요경비 60%가 인정되는 기타소득 계산입니다.'
+        : '계속·반복적으로 일하고 받는 프리랜서 용역 대가에 주로 적용됩니다.';
+      $('[data-ft-amount-label]').textContent = rv ? '받고 싶은 금액(세금 뗀 후)' : '계약금액(세금 떼기 전)';
+      $('[data-ft-amount-hint]').textContent = rv
+        ? '통장에 들어오길 원하는 금액을 넣으세요. 이 금액 이상을 받으려면 얼마로 계약해야 하는지 계산합니다.'
+        : '세금을 떼기 전, 지급처와 약속한 금액을 넣으세요. 10억원까지 계산합니다.';
+      $('[data-ft-head]').textContent = rv ? '필요한 계약금액' : '예상 받는 금액';
+    };
+
+    const show = (x: WithholdingResult, rv: boolean) => {
+      out('main', won(rv ? x.pay : x.net));
+      out('sub', x.totalTax === 0 ? '떼는 세금 0원' : `실제 떼는 비율 ${pct(x.totalTax, x.pay)}`);
+      out('pay', won(x.pay));
+      out('income', won(x.income));
+      out('tax', won(x.incomeTax));
+      out('local', won(x.localTax));
+      out('total', won(x.totalTax));
+      out('net', won(x.net));
+      $('[data-ft-pay-row]').hidden = !rv;
+      $('[data-ft-net-row]').hidden = !rv;
+      $('[data-ft-income-row]').hidden = x.kind !== 'other';
+      const n: string[] = [];
+      if (x.kind === 'other' && x.belowMinimum) n.push('기타소득금액이 5만원 이하(계약금액 125,000원 이하)라 원천징수하는 세금이 없습니다. 실제 공제율은 0%입니다.');
+      if (x.kind === 'other' && !x.belowMinimum && x.pay <= 150_000) n.push('125,000원을 넘으면 넘은 금액만이 아니라 기타소득금액 전체에 세금이 붙어, 받는 금액이 오히려 줄 수 있습니다.');
+      if (x.kind === 'business' && x.incomeTax > 0 && x.incomeTax < 1_000) n.push('소득세가 1천원 미만이어도 계속·반복적인 인적용역 대가는 원천징수합니다.');
+      if (rv && x.net > Number(amount.value.replace(/,/g, ''))) n.push(`세금은 10원 단위로 계산되어, 이 계약금액이면 목표보다 ${won(x.net - Number(amount.value.replace(/,/g, '')))} 더 받습니다.`);
+      notices.replaceChildren(...n.map((t) => Object.assign(document.createElement('li'), { textContent: t })));
+      notices.hidden = n.length === 0;
+      msg.hidden = true;
+      result.hidden = false;
+      signalUse();
+    };
+
+    const run = () => {
+      const rv = reverse();
+      const p = parseWonInt(amount.value, { min: 1, max: MAX_PAY });
+      if (!p.ok) {
+        fieldError(p.code === 'empty' ? '' : rv ? '받을 금액을 1원 이상, 10억원 이하의 원 단위 숫자로 입력해 주세요.' : '계약금액을 1원 이상, 10억원 이하의 원 단위 숫자로 입력해 주세요.');
+        hide();
+        return;
+      }
+      fieldError('');
+      const r = rv ? reversePay(kind(), p.value) : calcWithholding(kind(), p.value);
+      if (!r.ok) {
+        hide(errorText[r.error]);
+        return;
+      }
+      show(r.result, rv);
+    };
+
+    amount.addEventListener('input', () => {
+      withCommas(amount);
+      run();
+    });
+    for (const el of $$<HTMLInputElement>('input[name="ft-kind"], input[name="ft-dir"]'))
+      el.addEventListener('change', () => {
+        sync();
+        run();
+      });
+    sync();
+  }
+</script>
+
+<style>
+  .ft-msg[hidden] {
+    display: none;
+  }
+
+  .ft-seg {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .ft-seg__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--touch);
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+  }
+
+  .ft-seg__item input {
+    flex: none;
+    accent-color: var(--color-brand-text);
+  }
+
+  .ft-seg__item:has(input:checked) {
+    border-color: var(--color-brand);
+    background: var(--color-brand-soft);
+  }
+
+  .ft-basis summary {
+    display: flex;
+    align-items: center;
+    min-height: var(--touch);
+    font-weight: var(--weight-semibold);
+    cursor: pointer;
+  }
+
+  .ft-result {
+    gap: var(--space-4);
+  }
+
+  .ft-head h3 {
+    font-size: var(--text-md);
+    font-weight: var(--weight-semibold);
+  }
+
+  .ft-total {
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+
+  .ft-sub {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .ft-lines {
+    display: grid;
+  }
+
+  .ft-lines div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-3);
+    padding-block: var(--space-2);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .ft-lines div[hidden] {
+    display: none;
+  }
+
+  .ft-lines div:first-child {
+    border-top: 0;
+  }
+
+  .ft-lines dt {
+    min-width: 0;
+  }
+
+  .ft-lines dd {
+    flex: none;
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+
+  .ft-lines__sum {
+    font-weight: var(--weight-semibold);
+  }
+
+  .ft-notes {
+    display: grid;
+    gap: var(--space-1);
+    padding-left: 1.25em;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    list-style: disc;
+  }
+
+  .ft-notes[hidden] {
+    display: none;
+  }
+
+  .ft-notes--alert {
+    color: var(--color-text);
+    font-weight: var(--weight-semibold);
+  }
+
+  .ft-example {
+    font-weight: var(--weight-semibold);
+  }
+
+  .ft-basis__body {
+    display: grid;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+  }
+
+  .ft-basis__body ul {
+    display: grid;
+    gap: var(--space-1);
+    padding-left: 1.25em;
+    list-style: disc;
+  }
+</style>
