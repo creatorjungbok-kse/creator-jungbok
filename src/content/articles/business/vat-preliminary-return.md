@@ -21,7 +21,7 @@ summary: 2026년 2기 예정분은 법인이 7~9월 실적을 10월 26일까지 
 thumbnail: /images/thumbnails/vat-preliminary-return.svg
 ogImage: /images/og/vat-preliminary-return.png
 datePublished: 2026-10-05
-dateModified: 2026-10-12
+dateModified: 2026-10-19
 researchedAt: 2026-10-12
 author: operator
 ymyl: medium
@@ -60,8 +60,10 @@ faq:
     answer: 홈택스에 로그인해 세금신고 → 부가가치세 신고 → 신고도움 자료 조회에서 예정고지 대상 여부와 세액을 볼 수 있습니다. 개인사업자는 ARS(1544-9944)로도 조회할 수 있습니다.
   - question: 7~9월에 매출이 없는 법인도 신고해야 하나요?
     answer: 네. 예정신고 대상 법인은 실적이 없어도 신고합니다. 실적이 없는 법인은 홈택스 부가가치세 정기신고 화면에서 몇 번의 클릭으로 무실적 신고를 마칠 수 있습니다.
-related: [/business/business-credit-card/, /business/cash-receipt/]
+related: [/business/vat-preliminary-payment/, /business/tax-calendar/, /business/vat-calculator/, /business/business-credit-card/, /business/cash-receipt/]
 changelog:
+  - date: 2026-10-19
+    summary: 고지서를 받은 개인사업자·소규모 법인이 다음 할 일로 바로 갈 수 있게 예정고지 납부 방법, 사업자 세금 달력, 부가세 계산기 연결을 본문과 관련 글에 추가했습니다(기한·금액 내용은 바꾸지 않음).
   - date: 2026-10-12
     summary: 일반과세자·간이과세자의 1년 부가세 신고기간 일정(예정·확정)과 기한이 주말이면 다음 날로 넘어가는 원칙을 부가가치세법 제5조·제48조·제49조·제67조 기준으로 추가했습니다.
 sourceIds: [local:nts-vat-2026-2-pre, local:law-vat-48, local:law-vat-decree-90, local:law-vat-66, local:nts-tax-schedule-2026-10, local:law-vat-5, local:law-vat-49, local:law-vat-67, local:law-basic-5]
@@ -145,6 +147,8 @@ localSources:
 
 직전 과세기간은 2026년 1월 1일부터 6월 30일까지입니다. 간이과세자 일정은 이번 국세청 발표가 아니라, 1월부터 6월까지를 예정부과기간으로 두고 7월에 납부하도록 한 부가가치세법 기준으로 정리했습니다.
 
+**고지서를 받았다면** [예정고지 납부 방법](/business/vat-preliminary-payment/)에서 고지세액 확인부터 납부까지 순서대로 볼 수 있습니다. 1년 동안의 부가세 신고·납부 날짜는 [사업자 세금 달력](/business/tax-calendar/)에 모아 두었습니다.
+
 ## 부가세 신고기간 1년 일정
 
 부가세는 과세기간이 끝난 뒤(예정신고는 예정신고기간이 끝난 뒤) **25일 안에** 신고·납부합니다. 아래는 법인사업자 등 예정신고 대상의 기본 일정입니다. 개인 일반과세자는 예정신고 대신 예정고지를 받을 수 있습니다. 기한이 토요일·일요일·공휴일(대체공휴일·노동절 포함)이면 그다음 날까지입니다.
@@ -170,6 +174,8 @@ localSources:
 - **고지 금액**: 직전 과세기간 납부세액의 50%입니다(1천원 미만 버림).
 - **고지하지 않는 경우**: 고지할 금액이 50만원 미만이거나, 간이과세자에서 이번 과세기간 시작일 현재 일반과세자로 바뀐 경우 등입니다.
 - **납부기한 11월 2일(월)**: 10월 초 휴일이 몰려 고지서 송달이 늦어질 수 있어, 국세청이 납부기한을 10월 말일로 일괄 연장했습니다. 10월 31일이 토요일이라 실제 기한은 11월 2일입니다.
+
+고지세액을 홈택스·손택스로 내는 법, 카드로 낼 때 수수료, 늦게 냈을 때 붙는 가산세는 [예정고지 납부 방법](/business/vat-preliminary-payment/)에 정리했습니다.
 
 공급가액과 부가세를 나누거나 간이과세자의 1년 예상 부가세를 미리 보려면 [부가세 계산기](/business/vat-calculator/)를 이용하세요.
 
