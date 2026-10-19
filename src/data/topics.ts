@@ -8,6 +8,7 @@ export const topics = [
   { id: 'employment', name: '고용' },
   { id: 'housing', name: '주거' },
   { id: 'tax', name: '세금·환급' },
+  { id: 'finance', name: '금융·저축' },
   { id: 'health', name: '건강·의료' },
   { id: 'culture', name: '문화·여가' },
   { id: 'security', name: '보안·개인정보' },

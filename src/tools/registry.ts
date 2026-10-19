@@ -9,8 +9,9 @@ import { annualLeave } from './annual-leave/constants';
 import { takeHomePay } from './take-home-pay/constants';
 import { freelancerTax } from './freelancer-tax/constants';
 import { parentalLeavePay } from './parental-leave-pay/constants';
+import { savingsInterest } from './savings-interest/constants';
 
-export const toolIds = ['electricity-bill', 'mvno-plan-cost', 'weekly-holiday-pay', 'vat-calculator', 'social-insurance-calculator', 'severance-pay', 'tax-calendar', 'annual-leave', 'take-home-pay', 'freelancer-tax', 'parental-leave-pay'] as const;
+export const toolIds = ['electricity-bill', 'mvno-plan-cost', 'weekly-holiday-pay', 'vat-calculator', 'social-insurance-calculator', 'severance-pay', 'tax-calendar', 'annual-leave', 'take-home-pay', 'freelancer-tax', 'parental-leave-pay', 'savings-interest'] as const;
 export type ToolId = (typeof toolIds)[number];
 
 // 사이드바 '계산기·도구' 목록에 쓰는 짧은 이름(도구가 들어 있는 글로 연결된다)
@@ -26,6 +27,7 @@ export const toolNames: Record<ToolId, string> = {
   'take-home-pay': '실수령액 계산기',
   'freelancer-tax': '3.3% 계산기',
   'parental-leave-pay': '육아휴직급여 계산기',
+  'savings-interest': '적금 이자 계산기',
 };
 
 // 도구를 둘 수 있는 글 유형(도구마다 하나)
@@ -42,6 +44,7 @@ export const toolContentTypes: Record<ToolId, 'cost' | 'compare' | 'guide'> = {
   'take-home-pay': 'cost',
   'freelancer-tax': 'cost',
   'parental-leave-pay': 'cost',
+  'savings-interest': 'cost',
 };
 
 const eb = electricityBill;
@@ -66,4 +69,6 @@ export const toolSourceIds: Record<ToolId, string[]> = {
   'freelancer-tax': [...freelancerTax.sourceIds],
   // 고용보험법·시행령·남녀고용평등법 근거는 글의 localSources에 둔다
   'parental-leave-pay': [...parentalLeavePay.sourceIds],
+  // 소득세법·조특법·농특세법 근거는 글의 localSources에 둔다
+  'savings-interest': [...savingsInterest.sourceIds],
 };

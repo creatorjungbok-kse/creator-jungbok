@@ -99,6 +99,16 @@ export const categories: Category[] = [
       { slug: 'hosting', name: '도메인·호스팅' },
     ],
   },
+  {
+    slug: 'money',
+    name: '금융·저축',
+    title: '금융·저축',
+    seoTitle: '금융·저축 계산·정보',
+    description: '예금·적금 이자와 세금처럼 돈을 모으고 빌릴 때 알아야 할 숫자를 공식 기준으로 정리하고 계산합니다.',
+    subcategories: [{ slug: 'savings', name: '예적금' }],
+    // 공개 글 3편 전까지 상단 메뉴·홈·footer에 노출하지 않는다(GPT 결정 2026-10-19). 카테고리 페이지·글·sitemap은 정상 공개
+    primaryNavMinPosts: 3,
+  },
 ];
 
 export const categoryHref = (c: Category) => `/${c.slug}/`;

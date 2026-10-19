@@ -79,7 +79,7 @@ faq:
     answer: 예·적금, 보험금 등은 만기 이후 적용금리가 점차 줄다가 소멸시효가 완성되면 이자가 붙지 않습니다. 예를 들어 보험은 만기 후 1년까지 평균공시이율의 50%, 1년 이후 3년까지 40%, 3년 후에는 0%가 적용됩니다.
   - question: 알뜰폰을 해지했는데 통신 미환급금은 어디서 확인하나요?
     answer: 스마트초이스 미환급액 조회는 KT·SK텔레콤·LG유플러스·SK브로드밴드 서비스가 대상입니다. 알뜰폰 등 다른 사업자의 미환급액은 해지한 사업자 고객센터에 직접 문의하세요.
-related: [/digital/personal-info-leak-response/, /digital/mvno-plan-comparison/]
+related: [/digital/personal-info-leak-response/, /money/savings-interest-calculator/, /digital/mvno-plan-comparison/]
 relatedAuto: false
 sourceIds: [local:fsc-hidden-2025, local:fsc-hidden-2026, local:fsc-insurance-2026, local:fine, local:smartchoice-guide, local:smartchoice-refund]
 localSources:

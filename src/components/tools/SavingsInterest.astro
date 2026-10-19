@@ -1,0 +1,523 @@
+---
+// 예적금 세후 이자 계산기(정기예금·정기적금, 단리·월복리, 과세 5종). 계산은 src/lib/finance/savings/calculation.ts에만 있고, 이 컴포넌트는 입력을 모아 결과를 그리기만 한다.
+// 범위(GPT 결정 2026-10-19): 1~60개월, 연 0.01~20.00%, 우대 한도를 넘으면 계산하지 않는다(한도 초과분 분리 과세는 v1 범위 밖).
+// 입력값·결과는 저장·전송하지 않는다(form 제출 없음, URL·GA 전송 없음).
+import ToolShell from '../ToolShell.astro';
+import { savingsInterest as c } from '../../tools/savings-interest/constants';
+import { calcSavings } from '../../lib/finance/savings/calculation.ts';
+import { formatDate } from '../../lib/format';
+
+const won = (n: number) => `${n.toLocaleString('ko-KR')}원`;
+const day = (s: string) => formatDate(new Date(s));
+const ex = calcSavings({ product: 'installment', method: 'simple', amount: 500_000, months: 12, rateBp: 350, tax: 'general' });
+const exr = ex.ok ? ex.result : null;
+const quick = [6, 12, 24, 36];
+const taxes = [
+  { value: 'general', label: '일반과세 15.4%' },
+  { value: 'taxfree', label: '비과세종합저축' },
+  { value: 'coop', label: '조합 예탁금' },
+] as const;
+const coops = [
+  { value: 'coop-exempt', label: '비과세 유지 1.4%', hint: '2025년 12월 31일까지 가입했거나, 2026~2028년 가입이면서 아래 특례에 해당하는 경우' },
+  { value: 'coop-5', label: '5.9%', hint: '2026년에 가입했고 특례에 해당하지 않는 경우(특례 대상자도 2029년 가입분은 5.9%)' },
+  { value: 'coop-9', label: '9.5%', hint: '2027년 이후 가입했고 특례에 해당하지 않는 경우(특례 대상자는 2030년 이후 가입분부터)' },
+] as const;
+---
+
+<ToolShell id="savings-interest" title="적금 이자 계산기" reviewFrom={c.reviewFrom} reviewNote={c.reviewNote}>
+  <p class="tool-scope">
+    <strong>예상 세후 이자</strong> · 정기예금과 정기적금의 이자에서 세금을 떼고 만기에 받는 금액을 계산합니다.
+  </p>
+  <noscript><p class="tool-noscript">계산기는 JavaScript가 켜져 있어야 동작합니다. 아래 예시 결과와 계산 근거를 참고하세요.</p></noscript>
+
+  <div class="tool-form" data-js-only>
+    <fieldset>
+      <legend class="tool-label">어떤 상품인가요?</legend>
+      <div class="sv-seg">
+        <label class="sv-seg__item"><input type="radio" name="sv-product" value="installment" checked /><span>정기적금(매달 넣기)</span></label>
+        <label class="sv-seg__item"><input type="radio" name="sv-product" value="deposit" /><span>정기예금(한 번에 맡기기)</span></label>
+      </div>
+    </fieldset>
+
+    <div class="tool-field">
+      <label class="tool-label" for="sv-amount" data-sv-amount-label>매달 넣을 금액</label>
+      <div class="tool-input">
+        <input id="sv-amount" type="text" inputmode="numeric" autocomplete="off" maxlength="14" aria-describedby="sv-amount-hint sv-amount-error" />
+        <span aria-hidden="true">원</span>
+      </div>
+      <p id="sv-amount-hint" class="tool-hint" data-sv-amount-hint>매달 같은 금액을 넣는 정액적립식 적금 기준입니다. 1억원까지 계산합니다.</p>
+      <p id="sv-amount-error" class="tool-error" data-sv-amount-error></p>
+    </div>
+
+    <div class="sv-row">
+      <div class="tool-field">
+        <label class="tool-label" for="sv-months">기간</label>
+        <div class="tool-input">
+          <input id="sv-months" type="text" inputmode="numeric" autocomplete="off" maxlength="2" value="12" aria-describedby="sv-months-error" />
+          <span aria-hidden="true">개월</span>
+        </div>
+      </div>
+      <div class="tool-field">
+        <label class="tool-label" for="sv-rate">연 이율</label>
+        <div class="tool-input">
+          <input id="sv-rate" type="text" inputmode="decimal" autocomplete="off" maxlength="6" aria-describedby="sv-rate-hint sv-rate-error" />
+          <span aria-hidden="true">%</span>
+        </div>
+      </div>
+    </div>
+    <div class="sv-quick" role="group" aria-label="기간 빠른 선택">
+      {quick.map((m) => <button type="button" class="sv-quick__btn" data-sv-months={m}>{m}개월</button>)}
+    </div>
+    <p id="sv-rate-hint" class="tool-hint">기간은 1~60개월, 연 이율은 우대금리를 더한 세전 이율로 0.01~20%까지 넣으세요.</p>
+    <p id="sv-months-error" class="tool-error" data-sv-months-error></p>
+    <p id="sv-rate-error" class="tool-error" data-sv-rate-error></p>
+
+    <fieldset>
+      <legend class="tool-label">이자 계산 방식</legend>
+      <div class="sv-seg">
+        <label class="sv-seg__item"><input type="radio" name="sv-method" value="simple" checked /><span>단리</span></label>
+        <label class="sv-seg__item"><input type="radio" name="sv-method" value="monthly" /><span>월복리</span></label>
+      </div>
+      <p class="tool-hint">상품설명서의 '이자 계산 방식'을 확인하세요. 은행 예적금은 단리 상품이 많습니다.</p>
+    </fieldset>
+
+    <fieldset>
+      <legend class="tool-label">세금</legend>
+      <div class="sv-seg">
+        {
+          taxes.map((t, i) => (
+            <label class="sv-seg__item">
+              <input type="radio" name="sv-tax" value={t.value} checked={i === 0} />
+              <span>{t.label}</span>
+            </label>
+          ))
+        }
+      </div>
+      <p class="tool-hint" data-sv-tax-hint></p>
+      <div class="sv-coop" data-sv-coop hidden>
+        <p class="tool-label">언제, 어떤 조건으로 가입했나요?</p>
+        {
+          coops.map((o, i) => (
+            <label class="sv-coop__item">
+              <input type="radio" name="sv-coop" value={o.value} checked={i === 0} />
+              <span>
+                <strong>{o.label}</strong>
+                <small>{o.hint}</small>
+              </span>
+            </label>
+          ))
+        }
+        <p class="tool-hint">
+          특례는 농협·수협·산림조합 조합원이거나, 직전 과세기간 소득 기준(근로소득만 있으면 총급여 7천만원 이하, 그 밖에는 종합소득과세표준에 합산되는 종합소득금액 6천만원 이하 등)을 충족하는 사람에게 적용됩니다. 소득 기준은 세무서에서 받은
+          소득확인증명서를 내야 합니다. 신협·새마을금고 회원이라는 것만으로 자동 적용되지 않으니, 실제 자격은 가입 금융기관에서 확인하세요.
+        </p>
+      </div>
+    </fieldset>
+  </div>
+
+  <div aria-live="polite" aria-atomic="true">
+    <p class="tool-result sv-msg" data-sv-msg hidden></p>
+    <div class="tool-result sv-result" data-sv-result hidden>
+      <div class="sv-head">
+        <h3>예상 만기 수령액</h3>
+        <p class="sv-total" data-sv-out="maturity"></p>
+        <p class="sv-sub" data-sv-out="sub"></p>
+      </div>
+      <dl class="sv-lines">
+        <div><dt>원금 합계</dt><dd data-sv-out="principal"></dd></div>
+        <div><dt>세전 이자</dt><dd data-sv-out="interest"></dd></div>
+        <div data-sv-row="income"><dt>이자소득세</dt><dd data-sv-out="income"></dd></div>
+        <div data-sv-row="local"><dt>지방소득세</dt><dd data-sv-out="local"></dd></div>
+        <div data-sv-row="rural"><dt>농어촌특별세</dt><dd data-sv-out="rural"></dd></div>
+        <div class="sv-lines__sum"><dt>떼는 세금 합계</dt><dd data-sv-out="tax"></dd></div>
+        <div class="sv-lines__sum"><dt>세후 이자</dt><dd data-sv-out="after"></dd></div>
+      </dl>
+      <ul class="sv-notes sv-notes--alert" data-sv-notices hidden></ul>
+      <ul class="sv-notes">
+        <li>세전 이자를 계산한 뒤 세금을 금액으로 떼는 예상값입니다. 실제 은행의 일 단위 계산·절사 방식이나 금융감독원 비교 사이트의 예시와 몇 원~몇백 원 다를 수 있습니다.</li>
+        <li>중도해지, 만기 후 이율, 우대금리 조건 충족 여부는 반영하지 않습니다.</li>
+        <li>이자·배당을 합친 금융소득이 한 해 2천만원을 넘으면 넘는 부분은 다음 해 종합소득세 신고 때 다른 소득과 합산될 수 있습니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <noscript>
+    {
+      exr && (
+        <div class="tool-result">
+          <p class="sv-example">예시 · 정기적금 월 50만원, 12개월, 연 3.5% 단리, 일반과세</p>
+          <dl class="sv-lines">
+            <div><dt>예상 만기 수령액</dt><dd>{won(exr.maturity)}</dd></div>
+            <div><dt>세전 이자</dt><dd>{won(exr.interest)}</dd></div>
+            <div><dt>세후 이자</dt><dd>{won(exr.afterTax)}</dd></div>
+          </dl>
+        </div>
+      )
+    }
+  </noscript>
+
+  <details class="sv-basis">
+    <summary class="disclosure">계산 근거</summary>
+    <div class="sv-basis__body">
+      <ul>
+        <li>예금 단리: 원금 × 연 이율 × 개월 ÷ 12 / 월복리: 원금 × {'{'}(1 + 연 이율 ÷ 12)^개월 − 1{'}'}</li>
+        <li>적금 단리: 월 납입액 × 연 이율 ÷ 12 × n(n+1)/2 / 월복리: 회차마다 남은 개월만큼 월복리로 불린 이자의 합. 세전 이자는 마지막에 원 미만을 버립니다</li>
+        <li>일반과세: 이자소득세 14%(10원 미만 버림), 지방소득세 = 이자소득세의 10%(10원 미만 버림)(소득세법 제129조, 지방세법 제103조의13)</li>
+        <li>비과세종합저축: 1명당 원금 5천만원까지 이자소득세·농어촌특별세 없음(조세특례제한법 제88조의2, 농어촌특별세법 제4조)</li>
+        <li>조합 예탁금: 1명당 3천만원까지 가입 연도·특례 여부에 따라 이자소득세 0%·5%·9%, 지방소득세 없음, 농어촌특별세 = (이자 × 14% − 낸 이자소득세) × 10%(조세특례제한법 제89조의3, 농어촌특별세법 제5조)</li>
+        <li>우대 한도를 넘는 금액은 계산하지 않습니다. 다른 계좌에서 이미 쓴 한도도 반영하지 않습니다</li>
+      </ul>
+      <p>확인일 {day(c.checkedAt)}</p>
+    </div>
+  </details>
+</ToolShell>
+
+<script>
+  // 입력값은 이 페이지 안에서만 계산한다(저장·전송 없음). 계산은 lib의 함수만 쓴다.
+  import { parseWonInt } from '../../lib/payroll/shared/validation.ts';
+  import { calcSavings, parseRateBp, LIMITS, type Product, type Method, type TaxType, type SavingsError } from '../../lib/finance/savings/calculation.ts';
+
+  const won = (n: number) => `${n.toLocaleString('ko-KR')}원`;
+  const man = (n: number) => (n % 10_000_000 === 0 ? `${n / 10_000_000}천만원` : `${(n / 10_000).toLocaleString('ko-KR')}만원`);
+  const errorText: Record<Exclude<SavingsError, 'over-limit'>, string> = {
+    'amount-invalid': '금액을 1원 이상 원 단위 숫자로 입력해 주세요.',
+    'months-invalid': '기간을 1~60개월 사이의 정수로 입력해 주세요.',
+    'rate-invalid': '연 이율을 0.01~20% 사이로, 소수 둘째 자리까지 입력해 주세요.',
+    'over-max': '계산할 수 있는 금액을 넘었습니다.',
+  };
+  const taxHint: Record<string, string> = {
+    general: '대부분의 예적금 이자에서 떼는 세금입니다(이자소득세 14% + 지방소득세 1.4%).',
+    taxfree: '65세 이상 기초연금 수급자, 등록 장애인, 기초생활수급자, 독립유공자 등이 1명당 원금 5천만원까지 가입한 비과세종합저축입니다(2028년 말 가입분까지).',
+    coop: '농협·수협·신협·새마을금고·산림조합 등에 19세 이상이 1명당 3천만원까지 맡긴 예탁금입니다. 가입 연도와 특례 여부에 따라 세금이 다릅니다.',
+  };
+
+  const root = document.querySelector<HTMLElement>('[data-tool="savings-interest"]');
+  if (root) {
+    const $ = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
+    const $$ = <T extends HTMLElement>(sel: string) => [...root.querySelectorAll<T>(sel)];
+    const result = $('[data-sv-result]');
+    const msg = $('[data-sv-msg]');
+    const amount = $<HTMLInputElement>('#sv-amount');
+    const months = $<HTMLInputElement>('#sv-months');
+    const rate = $<HTMLInputElement>('#sv-rate');
+    const notices = $('[data-sv-notices]');
+    let signaled = false;
+    const signalUse = () => {
+      if (signaled) return;
+      signaled = true;
+      document.dispatchEvent(new CustomEvent('kkultip:tool-use', { detail: 'savings-interest' }));
+    };
+    const picked = (name: string) => $$<HTMLInputElement>(`input[name="${name}"]`).find((r) => r.checked)?.value ?? '';
+    const product = (): Product => (picked('sv-product') === 'deposit' ? 'deposit' : 'installment');
+    const method = (): Method => (picked('sv-method') === 'monthly' ? 'monthly' : 'simple');
+    const tax = (): TaxType => {
+      const t = picked('sv-tax');
+      if (t === 'taxfree') return 'taxfree';
+      if (t === 'coop') {
+        const k = picked('sv-coop');
+        return k === 'coop-5' || k === 'coop-9' ? k : 'coop-exempt';
+      }
+      return 'general';
+    };
+    const out = (key: string, text: string) => ($(`[data-sv-out="${key}"]`).textContent = text);
+    const withCommas = (input: HTMLInputElement) => {
+      const raw = input.value;
+      if (!/^[\d,]*$/.test(raw)) return;
+      const caret = input.selectionStart ?? raw.length;
+      const digitsBefore = raw.slice(0, caret).replace(/,/g, '').length;
+      const digits = raw.replace(/,/g, '').replace(/^0+(?=\d)/, '');
+      const next = digits === '' ? '' : Number(digits).toLocaleString('ko-KR');
+      if (next === raw || digits.length > 11) return;
+      input.value = next;
+      let pos = 0;
+      for (let seen = 0; pos < next.length && seen < digitsBefore; pos++) if (next[pos] !== ',') seen++;
+      input.setSelectionRange(pos, pos);
+    };
+    const setError = (sel: string, input: HTMLInputElement, text: string) => {
+      $(sel).textContent = text;
+      if (text) input.setAttribute('aria-invalid', 'true');
+      else input.removeAttribute('aria-invalid');
+    };
+    const hide = (text = '') => {
+      result.hidden = true;
+      msg.textContent = text;
+      msg.hidden = text === '';
+    };
+
+    const sync = () => {
+      const dep = product() === 'deposit';
+      $('[data-sv-amount-label]').textContent = dep ? '맡길 금액' : '매달 넣을 금액';
+      $('[data-sv-amount-hint]').textContent = dep
+        ? '처음에 한 번 맡기는 원금입니다. 100억원까지 계산합니다.'
+        : '매달 같은 금액을 넣는 정액적립식 적금 기준입니다. 1억원까지 계산합니다.';
+      const t = picked('sv-tax');
+      $('[data-sv-tax-hint]').textContent = taxHint[t] ?? taxHint.general;
+      $('[data-sv-coop]').hidden = t !== 'coop';
+    };
+
+    const run = () => {
+      const dep = product() === 'deposit';
+      const a = parseWonInt(amount.value, { min: 1, max: dep ? LIMITS.maxDeposit : LIMITS.maxMonthly });
+      const mRaw = months.value.trim();
+      const m = /^\d{1,2}$/.test(mRaw) ? Number(mRaw) : NaN;
+      const bp = rate.value.trim() === '' ? null : parseRateBp(rate.value);
+      setError('[data-sv-amount-error]', amount, !a.ok && a.code !== 'empty' ? (dep ? '맡길 금액을 1원 이상, 100억원 이하로 입력해 주세요.' : '매달 넣을 금액을 1원 이상, 1억원 이하로 입력해 주세요.') : '');
+      setError('[data-sv-months-error]', months, mRaw !== '' && !(m >= 1 && m <= 60) ? errorText['months-invalid'] : '');
+      setError('[data-sv-rate-error]', rate, rate.value.trim() !== '' && (bp === null || bp < 1 || bp > 2000) ? errorText['rate-invalid'] : '');
+      if (!a.ok || !(m >= 1 && m <= 60) || bp === null || bp < 1 || bp > 2000) {
+        hide();
+        return;
+      }
+      const t = tax();
+      const r = calcSavings({ product: product(), method: method(), amount: a.value, months: m, rateBp: bp, tax: t });
+      if (!r.ok) {
+        if (r.error === 'over-limit') {
+          hide(
+            `선택한 과세 유형의 원금 한도(1명당 ${man(r.limit!)})를 초과했습니다. 한도 초과분을 나누어 과세하는 기능은 지원하지 않습니다. 실제 남은 우대 한도를 확인한 뒤 금액을 조정하거나 일반과세로 계산해 주세요.${dep ? '' : ' 적금은 월 납입액 × 개월 수로 원금 합계를 봅니다.'}`,
+          );
+        } else hide(errorText[r.error]);
+        return;
+      }
+      const x = r.result;
+      out('maturity', won(x.maturity));
+      out('sub', `세후 이자 ${won(x.afterTax)} · 세전 이자 ${won(x.interest)}`);
+      out('principal', won(x.principal));
+      out('interest', won(x.interest));
+      out('income', won(x.incomeTax));
+      out('local', won(x.localTax));
+      out('rural', won(x.ruralTax));
+      out('tax', won(x.totalTax));
+      out('after', won(x.afterTax));
+      $('[data-sv-row="income"]').hidden = t === 'taxfree' || t === 'coop-exempt';
+      $('[data-sv-row="local"]').hidden = t !== 'general';
+      $('[data-sv-row="rural"]').hidden = !t.startsWith('coop');
+      const n: string[] = [];
+      if (x.lumpSumInterest && x.lumpSumInterest > 0) {
+        const pct = Math.round((x.interest / x.lumpSumInterest) * 100);
+        n.push(
+          `적금은 매달 넣은 돈이 맡겨진 기간이 달라, 원금 합계 ${won(x.principal)}을 처음부터 ${m}개월 맡긴 예금(단리 세전 ${won(x.lumpSumInterest)})의 약 ${pct}%만 이자가 붙습니다.`,
+        );
+      }
+      if (t !== 'general') n.push('다른 계좌에서 이미 쓴 우대 한도는 이 계산기가 알 수 없습니다. 실제로 우대를 받을 수 있는 금액은 더 작을 수 있습니다.');
+      if (t.startsWith('coop')) n.push('조합 예탁금 세금은 가입 연도와 특례 자격에 따라 정해집니다. 실제 적용 세율은 가입한 금융기관에서 확인하세요.');
+      if (x.interest === 0) n.push('금액이 작아 이자가 1원 미만입니다.');
+      notices.replaceChildren(...n.map((s) => Object.assign(document.createElement('li'), { textContent: s })));
+      notices.hidden = n.length === 0;
+      msg.hidden = true;
+      result.hidden = false;
+      signalUse();
+    };
+
+    for (const b of $$<HTMLButtonElement>('[data-sv-months]'))
+      b.addEventListener('click', () => {
+        months.value = b.dataset.svMonths!;
+        run();
+      });
+    amount.addEventListener('input', () => {
+      withCommas(amount);
+      run();
+    });
+    for (const el of [months, rate]) el.addEventListener('input', run);
+    for (const el of $$<HTMLInputElement>('input[name="sv-product"], input[name="sv-method"], input[name="sv-tax"], input[name="sv-coop"]'))
+      el.addEventListener('change', () => {
+        sync();
+        run();
+      });
+    sync();
+  }
+</script>
+
+<style>
+  .sv-msg[hidden],
+  [data-sv-coop][hidden],
+  .sv-lines div[hidden] {
+    display: none;
+  }
+
+  .sv-seg {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .sv-seg__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--touch);
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+  }
+
+  .sv-seg__item input,
+  .sv-coop__item input {
+    flex: none;
+    accent-color: var(--color-brand-text);
+  }
+
+  .sv-seg__item:has(input:checked),
+  .sv-coop__item:has(input:checked) {
+    border-color: var(--color-brand);
+    background: var(--color-brand-soft);
+  }
+
+  .sv-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .sv-row > * {
+    min-width: 0;
+  }
+
+  .sv-row :global(.tool-input input) {
+    width: 100%;
+  }
+
+  .sv-quick {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .sv-quick__btn {
+    min-height: var(--touch);
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .sv-quick__btn:hover {
+    border-color: var(--color-brand);
+  }
+
+  .sv-coop {
+    display: grid;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+  }
+
+  .sv-coop__item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    padding: var(--space-3);
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+  }
+
+  .sv-coop__item input {
+    margin-top: 0.3em;
+  }
+
+  .sv-coop__item span {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .sv-coop__item small {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .sv-basis summary {
+    display: flex;
+    align-items: center;
+    min-height: var(--touch);
+    font-weight: var(--weight-semibold);
+    cursor: pointer;
+  }
+
+  .sv-result {
+    gap: var(--space-4);
+  }
+
+  .sv-head h3 {
+    font-size: var(--text-md);
+    font-weight: var(--weight-semibold);
+  }
+
+  .sv-total {
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+
+  .sv-sub {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .sv-lines {
+    display: grid;
+  }
+
+  .sv-lines div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-3);
+    padding-block: var(--space-2);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .sv-lines div:first-child {
+    border-top: 0;
+  }
+
+  .sv-lines dd {
+    flex: none;
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+
+  .sv-lines__sum {
+    font-weight: var(--weight-semibold);
+  }
+
+  .sv-notes {
+    display: grid;
+    gap: var(--space-1);
+    padding-left: 1.25em;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    list-style: disc;
+  }
+
+  .sv-notes[hidden] {
+    display: none;
+  }
+
+  .sv-notes--alert {
+    color: var(--color-text);
+    font-weight: var(--weight-semibold);
+  }
+
+  .sv-example {
+    font-weight: var(--weight-semibold);
+  }
+
+  .sv-basis__body {
+    display: grid;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+  }
+
+  .sv-basis__body ul {
+    display: grid;
+    gap: var(--space-1);
+    padding-left: 1.25em;
+    list-style: disc;
+  }
+</style>
