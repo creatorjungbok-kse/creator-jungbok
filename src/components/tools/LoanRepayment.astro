@@ -1,0 +1,713 @@
+---
+// 대출 상환 계산기(원리금균등·원금균등·만기일시, 거치기간). 계산은 src/lib/finance/loan/calculation.ts에만 있고, 이 컴포넌트는 입력을 모아 결과를 그리기만 한다.
+// 범위(GPT 결정 2026-10-20): 1원~100억원, 1~600개월, 연 0~20.00%, 만기일시는 거치기간 없음. 대출 한도(LTV·DSR)·중도상환수수료·연체이자는 계산하지 않는다.
+// 입력값·결과는 저장·전송하지 않는다(form 제출 없음, URL·GA 전송 없음).
+import ToolShell from '../ToolShell.astro';
+import { loanRepayment as c } from '../../tools/loan-repayment/constants';
+import { calcLoan } from '../../lib/finance/loan/calculation.ts';
+import { formatDate } from '../../lib/format';
+
+const won = (n: number) => `${n.toLocaleString('ko-KR')}원`;
+const day = (s: string) => formatDate(new Date(s));
+const exArgs = { amount: 100_000_000, months: 360, rateBp: 400, graceMonths: 0 };
+const ex = (['equal-payment', 'equal-principal', 'bullet'] as const).map((method) => {
+  const r = calcLoan({ method, ...exArgs });
+  return r.ok ? { method, r: r.result } : null;
+});
+const exName = { 'equal-payment': '원리금균등', 'equal-principal': '원금균등', bullet: '만기일시' } as const;
+const methods = [
+  { value: 'equal-payment', label: '원리금균등', hint: '매달 같은 금액(원금 + 이자)을 갚습니다. 주택담보대출에서 많이 씁니다.' },
+  { value: 'equal-principal', label: '원금균등', hint: '매달 같은 원금에 남은 원금의 이자를 더해 갚습니다. 처음 부담이 크고 갈수록 줄어듭니다.' },
+  { value: 'bullet', label: '만기일시', hint: '매달 이자만 내고 만기에 원금을 한 번에 갚습니다. 신용대출·전세자금대출에서 많이 씁니다.' },
+] as const;
+const quickYears = [1, 3, 5, 10, 30];
+---
+
+<ToolShell id="loan-repayment" title="대출 이자·상환 계산기" reviewFrom={c.reviewFrom} reviewNote={c.reviewNote}>
+  <p class="tool-scope">
+    <strong>예상 상환액</strong> · 대출금액, 금리, 기간을 넣으면 상환방식별로 매달 갚을 돈과 총이자, 회차별 상환표를 계산합니다.
+  </p>
+  <noscript><p class="tool-noscript">계산기는 JavaScript가 켜져 있어야 동작합니다. 아래 예시 결과와 계산 근거를 참고하세요.</p></noscript>
+
+  <div class="tool-form" data-js-only>
+    <fieldset>
+      <legend class="tool-label">상환방식</legend>
+      <div class="ln-seg">
+        {
+          methods.map((m, i) => (
+            <label class="ln-seg__item">
+              <input type="radio" name="ln-method" value={m.value} checked={i === 0} />
+              <span>{m.label}</span>
+            </label>
+          ))
+        }
+      </div>
+      <p class="tool-hint" data-ln-method-hint></p>
+    </fieldset>
+
+    <div class="tool-field">
+      <label class="tool-label" for="ln-amount">대출금액</label>
+      <div class="tool-input">
+        <input id="ln-amount" type="text" inputmode="numeric" autocomplete="off" maxlength="14" aria-describedby="ln-amount-hint ln-amount-error" />
+        <span aria-hidden="true">원</span>
+      </div>
+      <p id="ln-amount-hint" class="tool-hint">100억원까지 계산합니다.</p>
+      <p id="ln-amount-error" class="tool-error" data-ln-amount-error></p>
+    </div>
+
+    <div class="ln-row">
+      <div class="tool-field">
+        <label class="tool-label" for="ln-rate">연 금리</label>
+        <div class="tool-input">
+          <input id="ln-rate" type="text" inputmode="decimal" autocomplete="off" maxlength="6" aria-describedby="ln-rate-hint ln-rate-error" />
+          <span aria-hidden="true">%</span>
+        </div>
+      </div>
+      <div class="tool-field">
+        <label class="tool-label" for="ln-term">대출기간</label>
+        <div class="ln-term">
+          <div class="tool-input">
+            <input id="ln-term" type="text" inputmode="numeric" autocomplete="off" maxlength="3" value="30" aria-describedby="ln-term-error" />
+          </div>
+          <select id="ln-term-unit" aria-label="대출기간 단위">
+            <option value="year" selected>년</option>
+            <option value="month">개월</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="ln-quick" role="group" aria-label="대출기간 빠른 선택">
+      {quickYears.map((y) => <button type="button" class="ln-quick__btn" data-ln-years={y}>{y}년</button>)}
+    </div>
+    <p id="ln-rate-hint" class="tool-hint">연 금리는 0~20%, 소수 둘째 자리까지 넣으세요. 대출기간은 50년(600개월)까지 계산합니다.</p>
+    <p id="ln-rate-error" class="tool-error" data-ln-rate-error></p>
+    <p id="ln-term-error" class="tool-error" data-ln-term-error></p>
+
+    <div class="tool-field" data-ln-grace-field>
+      <label class="tool-label" for="ln-grace">거치기간</label>
+      <div class="tool-input ln-grace">
+        <input id="ln-grace" type="text" inputmode="numeric" autocomplete="off" maxlength="3" value="0" aria-describedby="ln-grace-hint ln-grace-error" />
+        <span aria-hidden="true">개월</span>
+      </div>
+      <p id="ln-grace-hint" class="tool-hint" data-ln-grace-hint>처음 몇 개월 동안 이자만 내고 원금은 그 뒤에 갚는 기간입니다. 없으면 0으로 두세요.</p>
+      <p id="ln-grace-error" class="tool-error" data-ln-grace-error></p>
+    </div>
+  </div>
+
+  <div aria-live="polite" aria-atomic="true">
+    <p class="tool-result ln-msg" data-ln-msg hidden></p>
+    <div class="tool-result ln-result" data-ln-result hidden>
+      <div class="ln-head">
+        <h3 data-ln-out="head-label"></h3>
+        <p class="ln-total" data-ln-out="head"></p>
+        <p class="ln-sub" data-ln-out="sub"></p>
+      </div>
+      <dl class="ln-lines">
+        <div><dt>대출 원금</dt><dd data-ln-out="principal"></dd></div>
+        <div><dt>총이자</dt><dd data-ln-out="interest"></dd></div>
+        <div class="ln-lines__sum"><dt>총상환액</dt><dd data-ln-out="total"></dd></div>
+      </dl>
+
+      <div class="ln-compare">
+        <h4>같은 조건, 상환방식별 비교 <small>(단위: 원)</small></h4>
+        <div class="ln-scroll">
+          <table class="ln-table">
+            <thead><tr><th scope="col">방식</th><th scope="col">첫 상환 회차</th><th scope="col">총이자</th></tr></thead>
+            <tbody data-ln-compare></tbody>
+          </table>
+        </div>
+        <p class="ln-small" data-ln-compare-note></p>
+      </div>
+
+      <div class="ln-schedule">
+        <h4>회차별 상환표 <small>(단위: 원)</small></h4>
+        <div class="ln-scroll" tabindex="0" role="region" aria-label="회차별 상환표">
+          <table class="ln-table ln-table--rows">
+            <thead><tr><th scope="col">회차</th><th scope="col">원금</th><th scope="col">이자</th><th scope="col">납입액</th><th scope="col">남은 원금</th></tr></thead>
+            <tbody data-ln-rows></tbody>
+          </table>
+        </div>
+        <button type="button" class="ln-more" data-ln-more hidden></button>
+      </div>
+
+      <ul class="ln-notes ln-notes--alert" data-ln-notices hidden></ul>
+      <ul class="ln-notes">
+        <li>이 계산기는 연 금리를 12로 나누는 월 단위 예상 계산입니다. 실제 금융회사는 상환방식, 대출 실행일, 납입일, 일수 계산 및 절사 규칙에 따라 이자가 달라질 수 있습니다. 특히 원금이 크거나 기간 차이가 있으면 수천 원 이상 차이가 날 수 있습니다.</li>
+        <li>고정금리로 계산합니다. 변동금리 대출은 금리가 바뀌면 상환액도 바뀝니다.</li>
+        <li>중도상환수수료, 연체이자, 보증료·인지세 같은 부대비용은 넣지 않았습니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <noscript>
+    <div class="tool-result">
+      <p class="ln-example">예시 · 1억원, 연 4%, 30년(360개월), 거치기간 없음</p>
+      <dl class="ln-lines">
+        {
+          ex.map(
+            (e) =>
+              e && (
+                <div>
+                  <dt>{exName[e.method]}</dt>
+                  <dd>
+                    첫 달 {won(e.r.firstPayment)} · 총이자 {won(e.r.totalInterest)}
+                  </dd>
+                </div>
+              ),
+          )
+        }
+      </dl>
+    </div>
+  </noscript>
+
+  <details class="ln-basis">
+    <summary class="disclosure">계산 근거</summary>
+    <div class="ln-basis__body">
+      <ul>
+        <li>월 이율 = 연 금리 ÷ 12. 매달 이자 = 남은 원금 × 월 이율(원 미만 버림)</li>
+        <li>원리금균등 월 상환액 = 원금 × 월 이율 × (1 + 월 이율)^m ÷ {'{'}(1 + 월 이율)^m − 1{'}'}(원 미만 반올림, m은 원금을 갚는 개월 수). 0%이면 원금을 m회로 나눕니다</li>
+        <li>원금균등 월 원금 = 원금 ÷ m(원 미만 버림). 만기일시는 매달 이자만 내고 마지막 회차에 원금을 갚습니다</li>
+        <li>거치기간에는 이자만 내고, 원금은 '대출기간 − 거치기간' 동안 갚습니다</li>
+        <li>마지막 회차에는 남은 원금을 모두 갚으므로 다른 회차와 몇 원 다를 수 있습니다</li>
+        <li>금액이 너무 작아 매달 갚을 원금이 0원이 되거나 마지막 회차 전에 다 갚아지는 경우는 계산하지 않습니다</li>
+      </ul>
+      <p>확인일 {day(c.checkedAt)}</p>
+    </div>
+  </details>
+</ToolShell>
+
+<script>
+  // 입력값은 이 페이지 안에서만 계산한다(저장·전송 없음). 계산은 lib의 함수만 쓴다.
+  import { parseWonInt } from '../../lib/payroll/shared/validation.ts';
+  import { calcLoan, parseRateBp, LIMITS, type RepayMethod, type LoanError, type LoanRow } from '../../lib/finance/loan/calculation.ts';
+
+  const won = (n: number) => `${n.toLocaleString('ko-KR')}원`;
+  const num = (n: number) => n.toLocaleString('ko-KR');
+  const NAME: Record<RepayMethod, string> = { 'equal-payment': '원리금균등', 'equal-principal': '원금균등', bullet: '만기일시' };
+  const HINT: Record<RepayMethod, string> = {
+    'equal-payment': '매달 같은 금액(원금 + 이자)을 갚습니다. 주택담보대출에서 많이 씁니다.',
+    'equal-principal': '매달 같은 원금에 남은 원금의 이자를 더해 갚습니다. 처음 부담이 크고 갈수록 줄어듭니다.',
+    bullet: '매달 이자만 내고 만기에 원금을 한 번에 갚습니다. 신용대출·전세자금대출에서 많이 씁니다.',
+  };
+  const errorText: Record<LoanError, string> = {
+    'amount-invalid': '대출금액을 1원 이상, 100억원 이하로 입력해 주세요.',
+    'months-invalid': '대출기간을 1개월 이상, 50년(600개월) 이하의 정수로 입력해 주세요.',
+    'rate-invalid': '연 금리를 0~20% 사이로, 소수 둘째 자리까지 입력해 주세요.',
+    'grace-invalid': '거치기간은 0개월 이상, 대출기간보다 1개월 이상 짧게 입력해 주세요.',
+    'too-small': '금액이 너무 작아 매달 갚을 원금을 원 단위로 나눌 수 없습니다. 대출금액을 늘리거나 기간을 줄여 주세요.',
+  };
+  const FIRST_ROWS = 12;
+
+  const root = document.querySelector<HTMLElement>('[data-tool="loan-repayment"]');
+  if (root) {
+    const $ = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
+    const $$ = <T extends HTMLElement>(sel: string) => [...root.querySelectorAll<T>(sel)];
+    const result = $('[data-ln-result]');
+    const msg = $('[data-ln-msg]');
+    const amount = $<HTMLInputElement>('#ln-amount');
+    const rate = $<HTMLInputElement>('#ln-rate');
+    const term = $<HTMLInputElement>('#ln-term');
+    const unit = $<HTMLSelectElement>('#ln-term-unit');
+    const grace = $<HTMLInputElement>('#ln-grace');
+    const rowsBody = $('[data-ln-rows]');
+    const more = $<HTMLButtonElement>('[data-ln-more]');
+    const notices = $('[data-ln-notices]');
+    let allRows: LoanRow[] = [];
+    let expanded = false;
+    let signaled = false;
+    const signalUse = () => {
+      if (signaled) return;
+      signaled = true;
+      document.dispatchEvent(new CustomEvent('kkultip:tool-use', { detail: 'loan-repayment' }));
+    };
+    const method = (): RepayMethod => {
+      const v = $$<HTMLInputElement>('input[name="ln-method"]').find((r) => r.checked)?.value;
+      return v === 'equal-principal' || v === 'bullet' ? v : 'equal-payment';
+    };
+    const out = (key: string, text: string) => ($(`[data-ln-out="${key}"]`).textContent = text);
+    const withCommas = (input: HTMLInputElement) => {
+      const raw = input.value;
+      if (!/^[\d,]*$/.test(raw)) return;
+      const caret = input.selectionStart ?? raw.length;
+      const digitsBefore = raw.slice(0, caret).replace(/,/g, '').length;
+      const digits = raw.replace(/,/g, '').replace(/^0+(?=\d)/, '');
+      const next = digits === '' ? '' : Number(digits).toLocaleString('ko-KR');
+      if (next === raw || digits.length > 11) return;
+      input.value = next;
+      let pos = 0;
+      for (let seen = 0; pos < next.length && seen < digitsBefore; pos++) if (next[pos] !== ',') seen++;
+      input.setSelectionRange(pos, pos);
+    };
+    const setError = (sel: string, input: HTMLInputElement, text: string) => {
+      $(sel).textContent = text;
+      if (text) input.setAttribute('aria-invalid', 'true');
+      else input.removeAttribute('aria-invalid');
+    };
+    const hide = (text = '') => {
+      result.hidden = true;
+      msg.textContent = text;
+      msg.hidden = text === '';
+    };
+    const cell = (text: string, tag: 'td' | 'th' = 'td') => Object.assign(document.createElement(tag), { textContent: text });
+    // 좁은 화면에서는 한 회차를 두 줄(납입액·남은 원금 / 원금·이자)로 보여 주므로 칸마다 이름을 붙인다
+    const lcell = (label: string, n: number, key: string) => {
+      const td = cell(num(n));
+      td.dataset.label = label;
+      td.className = `ln-c-${key}`;
+      return td;
+    };
+    const intOrNaN = (raw: string) => (/^\d{1,3}$/.test(raw.trim()) ? Number(raw.trim()) : NaN);
+
+    const drawRows = () => {
+      const list = expanded ? allRows : allRows.slice(0, FIRST_ROWS);
+      rowsBody.replaceChildren(
+        ...list.map((x) => {
+          const tr = document.createElement('tr');
+          tr.append(cell(`${x.no}회`, 'th'), lcell('원금', x.principal, 'p'), lcell('이자', x.interest, 'i'), lcell('납입액', x.payment, 'pay'), lcell('남은 원금', x.balance, 'bal'));
+          tr.firstElementChild!.setAttribute('scope', 'row');
+          return tr;
+        }),
+      );
+      more.hidden = allRows.length <= FIRST_ROWS;
+      more.textContent = expanded ? '처음 12회만 보기' : `전체 ${allRows.length}회 보기`;
+      more.setAttribute('aria-expanded', String(expanded));
+    };
+
+    const sync = () => {
+      const m = method();
+      $('[data-ln-method-hint]').textContent = HINT[m];
+      const bullet = m === 'bullet';
+      grace.disabled = bullet;
+      $('[data-ln-grace-field]').classList.toggle('is-disabled', bullet);
+      $('[data-ln-grace-hint]').textContent = bullet
+        ? '만기일시상환은 만기까지 원금을 갚지 않으므로 거치기간을 따로 두지 않습니다.'
+        : '처음 몇 개월 동안 이자만 내고 원금은 그 뒤에 갚는 기간입니다. 없으면 0으로 두세요.';
+    };
+
+    const run = () => {
+      const m = method();
+      const a = parseWonInt(amount.value, { min: LIMITS.minAmount, max: LIMITS.maxAmount });
+      const t = intOrNaN(term.value);
+      const months = unit.value === 'year' ? t * 12 : t;
+      const bp = rate.value.trim() === '' ? null : parseRateBp(rate.value);
+      const gRaw = grace.value.trim() === '' ? 0 : intOrNaN(grace.value);
+      const g = m === 'bullet' ? 0 : gRaw;
+      const monthsOk = Number.isInteger(months) && months >= LIMITS.minMonths && months <= LIMITS.maxMonths;
+      const rateOk = bp !== null && bp >= LIMITS.minRateBp && bp <= LIMITS.maxRateBp;
+      const graceOk = Number.isInteger(g) && g >= 0 && (!monthsOk || g <= months - 1);
+      setError('[data-ln-amount-error]', amount, !a.ok && a.code !== 'empty' ? errorText['amount-invalid'] : '');
+      setError('[data-ln-term-error]', term, term.value.trim() !== '' && !monthsOk ? errorText['months-invalid'] : '');
+      setError('[data-ln-rate-error]', rate, rate.value.trim() !== '' && !rateOk ? errorText['rate-invalid'] : '');
+      setError('[data-ln-grace-error]', grace, m !== 'bullet' && !graceOk ? errorText['grace-invalid'] : '');
+      if (!a.ok || !monthsOk || !rateOk || !graceOk) {
+        hide();
+        return;
+      }
+      const r = calcLoan({ method: m, amount: a.value, months, rateBp: bp!, graceMonths: g });
+      if (!r.ok) {
+        hide(errorText[r.error]);
+        return;
+      }
+      const x = r.result;
+      const paying = x.rows[Math.min(g, months - 1)];
+      if (m === 'equal-payment') {
+        out('head-label', g > 0 ? `거치기간 뒤 매달 갚을 돈` : '매달 갚을 돈');
+        out('head', won(x.firstAmortPayment));
+        out('sub', months > 1 ? `마지막 ${months}회차 ${won(x.lastPayment)} · ${months}회 상환` : `${months}회 상환`);
+      } else if (m === 'equal-principal') {
+        out('head-label', g > 0 ? '거치기간 뒤 첫 회차에 갚을 돈' : '첫 달 갚을 돈');
+        out('head', won(x.firstAmortPayment));
+        out('sub', months - g > 1 ? `매달 줄어 마지막 ${months}회차 ${won(x.lastPayment)} · 매달 원금 ${won(paying.principal)}` : `${months}회 상환`);
+      } else {
+        out('head-label', '매달 낼 이자');
+        out('head', won(x.firstPayment));
+        out('sub', `마지막 ${months}회차에 원금 ${won(a.value)} + 이자 ${won(x.rows[months - 1].interest)}`);
+      }
+      out('principal', won(a.value));
+      out('interest', won(x.totalInterest));
+      out('total', won(x.totalPayment));
+
+      // 상환방식별 비교(만기일시는 거치기간 없이 계산)
+      const cmp = (['equal-payment', 'equal-principal', 'bullet'] as RepayMethod[]).map((k) => {
+        const y = calcLoan({ method: k, amount: a.value, months, rateBp: bp!, graceMonths: k === 'bullet' ? 0 : g });
+        return { k, y };
+      });
+      $('[data-ln-compare]').replaceChildren(
+        ...cmp.map(({ k, y }) => {
+          const tr = document.createElement('tr');
+          if (k === m) tr.className = 'is-current';
+          const th = cell(NAME[k], 'th');
+          if (k === m) th.append(Object.assign(document.createElement('span'), { className: 'ln-sr', textContent: ' (선택한 방식)' }));
+          th.setAttribute('scope', 'row');
+          if (y.ok) tr.append(th, cell(num(y.result.firstAmortPayment)), cell(num(y.result.totalInterest)));
+          else tr.append(th, cell('계산 불가'), cell('-'));
+          return tr;
+        }),
+      );
+      $('[data-ln-compare-note]').textContent =
+        g > 0 ? `첫 상환 회차는 원금을 갚기 시작하는 회차(거치 ${g}개월 뒤)의 납입액입니다. 만기일시는 거치기간 없이 계산했습니다. 색칠된 줄이 선택한 방식입니다.` : '첫 상환 회차는 1회차 납입액입니다. 색칠된 줄이 선택한 방식입니다.';
+
+      allRows = x.rows;
+      expanded = false;
+      drawRows();
+
+      const n: string[] = [];
+      if (g > 0 && m !== 'bullet') n.push(`거치기간 ${g}개월 동안은 매달 이자 ${won(x.rows[0].interest)}만 냅니다. 거치기간이 길수록 원금이 줄지 않는 기간이 길어 총이자가 늘어납니다.`);
+      if (bp === 0) n.push('0% 무이자로 계산했습니다. 원리금균등과 원금균등은 같은 결과입니다.');
+      if (x.totalInterest === 0 && bp! > 0) n.push('금액이 작아 매달 이자가 1원 미만입니다.');
+      notices.replaceChildren(...n.map((s) => Object.assign(document.createElement('li'), { textContent: s })));
+      notices.hidden = n.length === 0;
+      msg.hidden = true;
+      result.hidden = false;
+      signalUse();
+    };
+
+    more.addEventListener('click', () => {
+      expanded = !expanded;
+      drawRows();
+    });
+    for (const b of $$<HTMLButtonElement>('[data-ln-years]'))
+      b.addEventListener('click', () => {
+        term.value = b.dataset.lnYears!;
+        unit.value = 'year';
+        run();
+      });
+    amount.addEventListener('input', () => {
+      withCommas(amount);
+      run();
+    });
+    for (const el of [rate, term, grace]) el.addEventListener('input', run);
+    unit.addEventListener('change', run);
+    for (const el of $$<HTMLInputElement>('input[name="ln-method"]'))
+      el.addEventListener('change', () => {
+        sync();
+        run();
+      });
+    sync();
+  }
+</script>
+
+<style>
+  .ln-msg[hidden],
+  .ln-more[hidden] {
+    display: none;
+  }
+
+  .ln-seg {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .ln-seg__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--touch);
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+  }
+
+  .ln-seg__item input {
+    flex: none;
+    accent-color: var(--color-brand-text);
+  }
+
+  .ln-seg__item:has(input:checked) {
+    border-color: var(--color-brand);
+    background: var(--color-brand-soft);
+  }
+
+  .ln-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .ln-row > * {
+    min-width: 0;
+  }
+
+  .ln-row :global(.tool-input input),
+  .ln-grace :global(input) {
+    width: 100%;
+  }
+
+  .ln-term {
+    display: flex;
+    gap: var(--space-2);
+    min-width: 0;
+  }
+
+  .ln-term .tool-input {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .ln-term select {
+    flex: none;
+    min-height: var(--touch);
+    padding: 0 var(--space-2);
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font: inherit;
+  }
+
+  .ln-quick {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .ln-quick__btn,
+  .ln-more {
+    min-height: var(--touch);
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .ln-quick__btn:hover,
+  .ln-more:hover {
+    border-color: var(--color-brand);
+  }
+
+  .is-disabled {
+    opacity: 0.55;
+  }
+
+  .ln-basis summary {
+    display: flex;
+    align-items: center;
+    min-height: var(--touch);
+    font-weight: var(--weight-semibold);
+    cursor: pointer;
+  }
+
+  .ln-result {
+    gap: var(--space-4);
+  }
+
+  .ln-head h3,
+  .ln-compare h4,
+  .ln-schedule h4 {
+    font-size: var(--text-md);
+    font-weight: var(--weight-semibold);
+  }
+
+  .ln-total {
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+
+  .ln-sub,
+  .ln-small {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .ln-lines {
+    display: grid;
+  }
+
+  .ln-lines div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-3);
+    padding-block: var(--space-2);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .ln-lines div:first-child {
+    border-top: 0;
+  }
+
+  .ln-lines dd {
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+
+  .ln-lines__sum {
+    font-weight: var(--weight-semibold);
+  }
+
+  .ln-compare,
+  .ln-schedule {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .ln-scroll {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .ln-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-xs, 0.8125rem);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .ln-table :global(th),
+  .ln-table :global(td) {
+    padding: var(--space-2) var(--space-1);
+    border-top: 1px solid var(--color-border);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .ln-table thead th {
+    white-space: normal;
+    border-top: 0;
+    color: var(--color-text-muted);
+    font-weight: var(--weight-semibold);
+  }
+
+  .ln-table :global(th:first-child) {
+    text-align: left;
+    font-weight: var(--weight-semibold);
+  }
+
+  .ln-table :global(tr.is-current) {
+    background: var(--color-brand-soft);
+  }
+
+  .ln-more {
+    justify-self: start;
+  }
+
+  /* 좁은 화면: 회차 하나를 두 줄로(1줄 납입액·남은 원금, 2줄 원금·이자) */
+  @media (max-width: 520px) {
+    .ln-table--rows,
+    .ln-table--rows tbody {
+      display: block;
+    }
+
+    .ln-table--rows thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+    }
+
+    .ln-table--rows :global(tr) {
+      display: grid;
+      grid-template-columns: 3.2em minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-areas: 'no pay bal' 'no p i';
+      column-gap: var(--space-2);
+      padding-block: var(--space-2);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .ln-table--rows :global(th),
+    .ln-table--rows :global(td) {
+      padding: 0;
+      border-top: 0;
+      text-align: left;
+    }
+
+    .ln-table--rows :global(th) {
+      grid-area: no;
+      align-self: center;
+    }
+
+    .ln-table--rows :global(td::before) {
+      content: attr(data-label);
+      display: block;
+      color: var(--color-text-muted);
+      font-size: 0.75rem;
+      font-weight: var(--weight-regular, 400);
+    }
+
+    .ln-table--rows :global(td) {
+      min-width: 0;
+      padding-block: 2px;
+    }
+
+    .ln-table--rows :global(.ln-c-pay) {
+      grid-area: pay;
+      font-weight: var(--weight-semibold);
+    }
+
+    .ln-table--rows :global(.ln-c-bal) {
+      grid-area: bal;
+    }
+
+    .ln-table--rows :global(.ln-c-p) {
+      grid-area: p;
+      color: var(--color-text-muted);
+    }
+
+    .ln-table--rows :global(.ln-c-i) {
+      grid-area: i;
+      color: var(--color-text-muted);
+    }
+  }
+
+  .ln-compare h4 small,
+  .ln-schedule h4 small {
+    white-space: nowrap;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-regular, 400);
+  }
+
+  .ln-table :global(.ln-sr) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .ln-notes {
+    display: grid;
+    gap: var(--space-1);
+    padding-left: 1.25em;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    list-style: disc;
+  }
+
+  .ln-notes[hidden] {
+    display: none;
+  }
+
+  .ln-notes--alert {
+    color: var(--color-text);
+    font-weight: var(--weight-semibold);
+  }
+
+  .ln-example {
+    font-weight: var(--weight-semibold);
+  }
+
+  .ln-basis__body {
+    display: grid;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+  }
+
+  .ln-basis__body ul {
+    display: grid;
+    gap: var(--space-1);
+    padding-left: 1.25em;
+    list-style: disc;
+  }
+</style>

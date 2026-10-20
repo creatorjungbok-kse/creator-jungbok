@@ -48,7 +48,7 @@ faq:
     answer: 2025년 말까지 가입한 예탁금은 1명당 3천만원까지 이자소득세 없이 농어촌특별세 1.4%만 뗍니다. 2026년부터 새로 가입하면 특례 대상이 아닌 경우 5.9%(2027년 이후 가입은 9.5%)를 뗍니다. 특례는 농협·수협·산림조합 조합원이나 소득 기준을 충족하는 사람에게 적용되고, 신협·새마을금고 회원이라는 것만으로는 적용되지 않습니다.
   - question: 계산기 금액과 은행 앱 금액이 왜 다르죠?
     answer: 은행은 실제로 맡긴 날수로 이자를 계산하고, 상품마다 원 단위 처리 방식이 달라 몇 원~몇백 원 차이가 날 수 있습니다. 우대금리 조건을 채우지 못했거나 중도해지한 경우도 이자가 달라집니다. 정확한 금액은 가입한 금융회사에서 확인하세요.
-related: [/work/take-home-pay-calculator/, /benefits/hidden-financial-assets/, /benefits/youth-future-savings/]
+related: [/work/take-home-pay-calculator/, /benefits/hidden-financial-assets/, /benefits/youth-future-savings/, /money/loan-repayment-calculator/]
 sourceIds: [local:law-income-129-interest, local:law-local-tax-103-13-interest, local:law-national-treasury-47-interest, local:law-stl-88-2, local:law-stl-89-3, local:law-stl-88-5, local:law-stl-decree-82-5, local:law-rural-4-5, local:law-income-14-financial, local:fss-finlife, local:bokjiro-deposit-protection]
 localSources:
   - id: local:law-income-129-interest

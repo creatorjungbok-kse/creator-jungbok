@@ -12,6 +12,7 @@ import TakeHomePay from './TakeHomePay.astro';
 import FreelancerTax from './FreelancerTax.astro';
 import ParentalLeavePay from './ParentalLeavePay.astro';
 import SavingsInterest from './SavingsInterest.astro';
+import LoanRepayment from './LoanRepayment.astro';
 
 export const toolComponents: Record<ToolId, typeof ElectricityBill> = {
   'electricity-bill': ElectricityBill,
@@ -26,4 +27,5 @@ export const toolComponents: Record<ToolId, typeof ElectricityBill> = {
   'freelancer-tax': FreelancerTax,
   'parental-leave-pay': ParentalLeavePay,
   'savings-interest': SavingsInterest,
+  'loan-repayment': LoanRepayment,
 };
