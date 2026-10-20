@@ -61,6 +61,7 @@ export const categories: Category[] = [
     subcategories: [
       { slug: 'wages', name: '임금·수당' },
       { slug: 'job-loss', name: '실업·퇴직' },
+      { slug: 'insurance', name: '4대보험' },
     ],
     // 공개 글 3편 전까지 상단 메뉴·홈·footer에 노출하지 않는다(2026-10-09 결정)
     primaryNavMinPosts: 3,
