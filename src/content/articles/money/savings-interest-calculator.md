@@ -1,13 +1,14 @@
 ---
-title: 적금 이자 계산기｜예금·적금 세후 이자와 만기 수령액
-cardTitle: 적금 이자 계산기
-seoTitle: 적금 이자 계산기｜예금·적금 세후 이자와 만기 수령액
+title: 적금 계산기｜예금 이자 계산기, 세후 이자와 만기 수령액
+cardTitle: 적금·예금 이자 계산기
+seoTitle: 적금 계산기｜예금 이자 계산기, 세후 이자와 만기 수령액
 description: 예금·적금의 금액, 기간, 금리를 넣으면 15.4% 세금을 뗀 세후 이자와 만기 수령액을 계산합니다.
 subcategory: savings
 contentType: cost
 contentMode: evergreen
-primaryQuery: 적금 이자 계산기
+primaryQuery: 적금 계산기
 synonyms:
+  - 적금 이자 계산기
   - 적금 이자 계산
   - 예금 이자 계산기
   - 예금 이자 계산

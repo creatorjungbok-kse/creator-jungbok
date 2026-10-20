@@ -27,7 +27,7 @@ export const toolNames: Record<ToolId, string> = {
   'take-home-pay': '실수령액 계산기',
   'freelancer-tax': '3.3% 계산기',
   'parental-leave-pay': '육아휴직급여 계산기',
-  'savings-interest': '적금 이자 계산기',
+  'savings-interest': '적금·예금 이자 계산기',
 };
 
 // 도구를 둘 수 있는 글 유형(도구마다 하나)
