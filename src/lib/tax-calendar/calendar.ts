@@ -1,4 +1,5 @@
-// 사업자 세금 달력 v1 — 일정 데이터와 상태 판정. 확정 설계: docs/ready/tax-calendar/design.md
+// 사업자 세금 달력 — 일정 데이터와 상태 판정. 확정 설계: docs/ready/tax-calendar/design.md
+// 2026-10-21: 종합소득세 중간예납(개인사업자) 일정 추가(GPT 승인, docs/ready/calendar-2026-10-21/00-calendar-income-design.md)
 // 외부 import 없음 — 빌드(서버 렌더)·화면 스크립트·node 테스트가 같은 함수를 쓴다.
 // 기한은 사람이 국세청 원문(세무일정·보도참고자료·안내문)을 보고 입력한다. 코드는 기한을 계산하지 않는다.
 // 예외: 월합계 세금계산서 발급기한(부가세법 제34조③)은 '다음 달 10일, 토요일·공휴일이면 다음 영업일' 규칙을 공휴일 목록으로 계산한다.
@@ -24,7 +25,7 @@ export interface PaymentExtension {
 
 export interface TaxEvent {
   id: string;
-  taxType: 'vat';
+  taxType: 'vat' | 'income';
   actionType: ActionType;
   title: string;
   // 이 일정이 해당하는 사업자(corp-unknown은 따로 처리: corp-return·corp-notice 일정을 조건과 함께 모두 보여준다)
@@ -208,6 +209,42 @@ export const taxEvents: TaxEvent[] = [
     checkedAt: '2026-10-16',
     articleUrl: '/business/simplified-taxpayer/',
     articleLabel: '간이과세자 보기',
+  },
+  {
+    id: 'income-2026-interim',
+    taxType: 'income',
+    actionType: 'pay',
+    title: '2026년 종합소득세 중간예납 납부',
+    audiences: ['individual', 'simplified'],
+    condition: '사업소득이 있는 개인사업자 중 중간예납 대상. 올해 개업했거나 중간예납세액이 50만원 미만이면 내지 않습니다',
+    start: '2026-11-01',
+    payDeadline: '2026-11-30',
+    verification: 'confirmed',
+    verificationNote: '국세청 2026년 중간예납 안내의 납부기한입니다. 고지서는 11월 초(법정 발급 기간 11월 1일부터 15일)에 나옵니다.',
+    todo: '중간예납 대상이라면 11월 30일까지 납부하세요. 상반기 실적이 크게 줄었다면 추계액 신고를, 세액이 1천만원을 넘으면 분납을 확인하세요. 중간예납기준액이 없는 복식부기의무자는 별도의 추계액 신고 의무가 있을 수 있습니다.',
+    afterDeadline: afterPay,
+    sourceIds: ['local:nts-interim-calc', 'local:law-income-65'],
+    checkedAt: '2026-10-21',
+    articleUrl: '/business/income-tax-interim-prepayment/',
+    articleLabel: '중간예납 대상·추계액 신고 보기',
+  },
+  {
+    id: 'income-2026-interim-installment',
+    taxType: 'income',
+    actionType: 'pay',
+    title: '2026년 종합소득세 중간예납 분납분 납부',
+    audiences: ['individual', 'simplified'],
+    condition: '2026년 11월 중간예납세액 중 일부를 분납하기로 한 경우에만 해당합니다',
+    start: '2027-01-01',
+    payDeadline: '2027-02-01',
+    verification: 'confirmed',
+    verificationNote: '국세청 2026년 중간예납 안내의 분납 기한입니다(2027년 1월 31일이 일요일이라 2월 1일).',
+    todo: '1월 초 분납분 고지서가 오면 남은 세액을 납부합니다. 분납하지 않았다면 할 일이 없습니다.',
+    afterDeadline: afterPay,
+    sourceIds: ['local:nts-interim-calc', 'local:law-income-77-86'],
+    checkedAt: '2026-10-21',
+    articleUrl: '/business/income-tax-interim-prepayment/',
+    articleLabel: '중간예납 분납 기준 보기',
   },
 ];
 

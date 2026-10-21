@@ -2,7 +2,7 @@
 title: 사업자 세금 달력｜부가세 신고·납부와 세금계산서 일정
 cardTitle: 사업자 세금 달력
 seoTitle: 사업자 세금 달력｜부가세 신고·납부·세금계산서 일정
-description: 개인 일반·간이·법인 중 내 유형을 고르면 지금 해야 할 부가세 신고·납부와 월합계 세금계산서 기한을 오늘 날짜 기준으로 보여줍니다.
+description: 내 사업자 유형을 고르면 부가세 신고·납부, 월합계 세금계산서, 종합소득세 중간예납 기한을 오늘 날짜 기준으로 보여줍니다.
 subcategory: tax
 contentType: guide
 contentMode: evergreen
@@ -15,10 +15,10 @@ synonyms:
   - 세금계산서 발급기한
   - 부가세 예정고지 납부기한
   - 간이과세자 신고기간
-summary: 부가세는 사업자 유형에 따라 같은 달에도 할 일이 다릅니다. 예정신고 대상 법인은 4월·10월에 예정신고·납부를 하고, 개인 일반과세자와 소규모 법인은 보통 고지된 세액만 냅니다. 일반과세자는 1월·7월에 확정신고를 하고, 간이과세자는 다음 해 1월에 1년치를 신고합니다. 아래 달력에서 내 유형을 고르면 오늘 날짜 기준으로 지금 할 일과 다음 일정이 보입니다.
+summary: 부가세는 사업자 유형에 따라 같은 달에도 할 일이 다릅니다. 예정신고 대상 법인은 4월·10월에 예정신고·납부를 하고, 개인 일반과세자와 소규모 법인은 보통 고지된 세액만 냅니다. 일반과세자는 1월·7월에 확정신고를 하고, 간이과세자는 다음 해 1월에 1년치를 신고합니다. 개인사업자는 11월에 종합소득세 중간예납(2026년은 11월 30일까지)도 챙겨야 합니다. 아래 달력에서 내 유형을 고르면 오늘 날짜 기준으로 지금 할 일과 다음 일정이 보입니다.
 datePublished: 2026-10-16
-dateModified: 2026-10-16
-researchedAt: 2026-10-16
+dateModified: 2026-10-21
+researchedAt: 2026-10-21
 author: operator
 ymyl: medium
 topics: [small-business, tax]
@@ -60,8 +60,11 @@ faq:
     answer: 원칙적으로 아닙니다. 개인 일반과세자는 신고 없이 고지된 세액을 기한까지 내면 됩니다. 다만 공급가액이나 납부세액이 직전 과세기간의 3분의 1에 못 미치면 예정신고를 선택할 수 있습니다.
   - question: 기한을 넘겼는데 이제 아무것도 할 수 없나요?
     answer: 아닙니다. 기한이 지난 것과 더 이상 신고·납부할 수 없는 것은 다릅니다. 신고하지 못했다면 기한 후 신고를, 내지 못한 세액은 납부지연가산세와 함께 홈택스에서 확인하세요. 구체적인 가능 여부와 가산세는 상황에 따라 다릅니다.
-related: [/business/vat-preliminary-return/, /business/vat-preliminary-payment/]
-sourceIds: [local:nts-tax-schedule, local:nts-2026-10-press, local:law-vat-48, local:law-vat-49, local:law-vat-66, local:law-vat-67, local:law-vat-34, local:law-basic-5, local:kasi-2027, local:hometax]
+changelog:
+  - date: 2026-10-21
+    summary: 개인사업자의 2026년 종합소득세 중간예납 납부(11월 30일)와 분납분 납부(2027년 2월 1일) 일정을 달력에 추가했습니다.
+related: [/business/vat-preliminary-return/, /business/vat-preliminary-payment/, /business/income-tax-interim-prepayment/]
+sourceIds: [local:nts-tax-schedule, local:nts-2026-10-press, local:law-vat-48, local:law-vat-49, local:law-vat-66, local:law-vat-67, local:law-vat-34, local:law-basic-5, local:kasi-2027, local:hometax, local:nts-interim-calc, local:law-income-65, local:law-income-77-86]
 localSources:
   - id: local:nts-tax-schedule
     title: 세무일정(목록형) 2026년 10월~2027년 3월
@@ -123,6 +126,24 @@ localSources:
     url: https://www.hometax.go.kr/
     level: S1
     checkedAt: 2026-10-16
+  - id: local:nts-interim-calc
+    title: 중간예납 안내 — 중간예납세액의 계산 및 납부방법
+    publisher: 국세청
+    url: https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=2237&cntntsId=7674
+    level: S1
+    checkedAt: 2026-10-21
+  - id: local:law-income-65
+    title: 소득세법 제65조(중간예납)
+    publisher: 법제처 국가법령정보센터
+    url: https://www.law.go.kr/법령/소득세법/제65조
+    level: S1
+    checkedAt: 2026-10-21
+  - id: local:law-income-77-86
+    title: 소득세법 제77조(분할납부)·제86조(소액 부징수)
+    publisher: 법제처 국가법령정보센터
+    url: https://www.law.go.kr/법령/소득세법/제77조
+    level: S1
+    checkedAt: 2026-10-21
 ---
 
 ## 내 유형에 따라 할 일이 다릅니다
@@ -159,6 +180,12 @@ localSources:
 
 한 달 거래를 모아 월합계·기간합계 세금계산서를 발급한다면 거래한 달의 다음 달 10일까지 발급합니다. 10일이 토요일이나 공휴일이면 바로 다음 영업일까지입니다. 예를 들어 2026년 12월 거래분은 2027년 1월 10일이 일요일이라 1월 11일(월)까지입니다. 이번 달 기한은 위 달력의 '매월 확인할 일'에서 볼 수 있습니다. 발급 대상과 전송 기한은 [전자세금계산서 발급 방법](/business/e-tax-invoice/)에서 확인하세요.
 
+## 개인사업자: 종합소득세 중간예납
+
+사업소득이 있는 개인사업자는 상반기 소득세를 11월에 미리 냅니다. 2026년 납부기한은 **11월 30일(월)이고**, 고지서는 11월 초에 나옵니다. 세액은 중간예납기준액(직전 연도 종합소득세 납부세액)의 절반이고, 50만원 미만이면 내지 않습니다. 1천만원을 넘어 일부를 분납했다면 나머지는 2027년 2월 1일(월)까지 냅니다.
+
+중간예납 대상은 부가세 과세유형과 관계없이 정해집니다. 이 달력은 개인 일반과세자·간이과세자를 고르면 중간예납 일정을 함께 보여 주지만, 면세사업자나 프리랜서도 대상일 수 있습니다. 대상과 제외, 추계액 신고는 [종합소득세 중간예납](/business/income-tax-interim-prepayment/)에서 확인하세요.
+
 ## 이 달력에 없는 세금
 
-원천세(매월 10일), 종합소득세(5월), 법인세, 면세사업자 사업장현황신고 같은 일정은 이 달력에 넣지 않았습니다. 전체 일정은 국세청 세무일정에서 확인하세요.
+원천세(매월 10일), 종합소득세 확정신고(5월), 법인세, 면세사업자 사업장현황신고 같은 일정은 이 달력에 넣지 않았습니다. 전체 일정은 국세청 세무일정에서 확인하세요.

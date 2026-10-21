@@ -17,7 +17,7 @@ const groups: [string, string, TaxEvent[]][] = [
 ---
 
 <ToolShell id="tax-calendar" title="사업자 세금 달력" reviewFrom={reviewFromDate} reviewNote={reviewNote}>
-  <p class="tool-scope">부가세 신고·납부와 세금계산서 일정만 담았습니다 · 원천세·종합소득세·법인세는 아래 국세청 세무일정에서 확인하세요</p>
+  <p class="tool-scope">부가세 신고·납부, 세금계산서, 종합소득세 중간예납 일정을 담았습니다 · 원천세·종합소득세 확정신고·법인세는 아래 국세청 세무일정에서 확인하세요</p>
 
   <div class="tc-pick" data-tc-pick data-js-only>
     <fieldset>
@@ -38,6 +38,8 @@ const groups: [string, string, TaxEvent[]][] = [
       <p class="tool-hint">어느 쪽인지 모르면 두 경우를 모두 보여 드립니다. 홈택스나 국세청 126에서 확인하세요.</p>
     </fieldset>
   </div>
+
+  <p class="tool-hint tc-scope-note">이 달력은 선택한 사업자 유형에 맞는 주요 일정만 보여줍니다. 면세사업자·프리랜서 등의 중간예납 대상 여부는 국세청에서 별도로 확인하세요.</p>
 
   <p class="tc-asof" data-tc-asof>{dotDate(buildDay)} 기준 · 사업자 유형을 고르면 해당 일정만 보입니다</p>
   <p class="tc-stale" data-tc-stale hidden>이 달력에 입력된 확정 일정이 모두 지났습니다. 최신 일정은 국세청 세무일정에서 확인하세요.</p>
@@ -78,7 +80,7 @@ const groups: [string, string, TaxEvent[]][] = [
     </section>
   </div>
 
-  <p class="tool-notice">모든 날짜와 대상은 국세청 개별 안내와 실제 사업자 상황에 따라 다시 확인하세요. 원천세·종합소득세 등 전체 일정은 <a href="https://www.nts.go.kr/nts/ad/taxSchdul/selectList.do?mi=135747" target="_blank" rel="noopener">국세청 세무일정</a>에서 볼 수 있습니다.</p>
+  <p class="tool-notice">모든 날짜와 대상은 국세청 개별 안내와 실제 사업자 상황에 따라 다시 확인하세요. 원천세·종합소득세 확정신고 등 전체 일정은 <a href="https://www.nts.go.kr/nts/ad/taxSchdul/selectList.do?mi=135747" target="_blank" rel="noopener">국세청 세무일정</a>에서 볼 수 있습니다.</p>
 </ToolShell>
 
 <script>

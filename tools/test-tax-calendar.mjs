@@ -2,7 +2,7 @@
 // 날짜 계산보다 '잘못된 신고 의무를 안내하지 않는지'를 먼저 고정한다.
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { board, pastVisible, eventsFor, eventStatus, dDay, monthlyInvoiceDue, nextMonthlyInvoice, seoulToday, taxEvents, validateData, mainDeadline } from '../src/lib/tax-calendar/calendar.ts';
+import { board, pastVisible, eventsFor, eventStatus, dDay, monthlyInvoiceDue, nextMonthlyInvoice, seoulToday, taxEvents, validateData, mainDeadline, articleNowEvents, linkedArticleUrls } from '../src/lib/tax-calendar/calendar.ts';
 
 const ids = (list) => list.map((e) => e.id);
 const byId = (id) => taxEvents.find((e) => e.id === id);
@@ -59,7 +59,10 @@ test('기한이 지나도 기한 후 신고·납부 확인 경로가 남음', ()
   assert.ok(b.past[0].articleUrl);
   // 납부기한 연장(12.28)이 유효한 동안은 연장 안내가 붙은 채 남고, 그 뒤에 내려감
   assert.deepEqual(ids(board('corp-return', '2026-11-26').past), ['vat-2026-2-pre-return']);
-  assert.deepEqual(ids(board('individual', '2026-12-28').past), ['vat-2026-2-pre-notice']);
+  // 중간예납(11.30)도 기한 후 30일 안이라 함께 남음(2026-10-21 추가)
+  assert.deepEqual(ids(board('individual', '2026-12-28').past), ['vat-2026-2-pre-notice', 'income-2026-interim']);
+  assert.deepEqual(ids(board('individual', '2026-12-30').past), ['income-2026-interim']); // 기한 후 30일째까지
+  assert.deepEqual(ids(board('individual', '2026-12-31').past), []);
   assert.deepEqual(ids(board('corp-return', '2026-12-29').past), []);
   // 연장이 없는 일정은 30일 뒤 내려감
   assert.equal(pastVisible(byId('vat-2026-2-final'), '2027-02-24'), true);
@@ -124,8 +127,11 @@ test('월합계 세금계산서 발급기한: 다음 달 10일, 토요일·공�
 
 test('확정·법정 일정이 모두 지나면 최신 일정 확인 안내', () => {
   assert.equal(board('individual', '2026-10-16').stale, false);
-  assert.equal(board('individual', '2027-01-26').stale, true);
-  assert.equal(board('simplified', '2027-01-26').stale, true);
+  // 2026-10-21 중간예납 분납분(2027.2.1.)이 추가돼 개인·간이의 마지막 확정 일정이 2월 1일로 늦어짐
+  assert.equal(board('individual', '2027-01-26').stale, false);
+  assert.equal(board('individual', '2027-02-02').stale, true);
+  assert.equal(board('simplified', '2027-02-02').stale, true);
+  assert.equal(board('corp-return', '2027-01-26').stale, true);
 });
 
 test('예상 기한이 지나면 이후 일정에서 빠지고 재확인 안내', () => {
@@ -136,4 +142,61 @@ test('예상 기한이 지나면 이후 일정에서 빠지고 재확인 안내'
   assert.ok(!ids(after.later).includes('vat-2027-1-pre-return'));
   assert.ok(!ids(after.past).includes('vat-2027-1-pre-return'));
   assert.deepEqual(ids(after.expiredExpected), ['vat-2027-1-pre-return']);
+});
+
+// 2026-10-21 종합소득세 중간예납 일정 추가(GPT 승인 설계: docs/ready/calendar-2026-10-21)
+test('중간예납은 개인 일반·간이에만, 법인에는 보이지 않음', () => {
+  for (const p of ['individual', 'simplified']) {
+    assert.ok(ids(eventsFor(p)).includes('income-2026-interim'));
+    assert.ok(ids(eventsFor(p)).includes('income-2026-interim-installment'));
+  }
+  for (const p of ['corp-return', 'corp-notice', 'corp-unknown']) {
+    assert.ok(!ids(eventsFor(p)).some((id) => id.startsWith('income-')));
+  }
+});
+
+test('중간예납 11월 30일 경계: 11.22 진행, 11.23 임박(D-7), 11.24, 11.30 당일, 12.1 지남', () => {
+  const e = byId('income-2026-interim');
+  assert.equal(e.actionType, 'pay');
+  assert.equal(e.fileDeadline, undefined);
+  assert.equal(eventStatus(e, '2026-10-31'), 'upcoming');
+  assert.equal(eventStatus(e, '2026-11-01'), 'open');
+  assert.equal(eventStatus(e, '2026-11-22'), 'open');
+  assert.equal(dDay(e, '2026-11-22'), 'D-8');
+  // 마감 임박은 7일 이내(CLOSING_SOON_DAYS): 11.23 = D-7부터
+  assert.equal(eventStatus(e, '2026-11-23'), 'closing');
+  assert.equal(dDay(e, '2026-11-23'), 'D-7');
+  assert.equal(eventStatus(e, '2026-11-24'), 'closing');
+  assert.equal(dDay(e, '2026-11-24'), 'D-6');
+  assert.equal(eventStatus(e, '2026-11-30'), 'today');
+  assert.equal(dDay(e, '2026-11-30'), '오늘 마감');
+  assert.equal(eventStatus(e, '2026-12-01'), 'past');
+  // 고지서를 받은 사람만이 아니라 대상자 기준, 추계액·분납·복식부기의무자 안내 포함
+  assert.doesNotMatch(e.condition, /고지서를 받은/);
+  assert.match(e.todo, /추계액 신고/);
+  assert.match(e.todo, /분납/);
+  assert.match(e.todo, /복식부기의무자/);
+});
+
+test('분납분은 분납한 경우에만 해당, 2027.1.1 진행·2.1 마감·2.2 지남', () => {
+  const e = byId('income-2026-interim-installment');
+  assert.match(e.condition, /분납하기로 한 경우에만 해당/);
+  assert.equal(eventStatus(e, '2026-12-31'), 'upcoming');
+  assert.equal(eventStatus(e, '2027-01-01'), 'open');
+  assert.equal(eventStatus(e, '2027-02-01'), 'today');
+  assert.equal(eventStatus(e, '2027-02-02'), 'past');
+});
+
+test('11월 개인 일반과세자 지금 할 일에 중간예납, 법인에는 없음', () => {
+  assert.ok(ids(board('individual', '2026-11-10').now).includes('income-2026-interim'));
+  assert.ok(ids(board('simplified', '2026-11-10').now).includes('income-2026-interim'));
+  assert.ok(!ids(board('corp-notice', '2026-11-10').now).includes('income-2026-interim'));
+});
+
+test('중간예납 글 상단 지금 확인할 일: 11월에는 중간예납, 1월에는 분납분', () => {
+  const url = '/business/income-tax-interim-prepayment/';
+  assert.deepEqual(ids(articleNowEvents(url, '2026-11-10')), ['income-2026-interim']);
+  assert.deepEqual(ids(articleNowEvents(url, '2026-10-21')), ['income-2026-interim']); // 시작 전에는 가장 가까운 일정
+  assert.deepEqual(ids(articleNowEvents(url, '2027-01-10')), ['income-2026-interim-installment']);
+  assert.ok(linkedArticleUrls.includes(url));
 });
