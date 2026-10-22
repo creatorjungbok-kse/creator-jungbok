@@ -13,4 +13,5 @@ export const topics = [
   { id: 'culture', name: '문화·여가' },
   { id: 'security', name: '보안·개인정보' },
   { id: 'ai', name: 'AI 서비스' },
+  { id: 'car', name: '자동차' },
 ] as const;

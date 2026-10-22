@@ -11,8 +11,9 @@ import { freelancerTax } from './freelancer-tax/constants';
 import { parentalLeavePay } from './parental-leave-pay/constants';
 import { savingsInterest } from './savings-interest/constants';
 import { loanRepayment } from './loan-repayment/constants';
+import { carInspection } from './car-inspection/constants';
 
-export const toolIds = ['electricity-bill', 'mvno-plan-cost', 'weekly-holiday-pay', 'vat-calculator', 'social-insurance-calculator', 'severance-pay', 'tax-calendar', 'annual-leave', 'take-home-pay', 'freelancer-tax', 'parental-leave-pay', 'savings-interest', 'loan-repayment'] as const;
+export const toolIds = ['electricity-bill', 'mvno-plan-cost', 'weekly-holiday-pay', 'vat-calculator', 'social-insurance-calculator', 'severance-pay', 'tax-calendar', 'annual-leave', 'take-home-pay', 'freelancer-tax', 'parental-leave-pay', 'savings-interest', 'loan-repayment', 'car-inspection'] as const;
 export type ToolId = (typeof toolIds)[number];
 
 // 사이드바 '계산기·도구' 목록에 쓰는 짧은 이름(도구가 들어 있는 글로 연결된다)
@@ -30,6 +31,7 @@ export const toolNames: Record<ToolId, string> = {
   'parental-leave-pay': '육아휴직급여 계산기',
   'savings-interest': '적금·예금 이자 계산기',
   'loan-repayment': '대출 이자·상환 계산기',
+  'car-inspection': '자동차 검사기간 계산기',
 };
 
 // 도구를 둘 수 있는 글 유형(도구마다 하나)
@@ -48,6 +50,8 @@ export const toolContentTypes: Record<ToolId, 'cost' | 'compare' | 'guide'> = {
   'parental-leave-pay': 'cost',
   'savings-interest': 'cost',
   'loan-repayment': 'cost',
+  // 검사 가능 날짜와 지연 여부를 알려 주는 안내 도구(금액 계산 아님)
+  'car-inspection': 'guide',
 };
 
 const eb = electricityBill;
@@ -76,4 +80,6 @@ export const toolSourceIds: Record<ToolId, string[]> = {
   'savings-interest': [...savingsInterest.sourceIds],
   // 이자제한법·대부업법·금융소비자보호법 근거는 글의 localSources에 둔다
   'loan-repayment': [...loanRepayment.sourceIds],
+  // 자동차관리법 시행규칙·시행령, 자동차종합검사규칙 근거는 글의 localSources에 둔다
+  'car-inspection': [...carInspection.sourceIds],
 };

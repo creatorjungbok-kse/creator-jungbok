@@ -1,0 +1,179 @@
+---
+// 자동차 검사기간 계산기 v1. 판정은 src/lib/car-inspection/inspection.ts에만 있다(화면은 그리기만).
+// 입력값(만료일·검사일)은 이 화면에서만 계산하고 저장·전송하지 않는다. 차량번호는 받지 않는다.
+import ToolShell from '../ToolShell.astro';
+import { dateLabel, fineLine, judge, parseYmd } from '../../lib/car-inspection/inspection.ts';
+
+// JavaScript가 꺼져 있을 때 보여 줄 고정 예시
+const exExpiry = parseYmd('2026-12-31')!;
+const ex = judge(exExpiry, exExpiry, exExpiry);
+---
+
+<ToolShell id="car-inspection" title="자동차 검사기간 계산기">
+  <p class="tool-scope">정기검사·종합검사 모두 검사유효기간 만료일 전 90일부터 후 31일까지 받을 수 있습니다 · 입력한 날짜는 이 화면에서만 계산하고 저장하지 않습니다</p>
+  <noscript><p class="tool-noscript">계산기는 JavaScript가 켜져 있어야 동작합니다. 아래 예시를 참고하세요.</p></noscript>
+
+  <div class="tool-form" data-ci-form data-js-only>
+    <div class="tool-field">
+      <label class="tool-label" for="ci-expiry">검사유효기간 만료일</label>
+      <div class="tool-input"><input id="ci-expiry" type="date" autocomplete="off" min="2000-01-01" max="2099-12-31" aria-describedby="ci-expiry-hint" /></div>
+      <p id="ci-expiry-hint" class="tool-hint">자동차등록증의 검사유효기간 끝 날짜, 검사 안내문, TS 사이버검사소 조회에서 확인할 수 있습니다. 연장·유예를 받았다면 연장된 만료일을 넣으세요.</p>
+      <p class="tool-error" data-ci-error="expiry"></p>
+    </div>
+
+    <fieldset>
+      <legend class="tool-label">언제 검사를 받나요?</legend>
+      <div class="tool-choices">
+        <label class="tool-choice"><input type="radio" name="ci-when" value="today" checked /><span>오늘</span></label>
+        <label class="tool-choice"><input type="radio" name="ci-when" value="other" /><span>다른 날</span></label>
+      </div>
+      <div class="tool-field ci-sub" data-ci-otherbox hidden>
+        <label class="tool-label" for="ci-check">검사 받을 날</label>
+        <div class="tool-input"><input id="ci-check" type="date" autocomplete="off" min="2025-01-01" max="2099-12-31" /></div>
+      </div>
+      <p class="tool-error" data-ci-error="check"></p>
+    </fieldset>
+
+    <button class="tool-submit" type="button" data-ci-submit>검사기간 확인하기</button>
+
+    <div class="tool-result ci-result" data-ci-output hidden aria-live="polite" tabindex="-1">
+      <p class="ci-window">검사기간 <strong data-ci="window"></strong></p>
+      <p class="ci-headline" data-ci="headline"></p>
+      <p class="ci-fine" data-ci="fine"></p>
+      <p class="ci-note" data-ci="note"></p>
+    </div>
+  </div>
+
+  <noscript>
+    <div class="tool-result">
+      <p class="ci-window">예시 · 만료일 2026년 12월 31일 → 검사기간 <strong>{dateLabel(ex.window.start)}부터 {dateLabel(ex.window.end)}까지</strong></p>
+      <p class="tool-hint">{fineLine(ex)}</p>
+    </div>
+  </noscript>
+
+  <p class="tool-notice">과태료는 관할 시·군·구가 부과하며, 연장·유예나 감경이 있으면 실제 금액이 달라질 수 있습니다. 31일 이후 정확한 금액은 고지서나 관할 시·군·구에서 확인하세요. 검사 예약과 유효기간 조회는 <a href="https://www.cyberts.kr/" target="_blank" rel="noopener">TS 사이버검사소</a>에서 할 수 있습니다.</p>
+</ToolShell>
+
+<script>
+  import { dateLabel, fineLine, headline, judge, parseYmd, seoulTodayDay, validate, type InputError } from '../../lib/car-inspection/inspection.ts';
+
+  const root = document.querySelector<HTMLElement>('[data-tool="car-inspection"]');
+  if (root) {
+    const $ = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
+    const expiryInput = $<HTMLInputElement>('#ci-expiry');
+    const checkInput = $<HTMLInputElement>('#ci-check');
+    const otherBox = $('[data-ci-otherbox]');
+    const out = $('[data-ci-output]');
+    const radios = [...root.querySelectorAll<HTMLInputElement>('input[name="ci-when"]')];
+    const when = () => radios.find((r) => r.checked)?.value ?? 'today';
+    let reached = false;
+
+    const MESSAGES: Record<InputError, [string, string]> = {
+      'expiry-empty': ['expiry', '검사유효기간 만료일을 넣어 주세요.'],
+      'expiry-range': ['expiry', '2000년부터 2099년 사이의 날짜를 넣어 주세요.'],
+      'check-empty': ['check', '검사 받을 날을 넣어 주세요.'],
+      'check-range': ['check', '2099년까지의 날짜를 넣어 주세요.'],
+      'check-before-rule': ['check', '이 계산기는 2025년 1월 1일 이후 검사에 적용되는 기준(전 90일·후 31일)으로 계산합니다.'],
+    };
+
+    const NOTES = {
+      early: '검사기간보다 먼저 받아도 되지만, 그러면 다음 유효기간이 검사받은 날 다음 날부터 계산돼 다음 검사일도 그만큼 앞당겨집니다. 검사기간 안에 받는 편이 유리합니다.',
+      open: '이 기간에 적합 판정을 받으면 만료일에 검사를 받은 것으로 보고, 다음 유효기간은 만료일 다음 날부터 계산됩니다.',
+      late: '지금이라도 빨리 받을수록 과태료 구간이 덜 올라갑니다. 지연 기간이 길어지면 검사명령과 번호판 영치로 이어질 수 있습니다. 도난·사고·입원 등 부득이한 사유가 있었다면 연장·유예 신청이 가능한지 확인하세요.',
+    } as const;
+
+    otherBox.hidden = when() !== 'other';
+    for (const r of radios)
+      r.addEventListener('change', () => {
+        otherBox.hidden = when() !== 'other';
+      });
+
+    $('[data-ci-submit]').addEventListener('click', () => {
+      for (const el of root.querySelectorAll<HTMLElement>('[data-ci-error]')) el.textContent = '';
+      expiryInput.removeAttribute('aria-invalid');
+      checkInput.removeAttribute('aria-invalid');
+      const today = seoulTodayDay();
+      const expiry = parseYmd(expiryInput.value);
+      const checkDay = when() === 'today' ? today : parseYmd(checkInput.value);
+      const errors = validate(expiry, checkDay);
+      if (errors.length) {
+        for (const e of errors) {
+          const [field, msg] = MESSAGES[e];
+          $(`[data-ci-error="${field}"]`).textContent = msg;
+          (field === 'expiry' ? expiryInput : checkInput).setAttribute('aria-invalid', 'true');
+        }
+        out.hidden = true;
+        return;
+      }
+      const j = judge(expiry!, checkDay!, today);
+      $('[data-ci="window"]').textContent = `${dateLabel(j.window.start)}부터 ${dateLabel(j.window.end)}까지`;
+      const prefix = checkDay === today ? '오늘 기준 · ' : `${dateLabel(checkDay!)} 기준 · `;
+      $('[data-ci="headline"]').textContent = prefix + headline(j);
+      $('[data-ci="fine"]').textContent = fineLine(j);
+      $('[data-ci="fine"]').dataset.band = j.fine;
+      const planLateButStillOpen = j.status === 'late' && j.future && today <= j.window.end;
+      $('[data-ci="note"]').textContent = planLateButStillOpen
+        ? `그날 받으면 검사기간이 지난 뒤입니다. ${dateLabel(j.window.end)}까지 받으면 과태료가 없습니다.`
+        : NOTES[j.status];
+      out.hidden = false;
+      out.focus();
+      if (!reached) {
+        reached = true;
+        // 도구 이름만 보낸다(날짜 없음)
+        document.dispatchEvent(new CustomEvent('kkultip:tool-use', { detail: 'car-inspection' }));
+      }
+    });
+  }
+</script>
+
+<style>
+  .ci-sub {
+    margin-top: var(--space-3);
+  }
+
+  .ci-sub[hidden],
+  .ci-result[hidden] {
+    display: none;
+  }
+
+  .ci-result {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .ci-window {
+    font-size: var(--text-sm);
+  }
+
+  .ci-window strong {
+    display: block;
+    margin-top: var(--space-1);
+    font-size: var(--text-md);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .ci-headline {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+  }
+
+  .ci-fine {
+    padding: var(--space-2) var(--space-3);
+    border-left: 3px solid var(--color-outline);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+  }
+
+  .ci-fine[data-band='base'],
+  .ci-fine[data-band='rising'],
+  .ci-fine[data-band='max'] {
+    border-left-color: var(--color-status-closing);
+  }
+
+  .ci-note {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+</style>

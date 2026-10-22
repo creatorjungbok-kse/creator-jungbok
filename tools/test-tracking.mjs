@@ -29,6 +29,7 @@ const TOOL_PAGES = {
   'parental-leave-pay': '/work/parental-leave-pay-calculator/',
   'savings-interest': '/money/savings-interest-calculator/',
   'loan-repayment': '/money/loan-repayment-calculator/',
+  'car-inspection': '/living/car-inspection-period/',
 };
 const FORBIDDEN = /\b(link_text|link_url|text|value|kwh|kWh|price|amount|bill|result|query|search_term|q|name|input)\s*:/;
 
