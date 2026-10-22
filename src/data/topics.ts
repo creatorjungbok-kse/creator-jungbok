@@ -14,4 +14,5 @@ export const topics = [
   { id: 'security', name: '보안·개인정보' },
   { id: 'ai', name: 'AI 서비스' },
   { id: 'car', name: '자동차' },
+  { id: 'documents', name: '서류 발급' },
 ] as const;
