@@ -35,6 +35,40 @@ function normalizeQuery(q: string) {
   return s;
 }
 
+// table-cards(모바일에서 카드로 바뀌는 표) 본문 칸에 굵은 글씨와 보통 글씨가 섞이면 카드에서 굵은 부분이 따로 떨어진 줄로 보인다(2026-10-22 발견).
+// 그 표의 본문 행에서 섞인 칸만 금지한다. 칸 전체 굵게·머리 행·일반 표·본문 강조는 허용.
+export function tableCardBoldLines(body: string): number[] {
+  const bad: number[] = [];
+  let inCards = false;
+  let row = 0;
+  body.split('\n').forEach((line, i) => {
+    const t = line.trim();
+    if (/^<div class="table-cards">/.test(t)) {
+      inCards = true;
+      row = 0;
+      return;
+    }
+    if (inCards && t.startsWith('</div>')) {
+      inCards = false;
+      return;
+    }
+    if (!inCards) return;
+    if (!t.startsWith('|')) {
+      row = 0;
+      return;
+    }
+    row++;
+    if (row <= 2) return;
+    // 칸 전체가 굵은 글씨면 괜찮고, 굵은 글씨와 보통 글씨가 섞인 칸만 갈라진다
+    const cells = t.replace(/^\|/, '').replace(/\|$/, '').split('|').map((c) => c.trim());
+    if (cells.some((c) => c.includes('**') && !/^\*\*[^*]+\*\*$/.test(c))) bad.push(i + 1);
+  });
+  return bad;
+}
+
+// 오류 줄 번호 계산용 원본 마크다운(검증 실패 메시지에만 쓴다)
+const rawSources = import.meta.glob<string>(['/src/content/**/*.md', '/src/dev/content/**/*.md'], { query: '?raw', import: 'default', eager: true });
+
 function validate(items: ContentItem[]) {
   const errors: string[] = [];
   const where = (i: ContentItem) => `${i.entry.collection}/${i.entry.id}`;
@@ -61,6 +95,17 @@ function validate(items: ContentItem[]) {
     const dup = byQuery.get(key);
     if (dup) errors.push(`primaryQuery 중복: ${where(dup)} ↔ ${where(item)} (${data.primaryQuery})`);
     byQuery.set(key, item);
+
+    const body = item.entry.body ?? '';
+    const bold = tableCardBoldLines(body);
+    if (bold.length) {
+      // 오류 위치는 원본 파일의 줄 번호로 알려 준다
+      let offset = 0;
+      const raw = rawSources[`/${item.entry.filePath ?? ''}`] ?? '';
+      const at = raw.indexOf(body);
+      if (at > 0) offset = raw.slice(0, at).split('\n').length - 1;
+      for (const n of bold) errors.push(`${where(item)}: table-cards 표 칸에 굵은 글씨와 보통 글씨가 섞임(${item.entry.filePath ?? ''} ${n + offset}번째 줄)`);
+    }
   }
 
   for (const item of items) {

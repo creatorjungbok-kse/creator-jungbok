@@ -263,6 +263,9 @@ const cases = [
   ['og-image-remote', edit(G, 'contentMode: evergreen', 'contentMode: evergreen\nogImage: https://example.com/a.png'), '공유 이미지 경로 형식'],
   ['thumbnail-remote', edit(G, 'contentMode: evergreen', 'contentMode: evergreen\nthumbnail: https://example.com/a.png'), '대표 이미지 경로 형식'],
   ['broken-related-link', edit('articles/business/test-startup-guide.md', 'related: [/business/test-card-terminal/]', 'related: [/business/nope/]'), '존재하지 않는 글 링크 /business/nope/'],
+  // table-cards 표 본문 칸에 굵은 글씨와 보통 글씨를 섞으면 안 됨(2026-10-22 모바일 카드 줄 갈라짐). 칸 전체 굵게·머리 행·일반 표·본문 강조는 허용
+  ['table-cards-bold-cell', edit('articles/business/test-startup-guide.md', '---\n본문\n', '---\n<div class="table-cards">\n\n| 구분 | 내용 |\n|---|---|\n| 일반 | **굵게** 표시 |\n\n</div>\n'), 'test-startup-guide.md 23번째 줄'],
+  ['table-cards-bold-outside-ok', edit('articles/business/test-startup-guide.md', '---\n본문\n', '---\n**본문 강조는** 괜찮다\n\n<div class="table-cards">\n\n| **구분** | 내용 |\n|---|---|\n| 일반 | 보통 글씨 |\n\n</div>\n\n| 일반 표 | **굵게** |\n|---|---|\n| 칸 | **허용** |\n\n<div class="table-cards">\n\n| 구분 | 금액 |\n|---|---|\n| 합계 | **10,000원** |\n\n</div>\n'), null],
   ['related-auto-not-boolean', edit('articles/business/test-startup-guide.md', 'related: [/business/test-card-terminal/]', 'related: [/business/test-card-terminal/]\nrelatedAuto: "no"'), 'relatedAuto'],
 ];
 
