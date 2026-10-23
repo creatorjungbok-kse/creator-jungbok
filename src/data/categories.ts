@@ -110,6 +110,7 @@ export const categories: Category[] = [
     subcategories: [
       { slug: 'savings', name: '예적금' },
       { slug: 'loan', name: '대출' },
+      { slug: 'pension', name: '연금·노후' },
     ],
     // 공개 글 3편 전까지 상단 메뉴·홈·footer에 노출하지 않는다(GPT 결정 2026-10-19). 카테고리 페이지·글·sitemap은 정상 공개
     primaryNavMinPosts: 3,
