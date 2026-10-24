@@ -19,7 +19,7 @@ summary: 건강보험 자격득실확인서는 건강보험 자격을 언제 얻
 thumbnail: /images/thumbnails/health-insurance-qualification-certificate.svg
 ogImage: /images/og/health-insurance-qualification-certificate.png
 datePublished: 2026-10-23
-dateModified: 2026-10-23
+dateModified: 2026-10-24
 researchedAt: 2026-10-23
 author: operator
 ymyl: low
@@ -59,7 +59,10 @@ faq:
     answer: 네. 건강보험 가입자나 피부양자였던 사람도 지난 이력을 발급받을 수 있습니다.
   - question: 받은 서류가 진짜인지 제출처는 어떻게 확인하나요?
     answer: 국민건강보험공단 홈페이지의 '증명서 진위확인'에서 확인합니다. 다만 발급한 지 3개월이 지난 증명서는 이 메뉴에서 조회되지 않습니다. 증명서를 언제까지 써도 되는지는 제출처가 정하는 기준을 따르세요.
-related: [/work/health-insurance-dependent/, /work/unemployment-benefit/, /work/early-reemployment-allowance/, /work/withholding-receipt/]
+changelog:
+  - date: 2026-10-24
+    summary: 4대보험 가입 현황을 한 장으로 보는 4대사회보험 가입자 가입내역 확인서와의 차이를 추가하고 관련 글로 연결했습니다.
+related: [/work/social-insurance-enrollment-certificate/, /work/health-insurance-dependent/, /work/unemployment-benefit/, /work/early-reemployment-allowance/]
 sourceIds: [local:nhis-qual-cert, local:nhis-qual-confirm, local:gov24-qual-cert, local:gov24-kiosk, local:nhis-faq-verify, local:nhis-faq-fax, local:law-nhi-11]
 localSources:
   - id: local:nhis-qual-cert
@@ -110,7 +113,7 @@ localSources:
 
 건강보험 자격을 **언제 얻고 언제 잃었는지** 이력을 보여 주는 증명서입니다. 지금 가입자이거나 피부양자인 사람뿐 아니라, 예전에 가입자·피부양자였던 사람도 받을 수 있습니다. 수수료는 없습니다.
 
-비슷한 이름의 **자격확인서**는 지금의 건강보험 자격을 확인하는 서류입니다. 제출처가 이력을 보려면 자격득실확인서를, 현재 가입 여부만 보려면 자격확인서를 냅니다.
+비슷한 이름의 **자격확인서**는 지금의 건강보험 자격을 확인하는 서류입니다. 제출처가 이력을 보려면 자격득실확인서를, 현재 가입 여부만 보려면 자격확인서를 냅니다. 국민연금·고용보험·산재보험까지 지금 가입 현황을 한 장으로 보려면 [4대보험 가입확인서(가입내역 확인서)](/work/social-insurance-enrollment-certificate/)를 뗍니다.
 
 | 구분 | 자격득실확인서 | 자격확인서 |
 |---|---|---|
