@@ -21,7 +21,7 @@ summary: 자동차 정기검사와 종합검사는 검사유효기간 만료일 
 thumbnail: /images/thumbnails/car-inspection-period.svg
 ogImage: /images/og/car-inspection-period.png
 datePublished: 2026-10-22
-dateModified: 2026-10-22
+dateModified: 2026-10-24
 researchedAt: 2026-10-22
 author: operator
 ymyl: low
@@ -64,6 +64,10 @@ faq:
     answer: 부적합 판정을 받으면 정해진 기간 안에 고쳐서 재검사를 받아야 합니다. 종합검사는 검사기간 안에 신청했다면 보통 부적합 판정일부터 검사기간 만료 후 10일 이내이고, 배출가스 등 일부 사유는 판정일부터 10일 이내입니다. 재검사기간 안에 합격하지 못하면 검사를 받지 않은 것으로 봅니다.
   - question: 입원이나 해외 체류로 검사를 못 받으면요?
     answer: 도난, 사고, 압류, 장기 정비, 병원 입원, 해외 출장처럼 부득이한 사유가 있으면 증명 서류를 갖춰 시·도에 검사유효기간 연장이나 검사 유예를 신청할 수 있습니다. 허가를 받으면 연장된 만료일 기준으로 검사기간이 다시 정해집니다.
+changelog:
+  - date: 2026-10-24
+    summary: 검사 수수료·감면·예약 순서를 정리한 자동차검사 비용·예약 글을 연결했습니다.
+related: [/living/car-inspection-cost/]
 sourceIds: [local:law-rule-74-77, local:law-rule-75, local:law-rule-annex15-2, local:law-comp-9-10, local:law-comp-annex1, local:law-comp-7-11-13, local:law-decree-annex2, local:ts-cyberts, local:ts-faq]
 localSources:
   - id: local:law-rule-74-77
@@ -173,4 +177,4 @@ localSources:
 
 ## 검사 예약과 준비물
 
-TS 사이버검사소에서 검사소를 고르고 예약할 수 있습니다. 지정정비사업자(민간 검사소)에서도 받을 수 있습니다. 검사를 받으려면 **자동차보험에 가입되어 있어야** 합니다. 전산으로 가입이 확인되면 보험 증명서를 따로 내지 않아도 됩니다.
+TS 사이버검사소에서 검사소를 고르고 예약할 수 있습니다. 지정정비사업자(민간 검사소)에서도 받을 수 있습니다. 검사 수수료와 감면 대상, 예약 순서는 [자동차검사 비용·예약](/living/car-inspection-cost/)에 정리했습니다. 검사를 받으려면 **자동차보험에 가입되어 있어야** 합니다. 전산으로 가입이 확인되면 보험 증명서를 따로 내지 않아도 됩니다.
