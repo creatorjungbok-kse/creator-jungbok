@@ -1,0 +1,402 @@
+---
+// 실업급여(구직급여) 계산기. 계산은 src/lib/payroll/unemployment/calculation.ts에만 있고, 이 컴포넌트는 입력을 모아 결과를 그리기만 한다.
+// 범위: 상용근로자, 마지막 근무일 2026.1.1부터 2027.12.31까지, 하루 금액·받는 일수·총액. 받을 수 있는지(수급자격)는 판정하지 않는다.
+// 입력값·결과는 저장·전송하지 않는다(form 제출 없음, URL·GA 전송 없음).
+import ToolShell from '../ToolShell.astro';
+import { unemploymentBenefit as c } from '../../tools/unemployment-benefit/constants';
+import { calc, parseYmd, FIRST_DAY, LAST_DAY } from '../../lib/payroll/unemployment/calculation.ts';
+import { formatDate } from '../../lib/format';
+
+const won = (n: number) => `${n.toLocaleString('ko-KR')}원`;
+const day = (s: string) => formatDate(new Date(s));
+const ex = calc({ lastWorkDay: parseYmd('2026-09-30')!, wage3m: 9_000_000, hours: 8, age: 35, disabled: false, tenure: '1to3' });
+const exr = ex.ok ? ex.result : null;
+const tenureOptions = [
+  ['u1', '1년 미만'],
+  ['1to3', '1년 이상 3년 미만'],
+  ['3to5', '3년 이상 5년 미만'],
+  ['5to10', '5년 이상 10년 미만'],
+  ['o10', '10년 이상'],
+];
+---
+
+<ToolShell id="unemployment-benefit" title="실업급여 계산기" reviewFrom={c.reviewFrom} reviewNote={c.reviewNote}>
+  <p class="tool-scope">
+    <strong>예상 실업급여(구직급여)</strong> · 퇴사 전 3개월 임금, 하루 근무시간, 나이, 고용보험 가입기간으로 하루 금액과 받는 일수, 총액을 계산합니다.
+  </p>
+  <noscript><p class="tool-noscript">계산기는 JavaScript가 켜져 있어야 동작합니다. 아래 예시 결과와 계산 근거를 참고하세요.</p></noscript>
+
+  <div class="tool-form" data-js-only>
+    <div class="tool-field">
+      <label class="tool-label" for="ub-last">마지막 근무일</label>
+      <div class="tool-input"><input id="ub-last" type="date" autocomplete="off" min={FIRST_DAY} max={LAST_DAY} aria-describedby="ub-last-hint ub-last-error" /></div>
+      <p id="ub-last-hint" class="tool-hint">2026년 1월 1일부터 2027년 12월 31일까지 계산합니다. 이 날짜가 속한 해의 최저임금과 상한을 씁니다.</p>
+      <p id="ub-last-error" class="tool-error" data-ub-last-error></p>
+    </div>
+
+    <div class="tool-field">
+      <label class="tool-label" for="ub-wage">퇴사 전 3개월 동안 받은 임금 합계</label>
+      <div class="tool-input">
+        <input id="ub-wage" type="text" inputmode="numeric" autocomplete="off" maxlength="13" aria-describedby="ub-wage-hint ub-wage-error" />
+        <span aria-hidden="true">원</span>
+      </div>
+      <p id="ub-wage-hint" class="tool-hint">세금 떼기 전 금액입니다. 매달 같다면 월급 × 3을 넣으세요. 연장·야간수당처럼 그 기간에 받은 임금은 포함하고, 1년 동안 받은 상여금·연차수당이 있으면 그 3/12을 더하세요. 마지막 근무일까지의 3개월 기준입니다.</p>
+      <p id="ub-wage-error" class="tool-error" data-ub-wage-error></p>
+      <div class="ub-quick" role="group" aria-label="월급으로 입력">
+        <label class="tool-label ub-quick__label" for="ub-month">월급으로 넣기(× 3)</label>
+        <div class="tool-input">
+          <input id="ub-month" type="text" inputmode="numeric" autocomplete="off" maxlength="12" aria-describedby="ub-month-error" />
+          <span aria-hidden="true">원</span>
+        </div>
+        <p id="ub-month-error" class="tool-error" data-ub-month-error></p>
+      </div>
+    </div>
+
+    <div class="ub-grid">
+      <div class="tool-field">
+        <label class="tool-label" for="ub-hours">하루 근무시간</label>
+        <div class="tool-input">
+          <input id="ub-hours" type="text" inputmode="decimal" autocomplete="off" maxlength="4" value="8" aria-describedby="ub-hours-hint ub-hours-error" />
+          <span aria-hidden="true">시간</span>
+        </div>
+        <p id="ub-hours-hint" class="tool-hint">근로계약서에 정한 하루 근무시간입니다(0.1시간 단위). 주 단위로 정했다면 주 근무시간 ÷ 5를 넣으세요(예: 주 3일 × 8시간 = 주 24시간 → 4.8시간). 하한을 정할 때만 쓰고, 8시간이 넘으면 8시간으로 봅니다. 최종 시간은 고용센터가 정합니다.</p>
+        <p id="ub-hours-error" class="tool-error" data-ub-hours-error></p>
+      </div>
+      <div class="tool-field">
+        <label class="tool-label" for="ub-age">퇴사 당시 만 나이</label>
+        <div class="tool-input">
+          <input id="ub-age" type="text" inputmode="numeric" autocomplete="off" maxlength="3" aria-describedby="ub-age-error" />
+          <span aria-hidden="true">세</span>
+        </div>
+        <p id="ub-age-error" class="tool-error" data-ub-age-error></p>
+      </div>
+    </div>
+
+    <div class="tool-field">
+      <label class="tool-label" for="ub-tenure">고용보험 가입기간</label>
+      <div class="tool-input">
+        <select id="ub-tenure" aria-describedby="ub-tenure-hint">
+          {tenureOptions.map(([v, t]) => <option value={v} selected={v === '1to3'}>{t}</option>)}
+        </select>
+      </div>
+      <p id="ub-tenure-hint" class="tool-hint">이전 직장을 그만둔 뒤 3년 안에 다시 가입했다면 그 기간도 합칩니다. 그 직장을 그만두고 실업급여를 받았다면 그 직장 기간은 빠집니다.</p>
+    </div>
+
+    <label class="ub-check"><input type="checkbox" id="ub-disabled" /><span>장애인고용촉진 및 직업재활법상 장애인입니다(50세 이상과 같은 일수 적용)</span></label>
+  </div>
+
+  <div>
+    <p class="tool-result ub-msg" data-ub-msg aria-live="polite" hidden></p>
+    <div class="tool-result ub-result" data-ub-result hidden>
+      <div class="ub-head">
+        <h3>예상 실업급여 총액</h3>
+        <p class="ub-total" data-ub-out="total" aria-live="polite" aria-atomic="true"></p>
+        <p class="ub-sub" data-ub-out="sub"></p>
+      </div>
+      <ul class="ub-notes ub-notes--alert" data-ub-notices hidden></ul>
+      <dl class="ub-dl">
+        <div><dt>하루 금액</dt><dd data-ub-out="daily"></dd></div>
+        <div><dt>받는 일수</dt><dd data-ub-out="days"></dd></div>
+        <div><dt>30일 기준</dt><dd data-ub-out="month"></dd></div>
+        <div><dt>1일 평균임금</dt><dd data-ub-out="avg"></dd></div>
+        <div><dt>세금</dt><dd>없음(실업급여는 비과세)</dd></div>
+      </dl>
+      <ul class="ub-notes">
+        <li>고용24 실업급여 모의계산과 같은 산식으로 계산한 예상값입니다. 실제 금액과 일수는 고용센터 수급자격 심사로 정해집니다.</li>
+        <li>받을 수 있는지(퇴사 전 18개월 동안 고용보험 가입 180일 이상, 비자발적 퇴사 등)는 판정하지 않습니다.</li>
+        <li>실업 신고 뒤 7일 대기기간이 지나야 받기 시작하고, 마지막 근무일 다음 날부터 1년이 지나면 일수가 남아도 받을 수 없습니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <noscript>
+    {
+      exr && (
+        <div class="tool-result">
+          <p class="ub-example">예시 · 마지막 근무일 2026.9.30, 3개월 임금 9,000,000원, 하루 8시간, 35세, 가입 1년 이상 3년 미만</p>
+          <p>
+            하루 {won(exr.dailyShown)}(하한 적용) × {exr.days}일 = 예상 총액 {won(exr.total)}
+          </p>
+        </div>
+      )
+    }
+  </noscript>
+
+  <details class="ub-basis">
+    <summary class="disclosure">계산 근거</summary>
+    <div class="ub-basis__body">
+      <ul>
+        <li>1일 평균임금: 마지막 근무일까지 3개월 임금 합계 ÷ 그 기간 날수. 평균임금이 통상임금보다 적으면 통상임금을 쓰지만, 이 계산기는 입력한 임금으로만 계산합니다.</li>
+        <li>하루 금액: 1일 평균임금 × 60%. 상한은 2026년 하루 68,100원(기초일액 113,500원의 60%)입니다.</li>
+        <li>하한: 그 해 최저임금 × 하루 근무시간(최대 8시간) × 80%. 2026년 8시간이면 66,048원, 2027년 8시간이면 68,480원입니다.</li>
+        <li>2027년 상한: 2026년 9월 22일 입법예고된 시행령 개정안(상한을 하한의 약 103% 수준으로) 기준 예정값 하루 70,568원입니다. 확정되면 바꿉니다.</li>
+        <li>받는 일수: 퇴사 당시 나이(50세 이상·장애인 여부)와 고용보험 가입기간에 따라 120일부터 270일까지입니다.</li>
+        <li>세금: 고용보험법에 따른 실업급여는 소득세가 붙지 않는 비과세 소득입니다.</li>
+        <li>하루 근무시간: 주 단위 계약은 (주 근무시간 + 주휴시간) ÷ 48 × 8, 즉 주 근무시간 ÷ 5로 환산합니다. 8시간이 넘으면 8시간으로 계산합니다(고용24 모의계산의 '8시간 이상' 선택지와 같음).</li>
+        <li>계산하지 않음: 일용근로자·자영업자·예술인·노무제공자, 수급 중 일해서 번 소득에 따른 감액. 퇴사 전 3개월 안에 여러 직장에 다녔다면 그 3개월 동안 받은 임금을 모두 합쳐 넣으면 비슷하게 계산됩니다.</li>
+      </ul>
+      <p>확인일 {day(c.checkedAt)}</p>
+    </div>
+  </details>
+</ToolShell>
+
+<script>
+  // 입력값은 이 페이지 안에서만 계산한다(저장·전송 없음). 계산은 lib의 함수만 쓴다.
+  import { parseWonInt, parseScaled } from '../../lib/payroll/shared/validation.ts';
+  import { calc, parseYmd, fmtYmd, MAX_WAGE, type Tenure, type CalcError } from '../../lib/payroll/unemployment/calculation.ts';
+
+  const won = (n: number) => `${n.toLocaleString('ko-KR')}원`;
+  const dot = (s: string) => s.replace(/-/g, '.');
+  const errorText: Record<CalcError, string> = {
+    'date-invalid': '날짜를 다시 확인해 주세요.',
+    'date-range': '마지막 근무일이 2026년 1월 1일부터 2027년 12월 31일까지일 때만 계산합니다.',
+    'wage-invalid': '3개월 임금 합계를 1원 이상, 3억원 이하의 원 단위 숫자로 입력해 주세요.',
+    'hours-invalid': '하루 근무시간을 0.1시간 단위로 0.1시간부터 24시간 사이에서 입력해 주세요.',
+    'age-invalid': '만 나이를 15세부터 100세 사이의 숫자로 입력해 주세요.',
+  };
+
+  const root = document.querySelector<HTMLElement>('[data-tool="unemployment-benefit"]');
+  if (root) {
+    const $ = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
+    const result = $('[data-ub-result]');
+    const msg = $('[data-ub-msg]');
+    const last = $<HTMLInputElement>('#ub-last');
+    const wage = $<HTMLInputElement>('#ub-wage');
+    const month = $<HTMLInputElement>('#ub-month');
+    const hours = $<HTMLInputElement>('#ub-hours');
+    const age = $<HTMLInputElement>('#ub-age');
+    const tenure = $<HTMLSelectElement>('#ub-tenure');
+    const disabled = $<HTMLInputElement>('#ub-disabled');
+    const notices = $('[data-ub-notices]');
+    let signaled = false;
+    const signalUse = () => {
+      if (signaled) return;
+      signaled = true;
+      document.dispatchEvent(new CustomEvent('kkultip:tool-use', { detail: 'unemployment-benefit' }));
+    };
+    const withCommas = (input: HTMLInputElement) => {
+      const raw = input.value;
+      if (!/^[\d,]*$/.test(raw)) return;
+      const caret = input.selectionStart ?? raw.length;
+      const digitsBefore = raw.slice(0, caret).replace(/,/g, '').length;
+      const digits = raw.replace(/,/g, '').replace(/^0+(?=\d)/, '');
+      const next = digits === '' ? '' : Number(digits).toLocaleString('ko-KR');
+      if (next === raw || digits.length > 11) return;
+      input.value = next;
+      let pos = 0;
+      for (let seen = 0; pos < next.length && seen < digitsBefore; pos++) if (next[pos] !== ',') seen++;
+      input.setSelectionRange(pos, pos);
+    };
+    const setError = (sel: string, input: HTMLInputElement, text: string) => {
+      $(sel).textContent = text;
+      if (text) input.setAttribute('aria-invalid', 'true');
+      else input.removeAttribute('aria-invalid');
+    };
+    const hide = (text = '') => {
+      result.hidden = true;
+      msg.textContent = text;
+      msg.hidden = text === '';
+    };
+
+    const run = () => {
+      const d = last.value ? parseYmd(last.value) : null;
+      const w = parseWonInt(wage.value, { min: 1, max: MAX_WAGE });
+      const a = /^\s*\d{1,3}\s*$/.test(age.value) ? parseWonInt(age.value, { min: 15, max: 100 }) : { ok: false as const, code: age.value.trim() === '' ? ('empty' as const) : ('format' as const) };
+      const hr = parseScaled(hours.value, { decimals: 1, step: 1, min: 1, max: 240 });
+      setError('[data-ub-hours-error]', hours, !hr.ok && hr.code !== 'empty' ? errorText['hours-invalid'] : '');
+      setError('[data-ub-wage-error]', wage, !w.ok && w.code !== 'empty' ? errorText['wage-invalid'] : '');
+      setError('[data-ub-age-error]', age, !a.ok && a.code !== 'empty' ? errorText['age-invalid'] : '');
+      if (last.value && d === null) {
+        setError('[data-ub-last-error]', last, errorText['date-invalid']);
+        hide();
+        return;
+      }
+      if (d === null || !w.ok || !a.ok || !hr.ok) {
+        setError('[data-ub-last-error]', last, '');
+        hide();
+        return;
+      }
+      const r = calc({ lastWorkDay: d, wage3m: w.value, hours: hr.value / 10, age: a.value, disabled: disabled.checked, tenure: tenure.value as Tenure });
+      if (!r.ok) {
+        const dateErr = r.error === 'date-range' || r.error === 'date-invalid';
+        setError('[data-ub-last-error]', last, dateErr ? errorText[r.error] : '');
+        hide(dateErr ? '' : errorText[r.error]);
+        return;
+      }
+      setError('[data-ub-last-error]', last, '');
+      const x = r.result;
+      $('[data-ub-out="total"]').textContent = won(x.total);
+      $('[data-ub-out="sub"]').textContent = `하루 ${won(x.dailyShown)} × ${x.days}일 · ${x.year}년 기준${x.provisional ? '(상한은 입법예고안)' : ''}`;
+      const label = x.basis === 'cap' ? ' (상한 적용)' : x.basis === 'floor' ? ' (하한 적용)' : ' (평균임금의 60%)';
+      $('[data-ub-out="daily"]').textContent = won(x.dailyShown) + label;
+      $('[data-ub-out="days"]').textContent = `${x.days}일`;
+      $('[data-ub-out="month"]').textContent = won(x.month30);
+      $('[data-ub-out="avg"]').textContent = `${won(Math.floor(x.avgDaily))} (${dot(fmtYmd(x.periodStart))}부터 ${dot(fmtYmd(x.periodEnd))}까지 ${x.periodDays}일)`;
+      const n: string[] = [];
+      if (x.basis === 'floor') n.push(`평균임금의 60%가 하한보다 낮아 하한 ${won(x.floorDaily)}을 적용했습니다. 하루 근무시간이 짧으면 하한도 낮아집니다.`);
+      if (x.basis === 'cap') n.push(`평균임금의 60%가 상한을 넘어 상한 ${won(x.capDaily)}을 적용했습니다. 월급이 더 많아도 하루 금액은 같습니다.`);
+      if (x.provisional)
+        n.push('2027년 상한은 입법예고안(확정 전) 기준입니다. 개정안이 확정되지 않고 지금 상한(68,100원)이 유지되면, 8시간 근무자는 하한 68,480원이 상한보다 커서 금액이 달라질 수 있습니다.');
+      if (x.dailyShown !== x.daily) n.push('하루 금액은 원 미만을 버려 표시했고, 총액은 원 미만이 남는 하루 금액에 일수를 곱해 계산했습니다.');
+      notices.replaceChildren(...n.map((t) => Object.assign(document.createElement('li'), { textContent: t })));
+      notices.hidden = n.length === 0;
+      msg.hidden = true;
+      result.hidden = false;
+      signalUse();
+    };
+
+    wage.addEventListener('input', () => {
+      withCommas(wage);
+      month.value = '';
+      setError('[data-ub-month-error]', month, '');
+      run();
+    });
+    month.addEventListener('input', () => {
+      withCommas(month);
+      const m = parseWonInt(month.value, { min: 1, max: Math.floor(MAX_WAGE / 3) });
+      // 월급 칸이 비거나 잘못되면 3개월 합계도 비워 옛 값으로 계산하지 않는다
+      wage.value = m.ok ? (m.value * 3).toLocaleString('ko-KR') : '';
+      setError('[data-ub-month-error]', month, !m.ok && m.code !== 'empty' ? '월급을 1원 이상, 1억원 이하의 원 단위 숫자로 입력해 주세요.' : '');
+      run();
+    });
+    for (const el of [age, last, hours]) el.addEventListener('input', run);
+    for (const el of [last, tenure, disabled]) el.addEventListener('change', run);
+  }
+</script>
+
+<style>
+  .ub-msg[hidden] {
+    display: none;
+  }
+
+  .tool-field select {
+    width: 100%;
+    min-height: var(--touch);
+    padding: 0 var(--space-3);
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface, #fff);
+    color: var(--color-text);
+    font: inherit;
+  }
+
+  .ub-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+    gap: var(--space-3);
+  }
+
+  .ub-quick {
+    display: grid;
+    gap: var(--space-1);
+    margin-top: var(--space-2);
+  }
+
+  .ub-quick__label {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .ub-check {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--touch);
+    cursor: pointer;
+  }
+
+  .ub-check input {
+    flex: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    accent-color: var(--color-brand-text);
+  }
+
+  .ub-basis summary {
+    display: flex;
+    align-items: center;
+    min-height: var(--touch);
+    font-weight: var(--weight-semibold);
+    cursor: pointer;
+  }
+
+  .ub-result {
+    gap: var(--space-4);
+  }
+
+  .ub-head h3 {
+    font-size: var(--text-md);
+    font-weight: var(--weight-semibold);
+  }
+
+  .ub-total {
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+
+  .ub-sub {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .ub-dl {
+    display: grid;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .ub-dl > div {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: var(--space-2);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-outline);
+  }
+
+  .ub-dl dt {
+    font-weight: var(--weight-semibold);
+  }
+
+  .ub-dl dd {
+    overflow-wrap: anywhere;
+  }
+
+  .ub-notes {
+    display: grid;
+    gap: var(--space-1);
+    padding-left: 1.25em;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    list-style: disc;
+  }
+
+  .ub-notes[hidden] {
+    display: none;
+  }
+
+  .ub-notes--alert {
+    color: var(--color-text);
+    font-weight: var(--weight-semibold);
+  }
+
+  .ub-example {
+    font-weight: var(--weight-semibold);
+  }
+
+  .ub-basis__body {
+    display: grid;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+  }
+
+  .ub-basis__body ul {
+    display: grid;
+    gap: var(--space-1);
+    padding-left: 1.25em;
+    list-style: disc;
+  }
+</style>
