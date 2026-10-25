@@ -8,16 +8,16 @@ contentType: cost
 contentMode: evergreen
 primaryQuery: 주휴수당 계산기
 synonyms:
-  - 주휴수당
-  - 주휴수당 조건
-  - 주휴수당 지급 조건
-  - 주휴수당 발생 조건
-  - 알바 주휴수당
+  - 주휴수당 계산
+  - 주휴수당 계산법
   - 주휴수당 계산 방법
+  - 알바 주휴수당 계산기
+  - 주휴수당 포함 시급
+  - 2026 주휴수당 포함 시급
 summary: 4주 평균 1주 소정근로시간이 15시간 이상이고, 그 주의 소정근로일을 개근하는 등 조건을 충족하면 주휴수당이 발생할 수 있습니다. 아래 계산기는 일반적인 단시간근로 사례에서 예상 금액을 계산합니다.
 ogImage: /images/og/weekly-holiday-pay.png
 datePublished: 2026-10-09
-dateModified: 2026-10-09
+dateModified: 2026-10-25
 researchedAt: 2026-10-09
 author: operator
 ymyl: medium
@@ -38,7 +38,10 @@ faq:
     answer: 지각·조퇴·휴가·휴일·휴업은 결근으로 보지 않습니다. 지각·조퇴로 일하지 않은 시간의 임금은 공제할 수 있어도, 결근이 아니므로 그 주의 주휴수당은 지급해야 합니다(고용노동부 해석).
   - question: 그만두는 주에도 주휴수당을 받나요?
     answer: 1주(연속된 7일) 동안 근로관계가 유지되고 그 기간의 소정근로일을 개근했다면, 다음 주 근무 예정이 없어도 주휴수당이 발생합니다(고용노동부 해석). 월요일부터 금요일까지 일하고 일요일이 주휴일이면, 토요일에 퇴직하면 발생하지 않고 일요일까지 근로관계를 유지한 뒤 그다음 월요일에 퇴직하면 발생합니다.
-related: [/benefits/earned-income-tax-credit/, /business/durunuri-social-insurance/]
+changelog:
+  - date: 2026-10-25
+    summary: 받을 수 있는지 판단하는 내용은 새 글 '주휴수당 조건'으로 옮기고, 이 글은 금액 계산에 집중하도록 조건 절을 요약했습니다.
+related: [/work/weekly-holiday-pay-conditions/, /benefits/earned-income-tax-credit/, /business/durunuri-social-insurance/]
 sourceIds: [law-labor-standards-act, law-labor-standards-decree, local:moel-1350-tardiness, moel-1350-weekly-holiday-leave, moel-1350-weekly-holiday-resign, local:moel-1350-short-term, moel-1350-weekly-holiday-normal-day, minimumwage-decisions]
 localSources:
   - id: local:moel-1350-call
@@ -61,15 +64,14 @@ localSources:
     checkedAt: 2026-10-09
 ---
 
-## 주휴수당 받는 조건 3가지
+## 주휴수당 받는 조건
 
-아래 세 가지를 모두 갖추면 주휴수당이 생깁니다.
+아래를 모두 갖추면 주휴수당이 생깁니다. 결근·조퇴·공휴일·일용직·5인 미만처럼 사례별 판단은 [주휴수당 조건](/work/weekly-holiday-pay-conditions/)에 정리했습니다.
 
-1. **근로기준법상 근로자**입니다. 아르바이트·파트타임도 근로자라면 해당합니다. 3.3% 프리랜서 계약처럼 근로자인지 애매한 경우는 이 계산기로 판단하지 않습니다.
-2. **4주 평균 1주 소정근로시간이 15시간 이상**입니다. 소정근로시간은 근로계약 때 매주 일하기로 정한 시간이고, 연장근로는 넣지 않습니다.
-3. **그 주에 일하기로 한 날(소정근로일)을 개근**했습니다. 지각·조퇴·휴가·휴일·휴업은 결근이 아닙니다.
-
-상시 4명 이하(5인 미만) 사업장에도 같은 규정이 적용됩니다.
+- 근로기준법상 근로자(아르바이트·파트타임 포함)
+- 4주 평균 1주 소정근로시간 15시간 이상(연장근로 제외)
+- 그 주 소정근로일 개근(지각·조퇴·휴가·휴일은 결근 아님)
+- 1주(연속 7일) 근로관계 유지(그만두는 주는 날짜 확인)
 
 ## 주휴수당 계산 방법과 예시
 
