@@ -18,7 +18,7 @@ synonyms:
 summary: 퇴직금은 계속근로기간이 1년 이상이고 4주 평균 1주 소정근로시간이 15시간 이상이면 받을 수 있으며, 5인 미만 사업장과 알바·계약직도 같은 조건이면 대상입니다. 금액은 1년에 30일분 이상의 평균임금이고, 회사는 퇴직일부터 14일 안에 지급해야 합니다(당사자 합의로 연장 가능). 아래 계산기로 예상 금액(세전)을 계산하고 고용노동부 퇴직금 계산기로 다시 확인할 수 있습니다.
 ogImage: /images/og/severance-pay.png
 datePublished: 2026-10-10
-dateModified: 2026-10-16
+dateModified: 2026-10-25
 researchedAt: 2026-10-16
 author: operator
 ymyl: high
@@ -61,8 +61,10 @@ faq:
     answer: 네. 고용노동부는 근로계약서 작성이나 4대보험 가입과 관계없이 계속근로기간 1년 이상, 4주 평균 1주 소정근로시간 15시간 이상이면 퇴직금을 받을 수 있다고 안내합니다.
   - question: 회사가 14일이 지나도 퇴직금을 안 주면 어떻게 하나요?
     answer: 노동포털에서 온라인으로 임금체불 진정을 내거나 관할 고용노동관서를 방문해 진정할 수 있습니다. 상담은 고용노동부 고객상담센터 1350에서 받을 수 있습니다. 퇴직금이 법정 지급기한까지 지급되지 않으면 원칙적으로 연 20%의 지연이자가 발생합니다. 다만 법령에 따른 적용 제외기간 등이 있을 수 있습니다.
-related: [/work/severance-interim-settlement/, /work/unemployment-benefit/]
+related: [/work/severance-pay-tax/, /work/severance-interim-settlement/, /work/unemployment-benefit/]
 changelog:
+  - date: 2026-10-25
+    summary: 세후 금액을 볼 수 있도록 새 글 '퇴직금 세금'(퇴직소득세 계산 순서·근속연수별 표)을 연결했습니다.
   - date: 2026-10-16
     summary: 퇴직 전 3개월 임금과 재직일수로 예상 퇴직금(세전)을 계산하는 계산기를 추가했습니다. 고용노동부 퇴직금 계산기 산식·예제, 평균임금산정 특례 고시, 민법 제160조(1년 계산)를 확인했습니다.
 sourceIds: [local:moel-avg-wage-special, local:law-civil-160, local:law-rbsa, local:law-rbsa-decree, local:law-lsa, local:law-lsa-decree, local:law-equal, local:law-wage-claim, local:moel-faq-89, local:moel-faq-123, local:moel-faq-77, local:moel-counsel-bonus, local:moel-calc, local:labor-wage]
@@ -180,7 +182,7 @@ localSources:
 - **3개월에서 빼는 기간**: 수습 시작 후 3개월 이내, 회사 사정으로 쉰 휴업기간, 출산전후휴가·유산·사산 휴가, 업무상 부상·질병 요양기간, 육아휴직, 쟁의행위 기간, 병역·예비군·민방위 의무 기간, 업무 외 부상·질병 등으로 회사 승인을 받아 쉰 기간은 평균임금을 계산할 때 기간과 임금에서 모두 뺍니다.
 - **상여금·연차수당**: 정기상여금이나 연차수당도 평균임금에 반영될 수 있습니다. 다만 어떤 상여금인지, 연차수당이 언제 발생한 것인지에 따라 포함 여부가 달라집니다. 예를 들어 임금성이 인정되는 정기상여금은 최근 1년 지급액의 3/12을 반영하는 방식이 사용됩니다. 퇴직으로 비로소 지급 사유가 생긴 그해 미사용 연차수당은 평균임금에 포함되지 않습니다.
 
-위 계산기는 이 식으로 계산합니다. 결과는 세전 금액이고, 퇴직소득세는 홈택스 '퇴직소득 세액계산 프로그램'에서 계산할 수 있습니다.
+위 계산기는 이 식으로 계산합니다. 결과는 세전 금액입니다. 세금이 얼마인지는 [퇴직금 세금](/work/severance-pay-tax/)의 근속연수별 표로 가늠하고, 정확한 금액은 홈택스 '퇴직소득 세액계산 프로그램'에서 계산할 수 있습니다.
 
 ## 언제까지 받아야 하나
 
