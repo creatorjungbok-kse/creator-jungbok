@@ -65,7 +65,7 @@ faq:
     answer: 회사는 퇴직소득을 준 날이 속한 달의 다음 달 말일까지 퇴직소득 원천징수영수증을 줘야 합니다. 여기에 퇴직소득세와 지방소득세가 적힙니다.
   - question: 세금이 이미 떼였는데 IRP에 넣으면 돌려받나요?
     answer: 퇴직금을 받은 날부터 60일 안에 연금계좌(IRP 등)에 넣으면, 이미 원천징수된 세금의 환급을 신청할 수 있습니다(소득세법 제146조).
-related: [/work/severance-pay/, /work/severance-interim-settlement/, /work/take-home-pay-calculator/]
+related: [/work/severance-pay-irp/, /work/severance-pay/, /work/severance-interim-settlement/]
 sourceIds: [local:hometax, local:law-income-tax-48, local:law-income-tax-55, local:law-income-tax-146, local:law-local-tax-103-13, local:nts-retire-tax]
 localSources:
   - id: local:hometax
@@ -184,7 +184,7 @@ localSources:
 - **일시금으로 받을 때**: 회사가 퇴직금을 줄 때 퇴직소득세와 지방소득세를 원천징수하고 나머지를 줍니다.
 - **IRP 등 연금계좌로 받을 때**: 퇴직일 현재 연금계좌에 있거나 연금계좌로 지급되면, 연금 외로 꺼내기 전까지 세금을 떼지 않습니다.
 - **이미 뗀 뒤 IRP에 넣을 때**: 받은 날부터 60일 안에 연금계좌에 넣으면 원천징수된 세금의 환급을 신청할 수 있습니다.
-- 퇴직금은 원칙적으로 IRP 계좌로 옮겨 지급하고, 55세 이후 퇴직 등은 예외입니다. 자세한 기준은 [퇴직금 계산기](/work/severance-pay/) 글의 '중간정산과 퇴직연금'에 정리했습니다.
+- 퇴직금은 원칙적으로 IRP 계좌로 옮겨 지급하고, 55세 이후 퇴직 등은 예외입니다. IRP 계좌 개설, 해지할 때 세금, 연금으로 받을 때 줄어드는 세금은 [퇴직금 IRP 수령방법](/work/severance-pay-irp/)에 정리했습니다.
 
 ## 내 세금을 정확히 보려면
 
