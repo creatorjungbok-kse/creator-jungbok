@@ -2,7 +2,7 @@
 title: 2026·2027 주휴수당 계산기｜주 15시간 기준과 얼마 받는지
 cardTitle: 주휴수당 계산기
 seoTitle: 주휴수당 계산기 2026·2027｜주 15시간 기준
-description: 시급과 주 소정근로시간을 넣으면 주휴수당과 이번 주 예상 세전 임금을 계산합니다. 주 15시간·개근 조건과 2027 최저임금 반영.
+description: 시급과 주 근로시간을 넣으면 주휴수당과 이번 주 세전 임금을 계산합니다. 주휴수당 포함 시급표와 2027 최저임금도 정리했습니다.
 subcategory: wages
 contentType: cost
 contentMode: evergreen
@@ -40,10 +40,22 @@ faq:
     answer: 1주(연속된 7일) 동안 근로관계가 유지되고 그 기간의 소정근로일을 개근했다면, 다음 주 근무 예정이 없어도 주휴수당이 발생합니다(고용노동부 해석). 월요일부터 금요일까지 일하고 일요일이 주휴일이면, 토요일에 퇴직하면 발생하지 않고 일요일까지 근로관계를 유지한 뒤 그다음 월요일에 퇴직하면 발생합니다.
 changelog:
   - date: 2026-10-25
-    summary: 받을 수 있는지 판단하는 내용은 새 글 '주휴수당 조건'으로 옮기고, 이 글은 금액 계산에 집중하도록 조건 절을 요약했습니다.
+    summary: 받을 수 있는지 판단하는 내용은 새 글 '주휴수당 조건'으로 옮기고, 주휴수당 포함 시급표와 '주휴 포함 시급' 공고 확인법, 주휴수당 포함 월급 계산을 추가했습니다.
 related: [/work/weekly-holiday-pay-conditions/, /benefits/earned-income-tax-credit/, /business/durunuri-social-insurance/]
-sourceIds: [law-labor-standards-act, law-labor-standards-decree, local:moel-1350-tardiness, moel-1350-weekly-holiday-leave, moel-1350-weekly-holiday-resign, local:moel-1350-short-term, moel-1350-weekly-holiday-normal-day, minimumwage-decisions]
+sourceIds: [law-labor-standards-act, law-labor-standards-decree, local:law-min-wage-decree-5, local:moel-min-wage-2027, local:moel-1350-tardiness, moel-1350-weekly-holiday-leave, moel-1350-weekly-holiday-resign, local:moel-1350-short-term, moel-1350-weekly-holiday-normal-day, minimumwage-decisions]
 localSources:
+  - id: local:law-min-wage-decree-5
+    title: 최저임금법 시행령 제5조(최저임금의 적용을 위한 임금의 환산)
+    publisher: 법제처 국가법령정보센터
+    url: https://www.law.go.kr/법령/최저임금법시행령/제5조
+    level: S1
+    checkedAt: 2026-10-25
+  - id: local:moel-min-wage-2027
+    title: 2027년도 적용 최저임금 시간급 10,700원(월 환산 2,236,300원, 월 209시간 기준)
+    publisher: 고용노동부
+    url: https://www.moel.go.kr/news/enews/report/enewsView.do?news_seq=19744
+    level: S1
+    checkedAt: 2026-10-25
   - id: local:moel-1350-call
     title: 고용노동부 고객상담센터 — 1350 전화 상담 안내
     publisher: 고용노동부
@@ -96,6 +108,34 @@ localSources:
 </div>
 
 2027년 최저임금 10,700원은 2027년 1월 1일부터 적용됩니다(최저임금위원회 결정·고시). 시급이 최저임금보다 높다면 계산기에 실제 시급을 넣으세요.
+
+## 주휴수당 포함 시급
+
+4주 평균 주 15시간 이상(소정근로시간 기준) 일하고 그 주를 개근하면, 위 계산식에서 주휴시간이 1주 근로시간의 5분의 1이라 **주휴수당을 포함한 시급은 '시급 × 1.2'** 가 됩니다. 1주에 몇 시간 일하든 같습니다(같은 업무 통상근로자가 주 5일 근무하는 경우).
+
+| 시급 | 주휴수당 포함 시급 |
+| --- | --- |
+| 10,320원(2026년 최저임금) | 12,384원 |
+| 10,700원(2027년 최저임금) | 12,840원 |
+| 12,000원 | 14,400원 |
+| 13,000원 | 15,600원 |
+
+### '주휴수당 포함 시급'으로 적힌 공고는 나눠서 확인
+
+공고나 계약서에 '주휴수당 포함 시급 ○원'처럼 적혀 있고 주휴수당 조건(4주 평균 주 15시간 이상, 개근)을 갖췄다면, 1.2로 나눈 금액이 주휴수당을 뺀 시급에 해당합니다. 최저임금법 시행령 제5조는 주 단위로 정한 임금을 최저임금과 비교할 때 소정근로시간에 유급 주휴시간을 더한 시간으로 나누도록 정하고 있어, 같은 방식으로 따져 보는 것이 일반적입니다.
+
+- 주휴 포함 12,000원 → 12,000 ÷ 1.2 = 시급 10,000원. **2026년 최저임금(10,320원)보다 낮아 최저임금 위반 소지가 있습니다.**
+- 주휴 포함 13,000원 → 약 10,833원. 2026년·2027년 최저임금 이상입니다.
+- 2026년에 최저임금을 지키려면 주휴 포함 시급이 12,384원 이상이어야 합니다(2027년은 12,840원).
+
+계약 내용이 애매하면 근로계약서를 가지고 고용노동부 고객상담센터(1350)에 확인하세요.
+
+### 주휴수당 포함 월급
+
+월급으로 환산할 때도 주휴시간을 넣습니다. 시행령 제5조에 따라 '(1주 근로시간 + 주휴시간) × 1년 평균 주 수(365 ÷ 7) ÷ 12'가 한 달 기준시간입니다.
+
+- 주 40시간: (40 + 8) × 365 ÷ 7 ÷ 12 = 약 208.6시간, 고용노동부는 **월 209시간**으로 계산합니다. 2026년 최저임금 월 환산액은 2,156,880원, 2027년은 2,236,300원입니다.
+- 주 20시간: (20 + 4) × 365 ÷ 7 ÷ 12 = 약 104.3시간. 2026년 최저임금으로 약 1,076,000원입니다.
 
 ## 이런 주는 따로 확인하세요
 
