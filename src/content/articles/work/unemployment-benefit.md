@@ -10,7 +10,6 @@ primaryQuery: 실업급여 조건
 synonyms:
   - 실업급여
   - 실업급여 수급기간
-  - 실업급여 자발적 퇴사
   - 구직급여
 summary: 실업급여(구직급여)는 이직일 전 18개월 동안 피보험 단위기간이 180일 이상이고, 권고사직·계약만료처럼 비자발적으로 그만뒀거나 법이 정한 정당한 사유로 그만둔 경우 받을 수 있습니다. 하루 금액은 평균임금의 60%로, 2026년 상한은 68,100원이고 하한은 1일 8시간 기준 66,048원(최저임금으로 계산한 값)입니다. 나이와 가입기간에 따라 120일부터 270일까지 받지만, 이직일 다음 날부터 12개월이 지나면 남은 날이 있어도 받을 수 없으니 퇴사 후 바로 신청하세요.
 ogImage: /images/og/unemployment-benefit.png
@@ -60,7 +59,7 @@ faq:
 changelog:
   - date: 2026-10-25
     summary: 하루 금액·받는 일수·총액을 바로 계산하는 실업급여 계산기 글과, 단계별 신청방법 글을 연결했습니다.
-related: [/work/unemployment-benefit-apply/, /work/unemployment-benefit-calculator/, /work/minimum-wage/]
+related: [/work/unemployment-benefit-voluntary-resignation/, /work/unemployment-benefit-apply/, /work/unemployment-benefit-calculator/, /work/minimum-wage/]
 sourceIds: [local:law-eia, local:law-eia-decree, local:law-eia-rule, local:work24-ub, minimumwage-decisions, local:moel-cap-2026, local:moel-cap-2027-notice]
 localSources:
   - id: local:law-eia
@@ -142,7 +141,7 @@ localSources:
 9. **사업장의 안전·법적 문제**: 중대재해가 발생했고 고용노동부의 시정명령을 기한까지 이행하지 않아 같은 재해 위험에 계속 노출된 경우, 또는 법령 제·개정으로 사업 내용이 위법해졌거나 취업 당시와 달리 법에서 금지하는 재화·용역을 제조·판매하게 된 경우입니다.
 10. **그 밖의 객관적으로 불가피한 경우**: 본인과 사업장의 사정을 봤을 때 같은 상황의 통상적인 다른 근로자도 이직했을 것이라고 객관적으로 인정되는 경우입니다.
 
-자발적 퇴사 예외는 사유 이름만으로 자동 인정되는 것이 아니라, 실제 상황과 증빙을 고용센터가 확인해 수급자격을 판단합니다.
+자발적 퇴사 예외는 사유 이름만으로 자동 인정되는 것이 아니라, 실제 상황과 증빙을 고용센터가 확인해 수급자격을 판단합니다. 이사 거리 재는 법, 임금체불 일수 합산, 사유별 증빙은 [자진퇴사 실업급여](/work/unemployment-benefit-voluntary-resignation/)에 따로 정리했습니다.
 
 ## 얼마 받나(2026년)
 
