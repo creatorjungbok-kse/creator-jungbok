@@ -62,7 +62,7 @@ faq:
     answer: 안 됩니다. 본인이 고용센터에 가거나 온라인·모바일로 직접 신청해야 하고, 다른 사람이 대신 작성하면 부정수급에 해당합니다.
   - question: 결과에 이의가 있으면 어떻게 하나요?
     answer: 수급자격이나 실업인정 결정에 이의가 있으면 결정서나 통지서를 받은 날부터 90일 안에 고용보험 심사를 청구할 수 있습니다. 심사청구서는 고용센터에 냅니다.
-related: [/work/unemployment-benefit/, /work/unemployment-benefit-calculator/, /work/early-reemployment-allowance/]
+related: [/work/unemployment-job-search/, /work/unemployment-benefit/, /work/unemployment-benefit-calculator/, /work/early-reemployment-allowance/]
 sourceIds: [local:work24-ub-guide, local:moel-1350-ub-docs, local:moel-1350-ub-recognition]
 localSources:
   - id: local:work24-ub-guide
@@ -140,7 +140,7 @@ localSources:
 
 상담 안내에는 1차 실업인정일에 고용센터에 나가 집체교육을 받는다고 대상 구분 없이 나와 있어요. 60세 이상·장애인은 꼭 출석하는 차수가 4차로 안내돼 있으니, 1차 출석 여부는 관할 고용센터에 확인하는 게 안전해요. 위 기준은 고용노동부 상담 안내(2026년 6월과 10월 답변)를 정리한 거예요.
 
-반복해서 받거나 오래 받는 사람은 기준이 더 엄격하니, 담당자 안내를 따로 받는 게 좋아요. 어떤 활동이 인정되는지는 차수마다 달라서 실업인정 때 담당자에게 확인하는 게 정확해요.
+반복해서 받거나 오래 받는 사람은 기준이 더 엄격하니, 담당자 안내를 따로 받는 게 좋아요. 어떤 활동이 인정되는지, 사람인·이메일 지원은 어떤 증빙을 내는지는 [실업급여 구직활동](/work/unemployment-job-search/)에 따로 정리했어요.
 
 ## 실업급여 신청기간, 언제까지 해야 하나요?
 
