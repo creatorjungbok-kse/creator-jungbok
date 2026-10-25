@@ -9,8 +9,6 @@ contentMode: evergreen
 primaryQuery: 실업급여 조건
 synonyms:
   - 실업급여
-  - 실업급여 신청
-  - 실업급여 신청방법
   - 실업급여 수급기간
   - 실업급여 자발적 퇴사
   - 구직급여
@@ -61,8 +59,8 @@ faq:
     answer: 신청은 할 수 있지만, 구직급여는 이직일 다음 날부터 12개월 안에서만 지급됩니다. 늦게 신청하면 그만큼 받을 수 있는 날이 줄어들 수 있으니 퇴사 후 바로 신청하는 것이 좋습니다. 임신·출산·육아 등으로 취업할 수 없는 기간을 신고하면 수급기간이 연장될 수 있습니다.
 changelog:
   - date: 2026-10-25
-    summary: 하루 금액·받는 일수·총액을 바로 계산하는 실업급여 계산기 글을 연결했습니다.
-related: [/work/unemployment-benefit-calculator/, /work/minimum-wage/]
+    summary: 하루 금액·받는 일수·총액을 바로 계산하는 실업급여 계산기 글과, 단계별 신청방법 글을 연결했습니다.
+related: [/work/unemployment-benefit-apply/, /work/unemployment-benefit-calculator/, /work/minimum-wage/]
 sourceIds: [local:law-eia, local:law-eia-decree, local:law-eia-rule, local:work24-ub, minimumwage-decisions, local:moel-cap-2026, local:moel-cap-2027-notice]
 localSources:
   - id: local:law-eia
@@ -176,11 +174,7 @@ localSources:
 
 ## 신청 순서와 기한
 
-1. **회사에 처리 요청**: 퇴사한 회사가 피보험자격 상실신고와 이직확인서를 처리했는지 확인합니다. 고용24 안내에 따르면 사업주는 이직확인서 발급 요청을 받으면 10일 안에 발급해야 하고, 상실신고는 원칙적으로 다음 달 15일까지 합니다.
-2. **고용24 구직 등록**
-3. **사전 교육**: 온라인으로 듣고, 못 들었으면 고용센터에서 현장 교육을 받습니다.
-4. **수급자격 인정 신청**: 신분증을 가지고 **고용센터를 직접 방문**해 신청합니다.
-5. **실업 인정과 지급**: 정해진 실업인정일마다(1주부터 4주 간격) 재취업활동을 신고하고 인정받으면 지급됩니다. 반복·장기 수급자는 재취업활동 기준이 더 엄격합니다.
+회사의 상실신고·이직확인서 처리 → 고용24 구직 등록과 온라인 사전 교육 → 신분증을 들고 고용센터 방문해 수급자격 인정 신청 → 1주에서 4주마다 실업인정 순서입니다. 단계별 준비물, 이직확인서 조회, 실업인정 출석 차수는 [실업급여 신청방법](/work/unemployment-benefit-apply/)에 정리했습니다.
 
 **꼭 지켜야 할 기한**
 
