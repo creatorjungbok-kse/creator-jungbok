@@ -18,7 +18,7 @@ synonyms:
   - 문화누리카드 자동재충전
   - 통합문화이용권
 summary: 2026년 문화누리카드는 6세 이상 기초생활수급자·차상위계층에게 1인 15만원을 주고, 2008년부터 2013년생과 1962년부터 1966년생은 1만원을 더 줍니다. 작년에 3만원 이상 쓰고 자격을 유지했다면 자동재충전되고, 아니면 11월 30일까지 주민센터·누리집·앱·전화로 신청합니다. 등록된 문화·관광·체육 가맹점에서만 쓸 수 있고, 남은 금액은 12월 31일 23시 59분이 지나면 국고로 반납됩니다.
-thumbnail: /images/thumbnails/culture-nuri-card.svg
+thumbnail: /images/thumbnails/culture-nuri-card.webp
 ogImage: /images/og/culture-nuri-card.png
 datePublished: 2026-10-05
 dateModified: 2026-10-25
