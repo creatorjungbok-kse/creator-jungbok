@@ -18,7 +18,7 @@ synonyms:
   - 연금 피부양자
   - 사업소득 피부양자
 summary: 건강보험 피부양자가 되려면 가족관계에 따른 부양요건, 연간 소득 합계 2천만원 이하와 사업소득 요건, 재산세 과세표준 5억4천만원 이하(9억원 이하면 소득 1천만원 이하) 재산요건을 모두 충족해야 합니다. 공단은 매년 11월 새 소득·재산 자료로 요건을 다시 확인합니다.
-thumbnail: /images/thumbnails/health-insurance-dependent.svg
+thumbnail: /images/thumbnails/health-insurance-dependent.webp
 ogImage: /images/og/health-insurance-dependent.png
 datePublished: 2026-10-20
 dateModified: 2026-10-20
