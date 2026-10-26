@@ -16,7 +16,7 @@ synonyms:
   - 퇴직금 IRP 계좌
   - 퇴직금 수령방법 일시금
 summary: 퇴직금은 원칙적으로 내 명의 IRP(개인형 퇴직연금) 계좌로 들어오고, 55세 이후 퇴직이나 퇴직금 300만원 이하 등은 예외입니다. IRP에 있는 동안은 퇴직소득세를 떼지 않고, 바로 해지하면 미뤄 둔 세금을 그대로 냅니다. 55세 이후 연금으로 나눠 받으면 1년차부터 10년차까지는 세금의 30%, 11년차부터 40%, 21년차부터 50%가 줄어듭니다.
-thumbnail: /images/thumbnails/severance-pay-irp.svg
+thumbnail: /images/thumbnails/severance-pay-irp.webp
 ogImage: /images/og/severance-pay-irp.png
 datePublished: 2026-10-25
 dateModified: 2026-10-25
