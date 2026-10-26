@@ -16,7 +16,7 @@ synonyms:
   - 근속연수공제
   - 퇴직금 세금 공제
 summary: 퇴직금에는 월급처럼 근로소득세가 아니라 퇴직소득세와 그 10%인 지방소득세가 붙습니다. 근속연수공제와 환산급여공제를 빼고 근속연수로 나눠 계산하기 때문에, 월급 300만원에서 500만원, 근속 5년 이하라면 세금은 퇴직금의 1%에서 2% 안팎이고, 오래 일할수록 더 낮아집니다. 같은 퇴직금이라도 오래 일할수록 세금이 줄고, IRP 계좌로 받으면 꺼낼 때까지 세금을 떼지 않습니다.
-thumbnail: /images/thumbnails/severance-pay-tax.svg
+thumbnail: /images/thumbnails/severance-pay-tax.webp
 ogImage: /images/og/severance-pay-tax.png
 datePublished: 2026-10-25
 dateModified: 2026-10-25
