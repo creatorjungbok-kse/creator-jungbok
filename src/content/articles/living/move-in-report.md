@@ -84,7 +84,7 @@ changelog:
   - date: 2026-10-26
     summary: 정부24 온라인 세대주 확인 방법(8일 자동 취소), 방문·대리인 준비물, 늦어진 기간별 과태료 표, 주말 처리, 전입신고로 함께 처리되는 신고, 안 하면 생기는 불이익을 추가했습니다.
 related: [/living/rent-contract-report/, /living/lease-fixed-date/, /living/resident-registration-copy/]
-sourceIds: [local:gov24-move-in, local:gov24-move-in-faq-time, local:gov24-move-in-faq-head, local:gov24-move-in-faq-sync, local:gov24-move-in-faq-cases, local:easylaw-move-in, local:law-resident-registration, local:law-resident-registration-decree, local:law-housing-lease]
+sourceIds: [local:gov24-move-in, local:gov24-move-in-faq-time, local:gov24-move-in-faq-head, local:gov24-move-in-faq-sync, local:gov24-move-in-faq-cases, local:easylaw-move-in, local:law-resident-registration, local:law-resident-registration-decree, local:law-housing-lease, local:korea-jeonse-2026]
 localSources:
   - id: local:gov24-move-in
     title: 전입신고(신청방법·처리기간·수수료·신청자격·제출 서류, 2025.12.9 확인)
@@ -132,6 +132,12 @@ localSources:
     title: 주민등록법 시행령 별표 4 과태료의 부과기준
     publisher: 법제처 국가법령정보센터
     url: https://www.law.go.kr/법령/주민등록법시행령
+    level: S1
+    checkedAt: 2026-10-26
+  - id: local:korea-jeonse-2026
+    title: 임차인 대항력 '전입 신고 즉시' 발생…전세사기 방지 대책 발표(정책브리핑, 2026.3.10)
+    publisher: 문화체육관광부(대한민국 정책브리핑)
+    url: https://www.korea.kr/news/policyNewsView.do?newsId=148960599
     level: S1
     checkedAt: 2026-10-26
   - id: local:law-housing-lease
@@ -212,7 +218,7 @@ localSources:
 
 과태료보다 큰 건 **보증금 보호**예요.
 
-- **대항력이 안 생겨요**: 세입자는 집을 넘겨받고 전입신고를 마친 다음 날 0시부터 대항력이 생겨요. 전입신고를 안 하면 집이 팔리거나 경매에 넘어갔을 때 새 집주인에게 임대차를 주장하기 어려워요.
+- **대항력이 안 생겨요**: 세입자는 집을 넘겨받고 전입신고를 마친 다음 날 0시부터 대항력이 생겨요. 전입신고를 안 하면 집이 팔리거나 경매에 넘어갔을 때 새 집주인에게 임대차를 주장하기 어려워요. 정부가 2026년 3월 대항력이 전입신고 처리 즉시 생기도록 바꾸는 대책을 발표했지만, 법이 바뀌기 전까지는 다음 날 0시 기준이에요.
 - **우선변제권도 없어요**: 우선변제권은 대항력에 확정일자까지 갖춰야 생기는데, 전입신고가 빠지면 확정일자를 받아도 소용이 없어요.
 - **주소가 걸린 신고가 그대로 남아요**: 전입신고를 하면 병역의무자 거주지 이동, 인감 변경, 건강보험 거주지 변경 같은 신고가 함께 처리돼요. 전입신고를 안 하면 각 법에 따른 주소 이동 신고 의무가 그대로 남습니다.
 
