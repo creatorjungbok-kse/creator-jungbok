@@ -66,8 +66,10 @@ const { title, items, variant = 'list', notes = [], id } = Astro.props;
   /* 한눈에 보기: 칸 안에 라벨(작게)·값(굵게)을 위아래로 */
   .fact-list--quick {
     padding: var(--space-5);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius);
-    background: var(--color-surface);
+    background: var(--color-bg);
+    box-shadow: var(--shadow-card);
   }
 
   .fact-list--quick dl {

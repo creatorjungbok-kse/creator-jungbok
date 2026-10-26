@@ -2,18 +2,18 @@
   /* color — Material 3 색 체계(원색 #F4B400)에서 뽑은 값. 페이지는 흰색, 칸은 따뜻한 옅은 회색(B안).
      꿀색 = 브랜드·현재 위치·선택·주요 내부 행동·강조 라벨 / 파랑 = 본문 링크·공식 외부 링크·포커스 */
   --color-bg: #ffffff;
-  --color-surface: #f6f0eb;
-  --color-surface-strong: #ede7e3;
-  --color-border: #e7e1dd;
-  --color-outline: #cbc5c1;
-  --color-text: #1d1b19;
-  --color-text-muted: #615e5a;
+  --color-surface: #f6f7f9;
+  --color-surface-strong: #eceef2;
+  --color-border: #e6e8ec;
+  --color-outline: #c9ced6;
+  --color-text: #111418;
+  --color-text-muted: #5f6670;
   --color-brand: #f4b400;
-  --color-brand-soft: #ffdea3;
-  --color-brand-text: #7a5900;
-  --color-link: #1f5fcc;
-  --color-link-soft: #eaf1fc;
-  --color-link-strong: #174a9f;
+  --color-brand-soft: #fff1cc;
+  --color-brand-text: #8a6100;
+  --color-link: #0161ef;
+  --color-link-soft: #eaf2ff;
+  --color-link-strong: #0154cf;
   --color-status-open: #127a3e;
   --color-status-open-soft: #e7f5ec;
   --color-status-closing: #b4460b;
@@ -23,8 +23,8 @@
   --color-tone-living: #e3edfb;
   --color-tone-digital: #f3ebe4;
 
-  /* type — 시스템 글꼴(웹폰트 다운로드 없음). 크기는 M3 단계를 한국어 본문에 맞춰 조정 */
-  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic',
+  /* type — Pretendard(자체 호스팅, 글자 범위별로 필요한 조각만 내려받음, SIL OFL) → 없으면 시스템 글꼴. 크기는 M3 단계를 한국어 본문에 맞춰 조정 */
+  --font-sans: 'Pretendard Variable', Pretendard, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic',
     sans-serif;
   --text-2xs: 0.75rem;
   --text-xs: 0.8125rem;
@@ -38,7 +38,7 @@
   --weight-semibold: 600;
   --weight-bold: 700;
   --leading-tight: 1.35;
-  --leading-body: 1.7;
+  --leading-body: 1.8;
 
   /* space — 4px 단위 */
   --space-1: 0.25rem;
@@ -52,7 +52,7 @@
 
   /* shape — M3 모서리: 칸·카드 12px, 칩·배지·표 8px, 검색창·버튼 알약 */
   --radius-sm: 8px;
-  --radius: 12px;
+  --radius: 14px;
   --radius-pill: 999px;
 
   /* layout — Gizmo 참고 2단 구조(변경 없음) */
@@ -64,4 +64,7 @@
   --gutter: 16px;
   --touch: 44px;
   --ad-min-h: 250px;
+
+  /* elevation — 카드·이미지 그림자(AstroWind 참고) */
+  --shadow-card: 0 1px 2px rgb(16 24 40 / 6%), 0 4px 12px rgb(16 24 40 / 6%);
 }

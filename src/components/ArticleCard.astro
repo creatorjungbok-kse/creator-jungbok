@@ -150,13 +150,25 @@ const showMeta = meta.length > 0 && variant !== 'mini' && variant !== 'stack';
 
   .card--tile .card__title {
     -webkit-line-clamp: 2;
+    font-weight: var(--weight-bold);
+    letter-spacing: -0.01em;
+  }
+
+  .card--tile:hover :global(.thumb img),
+  .card--feature:hover :global(.thumb img) {
+    transform: scale(1.03);
+  }
+
+  .card :global(.thumb img) {
+    transition: transform 0.25s ease;
   }
 
   .card--tile .card__top span:not(.badge),
   .card--feature .card__top span:not(.badge) {
     padding: 2px var(--space-2);
-    border-radius: 6px;
-    background: var(--color-brand-soft);
+    border-radius: 999px;
+    background: var(--color-link-soft);
+    color: var(--color-link-strong);
   }
 
   /* mini: 사이드바용 작은 줄 */

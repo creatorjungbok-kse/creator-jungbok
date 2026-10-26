@@ -15,9 +15,11 @@ export interface Props {
   showRecent?: boolean;
   // 글 상세에서는 지금 글을 최근 글에서 뺀다
   exclude?: string;
+  // 홈: 세부 분류를 숨기고 대분류만(사이드바를 짧게)
+  compact?: boolean;
 }
 
-const { current, showRecent = true, exclude } = Astro.props;
+const { current, showRecent = true, exclude, compact = false } = Astro.props;
 const all = await getAllContent();
 const listed = all.filter((i) => statusOf(i) !== 'closed');
 const tree = (await activeCategories()).map((c) => {
@@ -46,7 +48,7 @@ const tools = toolIds.flatMap((id) => {
             <span>{c.name}</span>
             <span class="count">{count}<span class="visually-hidden">개</span></span>
           </a>
-          {subs.length > 0 && (
+          {!compact && subs.length > 0 && (
             <ul>
               {subs.map((s) => (
                 <li>
@@ -141,24 +143,28 @@ const tools = toolIds.flatMap((id) => {
     gap: var(--space-4);
   }
 
+  /* 계산기·도구: 2열 칩(모바일 포함), 테두리만 */
   .tool-links {
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
     gap: var(--space-2);
   }
 
   .tool-links a {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    min-height: var(--touch);
-    padding-inline: var(--space-4);
-    border-radius: var(--radius-sm);
-    background: var(--color-surface);
+    min-height: 2.5rem;
+    padding-inline: var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
     color: var(--color-text);
-    font-size: var(--text-sm);
-    font-weight: var(--weight-semibold);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
   }
 
   .tool-links a:hover {
-    background: var(--color-surface-strong);
+    border-color: var(--color-link);
+    color: var(--color-link);
+    text-decoration: none;
   }
 </style>
