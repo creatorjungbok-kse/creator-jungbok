@@ -16,7 +16,7 @@ synonyms:
   - 근로계약서 미작성 신고
   - 5인 미만 근로계약서
 summary: 회사는 근로계약을 맺을 때 임금·소정근로시간·휴일·연차를 적은 서면을 근로자에게 줘야 하고, 어기면 500만원 이하 벌금 대상입니다. 기간제·단시간 근로자는 여기에 기간제법상 서면명시 의무가 더해져 500만원 이하 과태료 기준도 적용됩니다. 5인 미만 사업장도 빠지지 않습니다.
-thumbnail: /images/thumbnails/employment-contract-penalty.svg
+thumbnail: /images/thumbnails/employment-contract-penalty.webp
 ogImage: /images/og/employment-contract-penalty.png
 datePublished: 2026-10-14
 dateModified: 2026-10-14
