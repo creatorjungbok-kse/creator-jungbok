@@ -11,8 +11,8 @@ export interface Props {
   variant?: ArticleCardProps['variant'];
   // 첫 화면 대표 이미지만 바로 불러온다
   eager?: boolean;
-  // 카드 위 분류 글자: full = 대분류(· 세부 분류) / sub = 세부 분류만 / none = 없음(세부 분류 구획 안)
-  label?: 'full' | 'sub' | 'none';
+  // 카드 위 분류 글자: full = 대분류(· 세부 분류) / main = 대분류만(홈 카드) / sub = 세부 분류만 / none = 없음(세부 분류 구획 안)
+  label?: 'full' | 'main' | 'sub' | 'none';
   // 카드형 UI(홈·관련 글)에서 cardTitle(짧은 표시 제목)이 있으면 그것을 쓴다. 카테고리 목록·사이드바는 끈다
   short?: boolean;
 }
@@ -22,7 +22,7 @@ const { data } = item.entry;
 const title = (short && data.cardTitle) || data.title;
 const category = categories.find((c) => c.slug === item.category)!;
 const sub = subcategoryName(category, data.subcategory);
-const label = { full: variant === 'text' ? category.name : `${category.name} · ${sub}`, sub, none: undefined }[labelMode];
+const label = { full: variant === 'text' ? category.name : `${category.name} · ${sub}`, main: category.name, sub, none: undefined }[labelMode];
 const meta =
   item.kind === 'article' && item.entry.data.contentType === 'cost'
     ? [`조사 기준 ${formatDate(data.researchedAt, 'month')}`, `업데이트 ${formatDate(data.dateModified)}`]

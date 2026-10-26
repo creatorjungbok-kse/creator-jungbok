@@ -17,6 +17,7 @@ synonyms:
   - 연봉 퇴직금 포함
   - 월급에 퇴직금 포함
 summary: 퇴직금 중간정산은 무주택자의 주택 구입·전세보증금, 6개월 이상 요양 의료비, 5년 안의 파산·개인회생, 임금피크제·근로시간 단축, 재난처럼 법이 정한 사유가 있을 때만 근로자가 요구할 수 있습니다. 사유가 있어도 회사가 반드시 승낙해야 하는 것은 아닙니다. DC형 퇴직연금은 중간정산이 아니라 금융회사에 중도인출을 신청합니다.
+thumbnail: /images/thumbnails/severance-interim-settlement.svg
 ogImage: /images/og/severance-interim-settlement.png
 datePublished: 2026-10-14
 dateModified: 2026-10-14

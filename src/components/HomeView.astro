@@ -1,8 +1,11 @@
 ---
-// 홈 화면. 목록 선택은 src/pages/index.astro(lib/select.ts 규칙)에서 하고, 여기서는 표시만 한다.
-// 순서(01 D): 소개·검색 → 지금 확인할 혜택 → 계산기 → 새로 올라온 글 → [광고] → 분야별로 보기(분야 4개 + 위에 안 나온 글) → 조사 원칙.
+// 홈 화면(B안 매거진형). 목록 선택은 src/pages/index.astro(lib/select.ts 규칙)에서 하고, 여기서는 표시만 한다.
+// 순서: 대표 글 + 요즘 많이 찾는 글 → [본문] 최신 글 → [광고] → 지금 확인할 혜택 → 계산기 → 분야별 다른 글 → 조사 원칙
+//       [사이드바] 운영자 → 인기 글 → 카테고리·계산기(BlogSidebar)
 // 한 글은 홈에서 한 번만 보이고, 항목이 없는 섹션은 숨긴다. 슬라이더·움직이는 요소 없음.
 import AdSlot from './AdSlot.astro';
+import AuthorBox from './AuthorBox.astro';
+import BlogSidebar from './BlogSidebar.astro';
 import ContentCard from './ContentCard.astro';
 import Icon from './Icon.astro';
 import SectionTitle from './SectionTitle.astro';
@@ -11,120 +14,114 @@ import type { Category } from '../data/categories';
 import type { ContentItem } from '../lib/content';
 import { formatDate } from '../lib/format';
 
-// 홈 첫 문장. 홈 <title>(site.tagline)과는 따로 둔다
-const headline = '받을 수 있는 혜택과 놓치기 쉬운 기한부터 먼저 확인하세요';
-const lead = '지원금 신청 기간, 사업자 신고, 공과금·통신비까지 정부·공공기관 공식 자료를 직접 확인해 정리합니다.';
-
 export interface Props {
+  lead?: ContentItem;
+  trending: ContentItem[];
+  popular: ContentItem[];
+  latest: ContentItem[];
   urgent: ContentItem[];
   moreUrgent: boolean;
   tools: { href: string; name: string; summary?: string }[];
-  picks: ContentItem[];
   sections: { category: Category; href: string; count: number; items: ContentItem[] }[];
   isEmpty: boolean;
 }
 
-const { urgent, moreUrgent, tools, picks, sections, isEmpty } = Astro.props;
+const { lead, trending, popular, latest, urgent, moreUrgent, tools, sections, isEmpty } = Astro.props;
 ---
 
 <div class="home">
-  <section class="hero">
-    <div class="container hero__inner">
-      <h1>{headline}</h1>
-      <p class="hero__lead">{lead}</p>
-      <form class="search-form" action="/search/" method="get" role="search">
-        <label class="visually-hidden" for="home-q">검색어</label>
-        <input id="home-q" name="q" type="search" placeholder="예: 전기요금 계산기, 사업자등록증" />
-        <button type="submit">검색</button>
-      </form>
-    </div>
-  </section>
-
-  <div class="container home__body">
-    {isEmpty && <p class="empty">첫 정보를 준비하고 있습니다. 아래 분야에서 다룰 주제를 확인해 보세요.</p>}
-
+  <div class="container home-lead">
+    <h1 class="home-title"><strong>{site.name}</strong> · 정부·공공기관 공식 자료로 확인한 생활 돈 정보</h1>
+    {isEmpty && <p class="empty">첫 정보를 준비하고 있습니다.</p>}
     {
-      urgent.length > 0 && (
-        <section class="block" data-open-list>
-          <SectionTitle title="지금 확인할 혜택" tier="primary" />
-          <p class="block__note">마감이 가까운 혜택, 7일 안에 신청이 시작되는 혜택, 지금 신청할 수 있는 혜택 순서입니다.</p>
-          <div class="card-grid">
-            {urgent.map((item) => (
-              <ContentCard item={item} short />
-            ))}
+      lead && (
+        <div class="lead-grid">
+          <div class="lead-main">
+            <ContentCard item={lead} variant="feature" eager label="main" />
           </div>
-          <a class="more-link" href="/benefits/">
-            {moreUrgent ? '지금 확인할 혜택 더 보기' : '지원·혜택 전체 보기'} <span aria-hidden="true">›</span>
-          </a>
-        </section>
+          {trending.length > 0 && (
+            <section class="lead-side" aria-labelledby="trending-title">
+              <h2 id="trending-title">요즘 많이 찾는 글</h2>
+              <div class="lead-list">
+                {trending.map((item) => (
+                  <ContentCard item={item} variant="mini" short />
+                ))}
+              </div>
+            </section>
+          )}
+        </div>
       )
     }
+  </div>
 
-    {
-      tools.length > 0 && (
-        <section class="block">
-          <SectionTitle title="바로 쓰는 계산기" tier="primary" />
-          <ul class="tools">
-            {tools.map((t) => (
-              <li>
-                <a href={t.href}>
-                  <span class="tools__name">{t.name}</span>
-                  {t.summary && <span class="tools__desc">{t.summary}</span>}
-                  <span class="tools__go">
-                    계산하기 <span aria-hidden="true">›</span>
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )
-    }
+  <div class="container page-grid">
+    <div class="page-main home__body">
+      {
+        latest.length > 0 && (
+          <section class="block">
+            <SectionTitle title="최신 글" tier="primary" />
+            <div class="latest">
+              {latest.map((item) => (
+                <ContentCard item={item} variant="tile" short label="main" />
+              ))}
+            </div>
+          </section>
+        )
+      }
 
-    {
-      picks.length > 0 && (
-        <section class="block">
-          <SectionTitle title="새로 올라온 글" tier="primary" />
-          <div class="post-grid picks">
-            {picks.map((item, i) => (
-              <ContentCard item={item} variant="feature" eager={i === 0} short />
-            ))}
-          </div>
-        </section>
-      )
-    }
+      {latest.length > 0 && <AdSlot id="home-1" />}
 
-    {picks.length > 0 && <AdSlot id="home-1" />}
+      {
+        urgent.length > 0 && (
+          <section class="block" data-open-list>
+            <SectionTitle title="지금 확인할 혜택" tier="primary" />
+            <p class="block__note">마감이 가까운 혜택, 7일 안에 신청이 시작되는 혜택, 지금 신청할 수 있는 혜택 순서입니다.</p>
+            <div class="card-grid">
+              {urgent.map((item) => (
+                <ContentCard item={item} short />
+              ))}
+            </div>
+            <a class="more-link" href="/benefits/">
+              {moreUrgent ? '지금 확인할 혜택 더 보기' : '지원·혜택 전체 보기'} <span aria-hidden="true">›</span>
+            </a>
+          </section>
+        )
+      }
 
-    {
-      sections.length > 0 && (
-        <section class="block">
-          <SectionTitle title="분야별로 보기" tier="primary" />
-          <nav class="cats" aria-label="분야">
-            <ul>
-              {sections.map(({ category, href, count }) => (
-                <li class={`cat cat--${category.slug}`}>
-                  <a href={href}>
-                    <span class="cat__name">{category.name}</span>
-                    <span class="cat__desc">{category.description}</span>
-                    <span class="cat__count">
-                      글 {count}개 <span aria-hidden="true">›</span>
+      {
+        tools.length > 0 && (
+          <section class="block">
+            <SectionTitle title="바로 쓰는 계산기" tier="primary" />
+            <ul class="tools">
+              {tools.map((t) => (
+                <li>
+                  <a href={t.href}>
+                    <span class="tools__name">{t.name}</span>
+                    {t.summary && <span class="tools__desc">{t.summary}</span>}
+                    <span class="tools__go">
+                      계산하기 <span aria-hidden="true">›</span>
                     </span>
                   </a>
                 </li>
               ))}
             </ul>
-          </nav>
-          {sections.some((s) => s.items.length > 0) && (
+          </section>
+        )
+      }
+
+      {
+        sections.some((s) => s.items.length > 0) && (
+          <section class="block">
+            <SectionTitle title="분야별로 보기" tier="primary" />
             <div class="by-cat">
               {sections
                 .filter(({ items }) => items.length > 0)
-                .map(({ category, href, items }) => (
+                .map(({ category, href, count, items }) => (
                   <section class="by-cat__col" aria-labelledby={`latest-${category.slug}`}>
                     <div class="by-cat__head">
-                      <h3 id={`latest-${category.slug}`}>{category.name} 다른 글</h3>
+                      <h3 id={`latest-${category.slug}`}>{category.name}</h3>
                       <a href={href}>
-                        전체 보기 <span aria-hidden="true">›</span>
+                        글 {count}개 전체 보기 <span aria-hidden="true">›</span>
                       </a>
                     </div>
                     <ol>
@@ -138,28 +135,155 @@ const { urgent, moreUrgent, tools, picks, sections, isEmpty } = Astro.props;
                   </section>
                 ))}
             </div>
-          )}
-        </section>
-      )
-    }
+          </section>
+        )
+      }
 
-    <section class="method" aria-labelledby="method-title">
-      <h2 id="method-title">정보는 이렇게 조사합니다</h2>
-      <p>
-        {site.name}은 지원·혜택, 사업·창업, 집·생활, 통신·디지털 네 분야의 생활 정보를 다룹니다. 모든 글은 정부·공공기관 같은 공식 자료를 먼저 확인하고,
-        확인한 날짜와 바뀐 내용을 글마다 남깁니다.
-      </p>
-      <ul class="trust">
-        <li><Icon name="check" size={18} /> 공식 출처만 사용</li>
-        <li><Icon name="check" size={18} /> 확인 날짜 표시</li>
-        <li><Icon name="check" size={18} /> 변경 내역 공개</li>
-      </ul>
-      <a class="method__link" href="/editorial-policy/">정보 조사 원칙 자세히 보기 <span aria-hidden="true">›</span></a>
-    </section>
+      <section class="method" aria-labelledby="method-title">
+        <h2 id="method-title">정보는 이렇게 조사합니다</h2>
+        <p>
+          {site.name}은 지원·혜택, 사업·창업, 근로·급여, 집·생활, 통신·디지털, 금융·저축 분야의 생활 정보를 다룹니다. 모든 글은 정부·공공기관 같은
+          공식 자료를 먼저 확인하고, 확인한 날짜와 바뀐 내용을 글마다 남깁니다.
+        </p>
+        <ul class="trust">
+          <li><Icon name="check" size={18} /> 공식 출처만 사용</li>
+          <li><Icon name="check" size={18} /> 확인 날짜 표시</li>
+          <li><Icon name="check" size={18} /> 변경 내역 공개</li>
+        </ul>
+        <a class="method__link" href="/editorial-policy/">정보 조사 원칙 자세히 보기 <span aria-hidden="true">›</span></a>
+      </section>
+    </div>
+
+    <aside class="page-aside" aria-label="운영자와 카테고리">
+      <AuthorBox />
+      {
+        popular.length > 0 && (
+          <section class="side-block popular">
+            <SectionTitle title="인기 글" tier="utility" />
+            <ol>
+              {popular.map((item) => (
+                <li>
+                  <a href={item.url}>{item.entry.data.cardTitle ?? item.entry.data.title}</a>
+                </li>
+              ))}
+            </ol>
+          </section>
+        )
+      }
+      <BlogSidebar showRecent={false} />
+    </aside>
   </div>
 </div>
 
 <style>
+  /* 첫 화면: 대표 글(큰 이미지) + 요즘 많이 찾는 글. 모바일은 위아래로 */
+  .home-lead {
+    display: grid;
+    gap: var(--space-4);
+    padding-top: var(--space-5);
+  }
+
+  .home-title {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+  }
+
+  .home-title strong {
+    color: var(--color-text);
+  }
+
+  .lead-grid {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .lead-main :global(.card--feature .card__title) {
+    font-size: var(--text-xl);
+  }
+
+  .lead-side h2 {
+    margin-bottom: var(--space-2);
+    font-size: var(--text-lg);
+  }
+
+  .lead-list > :global(.card) {
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    padding-block: var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .lead-list :global(.card__title) {
+    font-size: var(--text-base);
+    font-weight: var(--weight-semibold);
+  }
+
+  /* 최신 글: 이미지 카드 모바일 2칸, 태블릿 이상 3칸 */
+  .latest {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-5) var(--space-4);
+  }
+
+  .latest :global(.card__title) {
+    font-size: var(--text-sm);
+  }
+
+  .home .page-grid {
+    padding-top: var(--space-6);
+  }
+
+  /* 사이드바 인기 글: 번호 + 제목 */
+  .popular ol {
+    counter-reset: pop;
+  }
+
+  .popular li {
+    display: grid;
+    grid-template-columns: 1.75rem minmax(0, 1fr);
+    padding-block: var(--space-3);
+    border-bottom: 1px dashed var(--color-border);
+    counter-increment: pop;
+    font-size: var(--text-sm);
+  }
+
+  .popular li::before {
+    content: counter(pop, decimal-leading-zero);
+    color: var(--color-brand);
+    font-weight: var(--weight-bold);
+  }
+
+  .popular a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .popular a:hover {
+    text-decoration: underline;
+  }
+
+  @media (min-width: 768px) {
+    .latest {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-6) var(--space-5);
+    }
+
+    .latest :global(.card__title) {
+      font-size: var(--text-base);
+    }
+
+    .lead-main :global(.card--feature .card__title) {
+      font-size: var(--text-2xl);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .lead-grid {
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      gap: var(--gap-layout);
+    }
+  }
+
   .home__body {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
@@ -168,35 +292,11 @@ const { urgent, moreUrgent, tools, picks, sections, isEmpty } = Astro.props;
   }
 
   /* 소개·검색: 옅은 바탕 띠로 본문과 구분. 모바일 첫 300px 안에 검색창, 이미지 없음 */
-  .hero {
-    background: var(--color-surface);
-    border-bottom: 1px solid var(--color-border);
-  }
 
-  .hero__inner {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-3);
-    padding-block: var(--space-6);
-  }
 
-  .hero h1 {
-    font-size: var(--text-xl);
-    letter-spacing: -0.02em;
-  }
 
-  .hero__lead {
-    color: var(--color-text-muted);
-    font-size: var(--text-sm);
-  }
 
-  .hero .search-form {
-    margin-top: var(--space-2);
-  }
 
-  .hero .search-form input {
-    background: var(--color-bg);
-  }
 
   /* 지금 확인할 혜택: 고르는 기준 한 줄 + 전체 보기 */
   .block__note {
@@ -332,7 +432,7 @@ const { urgent, moreUrgent, tools, picks, sections, isEmpty } = Astro.props;
     }
   }
 
-  /* 분야별 최신 글: 모바일 1칸, 태블릿 2칸, 데스크톱 4칸 */
+  /* 분야별 최신 글: 모바일 1칸, 태블릿 이상 2칸(본문 칸 안) */
   .by-cat {
     display: grid;
     gap: var(--space-6);
@@ -429,18 +529,6 @@ const { urgent, moreUrgent, tools, picks, sections, isEmpty } = Astro.props;
   }
 
   @media (min-width: 768px) {
-    .hero__inner {
-      padding-block: var(--space-7);
-    }
-
-    .hero h1 {
-      font-size: var(--text-2xl);
-    }
-
-    .hero__lead {
-      font-size: var(--text-base);
-    }
-
     .cats ul {
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
@@ -463,25 +551,6 @@ const { urgent, moreUrgent, tools, picks, sections, isEmpty } = Astro.props;
   }
 
   @media (min-width: 1024px) {
-    .hero__inner {
-      max-width: 60rem;
-      margin-inline: auto;
-      text-align: center;
-      justify-items: center;
-    }
-
-    .hero__inner > :is(h1, .hero__lead, .search-form) {
-      width: 100%;
-      max-width: 48rem;
-    }
-
-    .hero .search-form {
-      width: 100%;
-    }
-
-    .by-cat {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
 
     .method {
       padding: var(--space-6);

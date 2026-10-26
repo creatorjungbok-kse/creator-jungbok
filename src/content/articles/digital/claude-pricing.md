@@ -15,6 +15,7 @@ synonyms:
   - 클로드 Max
   - Claude Pro 가격
 summary: Claude 개인 요금제는 무료(Free) $0, Pro 월 $20(연간 구독 시 $200 선결제로 월 $17), Max 월 $100(5x)·$200(20x)입니다. Claude Code·Research·Opus 모델과 무제한 프로젝트가 필요하면 Pro부터, Pro 사용량을 자주 다 쓰면 Max가 해당됩니다. 공식 가격은 달러 기준이며 실제 결제 금액은 결제 화면의 현지 통화로 확인하세요.
+thumbnail: /images/thumbnails/claude-pricing.svg
 ogImage: /images/og/claude-pricing.png
 datePublished: 2026-10-10
 dateModified: 2026-10-10

@@ -10,6 +10,7 @@ import BaseLayout from './BaseLayout.astro';
 import ActionLinks from '../components/ActionLinks.astro';
 import ArticleFeedback from '../components/ArticleFeedback.astro';
 import AdSlot from '../components/AdSlot.astro';
+import AuthorBox from '../components/AuthorBox.astro';
 import BlogSidebar from '../components/BlogSidebar.astro';
 import ContentCard from '../components/ContentCard.astro';
 import Thumbnail from '../components/Thumbnail.astro';
@@ -230,13 +231,15 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
 
       <ArticleFeedback />
 
+      <AuthorBox variant="full" />
+
       {
         related.length > 0 && (
           <section data-ad-protected="related" data-track="related">
             <SectionTitle title="다음에 볼 정보" tier="article" />
-            <div class="card-list">
+            <div class="post-grid related-grid">
               {related.map((r) => (
-                <ContentCard item={r} variant="row" short />
+                <ContentCard item={r} variant="tile" short label="main" />
               ))}
             </div>
           </section>
@@ -277,10 +280,22 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
 </BaseLayout>
 
 <style is:global>
+  /* 관련 글: 이미지 카드 모바일 2칸, 태블릿 이상 3칸(layout.css post-grid) */
+  @media (max-width: 767.98px) {
+    .related-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-5) var(--space-4);
+    }
+
+    .related-grid .card__title {
+      font-size: var(--text-sm);
+    }
+  }
+
   /* ── 글 화면 구역 체계(블록·본문 공통) ─────────────────────────────
      모든 요소가 같은 폭(왼쪽·오른쪽 끝 정렬)이고, 제목이 있는 구역은 같은 크기 제목 + 위 구분선 + 같은 여백.
      컴포넌트의 기본 제목 크기보다 우선하도록 .article 아래에서만 덮어쓴다. */
-  .article > section:not(.fact-list--quick, .summary-box, .feedback) {
+  .article > section:not(.fact-list--quick, .summary-box, .feedback, .author) {
     padding-top: var(--space-6);
     border-top: 1px solid var(--color-border);
   }

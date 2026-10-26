@@ -1,0 +1,77 @@
+---
+// 운영자 소개 상자(홈 사이드바·글 끝). 실명·사진은 쓰지 않는다(운영자명만, 2026-10-15 사용자 확정).
+import { site } from '../config/site';
+
+export interface Props {
+  // compact: 사이드바용(설명 한 줄), full: 글 끝(작성 원칙 링크까지)
+  variant?: 'compact' | 'full';
+}
+
+const { variant = 'compact' } = Astro.props;
+---
+
+<section class:list={['author', `author--${variant}`]} aria-label="운영자 소개">
+  <span class="author__avatar" aria-hidden="true">꿀</span>
+  <div class="author__body">
+    <p class="author__name">{site.operatorName}</p>
+    <p class="author__desc">
+      {
+        variant === 'full'
+          ? '실업급여·퇴직금·지원금처럼 놓치기 쉬운 생활 돈 정보를 정부·공공기관 공식 자료로 확인해 정리합니다. 확인한 날짜와 바뀐 내용은 글마다 남깁니다.'
+          : '공식 자료로 확인한 생활 돈 정보를 정리합니다.'
+      }
+    </p>
+    <p class="author__links">
+      <a href="/about/">운영자 소개</a>
+      {variant === 'full' && <a href="/editorial-policy/">작성 원칙</a>}
+    </p>
+  </div>
+</section>
+
+<style>
+  .author {
+    display: grid;
+    grid-template-columns: 3.25rem minmax(0, 1fr);
+    gap: var(--space-4);
+    align-items: start;
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-bg);
+  }
+
+  .author__avatar {
+    display: grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 50%;
+    background: var(--color-brand);
+    color: #fff;
+    font-size: var(--text-lg);
+    font-weight: var(--weight-bold);
+  }
+
+  .author__body {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .author__name {
+    font-weight: var(--weight-bold);
+  }
+
+  .author__desc {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+
+  .author__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+  }
+</style>

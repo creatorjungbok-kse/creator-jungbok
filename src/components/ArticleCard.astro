@@ -2,7 +2,8 @@
 // 글 목록 카드 하나. 홈·카테고리·관련 글·사이드바가 모두 이 카드를 쓰고 variant로 모양만 바꾼다.
 // - text: 글자만(지원·혜택 카드, 회색 칸 목록)
 // - feature: 큰 대표 글(이미지 위, 큰 제목·요약)
-// - stack: 이미지 위 + 제목(관련 글·작은 대표 글)
+// - stack: 이미지 위 + 제목(작은 대표 글)
+// - tile: 이미지 위 + 분류·제목·날짜(홈 최신 글·관련 글 카드)
 // - row: 이미지 왼쪽 + 분류·제목·요약·날짜(최근 글·카테고리 목록)
 // - mini: 작은 이미지 왼쪽 + 제목(사이드바)
 // 카드 전체가 제목 링크의 클릭 영역이다(링크는 제목 하나뿐이라 스크린리더에서 중복되지 않는다).
@@ -20,7 +21,7 @@ export interface Props {
   statusLabel?: string;
   excerpt?: string;
   meta?: string[];
-  variant?: 'text' | 'feature' | 'stack' | 'row' | 'mini';
+  variant?: 'text' | 'feature' | 'stack' | 'tile' | 'row' | 'mini';
   // text가 아닌 카드의 대표 이미지(src가 없으면 Thumbnail이 대체 칸을 그린다)
   thumbnail?: Omit<ThumbnailProps, 'class'>;
 }
@@ -140,6 +141,22 @@ const showMeta = meta.length > 0 && variant !== 'mini' && variant !== 'stack';
 
   .card--row .card__title {
     -webkit-line-clamp: 2;
+  }
+
+  /* tile: 이미지 위 카드(홈 최신 글·관련 글). 제목 2줄 */
+  .card--tile {
+    gap: var(--space-3);
+  }
+
+  .card--tile .card__title {
+    -webkit-line-clamp: 2;
+  }
+
+  .card--tile .card__top span:not(.badge),
+  .card--feature .card__top span:not(.badge) {
+    padding: 2px var(--space-2);
+    border-radius: 6px;
+    background: var(--color-brand-soft);
   }
 
   /* mini: 사이드바용 작은 줄 */

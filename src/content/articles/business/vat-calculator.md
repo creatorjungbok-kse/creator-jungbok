@@ -16,6 +16,7 @@ synonyms:
   - 부가세 포함 금액
   - 간이과세자 부가세 계산
 summary: 부가세는 공급가액의 10%이고, 부가세가 포함된 합계에서는 합계 × 100/110이 공급가액입니다. 간이과세자는 1년 매출 × 업종별 부가가치율 × 10%에서 공제를 빼서 예상 부가세를 계산합니다.
+thumbnail: /images/thumbnails/vat-calculator.svg
 ogImage: /images/og/vat-calculator.png
 datePublished: 2026-10-13
 dateModified: 2026-10-13
