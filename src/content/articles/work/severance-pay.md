@@ -19,7 +19,7 @@ synonyms:
   - 퇴직금 계산
   - 알바 퇴직금
 summary: 퇴직금은 계속근로기간이 1년 이상이고 4주 평균 1주 소정근로시간이 15시간 이상이면 받을 수 있으며, 5인 미만 사업장과 알바·계약직도 같은 조건이면 대상입니다. 금액은 1년에 30일분 이상의 평균임금이고, 회사는 퇴직일부터 14일 안에 지급해야 합니다(당사자 합의로 연장 가능). 아래 계산기로 예상 금액(세전)을 계산하고 고용노동부 퇴직금 계산기로 다시 확인할 수 있습니다.
-thumbnail: /images/thumbnails/severance-pay.svg
+thumbnail: /images/thumbnails/severance-pay.webp
 ogImage: /images/og/severance-pay.png
 datePublished: 2026-10-10
 dateModified: 2026-10-25
