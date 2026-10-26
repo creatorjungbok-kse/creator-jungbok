@@ -18,7 +18,7 @@ synonyms:
   - 코로나 백신 65세
   - 독감 코로나 동시접종
 summary: 2026-2027절기 독감 무료접종은 어린이·임신부는 이미 시작됐고, 75세 이상은 10월 6일, 70~74세는 10월 12일, 65~69세는 10월 15일부터 시작합니다. 독감 무료접종은 주소와 관계없이 지정 위탁의료기관과 보건소에서 받을 수 있습니다. 코로나19 국가예방접종은 70세 이상과 12세 이상 면역저하자 등이 10월 12일, 65~69세가 10월 15일부터 시작하며, 65세 이상은 독감과 코로나19 백신을 같은 날 접종할 수 있습니다.
-thumbnail: /images/thumbnails/flu-vaccination.svg
+thumbnail: /images/thumbnails/flu-vaccination.webp
 ogImage: /images/og/flu-vaccination.png
 datePublished: 2026-10-05
 dateModified: 2026-10-09
