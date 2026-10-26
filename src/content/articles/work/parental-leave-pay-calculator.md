@@ -18,7 +18,7 @@ synonyms:
   - 한부모 육아휴직급여
   - 육아휴직기간
 summary: 2026년 육아휴직급여는 처음 3개월은 월 통상임금의 100%(상한 250만원), 4~6개월째는 100%(상한 200만원), 7개월째부터 80%(상한 160만원)입니다. 통상임금 300만원이면 12개월에 2,310만원입니다. 부모가 모두 쓰면 첫 6개월 상한이 최대 450만원까지 올라가고(6+6), 한부모는 첫 3개월 상한이 300만원입니다.
-thumbnail: /images/thumbnails/parental-leave-pay-calculator.svg
+thumbnail: /images/thumbnails/parental-leave-pay-calculator.webp
 ogImage: /images/og/parental-leave-pay-calculator.png
 datePublished: 2026-10-19
 dateModified: 2026-10-19
