@@ -17,7 +17,7 @@ synonyms:
   - 내일배움카드 대상
   - 내일배움카드 훈련장려금
 summary: 국민내일배움카드는 직업훈련 수강료를 5년간 300만원까지 지원하는 카드이고, 취약계층 등은 다 쓴 뒤 200만원을 더 받아 최대 500만원까지 씁니다. 실업자뿐 아니라 재직자·자영업자도 신청할 수 있지만 공무원, 75세 이상, 대규모기업에 다니는 45세 미만 월 300만원 이상 근로자 등은 받을 수 없습니다. 신청은 고용24에서 하고, 결과는 접수일부터 7일 안에 알려 줍니다.
-thumbnail: /images/thumbnails/national-learning-card.svg
+thumbnail: /images/thumbnails/national-learning-card.webp
 ogImage: /images/og/national-learning-card.png
 datePublished: 2026-10-18
 dateModified: 2026-10-18
