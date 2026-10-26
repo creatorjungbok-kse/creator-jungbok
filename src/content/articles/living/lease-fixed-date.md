@@ -25,7 +25,7 @@ synonyms:
   - 전세 확정일자
   - 월세 확정일자
 summary: 확정일자는 주택 소재지 주민센터나 등기소에 임대차계약서 원본과 신분증을 가져가 받거나, 대법원 인터넷등기소에서 온라인으로 받을 수 있습니다. 수수료는 방문 600원, 인터넷 500원입니다. 입주·전입신고와 확정일자를 함께 갖추면 경매·공매 때 후순위 권리자나 다른 채권자보다 보증금을 우선변제받을 수 있습니다.
-thumbnail: /images/thumbnails/lease-fixed-date.svg
+thumbnail: /images/thumbnails/lease-fixed-date.webp
 ogImage: /images/og/lease-fixed-date.png
 datePublished: 2026-10-06
 dateModified: 2026-10-26
