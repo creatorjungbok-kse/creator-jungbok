@@ -16,7 +16,7 @@ synonyms:
   - 조기재취업수당 574만원
   - 조기재취업수당 창업
 summary: 조기재취업수당은 실업급여(구직급여)를 받던 사람이 실업 신고일부터 14일이 지난 뒤, 소정급여일수를 절반 이상 남기고 재취업해 12개월 이상 계속 일하면 남은 구직급여의 절반을 한 번에 주는 제도입니다. 청구는 재취업한 날부터 12개월이 지난 뒤 고용센터에 합니다. 재취업 후 월평균 임금이 고시 금액(현행 574만원) 이상이면 받을 수 없고, 이 기준을 월 300만원 이상으로 낮추는 개정안이 행정예고됐습니다.
-thumbnail: /images/thumbnails/early-reemployment-allowance.svg
+thumbnail: /images/thumbnails/early-reemployment-allowance.webp
 ogImage: /images/og/early-reemployment-allowance.png
 datePublished: 2026-10-18
 dateModified: 2026-10-19
