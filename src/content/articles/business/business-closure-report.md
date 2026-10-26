@@ -15,7 +15,7 @@ synonyms:
   - 폐업 부가세 신고
   - 통합폐업신고
 summary: 사업을 쉬거나 접으면 지체 없이 세무서에 휴업·폐업 신고를 해야 하며, 홈택스·손택스나 가까운 세무서에서 할 수 있습니다. 음식점·미용실 등 통합폐업신고 대상 138개 인허가 업종은 통합폐업신고서로 시·군·구나 세무서 한 곳에 내면 함께 처리됩니다. 폐업 후 마지막 부가세는 폐업일이 속한 달의 다음 달 25일까지 신고하고, 종합소득세는 다음 해 5월에 신고합니다.
-thumbnail: /images/thumbnails/business-closure-report.svg
+thumbnail: /images/thumbnails/business-closure-report.webp
 ogImage: /images/og/business-closure-report.png
 datePublished: 2026-10-06
 dateModified: 2026-10-06
