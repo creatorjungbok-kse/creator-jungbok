@@ -15,7 +15,7 @@ synonyms:
   - 기초생활수급자 전기요금 할인
   - 차상위 전기요금 할인
 summary: 장애인·유공자·기초생활수급자·차상위계층과 대가족·3자녀·출산가구 등은 한전에 신청하면 전기요금을 할인받을 수 있습니다. 할인은 신청한 달 요금부터 적용되므로, 대상이라면 한전ON이나 123, 행정복지센터로 바로 신청하는 것이 좋습니다.
-thumbnail: /images/thumbnails/electricity-welfare-discount.svg
+thumbnail: /images/thumbnails/electricity-welfare-discount.webp
 ogImage: /images/og/electricity-welfare-discount.png
 datePublished: 2026-10-06
 dateModified: 2026-10-06
