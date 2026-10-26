@@ -17,7 +17,7 @@ synonyms:
   - 현금영수증 발급 방법
   - 현금영수증 미발급 신고
 summary: 의무발행업종(국세청 2026년 5월 기준 142개 업종) 사업자는 건당 10만원 이상(부가가치세 포함)을 현금이나 계좌이체로 받으면 손님이 요청하지 않아도 현금영수증을 발급해야 하고, 놓치면 미발급 금액의 20%가 가산세입니다. 그 밖의 소비자 상대 가맹점은 손님이 요청하면 1원부터 발급해야 합니다. 의무발행업종의 건당 10만원 이상 현금 거래는 손님이 원하지 않아도 발급해야 하며, 손님의 인적사항을 모르면 현금을 받은 날부터 5일 안에 국세청 지정 번호 010-000-1234로 자진발급하세요.
-thumbnail: /images/thumbnails/cash-receipt.svg
+thumbnail: /images/thumbnails/cash-receipt.webp
 ogImage: /images/og/cash-receipt.png
 datePublished: 2026-10-02
 dateModified: 2026-10-15
