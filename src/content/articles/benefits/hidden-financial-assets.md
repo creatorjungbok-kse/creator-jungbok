@@ -21,7 +21,7 @@ synonyms:
   - 통신비 환급금 조회
   - 스마트초이스 미환급금
 summary: 오래 잊고 있던 예·적금, 증권계좌 예탁금, 신탁, 카드포인트는 파인의 '내계좌 통합조회'나 '어카운트인포' 앱에서 조회할 수 있습니다. 1년 넘게 거래가 없고 잔고가 100만원 이하인 일부 계좌는 바로 환급받을 수 있고, 카드포인트도 현금화할 수 있습니다. 아직 청구하지 않은 중도·만기보험금은 '내보험찾아줌'에서, 휴대폰·인터넷을 해지하고 돌려받지 못한 통신 미환급액은 스마트초이스에서 따로 확인하세요.
-thumbnail: /images/thumbnails/hidden-financial-assets.svg
+thumbnail: /images/thumbnails/hidden-financial-assets.webp
 ogImage: /images/og/hidden-financial-assets.png
 datePublished: 2026-10-08
 dateModified: 2026-10-15
