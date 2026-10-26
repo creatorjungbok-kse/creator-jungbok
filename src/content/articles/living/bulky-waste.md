@@ -15,7 +15,7 @@ synonyms:
   - 폐가전 무상수거
   - 가구 버리는 법
 summary: 대형폐기물은 배출 장소를 관할하는 시·군·구 기준으로 신고해야 하며, 신청처·수수료·배출방법이 지역마다 다릅니다. 대체로 신고 후 수수료를 먼저 내고, 받은 배출번호나 필증·스티커를 붙여 정해진 시간과 장소에 내놓습니다. 냉장고·세탁기 같은 폐가전은 폐가전 무상방문수거(1599-0903)로 수수료 없이 버릴 수 있습니다.
-thumbnail: /images/thumbnails/bulky-waste.svg
+thumbnail: /images/thumbnails/bulky-waste.webp
 ogImage: /images/og/bulky-waste.png
 datePublished: 2026-10-10
 dateModified: 2026-10-10
