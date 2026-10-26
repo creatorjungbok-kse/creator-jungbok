@@ -15,7 +15,7 @@ synonyms:
   - 주휴수당 포함 시급
   - 2026 주휴수당 포함 시급
 summary: 4주 평균 1주 소정근로시간이 15시간 이상이고, 그 주의 소정근로일을 개근하는 등 조건을 충족하면 주휴수당이 발생할 수 있습니다. 아래 계산기는 일반적인 단시간근로 사례에서 예상 금액을 계산합니다.
-thumbnail: /images/thumbnails/weekly-holiday-pay.svg
+thumbnail: /images/thumbnails/weekly-holiday-pay.webp
 ogImage: /images/og/weekly-holiday-pay.png
 datePublished: 2026-10-09
 dateModified: 2026-10-25
