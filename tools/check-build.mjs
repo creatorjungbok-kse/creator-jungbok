@@ -248,6 +248,13 @@ for (const file of htmlFiles) {
   // (예: '6월 27일~30일, 10월 1일~2일'). 사이트는 취소선을 쓰지 않으므로 나오면 실패
   for (const [tag, text] of html.matchAll(/<(?:del|s)\b[^>]*>([\s\S]*?)<\/(?:del|s)>/g)) fail(`의도하지 않은 취소선: "${text.replace(/<[^>]+>/g, '').slice(0, 40)}" (본문 물결표 ~ 를 '부터'로 바꾸거나 한 문단에 하나만)`);
 
+  // 굵게가 풀린 채 보이는 별표(**) 금지: '**11월 2일(월)**까지'처럼 닫는 ** 뒤에 바로 글자가 오면 Markdown이 굵게로 바꾸지 못하고 별표가 화면에 남는다
+  {
+    const visible = html.replace(/<(script|style)\b[\s\S]*?<\/\1>/g, '').replace(/<[^>]+>/g, ' ');
+    const m = visible.match(/[^\s]{0,20}\*\*[^\s]{0,20}/);
+    if (m) fail(`굵게가 풀린 별표(**): "${m[0]}" (닫는 ** 뒤에 조사·글자가 붙으면 안 됨. 조사까지 굵게 안에 넣기)`);
+  }
+
   // 이미지: 로컬 파일만(원격 이미지 금지), 결과물에 실제로 있고, 레이아웃 이동(CLS)을 막는 width·height가 있어야 한다
   for (const [tag] of html.matchAll(/<img\b[^>]*>/g)) {
     const src = tag.match(/\ssrc="([^"]*)"/)?.[1] ?? '';

@@ -170,4 +170,4 @@ localSources:
 
 상호나 주소, 업종이 바뀌는 것은 휴·폐업이 아니라 [사업자등록 정정신고](/business/business-registration-correction/) 대상입니다. 사업은 계속하면서 사업장만 옮기는 경우도 정정신고를 합니다.
 
-다른 일정의 부가세 신고는 [부가세 예정신고·예정고지](/business/vat-preliminary-return/)에, 나중에 다시 사업을 시작할 때의 절차는 [사업자등록 신청 방법](/business/business-registration-application/)에 정리했습니다.
+다른 일정의 부가세 신고는 [부가세 예정신고](/business/vat-preliminary-return/)에, 나중에 다시 사업을 시작할 때의 절차는 [사업자등록 신청 방법](/business/business-registration-application/)에 정리했습니다.
