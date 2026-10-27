@@ -67,7 +67,7 @@ actionLinks:
     sourceId: local:nts-interim-target
 changelog:
   - date: 2026-10-27
-    summary: 중간예납 고지부터 분납 납부까지 기간을 한눈에 보는 표와 분납은 따로 신청서 없이 기한 안에 낼 금액만 내면 된다는 국세청 안내(10월 27일 확인)를 추가했습니다.
+    summary: 중간예납 고지부터 분납 납부까지 기간을 한눈에 보는 표, 분납은 따로 신청서 없이 기한 안에 낼 금액만 내면 된다는 국세청 안내, 카카오톡 모바일 전자고지로 받은 경우와 홈택스 납부 순서, 운영자의 실제 납부 경험(10월 27일 확인)을 추가했습니다.
 faq:
   - question: 중간예납 분납은 따로 신청해야 하나요?
     answer: 따로 신청서를 내지 않습니다. 홈택스·손택스로 낼 때 납부할 세액에서 분납할 금액을 빼고 기한 안에 낼 금액만 입력하거나, 은행에서 낼 금액만 이체하면 됩니다. 분납분 고지서는 2027년 1월 초에 나오고 2월 1일까지 냅니다.
@@ -80,8 +80,14 @@ faq:
   - question: 11월 30일을 넘기면 어떻게 되나요?
     answer: 고지된 세액을 기한까지 내지 않으면 납부지연가산세가 붙습니다. 내지 않은 세액의 3%가 더해지고, 그 뒤에는 경과한 개월 수에 따라 가산세가 늘어납니다. 고지서별 체납세액이 150만원 미만이면 월 단위 가산세는 붙지 않습니다.
 related: [/business/tax-calendar/, /work/freelancer-tax-calculator/, /business/withholding-tax-return/, /business/vat-preliminary-payment/]
-sourceIds: [local:law-income-65, local:law-income-77-86, local:law-income-76, local:law-income-decree-123-140, local:law-income-rule-64, local:nts-interim-target, local:nts-interim-calc, local:nts-interim-estimate, local:law-basic-5-47-4, local:law-basic-decree-27-4, local:hometax]
+sourceIds: [local:nts-mobile-notice, local:law-income-65, local:law-income-77-86, local:law-income-76, local:law-income-decree-123-140, local:law-income-rule-64, local:nts-interim-target, local:nts-interim-calc, local:nts-interim-estimate, local:law-basic-5-47-4, local:law-basic-decree-27-4, local:hometax]
 localSources:
+  - id: local:nts-mobile-notice
+    title: 국세 고지서, 스마트폰으로 간편하게 확인하고 바로 납부(보도자료, 2020.12.21)
+    publisher: 국세청
+    url: https://www.nts.go.kr/nts/na/ntt/selectNttInfo.do?mi=12363&nttSn=93602
+    level: S1
+    checkedAt: 2026-10-27
   - id: local:law-income-65
     title: 소득세법 제65조(중간예납)
     publisher: 법제처 국가법령정보센터
@@ -203,10 +209,28 @@ localSources:
 
 ## 납부 방법
 
-- **홈택스·손택스**: 로그인 → 납부·고지·환급 → 세금납부 → 납부할 세액 조회/납부 → 과세구분이 '고지분'인 건 선택 → 계좌이체·신용카드·간편결제. 이용시간은 07:00부터 23:30까지입니다.
-- **계좌이체·금융기관**: 고지서에 적힌 가상계좌나 국세계좌로 이체하거나 은행 창구에서 냅니다.
+> **직접 겪은 일**: 저도 개인사업자라 11월에 종합소득세 중간예납 고지서를 카카오톡으로 받아 봤고, 3년 동안 홈택스에 들어가서 직접 냈어요.
 
-분납할 경우에는 기한 안에 낼 금액만 입력하거나 이체하면 됩니다.
+### 카카오톡으로 고지서를 받았다면
+
+국세청은 2020년 12월 22일부터 **국세 모바일 전자고지**를 하고 있습니다. 전자고지를 신청한 사람은 본인 명의 스마트폰의 카카오톡이나 문자로 고지서를 받고, 간단한 본인인증을 거쳐 고지서를 확인한 뒤 바로 낼 수 있습니다.
+
+- 전자고지는 홈택스, 손택스(모바일 홈택스) 또는 세무서 민원실에서 신청하고, 신청한 다음 날부터 고지서를 스마트폰으로 받습니다.
+- 카카오톡 고지서에 적힌 금액과 납부기한은 종이 고지서와 같습니다. 카카오톡에서 바로 내지 않았다면 아래처럼 홈택스에서 내도 됩니다.
+
+### 홈택스에서 내는 순서
+
+1. 홈택스(www.hometax.go.kr)나 손택스 앱에 로그인합니다.
+2. **납부·고지·환급 → 세금납부 → 납부할 세액 조회/납부**로 들어갑니다.
+3. 목록에서 과세구분이 **'고지분'인** 종합소득세 건을 고릅니다.
+4. **납부하기**를 누르고 계좌이체, 신용카드, 간편결제 중 결제수단을 고릅니다.
+5. 분납하려면 납부할 세액에서 분납할 금액을 빼고, 기한 안에 낼 금액만 [납부세액]에 넣습니다.
+
+전자 납부는 **오전 7시부터 밤 11시 30분까지** 됩니다. 마감일 밤늦게 하다가 시간을 넘기지 않도록 미리 내세요.
+
+### 은행에서 내는 방법
+
+고지서에 적힌 가상계좌나 국세계좌로 이체하거나 은행 창구에서 냅니다. 분납할 경우에는 기한 안에 낼 금액만 이체하거나, 자진납부서에 낼 세액을 직접 적어 냅니다.
 
 ## 1천만원이 넘으면 분납
 
