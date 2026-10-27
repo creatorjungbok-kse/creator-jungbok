@@ -25,7 +25,7 @@ synonyms:
   - 청년문화예술패스 교보문고
   - 청년문화패스
 summary: 2006·2007년생은 2026년 11월 30일까지 청년문화예술패스 추가 발급을 신청할 수 있고, 받은 지원금(수도권 15만원·비수도권 20만원)은 12월 31일까지 써야 합니다. 다만 지자체 예산이 확보된 지역만 발급되고 지역 예산이 먼저 떨어지면 그 지역은 11월 30일 전에 마감되므로, 신청 전에 내 지역이 지금 발급 중인지부터 확인하세요.
-thumbnail: /images/thumbnails/youth-culture-pass.svg
+thumbnail: /images/thumbnails/youth-culture-pass.webp
 ogImage: /images/og/youth-culture-pass.png
 datePublished: 2026-10-10
 dateModified: 2026-10-27
