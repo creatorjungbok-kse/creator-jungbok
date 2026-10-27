@@ -30,7 +30,7 @@ synonyms:
   - 부가세 납부
   - 부가세 납부기한
 summary: 부가세 예정고지는 개인 일반과세자와 소규모 법인이 예정신고 대신 직전 과세기간 납부세액의 절반을 4월(1기)과 10월(2기)에 내는 제도이고, 고지할 금액이 50만원 미만이면 고지하지 않습니다. 2026년 2기 부가세 예정고지 세액은 11월 2일(월)까지 내면 됩니다. 고지세액은 2026년 1기 전체 납부세액의 절반(1천원 미만 버림)이라 직접 맞는지 확인할 수 있습니다. 고지서가 없어도 홈택스·손택스·ARS(1544-9944, 개인사업자)로 세액을 조회할 수 있고, 홈택스 '납부할 세액 조회/납부'에서 고지분을 골라 계좌이체·카드로 내거나 고지서에 적힌 가상계좌로 이체하면 됩니다.
-thumbnail: /images/thumbnails/vat-preliminary-payment.svg
+thumbnail: /images/thumbnails/vat-preliminary-payment.webp
 ogImage: /images/og/vat-preliminary-payment.png
 datePublished: 2026-10-13
 dateModified: 2026-10-27
