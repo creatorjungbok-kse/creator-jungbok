@@ -1,7 +1,7 @@
 ---
-title: 근로계약서 미작성 벌금｜안 쓰거나 안 주면 어떻게 되나
+title: 근로계약서 미작성 벌금 안 쓰거나 안 주면 어떻게 되나
 cardTitle: 근로계약서 미작성 벌금
-seoTitle: 근로계약서 미작성 벌금｜미교부·알바 과태료
+seoTitle: 근로계약서 미작성 벌금과 알바 과태료
 description: 근로계약서를 안 쓰거나 써도 주지 않으면 500만원 이하 벌금 대상입니다. 알바·계약직 과태료와 5인 미만 적용, 신고법을 알려 드립니다.
 subcategory: wages
 contentType: guide

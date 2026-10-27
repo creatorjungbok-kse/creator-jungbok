@@ -1,7 +1,7 @@
 ---
-title: 퇴직금 계산기｜1년·주 15시간 조건과 예상 퇴직금
-cardTitle: 퇴직금 계산기·지급기준
-seoTitle: 퇴직금 계산기｜1년·주 15시간 조건과 예상 퇴직금
+title: 퇴직금 계산기 1년 주 15시간 조건과 예상 퇴직금
+cardTitle: 퇴직금 계산기 지급기준
+seoTitle: 퇴직금 계산기 지급 조건과 예상 퇴직금
 description: 입사일·마지막 근무일과 퇴직 전 3개월 임금으로 예상 퇴직금(세전)을 계산합니다. 받는 조건과 14일 지급기한도 확인하세요.
 subcategory: job-loss
 contentType: cost

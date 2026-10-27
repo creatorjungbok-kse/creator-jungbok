@@ -1,7 +1,7 @@
 ---
-title: 사업자 세금 달력｜부가세 신고·납부와 세금계산서 일정
+title: 사업자 세금 달력 부가세 신고 납부와 세금계산서 일정
 cardTitle: 사업자 세금 달력
-seoTitle: 사업자 세금 달력｜부가세 신고·납부·세금계산서 일정
+seoTitle: 사업자 세금 달력 부가세 신고 납부 일정
 description: 내 사업자 유형을 고르면 부가세 신고·납부, 월합계 세금계산서, 종합소득세 중간예납 기한을 오늘 날짜 기준으로 보여줍니다.
 subcategory: tax
 contentType: guide

@@ -1,7 +1,7 @@
 ---
-title: 대출 계산기｜대출이자 계산기, 원리금균등·원금균등 월 상환액
-cardTitle: 대출 이자·상환 계산기
-seoTitle: 대출 계산기｜대출이자 계산기, 원리금균등·원금균등 월 상환액
+title: 대출 계산기 대출이자와 원리금균등 원금균등 월 상환액 계산
+cardTitle: 대출 이자 상환 계산기
+seoTitle: 대출 계산기 대출이자 월 상환액 계산
 description: 대출금액, 금리, 기간을 넣으면 원리금균등·원금균등·만기일시별 월 상환액과 총이자, 회차별 상환표를 계산합니다.
 subcategory: loan
 contentType: cost

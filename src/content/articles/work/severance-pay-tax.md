@@ -1,6 +1,7 @@
 ---
-title: 퇴직금 세금｜몇 퍼센트 떼나, 근속연수별 세후 금액 표
-cardTitle: 퇴직금 세금
+title: 퇴직금 세금 계산기 몇 퍼센트 떼고 근속연수별 세후 얼마 남나
+seoTitle: 퇴직금 세금 계산기 몇 퍼센트 떼나
+cardTitle: 퇴직금 세금 계산기
 description: 퇴직금 세금(퇴직소득세)은 월급 500만원 이하·근속 5년 이하면 1%에서 2% 안팎입니다. 계산 순서와 근속연수별 세후 표를 정리했습니다.
 subcategory: job-loss
 contentType: guide

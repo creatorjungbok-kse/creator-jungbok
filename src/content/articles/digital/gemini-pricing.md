@@ -1,7 +1,7 @@
 ---
-title: 제미나이 요금제 비교｜무료·Plus·Pro·Ultra 가격과 차이
+title: 제미나이 요금제 비교 무료 Plus Pro Ultra 가격과 차이
 cardTitle: 제미나이 요금제 비교
-seoTitle: 제미나이 요금제｜무료·Plus·Pro·Ultra 가격 비교
+seoTitle: 제미나이 요금제 무료 Plus Pro Ultra 비교
 description: 제미나이 무료·Plus·Pro·Ultra의 원화 가격, 저장공간, 사용량 차이와 연간 결제·할인 조건을 한국 공식 페이지 기준으로 비교합니다.
 subcategory: ai
 contentType: compare

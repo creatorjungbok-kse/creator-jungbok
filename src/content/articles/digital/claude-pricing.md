@@ -1,7 +1,7 @@
 ---
-title: Claude 요금제 비교｜무료·Pro·Max 가격과 나에게 맞는 플랜
+title: Claude 요금제 비교 무료 Pro Max 가격과 나에게 맞는 플랜
 cardTitle: Claude 요금제 비교
-seoTitle: Claude 요금제 비교｜무료·Pro·Max 가격과 차이
+seoTitle: Claude 요금제 비교 무료 Pro Max 가격
 description: Claude 무료·Pro·Max 중 내 사용량에 맞는 요금제를 고를 수 있게 가격, 사용량 한도, API·앱 결제와 세금 차이를 비교합니다.
 subcategory: ai
 contentType: compare

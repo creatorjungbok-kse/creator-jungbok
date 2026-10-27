@@ -1,7 +1,7 @@
 ---
-title: 알뜰폰 요금제 비교｜고르는 기준·알뜰폰허브 보는 법·총비용 계산
+title: 알뜰폰 요금제 비교 고르는 기준과 알뜰폰허브 보는 법 총비용 계산
 cardTitle: 알뜰폰 요금제 총비용 비교
-seoTitle: 알뜰폰 요금제 비교｜알뜰폰허브 보는 법·총비용 계산
+seoTitle: 알뜰폰 요금제 비교와 총비용 계산 방법
 description: 알뜰폰허브 요금제 카드의 'N개월 이후' 요금과 '+1Mbps' 표시 읽는 법, 고르는 기준, 12·24개월 총비용 계산을 정리했습니다.
 subcategory: mobile
 contentType: compare

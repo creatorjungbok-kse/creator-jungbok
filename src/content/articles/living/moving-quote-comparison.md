@@ -1,7 +1,7 @@
 ---
-title: 포장이사 비용·견적 비교｜추가요금 막는 견적서와 계약 해제 배상
+title: 포장이사 비용 견적 비교 추가요금 막는 견적서와 계약 해제 배상
 cardTitle: 포장이사 견적 비교
-seoTitle: 포장이사 비용·견적 비교｜추가요금·계약금·파손 보상
+seoTitle: 포장이사 비용 견적 비교와 추가요금
 description: 포장이사 견적서에서 확인할 항목, 계약금과 계약 해제 배상, 파손 대처를 공정위 표준약관 기준으로 정리했습니다.
 subcategory: moving
 contentType: guide

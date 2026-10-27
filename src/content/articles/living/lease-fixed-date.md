@@ -1,7 +1,7 @@
 ---
-title: 확정일자 받는 법｜인터넷·주민센터, 전입신고와 순서·확인 방법
+title: 확정일자 받는 법 인터넷 주민센터 전입신고와 순서 확인 방법
 cardTitle: 확정일자 받는 법
-seoTitle: 확정일자 받는 법｜인터넷·주민센터, 전입신고와 순서
+seoTitle: 확정일자 받는 법과 전입신고 순서
 description: 확정일자는 인터넷등기소나 주민센터에서 받습니다. 전입신고와 차이·순서, 확인 방법, 준비물과 비용을 정리했습니다.
 subcategory: moving
 contentType: guide

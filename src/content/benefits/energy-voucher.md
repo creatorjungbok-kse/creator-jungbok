@@ -1,6 +1,7 @@
 ---
-title: 에너지바우처｜난방별 요금차감·국민행복카드 선택법
-cardTitle: 에너지바우처 신청·사용기간
+title: 에너지바우처 난방별 요금차감과 국민행복카드 선택법
+seoTitle: 에너지바우처 요금차감과 국민행복카드
+cardTitle: 에너지바우처 신청 사용기간
 description: 에너지바우처 대상인지 확인하고, 도시가스·등유·연탄·관리비 등 우리 집 난방 방식에 맞는 사용법과 잔액이 남지 않게 쓰는 법을 알려 드립니다.
 subcategory: bill-relief
 contentMode: evergreen

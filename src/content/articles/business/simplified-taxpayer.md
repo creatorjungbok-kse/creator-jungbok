@@ -1,6 +1,7 @@
 ---
-title: 간이과세자 기준｜배제 업종·세금계산서·일반과세자 차이
-cardTitle: 간이과세자 기준·차이
+title: 간이과세자 기준 배제 업종과 세금계산서 일반과세자 차이
+seoTitle: 간이과세자 기준과 일반과세자 차이
+cardTitle: 간이과세자 기준과 차이
 description: 간이과세자 기준은 직전 연도 매출 1억400만원 미만 개인사업자입니다. 배제 업종, 세금계산서, 부가세 계산, 일반과세자와 차이를 정리했습니다.
 subcategory: tax
 contentType: guide

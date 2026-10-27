@@ -1,7 +1,6 @@
 ---
-title: 연차 계산기｜입사일 기준 연차 일수와 연차수당
-cardTitle: 연차 계산기·연차수당
-seoTitle: 연차 계산기｜입사일 기준 연차 일수·연차수당
+title: 연차 계산기 입사일 기준 연차 일수와 연차수당
+cardTitle: 연차 계산기와 연차수당
 description: 입사일과 기준일을 넣으면 연차가 언제 며칠 생기는지 계산합니다. 1년 미만 11일, 15일, 25일 기준과 미사용 연차수당도 보세요.
 subcategory: wages
 contentType: cost

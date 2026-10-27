@@ -1,7 +1,7 @@
 ---
-title: 전기요금 복지할인｜대상·할인 한도·한전 신청 방법
+title: 전기요금 복지할인 대상과 할인 한도 한전 신청 방법
 cardTitle: 전기요금 복지할인
-seoTitle: 전기요금 복지할인 대상·한도｜한전 신청 방법
+seoTitle: 전기요금 복지할인 대상과 한전 신청 방법
 description: 장애인·수급자·차상위·대가족·출산가구라면 전기요금이 한 달에 얼마까지 깎이는지, 겹치면 어떻게 되는지 확인하세요.
 subcategory: bill-relief
 contentType: guide

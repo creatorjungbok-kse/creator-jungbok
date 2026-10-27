@@ -1,6 +1,7 @@
 ---
-title: 전월세 신고 방법｜주택 임대차 신고 대상·기한·과태료 표
-cardTitle: 전월세 신고 대상·기한
+title: 전월세 신고 방법 주택 임대차 신고 대상과 기한 과태료 표
+seoTitle: 전월세 신고 방법 대상 기한 과태료
+cardTitle: 전월세 신고 대상과 기한
 description: 전월세 신고(주택 임대차 신고)는 보증금 6천만원 또는 월세 30만원 초과 계약을 30일 안에 합니다. 온라인 방법과 과태료 표를 정리했습니다.
 subcategory: moving
 contentType: guide

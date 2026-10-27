@@ -107,14 +107,17 @@ const compareSchema = z
 
 // ── 공통 필드 ────────────────────────────────────────
 const peopleIds = idsOf(people);
+// 제목에는 특수기호를 쓰지 않는다(운영자 규칙 2026-10-27). 키워드 안의 %와 .(3.3%, 0.40%)만 허용
+const TITLE_SYMBOL = /[^\p{L}\p{N}\s%.]/u;
+const titleText = text.refine((v) => !TITLE_SYMBOL.test(v), '제목에 특수기호(｜ · , ~ ? 등)를 쓰지 않는다. %와 .만 허용');
 const baseShape = {
   // 화면 H1·Article headline
-  title: text,
+  title: titleText,
   // <title>·OG 제목이 H1과 달라야 할 때만(없으면 title)
-  seoTitle: text.optional(),
+  seoTitle: titleText.optional(),
   // 카드형 UI용 짧은 표시 제목(홈 카드·관련 글 카드). 없으면 title.
   // H1·<title>·meta·구조화 데이터·검색·카테고리 목록·사이드바는 항상 title을 쓴다
-  cardTitle: text.refine((v) => [...v].length <= 22, '카드 제목은 22자 이하').optional(),
+  cardTitle: titleText.refine((v) => [...v].length <= 22, '카드 제목은 22자 이하').optional(),
   // 없으면 summary를 meta description으로 쓴다
   description: text.optional(),
   contentMode: z.enum(['evergreen', 'timely']),

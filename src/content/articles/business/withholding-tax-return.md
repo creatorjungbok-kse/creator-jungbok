@@ -1,7 +1,7 @@
 ---
-title: 원천세 신고 방법｜매월 10일·반기납부·가산세
-cardTitle: 원천세 신고·납부기한
-seoTitle: 원천세 신고 방법｜매월 10일·반기납부·가산세 계산
+title: 원천세 신고 방법 매월 10일 기한과 반기납부 가산세
+cardTitle: 원천세 신고 납부기한
+seoTitle: 원천세 신고 방법과 반기납부 가산세
 description: 직원 급여나 3.3% 외주비를 줬다면 다음 달 10일까지 원천세를 냅니다. 반기납부 조건과 12월 신청, 늦었을 때 가산세 계산을 정리했습니다.
 subcategory: tax
 contentType: guide

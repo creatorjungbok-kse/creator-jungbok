@@ -1,7 +1,7 @@
 ---
-title: 폐업신고 방법｜홈택스 휴업·폐업 신고와 마지막 부가세 기한
-cardTitle: 휴업·폐업 신고 방법
-seoTitle: 폐업신고 방법｜휴업·폐업 신고와 마지막 부가세 기한
+title: 폐업신고 방법 홈택스 휴업 폐업 신고와 마지막 부가세 기한
+cardTitle: 휴업 폐업 신고 방법
+seoTitle: 폐업신고 방법과 마지막 부가세 신고 기한
 description: 휴업·폐업 신고는 언제 어디서 할까요? 인허가 업종을 한 번에 끝내는 법과 폐업 후 부가세·종소세 신고 기한도 확인하세요.
 subcategory: tax
 contentType: guide

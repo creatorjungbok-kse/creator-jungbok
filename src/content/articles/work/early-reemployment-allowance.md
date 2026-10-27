@@ -1,7 +1,7 @@
 ---
-title: 조기재취업수당 조건·금액 계산｜남은 실업급여 절반 받는 법
-cardTitle: 조기재취업수당 조건·금액
-seoTitle: 조기재취업수당 조건·금액 계산｜절반 이상·12개월
+title: 조기재취업수당 조건과 금액 계산 남은 실업급여 절반 받는 법
+cardTitle: 조기재취업수당 조건과 금액
+seoTitle: 조기재취업수당 조건과 금액 계산
 description: 실업급여를 절반 이상 남기고 재취업해 12개월 다니면 남은 금액의 절반을 받습니다. 조건과 계산법, 임금 기준 개정 예고를 정리했습니다.
 subcategory: job-loss
 contentType: guide

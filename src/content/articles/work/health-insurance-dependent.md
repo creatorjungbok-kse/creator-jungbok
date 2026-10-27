@@ -1,7 +1,7 @@
 ---
-title: 건강보험 피부양자 조건｜소득 2천만원·재산 기준과 탈락 시기
+title: 건강보험 피부양자 조건 소득 2천만원 재산 기준과 탈락 시기
 cardTitle: 건강보험 피부양자 조건
-seoTitle: 건강보험 피부양자 조건｜소득 2천만원·재산 기준과 탈락 시기
+seoTitle: 건강보험 피부양자 조건과 탈락 기준
 description: 건강보험 피부양자가 되려면 부양·소득·재산 요건을 모두 갖춰야 합니다. 가족관계별 기준과 탈락 시기, 등록 방법을 정리했습니다.
 subcategory: insurance
 contentType: guide

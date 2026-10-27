@@ -157,6 +157,13 @@ const cases = [
   ['valid', () => {}, null],
   ['unknown-category-folder', add('articles/unknown/test-x.md', guide.replace('테스트 창업 초기 비용', '테스트 기타')), '콘텐츠 파일 경로 오류'],
   ['unknown-subcategory', edit(C, 'subcategory: payment', 'subcategory: nope'), '없는 subcategory'],
+  // 운영자 규칙(2026-10-27): 제목·seoTitle·cardTitle에 특수기호 금지, 키워드 안의 %와 .만 허용
+  ['title-pipe', edit(C, 'title: 테스트 카드단말기 비용', 'title: 테스트 카드단말기｜비용'), '특수기호'],
+  ['title-tilde', edit(C, 'title: 테스트 카드단말기 비용', 'title: 테스트 카드단말기 1~2만원'), '특수기호'],
+  ['title-middot', edit(C, 'title: 테스트 카드단말기 비용', 'title: 테스트 카드단말기·비용'), '특수기호'],
+  ['seo-title-symbol', edit(C, 'title: 테스트 카드단말기 비용', 'title: 테스트 카드단말기 비용\nseoTitle: 테스트 비용, 정리'), '특수기호'],
+  ['card-title-symbol', edit(C, 'title: 테스트 카드단말기 비용', 'title: 테스트 카드단말기 비용\ncardTitle: 테스트 비용?'), '특수기호'],
+  ['title-percent-dot-ok', edit(C, 'title: 테스트 카드단말기 비용', 'title: 테스트 카드단말기 비용 3.3%'), null],
   ['unknown-topic', edit(C, 'topics: [small-business]', 'topics: [nope]'), 'topics'],
   ['fixture-prefix-in-real-content', add('articles/living/fixture-moving.md', guide.replace('테스트 창업 초기 비용', '테스트 이사')), 'fixture 전용'],
   ['frontmatter-slug', edit(C, 'contentMode: evergreen', 'contentMode: evergreen\nslug: other'), 'slug'],

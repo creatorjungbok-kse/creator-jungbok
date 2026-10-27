@@ -1,7 +1,7 @@
 ---
-title: 아파트 관리비 조회｜K-apt에서 우리 단지 관리비 확인·비교하는 법
-cardTitle: 아파트 관리비 조회·비교
-seoTitle: 아파트 관리비 조회｜K-apt 우리 단지 확인·비교
+title: 아파트 관리비 조회 우리 단지 관리비 확인하고 비교하는 법
+cardTitle: 아파트 관리비 조회 비교
+seoTitle: 아파트 관리비 조회 우리 단지 비교하는 법
 description: 우리 아파트가 관리비 공개 대상인지 확인하고, K-apt에서 관리비를 조회해 비슷한 단지와 비교하는 방법을 따라 해 보세요.
 subcategory: utilities
 contentType: guide

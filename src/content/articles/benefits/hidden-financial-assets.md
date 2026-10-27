@@ -1,7 +1,7 @@
 ---
-title: 숨은 금융자산 찾기｜잠자는 예금·보험금·카드포인트 조회
+title: 숨은 금융자산 찾기 잠자는 예금 보험금 카드포인트 조회
 cardTitle: 숨은 금융자산 찾기
-seoTitle: 숨은 금융자산 찾기｜예금·보험금·카드포인트 조회
+seoTitle: 숨은 금융자산 찾기 예금 보험금 포인트 조회
 description: 잊고 있던 예·적금, 보험금, 증권 예탁금, 카드포인트를 어디서 찾는지, 찾은 돈은 어떻게 돌려받는지 알려 드립니다.
 subcategory: refunds
 contentType: guide

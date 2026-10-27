@@ -1,5 +1,6 @@
 ---
-title: 퇴직금 IRP 수령방법｜해지 세금·연금으로 받으면 얼마?
+title: 퇴직금 IRP 수령방법 해지 세금과 연금으로 받으면 얼마
+seoTitle: 퇴직금 IRP 수령방법과 해지 세금
 cardTitle: 퇴직금 IRP 수령방법
 description: 퇴직금은 원칙적으로 IRP 계좌로 받습니다. 계좌 개설, 해지 세금, 연금으로 받으면 30%에서 50% 줄어드는 세금을 정리했습니다.
 subcategory: job-loss
