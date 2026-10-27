@@ -1,0 +1,323 @@
+---
+// 퇴직금 세금 계산기(퇴직소득세·지방소득세·세후 퇴직금). 계산은 src/lib/payroll/severance-tax/calculation.ts에만 있고, 이 컴포넌트는 입력을 모아 결과를 그리기만 한다.
+// 입력값·결과는 저장·전송하지 않는다(form 제출 없음, 입력칸에 name 없음, URL·GA 전송 없음).
+import ToolShell from '../ToolShell.astro';
+import { severanceTax as c } from '../../tools/severance-tax/constants';
+import { calcSeveranceTax } from '../../lib/payroll/severance-tax/calculation.ts';
+import { formatDate } from '../../lib/format';
+
+const won = (n: number) => `${n.toLocaleString('ko-KR')}원`;
+const day = (s: string) => formatDate(new Date(s));
+const ex = calcSeveranceTax(50_000_000, 10);
+const exr = ex.ok ? ex.result : null;
+const steps = [
+  { key: 'sd', label: '① 근속연수공제' },
+  { key: 'conv', label: '② 환산급여(1년치로 바꾼 금액)' },
+  { key: 'cd', label: '③ 환산급여공제' },
+  { key: 'base', label: '④ 과세표준' },
+  { key: 'ctax', label: '⑤ 환산산출세액' },
+] as const;
+---
+
+<ToolShell id="severance-tax" title="퇴직금 세금 계산기" reviewFrom={c.reviewFrom} reviewNote={c.reviewNote}>
+  <p class="tool-scope">
+    <strong>예상 퇴직소득세</strong> · 세전 퇴직금과 근무 기간을 넣으면 떼는 세금과 세후 퇴직금을 계산합니다.
+  </p>
+  <noscript><p class="tool-noscript">계산기는 JavaScript가 켜져 있어야 동작합니다. 아래 예시 결과와 계산 근거를 참고하세요.</p></noscript>
+
+  <div class="tool-form" data-st-form data-js-only>
+    <div class="tool-field">
+      <label class="tool-label" for="st-pay">세전 퇴직금</label>
+      <div class="tool-input">
+        <input id="st-pay" type="text" inputmode="numeric" autocomplete="off" maxlength="17" aria-describedby="st-pay-hint st-pay-error" />
+        <span aria-hidden="true">원</span>
+      </div>
+      <p id="st-pay-hint" class="tool-hint">세금 떼기 전 퇴직금입니다. 모르면 퇴직금 계산기 결과나 회사가 알려 준 금액을 넣으세요.</p>
+      <p id="st-pay-error" class="tool-error" data-st-error="pay"></p>
+    </div>
+
+    <fieldset class="tool-field">
+      <legend class="tool-label">근무 기간</legend>
+      <div class="st-period">
+        <div class="tool-input">
+          <input id="st-years" type="text" inputmode="numeric" autocomplete="off" maxlength="2" aria-label="근무 기간 년" aria-describedby="st-period-hint st-period-error" />
+          <span aria-hidden="true">년</span>
+        </div>
+        <div class="tool-input">
+          <input id="st-months" type="text" inputmode="numeric" autocomplete="off" maxlength="2" aria-label="근무 기간 개월" aria-describedby="st-period-hint st-period-error" />
+          <span aria-hidden="true">개월</span>
+        </div>
+      </div>
+      <p id="st-period-hint" class="tool-hint">입사일부터 퇴사일까지입니다. 1년이 안 되는 기간(개월이나 며칠)이 있으면 1년을 더해 계산합니다. 며칠만 남으면 개월에 1을 넣으세요(4년 0개월 10일 → 5년).</p>
+      <p id="st-period-error" class="tool-error" data-st-error="period"></p>
+    </fieldset>
+  </div>
+
+  <div>
+    <div class="tool-result st-result" data-st-result hidden>
+      <div class="st-head" aria-live="polite" aria-atomic="true">
+        <h3>예상 세후 퇴직금</h3>
+        <p class="st-total" data-st-out="net"></p>
+        <p class="st-sub" data-st-out="sub"></p>
+      </div>
+      <dl class="st-lines">
+        <div><dt>세전 퇴직금</dt><dd data-st-out="pay"></dd></div>
+        <div><dt>퇴직소득세</dt><dd data-st-out="tax"></dd></div>
+        <div><dt>지방소득세(퇴직소득세의 10%)</dt><dd data-st-out="local"></dd></div>
+        <div class="st-lines__sum"><dt>떼는 세금 합계</dt><dd data-st-out="total"></dd></div>
+      </dl>
+      <details class="st-steps">
+        <summary class="disclosure">계산 과정 보기</summary>
+        <dl class="st-lines">
+          <div><dt>근속연수</dt><dd data-st-out="years"></dd></div>
+          {
+            steps.map((s) => (
+              <div>
+                <dt>{s.label}</dt>
+                <dd data-st-out={s.key} />
+              </div>
+            ))
+          }
+          <div><dt>⑥ 퇴직소득세(⑤ ÷ 12 × 근속연수)</dt><dd data-st-out="tax2"></dd></div>
+        </dl>
+      </details>
+      <ul class="st-notes">
+        <li>IRP 등 연금계좌로 받으면 지금은 이 세금을 떼지 않고, 연금 외로 꺼낼 때 냅니다. 이미 뗐어도 받은 날부터 60일 안에 IRP에 넣으면 환급을 신청할 수 있습니다.</li>
+        <li>예상 금액입니다. 비과세 퇴직소득, 중간정산·여러 번 받은 퇴직금의 정산, 임원 퇴직금 한도는 반영하지 않습니다. 실제 뗀 세금은 회사가 주는 퇴직소득 원천징수영수증에서 확인하세요.</li>
+      </ul>
+    </div>
+  </div>
+
+  <noscript>
+    {
+      exr && (
+        <div class="tool-result">
+          <p class="st-example">예시 · 퇴직금 50,000,000원, 근속 10년</p>
+          <dl class="st-lines">
+            <div><dt>퇴직소득세</dt><dd>{won(exr.incomeTax)}</dd></div>
+            <div><dt>지방소득세</dt><dd>{won(exr.localTax)}</dd></div>
+            <div><dt>세후 퇴직금</dt><dd>{won(exr.net)}</dd></div>
+          </dl>
+        </div>
+      )
+    }
+  </noscript>
+
+  <details class="st-basis">
+    <summary class="disclosure">계산 근거</summary>
+    <div class="st-basis__body">
+      <ul>
+        <li>근속연수공제와 환산급여공제: 소득세법 제48조 표(2023년 이후 퇴직분)</li>
+        <li>환산급여 = (퇴직금 − 근속연수공제) × 12 ÷ 근속연수, 과세표준 = 환산급여 − 환산급여공제</li>
+        <li>환산산출세액 = 과세표준 × 기본세율(6%부터 45%까지, 소득세법 제55조), 퇴직소득세 = 환산산출세액 ÷ 12 × 근속연수</li>
+        <li>퇴직소득세와 지방소득세는 10원 미만을 버립니다(국고금관리법 제47조, 지방소득세는 같은 방식의 예상 계산)</li>
+        <li>국세청 계산 사례(20년 근무, 퇴직금 1억원 → 퇴직소득세 112만원)와 같은 결과가 나옵니다</li>
+      </ul>
+      <p>확인일 {day(c.checkedAt)}</p>
+    </div>
+  </details>
+</ToolShell>
+
+<script>
+  // 입력값은 이 페이지 안에서만 계산한다(저장·전송 없음). 계산은 lib의 함수만 쓴다.
+  import { parseWonInt } from '../../lib/payroll/shared/validation.ts';
+  import { calcSeveranceTax, serviceYears, MAX_PAY, MAX_YEARS } from '../../lib/payroll/severance-tax/calculation.ts';
+
+  const won = (n: number) => `${n.toLocaleString('ko-KR')}원`;
+  const root = document.querySelector<HTMLElement>('[data-tool="severance-tax"]');
+  if (root) {
+    const $ = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
+    const result = $('[data-st-result]');
+    const pay = $<HTMLInputElement>('#st-pay');
+    const yIn = $<HTMLInputElement>('#st-years');
+    const mIn = $<HTMLInputElement>('#st-months');
+    let signaled = false;
+    const signalUse = () => {
+      if (signaled) return;
+      signaled = true;
+      document.dispatchEvent(new CustomEvent('kkultip:tool-use', { detail: 'severance-tax' }));
+    };
+    const out = (key: string, text: string) => ($(`[data-st-out="${key}"]`).textContent = text);
+    const err = (which: 'pay' | 'period', text: string, inputs: HTMLInputElement[]) => {
+      $(`[data-st-error="${which}"]`).textContent = text;
+      for (const i of inputs) text ? i.setAttribute('aria-invalid', 'true') : i.removeAttribute('aria-invalid');
+    };
+    const withCommas = (input: HTMLInputElement) => {
+      const raw = input.value;
+      if (!/^[\d,]*$/.test(raw)) return;
+      const caret = input.selectionStart ?? raw.length;
+      const digitsBefore = raw.slice(0, caret).replace(/,/g, '').length;
+      const digits = raw.replace(/,/g, '').replace(/^0+(?=\d)/, '');
+      const next = digits === '' ? '' : Number(digits).toLocaleString('ko-KR');
+      if (next === raw || digits.length > 15) return;
+      input.value = next;
+      let pos = 0;
+      for (let seen = 0; pos < next.length && seen < digitsBefore; pos++) if (next[pos] !== ',') seen++;
+      input.setSelectionRange(pos, pos);
+    };
+
+    const run = () => {
+      const p = parseWonInt(pay.value, { min: 1, max: MAX_PAY });
+      err('pay', !p.ok && p.code !== 'empty' ? '퇴직금을 1원 이상, 50억원 이하의 원 단위 숫자로 입력해 주세요.' : '', [pay]);
+      const yRaw = yIn.value.trim();
+      const mRaw = mIn.value.trim();
+      const y = parseWonInt(yRaw === '' && mRaw !== '' ? '0' : yRaw, { min: 0, max: MAX_YEARS });
+      const m = parseWonInt(mRaw === '' ? '0' : mRaw, { min: 0, max: 11 });
+      let years = 0;
+      if (yRaw === '' && mRaw === '') err('period', '', [yIn, mIn]);
+      else if (!y.ok || !m.ok) err('period', '년은 0부터 60까지, 개월은 0부터 11까지 숫자로 입력해 주세요.', [yIn, mIn]);
+      else if (y.value === 0 && m.value === 0) err('period', '근무 기간을 1개월 이상 입력해 주세요.', [yIn, mIn]);
+      else if (serviceYears(y.value, m.value) > MAX_YEARS) err('period', '근무 기간은 60년까지 계산합니다.', [yIn, mIn]);
+      else {
+        err('period', '', [yIn, mIn]);
+        years = serviceYears(y.value, m.value);
+      }
+      if (!p.ok || years === 0) {
+        result.hidden = true;
+        return;
+      }
+      const r = calcSeveranceTax(p.value, years);
+      if (!r.ok) {
+        result.hidden = true;
+        return;
+      }
+      const x = r.result;
+      out('net', won(x.net));
+      out('sub', x.totalTax === 0 ? '떼는 세금 0원' : `퇴직금의 약 ${(Math.round((x.totalTax / x.pay) * 1000) / 10).toLocaleString('ko-KR')}%를 세금으로 뗍니다`);
+      out('pay', won(x.pay));
+      out('tax', won(x.incomeTax));
+      out('local', won(x.localTax));
+      out('total', won(x.totalTax));
+      out('years', `${x.years}년`);
+      out('sd', won(x.serviceDeduction));
+      out('conv', won(x.converted));
+      out('cd', won(x.convertedDeduction));
+      out('base', won(x.taxBase));
+      out('ctax', x.ratePct ? `${won(x.convertedTax)} (세율 ${x.ratePct}%)` : won(x.convertedTax));
+      out('tax2', won(x.incomeTax));
+      result.hidden = false;
+      signalUse();
+    };
+
+    pay.addEventListener('input', () => {
+      withCommas(pay);
+      run();
+    });
+    yIn.addEventListener('input', run);
+    mIn.addEventListener('input', run);
+  }
+</script>
+
+<style>
+  fieldset.tool-field {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .st-period {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-2);
+  }
+
+  .st-period .tool-input {
+    min-width: 0;
+  }
+
+  .st-period input {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .st-result {
+    gap: var(--space-4);
+  }
+
+  .st-head h3 {
+    font-size: var(--text-md);
+    font-weight: var(--weight-semibold);
+  }
+
+  .st-total {
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+
+  .st-sub {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .st-lines {
+    display: grid;
+  }
+
+  .st-lines div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-3);
+    padding-block: var(--space-2);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .st-lines div:first-child {
+    border-top: 0;
+  }
+
+  .st-lines dt {
+    min-width: 0;
+  }
+
+  .st-lines dd {
+    flex: 0 1 auto;
+    overflow-wrap: anywhere;
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+
+  .st-lines__sum {
+    font-weight: var(--weight-semibold);
+  }
+
+  .st-steps summary,
+  .st-basis summary {
+    display: flex;
+    align-items: center;
+    min-height: var(--touch);
+    font-weight: var(--weight-semibold);
+    cursor: pointer;
+  }
+
+  .st-notes {
+    display: grid;
+    gap: var(--space-1);
+    padding-left: 1.25em;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    list-style: disc;
+  }
+
+  .st-example {
+    font-weight: var(--weight-semibold);
+  }
+
+  .st-basis__body {
+    display: grid;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+  }
+
+  .st-basis__body ul {
+    display: grid;
+    gap: var(--space-1);
+    padding-left: 1.25em;
+    list-style: disc;
+  }
+</style>

@@ -16,6 +16,7 @@ import LoanRepayment from './LoanRepayment.astro';
 import CarInspection from './CarInspection.astro';
 import PensionAge from './PensionAge.astro';
 import UnemploymentBenefit from './UnemploymentBenefit.astro';
+import SeveranceTax from './SeveranceTax.astro';
 
 export const toolComponents: Record<ToolId, typeof ElectricityBill> = {
   'electricity-bill': ElectricityBill,
@@ -34,4 +35,5 @@ export const toolComponents: Record<ToolId, typeof ElectricityBill> = {
   'car-inspection': CarInspection,
   'pension-age': PensionAge,
   'unemployment-benefit': UnemploymentBenefit,
+  'severance-tax': SeveranceTax,
 };

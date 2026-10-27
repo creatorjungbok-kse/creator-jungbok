@@ -32,6 +32,7 @@ const TOOL_PAGES = {
   'car-inspection': '/living/car-inspection-period/',
   'pension-age': '/money/national-pension-age/',
   'unemployment-benefit': '/work/unemployment-benefit-calculator/',
+  'severance-tax': '/work/severance-pay-tax/',
 };
 const FORBIDDEN = /\b(link_text|link_url|text|value|kwh|kWh|price|amount|bill|result|query|search_term|q|name|input)\s*:/;
 
