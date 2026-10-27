@@ -1,6 +1,6 @@
 ---
 # UI 검수용 예시(화면에 자연스러운 날짜·문구). 상태 계산 경계 검증은 tools/test-benefit-status.mjs가 맡는다.
-title: 예시 · 신청 가능한 에너지 지원
+title: 예시 신청 가능한 에너지 지원
 subcategory: bill-relief
 contentMode: timely
 primaryQuery: fixture 신청 가능한 에너지 지원

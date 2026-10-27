@@ -1,5 +1,5 @@
 ---
-title: 예시 · 받을 수 있는 정부 혜택 확인하는 법
+title: 예시 받을 수 있는 정부 혜택 확인하는 법
 contentType: guide
 subcategory: grants
 contentMode: evergreen

@@ -1,7 +1,7 @@
 ---
 # UI 검수용 예시(화면에 자연스러운 날짜·문구). 상태 계산 경계 검증은 tools/test-benefit-status.mjs가 맡는다.
 # 신청 예정 상태는 시작일(2027-03-02) 전까지만 유지된다. 그 뒤에는 날짜를 다음 해로 옮긴다.
-title: 예시 · 곧 시작하는 주거 지원
+title: 예시 곧 시작하는 주거 지원
 subcategory: housing
 contentMode: timely
 primaryQuery: fixture 곧 시작하는 주거 지원

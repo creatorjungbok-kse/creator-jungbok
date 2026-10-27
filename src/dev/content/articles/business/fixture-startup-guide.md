@@ -1,5 +1,5 @@
 ---
-title: 예시 · 매장 창업 초기 비용 가이드
+title: 예시 매장 창업 초기 비용 가이드
 contentType: guide
 subcategory: startup
 contentMode: evergreen

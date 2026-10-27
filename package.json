@@ -9,6 +9,7 @@
     "dev": "astro dev",
     "check": "astro check",
     "build": "astro check && astro build",
+    "build:fresh": "node -e \"for (const d of ['.astro', 'node_modules/.astro']) require('fs').rmSync(d, { recursive: true, force: true })\" && astro check && astro build",
     "preview": "astro preview",
     "check:build": "node tools/check-build.mjs",
     "test:content": "node tools/test-content.mjs",

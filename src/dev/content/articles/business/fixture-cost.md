@@ -1,5 +1,5 @@
 ---
-title: 예시 · 카드단말기 설치 비용, 조건별로 얼마나 들까
+title: 예시 카드단말기 설치 비용 조건별로 얼마나 들까
 contentType: cost
 subcategory: payment
 contentMode: evergreen

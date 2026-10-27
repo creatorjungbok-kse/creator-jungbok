@@ -1,5 +1,5 @@
 ---
-title: 예시 · 포장이사 비용, 거리와 짐 양에 따라
+title: 예시 포장이사 비용 거리와 짐 양에 따라
 contentType: cost
 subcategory: moving
 contentMode: evergreen

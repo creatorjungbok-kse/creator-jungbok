@@ -1,5 +1,5 @@
 ---
-title: 예시 · 인터넷 요금제 비교, 속도별로 무엇이 다를까
+title: 예시 인터넷 요금제 비교 속도별로 무엇이 다를까
 contentType: compare
 subcategory: internet
 contentMode: evergreen

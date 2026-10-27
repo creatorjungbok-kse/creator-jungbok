@@ -1,5 +1,5 @@
 ---
-title: 예시 · 이사 준비 순서 가이드
+title: 예시 이사 준비 순서 가이드
 contentType: guide
 subcategory: moving
 contentMode: evergreen

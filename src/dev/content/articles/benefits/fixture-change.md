@@ -1,5 +1,5 @@
 ---
-title: 예시 · 에너지 요금 지원 기준 변경 정리
+title: 예시 에너지 요금 지원 기준 변경 정리
 contentType: change
 subcategory: bill-relief
 contentMode: timely
