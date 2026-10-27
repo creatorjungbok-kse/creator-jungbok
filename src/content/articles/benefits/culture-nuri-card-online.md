@@ -20,6 +20,8 @@ synonyms:
   - 문화누리카드 쇼핑몰
   - 문화누리카드 문구
 summary: 문화누리카드를 온라인에서 쓰려면 먼저 NH농협카드 홈페이지(PC)의 일반결제나 NHpay 앱으로 인터넷 사용등록을 해야 하고, 결제는 문화누리카드 누리집 '온라인 가맹점'에서 검색되는 곳에서만 됩니다. 교보문고, YES24 도서, 알라딘, 영풍문고 온라인 같은 서점은 온라인 가맹점으로 등록돼 있지만(10월 27일 검색 기준) 쿠팡·G마켓 같은 오픈마켓은 안 되고, 온라인에서는 다른 카드와 나눠 내는 복합결제가 되지 않습니다.
+thumbnail: /images/thumbnails/culture-nuri-card-online.webp
+ogImage: /images/og/culture-nuri-card-online.png
 datePublished: 2026-10-27
 dateModified: 2026-10-27
 researchedAt: 2026-10-27
