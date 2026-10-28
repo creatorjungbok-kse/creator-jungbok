@@ -1,16 +1,21 @@
 ---
-// 글 상단 요약(cost 등: 결론부터 / benefit: 핵심 요약). 광고 금지 영역(data-ad-protected).
+// 글 상단 '핵심 요약'. 요약 문장을 한 줄씩 나눠 목록으로 보여 준다. 광고 금지 영역(data-ad-protected).
+import { splitSummary } from '../lib/summary';
+
 export interface Props {
   summary: string;
   title?: string;
 }
 
-const { summary, title = '결론부터' } = Astro.props;
+const { summary, title = '핵심 요약' } = Astro.props;
+const items = splitSummary(summary);
 ---
 
 <section class="summary-box" data-ad-protected="summary">
   <h2>{title}</h2>
-  <p>{summary}</p>
+  <ul>
+    {items.map((s) => <li>{s}</li>)}
+  </ul>
 </section>
 
 <style>
@@ -29,5 +34,13 @@ const { summary, title = '결론부터' } = Astro.props;
     color: var(--color-link-strong);
     font-size: var(--text-sm);
     font-weight: var(--weight-bold);
+  }
+
+  ul {
+    display: grid;
+    gap: var(--space-2);
+    margin: 0;
+    padding-left: 1.2em;
+    list-style: disc;
   }
 </style>

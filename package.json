@@ -21,7 +21,7 @@
     "test:tools": "node --test tools/test-electricity.mjs tools/test-mvno.mjs tools/test-payroll-shared.mjs tools/test-weekly-holiday-pay.mjs tools/test-vat-calculator.mjs tools/test-social-insurance.mjs tools/test-severance-pay.mjs tools/test-tax-calendar.mjs tools/test-annual-leave.mjs tools/test-take-home.mjs tools/test-freelancer-tax.mjs tools/test-parental-leave.mjs tools/test-savings-interest.mjs tools/test-loan-repayment.mjs tools/test-car-inspection.mjs tools/test-pension-age.mjs tools/test-unemployment.mjs tools/test-severance-tax.mjs",
     "test:seo": "node tools/test-check-build.mjs",
     "test:theme": "node --test tools/test-theme.mjs",
-    "test:style": "node --test tools/test-style.mjs"
+    "test:style": "node --test tools/test-style.mjs tools/test-summary.mjs"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "0.4.2",
