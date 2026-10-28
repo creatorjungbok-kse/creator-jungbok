@@ -21,7 +21,7 @@ synonyms:
   - 알뜰폰 변경 유심
   - 알뜰폰 변경 시기
 summary: 알뜰폰으로 번호이동을 하면 쓰던 전화번호를 그대로 유지해요. 셀프개통은 요금제를 고르고, 본인 인증과 기존 통신사 인증(ARS·문자)을 거친 뒤 유심 번호를 넣어 개통하는 순서예요. 번호이동은 10시부터 20시까지 되고 일요일과 명절 당일은 쉬어요. 번호이동·신규가입·명의변경일로부터 3개월 동안은 다시 번호이동이 제한되고, 기존 통신사의 남은 할부금과 약정 할인반환금도 미리 확인해야 해요.
-thumbnail: /images/thumbnails/mvno-number-porting.svg
+thumbnail: /images/thumbnails/mvno-number-porting.webp
 ogImage: /images/og/mvno-number-porting.png
 datePublished: 2026-10-28
 dateModified: 2026-10-28

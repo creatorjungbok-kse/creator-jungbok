@@ -21,7 +21,7 @@ synonyms:
   - 알뜰폰 요금제 비교 KT
   - 알뜰폰 요금제 비교 SKT
 summary: 알뜰폰 요금제는 크게 보이는 할인 월요금보다 'N개월 이후' 요금과 할인 기간을 함께 봐야 해요. 한국정보통신진흥협회가 운영하는 알뜰폰허브의 요금제 카드와 상세 화면에서 할인 월요금, 할인 기간, 할인 후 요금, 유심 비용을 찾아 계산기에 넣으면 12개월·24개월 예상 총액이 나와요. 데이터 표시의 '+1Mbps'는 기본 데이터를 다 쓴 뒤 그 속도로 계속 쓴다는 뜻이에요.
-thumbnail: /images/thumbnails/mvno-plan-comparison.svg
+thumbnail: /images/thumbnails/mvno-plan-comparison.webp
 ogImage: /images/og/mvno-plan-comparison.png
 datePublished: 2026-10-01
 dateModified: 2026-10-28
