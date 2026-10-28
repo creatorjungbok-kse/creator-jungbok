@@ -22,7 +22,7 @@ synonyms:
   - 클로드 Max
   - Claude Pro 가격
 summary: 클로드 개인 요금제는 Free $0, Pro 월 $20(연간 구독 시 월 $17), Max 월 $100(5x)·$200(20x)이에요. 한국에서는 부가세 10%가 붙어 Pro 월 $22, Max 5x $110으로 보여요. 일반 사용은 Pro로 충분하고, 사업·코딩·Claude Code에 쓴다면 Max 5x가 적당해요. 요금제는 설정 > 청구 > 구독 관리에서 바꾸고, 업그레이드는 바로, 다운그레이드는 결제 주기가 끝날 때 적용돼요.
-thumbnail: /images/thumbnails/claude-pricing.svg
+thumbnail: /images/thumbnails/claude-pricing.webp
 ogImage: /images/og/claude-pricing.png
 datePublished: 2026-10-10
 dateModified: 2026-10-28

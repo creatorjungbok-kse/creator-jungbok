@@ -18,7 +18,7 @@ synonyms:
   - 클로드 코드 Pro
   - 클로드 코드
 summary: 클로드 코드는 무료 플랜에서는 쓸 수 없고 Pro, Max, Team, Enterprise 구독이나 Console(API) 계정이 있어야 해요. 구독으로 쓰면 클로드 채팅과 같은 사용량 한도에서 함께 차감되고, 5시간 세션 한도와 주간 한도가 있어요. 운영자는 클로드 코드가 나온 뒤 Max 20x를 쓰다가 사용량이 남아 Max 5x로 바꿨고, 사업·코딩 작업에는 Max 5x를 추천해요. ANTHROPIC_API_KEY를 설정하고 사용을 승인하면 구독 대신 API 요금이 나갈 수 있어요.
-thumbnail: /images/thumbnails/claude-code-pricing.svg
+thumbnail: /images/thumbnails/claude-code-pricing.webp
 ogImage: /images/og/claude-code-pricing.png
 datePublished: 2026-10-28
 dateModified: 2026-10-28

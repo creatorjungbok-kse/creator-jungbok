@@ -19,7 +19,7 @@ synonyms:
   - 클로드 연간 결제
   - 클로드 결제 카드
 summary: 2026년 10월 28일 공식 요금 페이지에는 개인 학생 할인이 안내돼 있지 않아요. 학생은 학교가 계약하는 Education 플랜으로 할인된 요금을 받을 수 있어요. 개인이 쓸 수 있는 할인은 Pro 연간 결제로, 월 $20씩 1년이면 $240인데 연간 결제는 $200이라 1년에 $40을 덜 내요. 웹 결제는 신용카드·체크카드로만 되고, 해외 결제라 Visa 국제브랜드수수료(약 1%, 카드사별 1.0%에서 1.1%)와 카드사 해외서비스수수료가 더 붙어요.
-thumbnail: /images/thumbnails/claude-discount.svg
+thumbnail: /images/thumbnails/claude-discount.webp
 ogImage: /images/og/claude-discount.png
 datePublished: 2026-10-28
 dateModified: 2026-10-28
