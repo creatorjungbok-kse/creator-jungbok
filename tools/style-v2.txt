@@ -38,3 +38,4 @@ src/content/articles/work/unemployment-benefit-apply.md
 src/content/articles/digital/claude-pricing.md
 src/content/articles/digital/claude-code-pricing.md
 src/content/articles/digital/claude-discount.md
+src/content/articles/digital/claude-usage.md

@@ -78,7 +78,7 @@ faq:
     answer: 5시간 세션 한도가 초기화될 때까지 기다리거나, 상위 플랜으로 올리거나, 유료 플랜이라면 사용 크레딧을 켜서 표준 API 요금으로 계속 쓸 수 있어요. 현재 사용량은 설정 > 사용량에서 볼 수 있어요.
   - question: 요금제를 내리면 대화 기록이 사라지나요?
     answer: 아니요. 다운그레이드는 현재 결제 주기가 끝날 때 적용되고, 어떤 플랜을 쓰든 채팅, 프로젝트, 파일은 계정에 그대로 남아요.
-related: [/digital/claude-code-pricing/, /digital/gemini-pricing/]
+related: [/digital/claude-code-pricing/, /digital/claude-usage/, /digital/gemini-pricing/]
 changelog:
   - date: 2026-10-28
     summary: 10월 28일 공식 요금 페이지로 다시 확인해 한국 표시 가격(부가세 10% 포함), 사용량 한도, 팀·Enterprise 요금, 요금제 변경·취소 방법을 고치고, 1년 넘게 Pro·Max를 써 본 운영자 경험과 추천, 그림 2개를 넣었습니다.
