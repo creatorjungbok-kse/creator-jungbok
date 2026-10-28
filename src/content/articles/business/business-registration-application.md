@@ -13,7 +13,7 @@ synonyms:
   - 홈택스 사업자등록 신청
   - 사업자등록 준비서류
   - 사업자등록 기한
-summary: 사업자등록은 사업을 시작한 날부터 20일 이내에 신청해야 하고, 시작 전에 미리 신청할 수도 있습니다. 홈택스나 가까운 세무서 어디서나 신청할 수 있으며, 세무서는 보통 신청일부터 2일 이내에 사업자등록증을 발급합니다.
+summary: 사업자등록은 사업을 시작한 날부터 20일 이내에 신청해야 하고, 시작 전에 미리 신청할 수도 있어요. 홈택스나 가까운 세무서 어디서나 신청할 수 있으며, 세무서는 보통 신청일부터 2일 이내에 사업자등록증을 발급해요.
 thumbnail: /images/thumbnails/business-registration-application.svg
 ogImage: /images/og/business-registration-application.png
 datePublished: 2026-10-06

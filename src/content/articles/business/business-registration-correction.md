@@ -14,7 +14,7 @@ synonyms:
   - 사업장 이전 신고
   - 상호 변경 신고
   - 업종 추가 변경
-summary: 상호·업종·사업장 주소 등이 바뀌면 지체 없이 사업자등록 정정신고를 해야 합니다. 홈택스 또는 가까운 세무서에서 신고할 수 있습니다.
+summary: 상호·업종·사업장 주소 등이 바뀌면 지체 없이 사업자등록 정정신고를 해야 해요. 홈택스 또는 가까운 세무서에서 신고할 수 있어요.
 thumbnail: /images/thumbnails/business-registration-correction.svg
 ogImage: /images/og/business-registration-correction.png
 datePublished: 2026-10-04

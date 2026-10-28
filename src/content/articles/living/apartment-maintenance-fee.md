@@ -13,7 +13,7 @@ synonyms:
   - 아파트 관리비 비교
   - 관리비 공개
   - 장기수선충당금 세입자
-summary: 일정 규모 이상 아파트는 매달 관리비 내역을 다음 달 말일까지 K-apt(공동주택관리정보시스템)에 공개해야 합니다. K-apt에서 단지명으로 검색하면 로그인 없이 우리 단지 관리비를 보고 비슷한 단지와 비교할 수 있습니다.
+summary: 일정 규모 이상 아파트는 매달 관리비 내역을 다음 달 말일까지 K-apt(공동주택관리정보시스템)에 공개해야 해요. K-apt에서 단지명으로 검색하면 로그인 없이 우리 단지 관리비를 보고 비슷한 단지와 비교할 수 있어요.
 thumbnail: /images/thumbnails/apartment-maintenance-fee.svg
 ogImage: /images/og/apartment-maintenance-fee.png
 datePublished: 2026-10-05

@@ -34,3 +34,12 @@ test('빌드된 글: 핵심 요약 제목과 목록, 결론부터 없음', { ski
   }
   assert.ok(n > 10, `요약 상자가 있는 글이 너무 적음(${n})`);
 });
+
+test('모든 글 요약은 해요체(문장 끝 ~니다 금지)', () => {
+  const files = walk('src/content/articles').filter((p) => p.endsWith('.md') && !/\/test-/.test(p));
+  for (const f of files) {
+    const m = readFileSync(f, 'utf8').match(/^summary: (.*)$/m);
+    if (!m) continue;
+    for (const s of splitSummary(m[1])) assert.ok(!/니다[.!?]$/.test(s), `${f}: 요약 문장이 ~니다로 끝남: ${s.slice(-20)}`);
+  }
+});

@@ -16,7 +16,7 @@ synonyms:
   - 구글 AI 플러스
   - 제미나이 울트라 가격
   - 제미나이 연간 구독
-summary: 한국 기준 제미나이 유료 요금제는 Google AI Plus 월 7,500원(400GB, 2TB는 11,900원), Pro 월 29,000원(연 290,000원), Ultra 월 119,000원부터입니다. 2026년 10월 31일까지 Pro 연간 구독을 174,000원에 이용할 수 있는 할인 혜택이 있지만, 실제 적용 여부는 계정과 구독 상태에 따라 다릅니다.
+summary: 한국 기준 제미나이 유료 요금제는 Google AI Plus 월 7,500원(400GB, 2TB는 11,900원), Pro 월 29,000원(연 290,000원), Ultra 월 119,000원부터예요. 2026년 10월 31일까지 Pro 연간 구독을 174,000원에 이용할 수 있는 할인 혜택이 있지만, 실제 적용 여부는 계정과 구독 상태에 따라 달라요.
 thumbnail: /images/thumbnails/gemini-pricing.svg
 ogImage: /images/og/gemini-pricing.png
 datePublished: 2026-10-21

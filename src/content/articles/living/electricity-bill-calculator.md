@@ -20,7 +20,7 @@ synonyms:
   - 여름 누진제 완화
   - 400kWh 전기요금
   - 슈퍼유저 요금
-summary: 월 사용량(kWh)과 사용 시기만 넣으면 주택용 저압 일반가구의 예상 전기요금을 계산합니다. 전력량요금은 사용량 구간이 올라갈수록 단가가 높아지는 누진제이고, 여기에 기후환경요금·연료비조정요금·부가가치세·전력산업기반기금이 더해집니다. 실제 청구액은 한전ON에서 확인하세요.
+summary: 월 사용량(kWh)과 사용 시기만 넣으면 주택용 저압 일반가구의 예상 전기요금을 계산해요. 전력량요금은 사용량 구간이 올라갈수록 단가가 높아지는 누진제이고, 여기에 기후환경요금·연료비조정요금·부가가치세·전력산업기반기금이 더해져요. 실제 청구액은 한전ON에서 확인하세요.
 thumbnail: /images/thumbnails/electricity-bill-calculator.svg
 ogImage: /images/og/electricity-bill-calculator.png
 datePublished: 2026-10-01
