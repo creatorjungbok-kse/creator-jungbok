@@ -33,3 +33,4 @@ src/content/articles/living/resident-registration-copy.md
 src/content/articles/benefits/national-learning-card.md
 src/content/articles/benefits/national-learning-card-usage.md
 src/content/articles/work/unemployment-benefit-calculator.md
+src/content/articles/living/bulky-waste.md
