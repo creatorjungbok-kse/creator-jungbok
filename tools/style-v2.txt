@@ -15,3 +15,8 @@ src/content/articles/business/vat-preliminary-payment.md
 src/content/articles/business/vat-preliminary-return.md
 src/content/articles/work/severance-pay-tax.md
 src/content/benefits/youth-future-savings.md
+src/content/articles/work/unemployment-benefit.md
+src/content/articles/work/severance-pay.md
+src/content/articles/work/weekly-holiday-pay.md
+src/content/articles/work/weekly-holiday-pay-conditions.md
+src/content/articles/work/unemployment-benefit-voluntary-resignation.md
