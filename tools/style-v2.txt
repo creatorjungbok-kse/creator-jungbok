@@ -36,3 +36,5 @@ src/content/articles/work/unemployment-benefit-calculator.md
 src/content/articles/living/bulky-waste.md
 src/content/articles/work/unemployment-benefit-apply.md
 src/content/articles/digital/claude-pricing.md
+src/content/articles/digital/claude-code-pricing.md
+src/content/articles/digital/claude-discount.md
