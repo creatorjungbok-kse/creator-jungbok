@@ -59,7 +59,7 @@ faq:
     answer: 아닙니다. 부가가치세법은 사업장 관할 세무서가 아닌 다른 세무서에 신청해도 관할 세무서에 신청한 것으로 봅니다. 홈택스로 온라인 신청도 할 수 있습니다.
   - question: 사업 시작 전에 산 물건의 부가세도 공제받을 수 있나요?
     answer: 등록 전 매입세액은 원칙적으로 공제되지 않습니다. 다만 물건을 산 날이 속한 과세기간이 끝난 뒤 20일 이내에 등록을 신청하면, 등록 신청일부터 그 과세기간 시작일까지 거슬러 올라간 기간의 매입세액은 이 제한에서 빠집니다. 다른 공제 요건도 충족하면 공제 대상이 될 수 있습니다.
-related: [/business/business-registration-certificate/, /business/business-credit-card/, /business/cash-receipt/]
+related: [/business/business-registration-certificate/, /business/cash-receipt/]
 sourceIds: [local:nts-registration-docs, local:law-vat-8, local:law-vat-decree-11-5, local:law-vat-60, local:law-vat-39]
 localSources:
   - id: local:nts-registration-docs
@@ -142,6 +142,6 @@ localSources:
 ## 등록한 다음에 할 일
 
 - **사업자등록증 출력**: 홈택스에서 바로 출력할 수 있습니다. [사업자등록증 발급·재발급](/business/business-registration-certificate/)
-- **사업용 신용카드 등록**: 사업에 쓸 카드를 등록해 두면 부가세 신고가 편해집니다. [사업용 신용카드 등록 방법](/business/business-credit-card/)
+- **사업용 신용카드 등록**: 사업에 쓸 카드를 등록해 두면 부가세 신고가 편해집니다. [사업용 신용카드 등록 방법](/business/cash-receipt/#사업용-신용카드-등록)
 - **현금영수증 의무 확인**: 업종에 따라 10만원 이상 현금 거래에 발급 의무가 있습니다. [현금영수증 의무발행업종](/business/cash-receipt/)
-- **바뀌면 정정 신고**: 상호·주소·업종이 바뀌면 지체 없이 정정합니다. [사업자등록 정정신고](/business/business-registration-correction/)
+- **바뀌면 정정 신고**: 상호·주소·업종이 바뀌면 지체 없이 정정합니다. [사업자등록 정정신고](/business/business-registration-certificate/#사업자등록-정정신고가-필요한-경우)

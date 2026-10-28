@@ -62,7 +62,7 @@ faq:
     answer: 네. 사업 시작 전에 등록했는데 사실상 사업을 시작하지 않게 되면 휴업·폐업과 같이 지체 없이 신고해야 합니다. 사업 시작 전에 등록했고, 등록 후 6개월이 되는 날까지 거래 실적이 없으면 그날을 폐업일로 보는 규정도 있습니다(정당한 사유가 있으면 예외).
   - question: 폐업 신고를 하면 부가세 신고는 따로 안 해도 되나요?
     answer: 아닙니다. 폐업신고와 별도로 폐업일이 속한 달의 다음 달 25일까지 부가세 확정신고를 해야 합니다. 이때 확정신고서에 폐업 연월일과 사유를 적고 사업자등록증을 첨부해 내면 폐업신고서를 낸 것으로 봅니다.
-related: [/business/vat-preliminary-return/, /business/business-registration-correction/, /business/business-registration-application/]
+related: [/business/vat-preliminary-return/, /business/business-registration-certificate/, /business/business-registration-application/]
 sourceIds: [local:nts-closure, local:law-vat-8, local:law-vat-decree-13, local:law-vat-decree-7, local:law-vat-49, local:law-vat-67, local:law-vat-10, local:law-income-70, local:hometax]
 localSources:
   - id: local:nts-closure
@@ -168,6 +168,6 @@ localSources:
 
 ## 휴업·폐업과 정정신고는 다릅니다
 
-상호나 주소, 업종이 바뀌는 것은 휴·폐업이 아니라 [사업자등록 정정신고](/business/business-registration-correction/) 대상입니다. 사업은 계속하면서 사업장만 옮기는 경우도 정정신고를 합니다.
+상호나 주소, 업종이 바뀌는 것은 휴·폐업이 아니라 [사업자등록 정정신고](/business/business-registration-certificate/#사업자등록-정정신고가-필요한-경우) 대상입니다. 사업은 계속하면서 사업장만 옮기는 경우도 정정신고를 합니다.
 
 다른 일정의 부가세 신고는 [부가세 예정신고](/business/vat-preliminary-return/)에, 나중에 다시 사업을 시작할 때의 절차는 [사업자등록 신청 방법](/business/business-registration-application/)에 정리했습니다.

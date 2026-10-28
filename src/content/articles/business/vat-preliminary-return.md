@@ -57,7 +57,7 @@ faq:
     answer: 홈택스에 로그인해 세금신고 → 부가가치세 신고 → 신고도움 자료 조회로 들어가면 예정고지 대상 여부와 세액을 볼 수 있어요. 개인사업자는 ARS(1544-9944)로도 조회할 수 있고요.
   - question: 예정신고기간에 매출이 없는 법인도 신고해야 하나요?
     answer: 네. 예정신고 대상 법인은 실적이 없어도 신고해야 해요. 실적이 없는 법인은 홈택스 부가가치세 정기신고 화면에서 몇 번의 클릭으로 무실적 신고를 마칠 수 있어요.
-related: [/business/vat-preliminary-payment/, /business/tax-calendar/, /business/vat-calculator/, /business/business-credit-card/, /business/cash-receipt/]
+related: [/business/vat-preliminary-payment/, /business/tax-calendar/, /business/vat-calculator/, /business/cash-receipt/]
 changelog:
   - date: 2026-10-28
     summary: 내용은 그대로 두고 읽기 쉽게 다시 정리했습니다. 문단을 짧게 나누고, 예정신고 대상·1년 신고 일정·예정신고 선택 기준 그림 3개와 예정신고·예정고지 비교 표를 넣었습니다.
@@ -256,6 +256,6 @@ localSources:
 
 신고하는 사업자는 홈택스 '미리채움' 자료가 실제 거래와 맞는지 꼭 확인하세요!
 
-사업용으로 쓴 카드 지출은 [사업용 신용카드](/business/business-credit-card/)로 등록해 두면 다음 신고부터 합계금액만 적으면 돼요. 이번 신고부터는 현금영수증 매입내역을 신고 화면 팝업에서 바로 고칠 수 있어요.
+사업용으로 쓴 카드 지출은 [사업용 신용카드](/business/cash-receipt/#사업용-신용카드-등록)로 등록해 두면 다음 신고부터 합계금액만 적으면 돼요. 이번 신고부터는 현금영수증 매입내역을 신고 화면 팝업에서 바로 고칠 수 있어요.
 
 현금영수증을 발급해야 하는 업종이라면 [현금영수증 의무발행업종](/business/cash-receipt/)도 함께 확인하세요.

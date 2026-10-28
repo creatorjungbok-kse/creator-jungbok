@@ -88,7 +88,7 @@ actionLinks:
 notes:
   - 국민행복카드는 대상자 본인만 쓸 수 있고 다른 사람에게 주거나 빌려줄 수 없습니다. 은행 창구와 공과금수납기에서는 쓸 수 없습니다.
   - 에너지바우처 지원금은 수급자의 소득 산정에 반영되지 않습니다.
-related: [/benefits/electricity-welfare-discount/]
+related: [/living/electricity-bill-calculator/]
 sourceIds: [local:kea-2026-0622, local:kea-2026-0930, local:busan-sbiz-energy, local:khan-sbiz-voucher, local:kb-sbiz-voucher]
 changelog:
   - date: 2026-10-28
@@ -362,7 +362,7 @@ localSources:
 
 잔액조회는 에너지바우처 사용기간에만 돼요. 어디에 얼마를 썼는지 같은 자세한 내역은 에너지바우처 챗봇이나 상담센터(1600-3190)에서 확인할 수 있어요.
 
-기초생활수급자라면 한전의 [전기요금 복지할인](/benefits/electricity-welfare-discount/)도 받을 수 있는지 확인해 보세요. 에너지바우처와는 별도 제도라 한전에 따로 신청해요.
+기초생활수급자라면 한전의 [전기요금 복지할인](/living/electricity-bill-calculator/#전기요금-복지할인-대상)도 받을 수 있는지 확인해 보세요. 에너지바우처와는 별도 제도라 한전에 따로 신청해요.
 
 ## 소상공인 에너지바우처는 다른 제도입니다
 
