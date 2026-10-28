@@ -25,3 +25,8 @@ src/content/articles/work/national-employment-support.md
 src/content/articles/work/parental-leave-pay-calculator.md
 src/content/articles/work/take-home-pay-calculator.md
 src/content/articles/work/social-insurance-calculator.md
+src/content/articles/money/national-pension-age.md
+src/content/articles/living/move-in-report.md
+src/content/articles/work/minimum-wage.md
+src/content/articles/work/social-insurance-enrollment-certificate.md
+src/content/articles/living/resident-registration-copy.md
