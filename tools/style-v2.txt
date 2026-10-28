@@ -20,3 +20,8 @@ src/content/articles/work/severance-pay.md
 src/content/articles/work/weekly-holiday-pay.md
 src/content/articles/work/weekly-holiday-pay-conditions.md
 src/content/articles/work/unemployment-benefit-voluntary-resignation.md
+src/content/articles/money/loan-repayment-calculator.md
+src/content/articles/work/national-employment-support.md
+src/content/articles/work/parental-leave-pay-calculator.md
+src/content/articles/work/take-home-pay-calculator.md
+src/content/articles/work/social-insurance-calculator.md
