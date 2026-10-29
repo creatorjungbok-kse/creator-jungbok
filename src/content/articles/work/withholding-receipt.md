@@ -27,7 +27,7 @@ synonyms:
   - 전 직장 원천징수영수증
   - 원천징수영수증 소득금액증명 차이
 summary: 원천징수영수증은 홈택스 '지급명세서(원천징수 내역)등 조회'에서 귀속연도와 종류를 골라 볼 수 있어요. 홈택스에서 뽑은 서류에는 회사의 서명이나 직인이 없으니, 회사 직인이 찍힌 서류가 필요하면 회사에 요청하고 국세청 서류도 되면 소득금액증명을 떼요. 이직했다면 전 회사 원천징수영수증을 새 회사 연말정산에 내야 해요.
-thumbnail: /images/thumbnails/withholding-receipt.svg
+thumbnail: /images/thumbnails/withholding-receipt.webp
 ogImage: /images/og/withholding-receipt.png
 datePublished: 2026-10-12
 dateModified: 2026-10-29
