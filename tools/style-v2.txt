@@ -45,3 +45,4 @@ src/content/articles/living/car-inspection-period.md
 src/content/articles/business/cash-receipt.md
 src/content/articles/business/business-registration-certificate.md
 src/content/articles/living/electricity-bill-calculator.md
+src/content/articles/work/annual-leave.md
