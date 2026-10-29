@@ -47,3 +47,4 @@ src/content/articles/business/business-registration-certificate.md
 src/content/articles/living/electricity-bill-calculator.md
 src/content/articles/work/annual-leave.md
 src/content/articles/business/sme-confirmation.md
+src/content/articles/work/freelancer-tax-calculator.md
