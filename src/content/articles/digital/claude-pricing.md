@@ -1,7 +1,7 @@
 ---
-title: Claude 요금제 비교 무료 Pro Max 가격과 나에게 맞는 플랜
+title: 클로드 요금제 무료 Pro Max 가격 비교와 나에게 맞는 플랜 고르는 법
 cardTitle: Claude 요금제 비교
-seoTitle: 클로드 요금제 가격과 차이 추천까지
+seoTitle: 클로드 요금제 가격 비교와 고르는 법
 description: 클로드 요금제 Free·Pro·Max 가격과 차이, 사용량 한도, 팀 요금제, 변경 방법을 정리했어요. 1년 넘게 써 본 추천도 담았어요.
 subcategory: ai
 contentType: compare

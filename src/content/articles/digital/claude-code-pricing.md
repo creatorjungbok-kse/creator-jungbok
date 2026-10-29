@@ -1,7 +1,7 @@
 ---
-title: 클로드 코드 요금제 Pro와 Max 차이 사용량과 추천
+title: 클로드 코드 요금제 Pro와 Max 차이와 사용량 보고 고르는 법
 cardTitle: 클로드 코드 요금제
-seoTitle: 클로드 코드 요금제 Pro와 Max 차이와 추천
+seoTitle: 클로드 코드 요금제 Pro와 Max 차이와 고르는 법
 description: 클로드 코드는 Pro부터 쓸 수 있고 사용량은 채팅과 함께 차감돼요. 요금제별 가격, 구독 로그인과 설치, 운영자가 써 본 추천을 정리했어요.
 subcategory: ai
 contentType: compare

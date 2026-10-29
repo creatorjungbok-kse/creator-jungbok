@@ -1,0 +1,62 @@
+{
+ "unemployment-benefit-calculator": [
+  "실업급여 계산기",
+  "금액 · 기간",
+  "계산하는 법"
+ ],
+ "unemployment-benefit-apply": [
+  "실업급여 신청방법",
+  "온라인 · 준비물",
+  "신청 순서"
+ ],
+ "bulky-waste": [
+  "대형폐기물 신고",
+  "스티커 · 어플",
+  "신청 방법"
+ ],
+ "mvno-plan-comparison": [
+  "알뜰폰 요금제",
+  "비교 · 변경",
+  "방법"
+ ],
+ "mvno-number-porting": [
+  "알뜰폰 번호이동",
+  "유심 · eSIM",
+  "셀프개통 방법"
+ ],
+ "claude-pricing": [
+  "클로드 요금제",
+  "무료 · Pro · Max",
+  "고르는 법"
+ ],
+ "claude-code-pricing": [
+  "클로드 코드 요금제",
+  "Pro · Max 차이",
+  "고르는 법"
+ ],
+ "claude-discount": [
+  "클로드 요금제 할인",
+  "학생할인 · 연간 결제",
+  "아끼는 방법"
+ ],
+ "claude-usage": [
+  "클로드 사용법",
+  "프로젝트 · MD 지침서",
+  "만드는 법"
+ ],
+ "business-registration-certificate": [
+  "사업자등록증",
+  "재발급 · 출력",
+  "정정신고 방법"
+ ],
+ "electricity-bill-calculator": [
+  "전기요금 계산기",
+  "요금 계산 · 복지할인",
+  "받는 법"
+ ],
+ "annual-leave": [
+  "연차 계산기",
+  "발생 기준 · 개수",
+  "연차수당 계산법"
+ ]
+}

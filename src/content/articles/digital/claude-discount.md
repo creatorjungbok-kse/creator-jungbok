@@ -1,7 +1,7 @@
 ---
-title: 클로드 요금제 할인 방법 학생할인과 연간 결제 카드 수수료까지
+title: 클로드 요금제 할인 학생할인 여부와 연간 결제로 아끼는 방법
 cardTitle: 클로드 요금제 할인
-seoTitle: 클로드 요금제 할인 학생할인과 연간 결제
+seoTitle: 클로드 요금제 할인 연간 결제로 아끼는 방법
 description: 클로드는 개인 학생 할인 안내가 없지만 Pro 연간 결제로 1년에 $40을 아껴요. Education 플랜과 카드 수수료도 정리했어요.
 subcategory: ai
 contentType: guide

@@ -1,7 +1,7 @@
 ---
-title: 실업급여 계산기 2026 2027 하루 금액과 받는 기간 총액
+title: 실업급여 계산기 하루 금액과 받는 기간 한 달 총액 계산하는 법
 cardTitle: 실업급여 계산기
-seoTitle: 실업급여 계산기 하루 금액과 받는 기간
+seoTitle: 실업급여 계산기 금액과 기간 계산하는 법
 description: 퇴사 전 3개월 임금, 하루 근무시간, 나이, 가입기간으로 실업급여 하루 금액·받는 일수·총액을 계산합니다. 2027년 예정 기준도 됩니다.
 subcategory: job-loss
 contentType: cost

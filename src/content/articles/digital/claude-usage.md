@@ -1,7 +1,7 @@
 ---
-title: 클로드 사용법 처음 시작부터 프로젝트와 MD 지침서 활용까지
+title: 클로드 사용법 처음 시작하는 법과 프로젝트 MD 지침서 만드는 방법
 cardTitle: 클로드 사용법
-seoTitle: 클로드 사용법 프로젝트와 MD 지침서 활용
+seoTitle: 클로드 사용법 프로젝트와 MD 지침서 만드는 법
 description: 클로드는 웹·앱·데스크톱에서 무료로 시작할 수 있어요. 프로젝트로 작업을 정리하고 MD 지침서로 작업을 잊지 않게 하는 법을 정리했어요.
 subcategory: ai
 contentType: guide
