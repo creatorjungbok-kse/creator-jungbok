@@ -23,7 +23,7 @@ synonyms:
   - 소상공인 기준
   - 상시근로자 수 계산
 summary: 중소기업확인서는 중소기업현황정보시스템(sminfo.mss.go.kr)에서 자료를 먼저 제출한 뒤 신청서를 작성해 받아요. 수수료는 없고 처리 기간은 3일이에요. 소상공인확인서도 같은 절차로 신청하며, 확인서에 중기업·소기업·소상공인이 구분되어 나와요. 12월 결산 기업의 확인서는 매년 4월 1일부터 다음 해 3월 31일까지 유효해요.
-thumbnail: /images/thumbnails/sme-confirmation.svg
+thumbnail: /images/thumbnails/sme-confirmation.webp
 ogImage: /images/og/sme-confirmation.png
 datePublished: 2026-10-17
 dateModified: 2026-10-29
