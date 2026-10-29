@@ -27,7 +27,7 @@ synonyms:
   - 상호 변경 신고
   - 업종 추가 변경
 summary: 사업자등록증은 홈택스에서 수수료 없이 다시 출력할 수 있고, 재발급하면 지금 등록된 정보로 나와요. 상호·업종·사업장 주소가 바뀌었다면 재발급이 아니라 지체 없이 정정신고를 해야 하고, 상호는 신고 당일, 업종·주소 등은 2일 이내에 고친 등록증이 나와요. 제출처가 사업자등록증명을 요구했다면 별도 서류라 홈택스·정부24·무인발급기에서 따로 떼요. 폐업한 뒤에는 폐업사실증명, 사업자가 아님을 보여야 하면 사실증명(사업자등록사실여부)을 떼요.
-thumbnail: /images/thumbnails/business-registration-certificate.svg
+thumbnail: /images/thumbnails/business-registration-certificate.webp
 ogImage: /images/og/business-registration-certificate.png
 datePublished: 2026-10-01
 dateModified: 2026-10-28
