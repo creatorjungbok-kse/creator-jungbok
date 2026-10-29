@@ -24,7 +24,7 @@ synonyms:
   - 사업소득세 계산기
   - 원천징수 계산기
 summary: 프리랜서가 계약금액 100만원을 받으면 소득세 3만원과 지방소득세 3천원을 떼고 967,000원을 받아요. 일시적인 강연료·원고료처럼 필요경비 60%가 인정되는 기타소득은 8.8%를 떼 912,000원을 받고, 125,000원 이하면 떼는 세금이 없어요. 100만원을 손에 쥐려면 3.3%는 1,034,120원, 8.8%는 1,096,480원으로 계약해야 해요.
-thumbnail: /images/thumbnails/freelancer-tax-calculator.svg
+thumbnail: /images/thumbnails/freelancer-tax-calculator.webp
 ogImage: /images/og/freelancer-tax-calculator.png
 datePublished: 2026-10-19
 dateModified: 2026-10-29
