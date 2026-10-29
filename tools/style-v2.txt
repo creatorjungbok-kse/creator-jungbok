@@ -50,3 +50,4 @@ src/content/articles/business/sme-confirmation.md
 src/content/articles/work/freelancer-tax-calculator.md
 src/content/articles/work/withholding-receipt.md
 src/content/articles/living/lease-fixed-date.md
+src/content/articles/work/unemployment-job-search.md
