@@ -30,7 +30,7 @@ synonyms:
   - 기초생활수급자 전기요금 할인
   - 차상위 전기요금 할인
 summary: 월 사용량(kWh)과 사용 시기만 넣으면 주택용 저압 일반가구의 예상 전기요금을 계산해요. 전력량요금은 200kWh, 400kWh를 넘을 때마다 단가가 올라가는 3단계 누진제이고, 7월과 8월에는 기준이 300kWh, 450kWh로 넓어져요. 장애인·유공자, 기초생활수급자, 차상위계층, 대가족·3자녀·출산가구 등은 한전에 신청하면 복지할인을 받을 수 있고, 할인은 신청한 달 요금부터 적용돼요. 실제 청구액은 한전ON에서 확인하세요.
-thumbnail: /images/thumbnails/electricity-bill-calculator.svg
+thumbnail: /images/thumbnails/electricity-bill-calculator.webp
 ogImage: /images/og/electricity-bill-calculator.png
 datePublished: 2026-10-01
 dateModified: 2026-10-28
