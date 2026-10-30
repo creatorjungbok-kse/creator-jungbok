@@ -56,3 +56,4 @@ src/content/articles/work/severance-interim-settlement.md
 src/content/articles/work/severance-pay-irp.md
 src/content/articles/work/health-insurance-dependent.md
 src/content/articles/work/employment-contract-penalty.md
+src/content/articles/business/business-closure-report.md
