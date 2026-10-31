@@ -63,3 +63,4 @@ src/content/articles/business/e-tax-invoice.md
 src/content/articles/business/simplified-taxpayer.md
 src/content/articles/business/tax-calendar.md
 src/content/articles/business/withholding-tax-return.md
+src/content/articles/benefits/hidden-financial-assets.md
