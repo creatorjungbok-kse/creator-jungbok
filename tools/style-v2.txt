@@ -65,3 +65,4 @@ src/content/articles/business/tax-calendar.md
 src/content/articles/business/withholding-tax-return.md
 src/content/articles/benefits/hidden-financial-assets.md
 src/content/benefits/earned-income-tax-credit.md
+src/content/benefits/energy-cashback.md
