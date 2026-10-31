@@ -70,3 +70,4 @@ src/content/articles/living/rent-contract-report.md
 src/content/articles/living/apartment-maintenance-fee.md
 src/content/articles/living/moving-quote-comparison.md
 src/content/articles/digital/selective-discount.md
+src/content/articles/digital/gemini-pricing.md
