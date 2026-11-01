@@ -1,8 +1,8 @@
 ---
-title: 4대보험 계산기 2026 월급별 근로자 공제액과 사업주 부담
+title: 4대보험 계산기 사용법과 2026년 요율 월급 시급 일용직 계산하는 법
 cardTitle: 4대보험 계산기
-seoTitle: 4대보험 계산기 2026 근로자 공제액
-description: 월 보수를 넣으면 국민연금·건강보험·장기요양·고용보험의 근로자 공제액과 사업주 부담을 바로 나눠 줍니다. 2026년 7월 이후 기준입니다.
+seoTitle: 4대보험 계산기 사용법과 2026년 요율 월급 일용직
+description: 4대보험 계산기 사용법과 2026년 요율, 월급·시급별 근로자 공제액과 사업주 부담, 일용직 가입 기준을 예시로 정리했어요.
 subcategory: wages
 contentType: cost
 contentMode: evergreen
@@ -10,17 +10,25 @@ primaryQuery: 4대보험 계산기
 synonyms:
   - 4대보험 계산
   - 4대보험 요율
+  - 2026년 4대보험 요율
+  - 4대보험 계산기 월급
+  - 4대보험 계산기 급여
+  - 4대보험 계산기 시급
+  - 4대보험 계산기 일용직
+  - 4대보험 계산 방법
+  - 4대보험료 계산
+  - 4대보험 근로자 부담
   - 4대보험 요율 2026
   - 4대보험료 계산기
   - 월급 4대보험 공제
   - 사업주 4대보험 부담
   - 국민연금 건강보험 계산
 summary: 2026년 7월 이후 근로자는 국민연금 4.75%, 건강보험 3.595%, 장기요양(건강보험료의 13.14%), 고용보험 0.9%를 내요. 사업주는 같은 금액에 고용보험 고용안정·직업능력개발 몫과 산재보험을 더 내요. 월급 300만원이면 근로자 공제 예상액은 291,520원이에요.
-thumbnail: /images/thumbnails/social-insurance-calculator.svg
+thumbnail: /images/thumbnails/social-insurance-calculator.webp
 ogImage: /images/og/social-insurance-calculator.png
 datePublished: 2026-10-14
-dateModified: 2026-10-28
-researchedAt: 2026-10-14
+dateModified: 2026-11-01
+researchedAt: 2026-11-01
 author: operator
 ymyl: medium
 topics: [employment]
@@ -34,6 +42,10 @@ actionLinks:
     url: https://www.4insure.or.kr/pbiz/ntcn/inscSmlCalcView.do
     sourceId: 4insure-premium-calc
 faq:
+  - question: 4대보험 계산기로 실수령액도 알 수 있나요?
+    answer: 이 계산기는 4대보험 공제액만 계산해요. 소득세와 지방소득세까지 뺀 실수령액은 실수령액 계산기에서 함께 계산할 수 있어요.
+  - question: 일용직도 4대보험을 내나요?
+    answer: 고용보험은 하루만 일해도 적용돼서 일당의 0.9%를 떼요. 국민연금은 1개월 이상 일하면서 월 8일 이상, 월 60시간 이상, 월 소득 220만원 이상 중 하나에 해당할 때, 건강보험은 1개월 이상 일하면서 월 8일 이상일 때 가입해요.
   - question: 식대도 4대보험료 계산에 들어가나요?
     answer: 월 20만원 이하 식대처럼 소득세가 붙지 않는 비과세 급여는 보통 보험료 계산 기준에서 빠져요. 다만 건강보험은 비과세 급여 중 일부를 빼지 않는 예외가 있어서, 정확한 금액은 회사가 신고한 보수월액을 확인하는 게 좋아요.
   - question: 만 60세가 넘으면 국민연금을 안 내나요?
@@ -43,11 +55,37 @@ faq:
   - question: 2027년에는 4대보험료가 얼마나 오르나요?
     answer: 국민연금 보험료율은 2033년까지 해마다 0.5%포인트씩 올라 2027년에는 10%가 돼요. 2027년 건강보험료율은 2026년과 같은 7.19%로 정해졌어요. 나머지 요율까지 확정되면 계산기를 2027년 기준으로 바꿀 예정이에요.
 changelog:
+  - date: 2026-11-01
+    summary: 제목을 '사용법과 2026년 요율 월급 시급 일용직 계산하는 법'으로 바꾸고, 이 페이지 계산기에 월 300만원을 넣은 실제 사용 화면(2026년 11월 1일 확인), 순서별 사용법, 시급을 월급으로 바꿔 계산하는 법, 일용직·단시간 근로자 4대보험 가입 기준과 일용직 소득세를 넣었어요.
   - date: 2026-10-28
-    summary: 내용은 그대로 두고 읽기 쉽게 다시 정리했습니다. 문단을 짧게 나누고, 월 300만원 공제 내역·사업주 고용안정 요율·급여명세서와 다른 이유 그림 3개와 사업주 추가 부담 표를 넣었습니다.
-related: [/business/durunuri-social-insurance/, /work/minimum-wage/, /work/severance-pay/]
-sourceIds: [nps-premium-rate, mohw-nhi-rate-2026, mohw-ltc-rate-2026, law-ei-premium-act, law-ei-premium-decree, law-nhi-decree, 4insure-premium-calc, local:nps-member-scope, local:korea-nhi-2027]
+    summary: 내용은 그대로 두고 읽기 쉽게 다시 정리했어요. 문단을 짧게 나누고, 월 300만원 공제 내역·사업주 고용안정 요율·급여명세서와 다른 이유 그림 3개와 사업주 추가 부담 표를 넣었어요.
+related: [/work/take-home-pay-calculator/, /business/durunuri-social-insurance/, /work/minimum-wage/, /work/severance-pay/]
+sourceIds: [local:law-nps-decree-2, local:law-nhi-decree-9, local:law-ei-decree-3, local:nts-daily-wage-tax, nps-premium-rate, mohw-nhi-rate-2026, mohw-ltc-rate-2026, law-ei-premium-act, law-ei-premium-decree, law-nhi-decree, 4insure-premium-calc, local:nps-member-scope, local:korea-nhi-2027]
 localSources:
+  - id: local:law-nps-decree-2
+    title: 국민연금법 시행령 제2조(근로자에서 제외되는 사람)
+    publisher: 법제처 국가법령정보센터
+    url: https://www.law.go.kr/법령/국민연금법시행령/제2조
+    level: S1
+    checkedAt: 2026-11-01
+  - id: local:law-nhi-decree-9
+    title: 국민건강보험법 시행령 제9조(직장가입자에서 제외되는 사람)
+    publisher: 법제처 국가법령정보센터
+    url: https://www.law.go.kr/법령/국민건강보험법시행령/제9조
+    level: S1
+    checkedAt: 2026-11-01
+  - id: local:law-ei-decree-3
+    title: 고용보험법 시행령 제3조(적용 제외 근로자)
+    publisher: 법제처 국가법령정보센터
+    url: https://www.law.go.kr/법령/고용보험법시행령/제3조
+    level: S1
+    checkedAt: 2026-11-01
+  - id: local:nts-daily-wage-tax
+    title: 국세청 — 일용근로소득 원천징수
+    publisher: 국세청
+    url: https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?cntntsId=7863
+    level: S1
+    checkedAt: 2026-11-01
   - id: local:nps-member-scope
     title: 국민연금공단 — 사업장가입자 가입대상
     publisher: 국민연금공단
@@ -61,6 +99,21 @@ localSources:
     level: S1
     checkedAt: 2026-10-14
 ---
+
+## 4대보험 계산기 사용법
+
+위 계산기에 월급만 넣으면 근로자가 내는 4대보험료와 사업주 부담을 바로 나눠 줘요.
+
+<figure class="shot">
+  <a href="/images/articles/social-insurance-calc-how-to-use.webp" class="shot__zoom"><img src="/images/articles/social-insurance-calc-how-to-use.webp" width="800" height="1061" alt="이 페이지 4대보험 계산기 사용 화면. 1번 월 보험료 계산 기준 보수 3000000 입력, 2번 회사 규모 선택, 3번 근로자 월 공제 예상액 291,520원, 4번 국민연금 142,500원·건강보험 107,850원·장기요양보험 14,170원·고용보험 27,000원, 5번 사업주 월 부담 예상액 299,020원이 빨간 상자로 표시돼 있어요." loading="lazy" decoding="async"></a>
+  <figcaption>월 300만원을 넣으면 근로자 공제 291,520원, 사업주 부담 299,020원이 나와요. (2026년 11월 1일 확인)</figcaption>
+</figure>
+
+1. **월 보험료 계산 기준 보수**: 세전 월급에서 식대 같은 비과세 급여를 뺀 금액을 넣어요. 급여명세서나 회사가 신고한 보수월액을 알면 그 금액이 가장 정확해요.
+2. **회사 규모**: 사업주가 더 내는 고용보험료가 회사 규모에 따라 달라서 골라요. 근로자 공제액은 회사 규모와 상관없이 같아요.
+3. **나이**: 만 60세 이상이거나 만 65세 이후 새로 고용됐다면 해당 칸을 체크해요.
+
+결과에는 근로자 월 공제 예상액과 보험별 금액, 사업주 월 부담 예상액이 나와요. 소득세까지 뺀 실수령액은 [실수령액 계산기](/work/take-home-pay-calculator/)에서 확인하세요.
 
 ## 2026년 4대보험 요율 한눈에 보기
 
@@ -102,6 +155,45 @@ localSources:
 </figure>
 
 금액은 4대사회보험 정보연계센터 모의계산과 같은 방식으로 10원 미만을 버렸어요.
+
+### 시급으로 4대보험 계산하는 법
+
+시급제라면 먼저 한 달 월급으로 바꿔서 계산기에 넣어요. 주 40시간 일하고 주휴수당을 받으면 한 달은 **209시간**으로 봐요.
+
+| 구분 | 금액 |
+|---|---|
+| 2026년 최저시급 | 10,320원 |
+| 월 환산(× 209시간) | 2,156,880원 |
+| 근로자 4대보험 공제 예상액 | 209,530원 |
+
+근무시간이 다르면 시급 × 한 달 실제 근로시간(주휴 포함)으로 계산해요. 한 달 근로시간이 60시간(주 15시간) 미만이면 국민연금·건강보험·고용보험이 적용되지 않을 수 있어요. 다만 고용보험은 3개월 이상 계속 일하면 적용돼요.
+
+국민연금도 1개월 이상 일하면서 여러 사업장 근로시간을 합쳐 월 60시간 이상이거나 월 소득이 220만원 이상이면 가입해요.
+
+## 4대보험 계산기 일용직 기준
+
+일용직은 보험마다 가입 기준이 달라요.
+
+| 보험 | 일용직 가입 기준 | 근로자가 내는 몫 |
+|---|---|---|
+| 고용보험 | 하루만 일해도 적용 | 일당의 0.9% |
+| 산재보험 | 모든 근로자 적용 | 없음(사업주만 부담) |
+| 국민연금 | 1개월 이상 일하면서 월 8일 이상, 월 60시간 이상, 월 소득 220만원 이상 중 하나 | 4.75% |
+| 건강보험 | 1개월 이상 일하면서 월 8일 이상 | 3.595%와 장기요양보험료 |
+
+국민연금이나 건강보험 기준에 해당하면 한 달 받은 일당 합계를 월급으로 넣어 계산기로 예상할 수 있어요. 고용보험만 내는 일용직이라면 일당 × 0.9%만 빠져요.
+
+### 일용직 소득세
+
+일용직 소득세는 4대보험과 따로 떼요. 일당에서 15만원을 빼고 2.7%를 곱하면 소득세예요. 지방소득세는 그 소득세의 10%예요.
+
+| 일당 | 소득세 | 지방소득세 |
+|---|---|---|
+| 15만원 이하 | 없음 | 없음 |
+| 18만원 | 소액부징수로 없음(810원) | 없음 |
+| 20만원 | 1,350원 | 130원 |
+
+계산한 소득세가 1,000원 미만이면 떼지 않아요(소액부징수). 일용직 소득은 이렇게 떼고 끝나서 연말정산이나 종합소득세 신고 대상이 아니에요.
 
 ## 사업주가 더 내는 부분
 
