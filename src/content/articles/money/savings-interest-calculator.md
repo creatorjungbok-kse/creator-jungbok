@@ -1,8 +1,8 @@
 ---
-title: 적금 계산기 예금 이자 계산기로 세후 이자와 만기 수령액 계산
+title: 적금 계산기 예금 이자 계산기 사용법과 세후 이자 복리 계산하는 법
 cardTitle: 적금 예금 이자 계산기
-seoTitle: 적금 계산기 세후 이자와 만기 수령액
-description: 예금·적금의 금액, 기간, 금리를 넣으면 15.4% 세금을 뗀 세후 이자와 만기 수령액을 계산합니다.
+seoTitle: 적금 계산기 예금 이자 계산기 사용법과 세후 이자
+description: 적금·예금 이자 계산기 사용법과 적금 이자 계산 방법, 15.4% 세금을 뗀 세후 이자, 단리·복리 차이를 예시로 정리했어요.
 subcategory: savings
 contentType: cost
 contentMode: evergreen
@@ -10,6 +10,13 @@ primaryQuery: 적금 계산기
 synonyms:
   - 적금 이자 계산기
   - 적금 이자 계산
+  - 적금 이자 계산기 방법
+  - 정기적금 이자 계산기
+  - 예금 이자 계산기
+  - 이자 계산기
+  - 복리 계산기
+  - 예적금 이자 계산기
+  - 정기예금 이자 계산기
   - 예금 이자 계산기
   - 예금 이자 계산
   - 정기예금 이자 계산기
@@ -28,11 +35,11 @@ synonyms:
   - 월복리 적금
   - 적금 이자 세금
 summary: 예금·적금 이자에서는 보통 15.4%(이자소득세 14% + 지방소득세 1.4%)를 떼요. 1,000만원을 연 3%로 1년 맡기면 세전 이자 30만원에서 46,200원을 떼고 253,800원을 받아요. 매달 50만원씩 1년 넣는 연 3.5% 적금은 원금 600만원에 세전 이자가 113,750원으로, 600만원을 1년 맡긴 예금 이자의 절반 정도예요.
-thumbnail: /images/thumbnails/savings-interest-calculator.svg
+thumbnail: /images/thumbnails/savings-interest-calculator.webp
 ogImage: /images/og/savings-interest-calculator.png
 datePublished: 2026-10-19
-dateModified: 2026-10-28
-researchedAt: 2026-10-27
+dateModified: 2026-11-01
+researchedAt: 2026-11-01
 author: operator
 ymyl: medium
 topics: [finance, tax]
@@ -57,10 +64,12 @@ faq:
   - question: 계산기 금액과 은행 앱 금액이 왜 다르죠?
     answer: 은행은 실제로 맡긴 날수로 이자를 계산하고, 상품마다 원 단위 처리 방식이 달라 몇 원에서 몇백 원 차이가 날 수 있어요. 우대금리 조건을 채우지 못했거나 중도해지한 경우도 이자가 달라져요. 정확한 금액은 가입한 금융회사에서 확인하세요.
 changelog:
+  - date: 2026-11-01
+    summary: 제목을 '사용법과 세후 이자 복리 계산하는 법'으로 바꾸고, 이 페이지 계산기에 월 50만원·12개월·연 3.5%를 넣은 실제 사용 화면(2026년 11월 1일 확인)과 순서별 사용법, 적금 이자 계산 방법 소제목을 넣었어요.
   - date: 2026-10-28
-    summary: 내용은 그대로 두고 읽기 쉽게 다시 정리했습니다. 문단을 짧게 나누고, 15.4% 세금 계산·적금과 예금 이자 비교 그림 2개와 복리 공식·과세 방식별 세후 이자·알아 둘 것 표를 넣었습니다.
+    summary: 내용은 그대로 두고 읽기 쉽게 다시 정리했어요. 문단을 짧게 나누고, 15.4% 세금 계산·적금과 예금 이자 비교 그림 2개와 복리 공식·과세 방식별 세후 이자·알아 둘 것 표를 넣었어요.
   - date: 2026-10-27
-    summary: 연복리·일복리가 단리·월복리와 어떻게 다른지 같은 조건의 계산 예시로 비교하고, 상품설명서에서 이자 계산 방식을 확인하는 법과 관련 질문을 추가했습니다.
+    summary: 연복리·일복리가 단리·월복리와 어떻게 다른지 같은 조건의 계산 예시로 비교하고, 상품설명서에서 이자 계산 방식을 확인하는 법과 관련 질문을 추가했어요.
 related: [/work/take-home-pay-calculator/, /benefits/hidden-financial-assets/, /benefits/youth-future-savings/, /money/loan-repayment-calculator/]
 sourceIds: [local:law-income-129-interest, local:law-local-tax-103-13-interest, local:law-national-treasury-47-interest, local:law-stl-88-2, local:law-stl-89-3, local:law-stl-88-5, local:law-stl-decree-82-5, local:law-rural-4-5, local:law-income-14-financial, local:fss-finlife, local:bokjiro-deposit-protection]
 localSources:
@@ -132,6 +141,23 @@ localSources:
     checkedAt: 2026-10-19
 ---
 
+## 적금 이자 계산기 사용법
+
+위 계산기 하나로 정기적금과 정기예금의 세후 이자, 만기 수령액을 모두 계산할 수 있어요.
+
+<figure class="shot">
+  <a href="/images/articles/savings-calc-how-to-use.webp" class="shot__zoom"><img src="/images/articles/savings-calc-how-to-use.webp" width="800" height="1037" alt="이 페이지 적금·예금 이자 계산기 사용 화면. 1번 정기적금 선택, 2번 매달 넣을 금액 500,000원, 3번 기간 12개월과 연 이율 3.5%, 4번 단리 선택, 5번 일반과세 15.4% 선택, 6번 예상 만기 수령액 6,096,240원과 세후 이자 96,240원, 세전 이자 113,750원이 빨간 상자로 표시돼 있어요." loading="lazy" decoding="async"></a>
+  <figcaption>월 50만원을 연 3.5%로 12개월 넣으면 만기에 6,096,240원을 받아요. (2026년 11월 1일 확인)</figcaption>
+</figure>
+
+1. **상품**: 매달 넣으면 정기적금, 한 번에 맡기면 정기예금을 골라요.
+2. **금액**: 적금은 매달 넣을 금액, 예금은 맡길 금액을 넣어요.
+3. **기간과 연 이율**: 기간은 1개월부터 60개월까지, 이율은 우대금리를 더한 세전 이율로 넣어요.
+4. **이자 계산 방식**: 상품설명서에 적힌 대로 단리나 월복리를 골라요.
+5. **세금**: 보통은 일반과세 15.4%예요. 비과세종합저축이나 조합 예탁금이면 그쪽을 골라요.
+
+결과에는 예상 만기 수령액과 세후 이자, 세전 이자가 함께 나와요. 상품만 예금으로 바꿔 보면 같은 돈을 적금과 예금으로 넣었을 때 차이도 바로 비교할 수 있어요.
+
 ## 이자에서 떼는 세금 15.4%
 
 예금·적금 이자를 받을 때는 세금 **15.4%를** 떼고 받아요.
@@ -165,7 +191,18 @@ localSources:
 
 </div>
 
-단리 적금의 세전 이자는 월 납입액 × 연 이율 ÷ 12 × n(n+1)/2로 계산해요(n은 개월 수). 12개월이면 월 납입액에 연 이율을 곱한 값의 6.5배예요.
+### 적금 이자 계산 방법
+
+단리 적금의 세전 이자는 **월 납입액 × 연 이율 ÷ 12 × n(n+1)/2**로 계산해요(n은 개월 수). 12개월이면 월 납입액에 연 이율을 곱한 값의 6.5배예요.
+
+| 계산 순서 | 월 50만원 · 연 3.5% · 12개월 |
+|---|---|
+| 1. 월 납입액 × 연 이율 ÷ 12 | 500,000 × 0.035 ÷ 12 = 1,458.33원 |
+| 2. n(n+1)/2 | 12 × 13 ÷ 2 = 78 |
+| 3. 세전 이자 | 1,458.33 × 78 = 113,750원 |
+| 4. 세금 15.4%를 뗀 세후 이자 | 96,240원 |
+
+정기예금은 더 간단해요. 단리라면 맡긴 금액 × 연 이율 × 개월 수 ÷ 12가 세전 이자예요.
 
 ## 단리와 월복리 차이
 
