@@ -1,8 +1,8 @@
 ---
-title: 대출 계산기 대출이자와 원리금균등 원금균등 월 상환액 계산
+title: 대출 계산기 사용법과 원리금균등 원금균등 대출이자 거치기간 계산하는 법
 cardTitle: 대출 이자 상환 계산기
-seoTitle: 대출 계산기 대출이자 월 상환액 계산
-description: 대출금액, 금리, 기간을 넣으면 원리금균등·원금균등·만기일시별 월 상환액과 총이자, 회차별 상환표를 계산합니다.
+seoTitle: 대출 계산기 사용법과 원리금균등 원금균등 거치기간
+description: 대출 계산기 사용법과 원리금균등·원금균등·만기일시별 월 상환액, 대출이자, 거치기간을 둘 때 달라지는 금액을 정리했어요.
 subcategory: loan
 contentType: cost
 contentMode: evergreen
@@ -18,12 +18,18 @@ synonyms:
   - 주택담보대출 이자 계산
   - 대출 거치기간
   - 중도상환수수료
+  - 대출 상환 계산기 사용법
+  - 대출 상환 계산기 거치
+  - 원금균등상환 계산기
+  - 주택담보대출 계산기
+  - 대출 상환방식
+  - 거치기간
 summary: 1억원을 연 4%로 30년 빌리면 원리금균등은 매달 477,415원을 갚고 총이자가 약 7,187만원이에요. 원금균등은 첫 달 611,110원으로 시작해 줄어들고 총이자가 약 6,017만원으로 더 적어요. 만기일시는 매달 이자 333,333원만 내지만 총이자가 약 1억 2천만원으로 가장 많아요.
-thumbnail: /images/thumbnails/loan-repayment-calculator.svg
+thumbnail: /images/thumbnails/loan-repayment-calculator.webp
 ogImage: /images/og/loan-repayment-calculator.png
 datePublished: 2026-10-20
-dateModified: 2026-10-28
-researchedAt: 2026-10-20
+dateModified: 2026-11-01
+researchedAt: 2026-11-01
 author: operator
 ymyl: medium
 topics: [finance]
@@ -37,6 +43,8 @@ actionLinks:
     url: https://finlife.fss.or.kr/finlife/ldng/houseMrtg/list.do?menuNo=700007
     sourceId: local:fss-finlife-loan
 faq:
+  - question: 대출 계산기에서 거치기간은 어떻게 넣나요?
+    answer: 거치기간 칸에 개월 수를 넣으면 돼요. 1년이면 12, 거치가 없으면 0이에요. 거치기간은 대출기간 안에 포함되니, 대출기간은 거치를 포함한 전체 기간으로 넣으세요.
   - question: 원리금균등과 원금균등 중 무엇이 유리한가요?
     answer: 같은 금리·기간이면 총이자는 원금균등이 적어요. 1억원·연 4%·30년이면 원금균등이 약 1,170만원 적어요. 대신 원금균등은 처음 몇 년 동안 매달 내는 돈이 더 많아서, 첫 1년에만 약 154만원을 더 내요. 초기 부담을 줄이려면 원리금균등, 총이자를 줄이려면 원금균등이 맞아요.
   - question: 만기일시상환은 왜 총이자가 가장 많나요?
@@ -46,8 +54,10 @@ faq:
   - question: 계산기 금액과 은행 앱 금액이 왜 다르죠?
     answer: 이 계산기는 연 금리를 12로 나눈 월 이율로 계산해요. 실제 금융회사는 대출 실행일과 납입일 사이의 날수로 이자를 계산하는 경우가 많고, 상환방식과 상품마다 절사 규칙도 달라요. 원금이 크거나 첫 회차 기간이 한 달과 다르면 수천 원 이상 차이 날 수 있어요.
 changelog:
+  - date: 2026-11-01
+    summary: 제목을 '사용법과 원리금균등 원금균등 대출이자 거치기간 계산하는 법'으로 바꾸고, 이 페이지 계산기에 1억원·연 4%·30년·거치 12개월을 넣은 실제 사용 화면(2026년 11월 1일 확인)과 순서별 사용법, 거치기간 입력 FAQ를 넣었어요.
   - date: 2026-10-28
-    summary: 내용은 그대로 두고 읽기 쉽게 다시 정리했습니다. 문단을 짧게 나누고, 상환방식 3가지 비교·원리금균등과 원금균등 차이·거치기간 흐름 그림 3개와 중도상환수수료 인하 표를 넣었습니다.
+    summary: 내용은 그대로 두고 읽기 쉽게 다시 정리했어요. 문단을 짧게 나누고, 상환방식 3가지 비교·원리금균등과 원금균등 차이·거치기간 흐름 그림 3개와 중도상환수수료 인하 표를 넣었어요.
 related: [/money/savings-interest-calculator/, /work/severance-interim-settlement/, /living/lease-fixed-date/, /benefits/hidden-financial-assets/]
 sourceIds: [local:law-fcpa-20, local:fsc-prepayment-fee-2025, local:law-interest-limit-2-7, local:law-interest-limit-decree, local:law-moneylending-8-15, local:law-moneylending-decree-5-9, local:fss-finlife-loan]
 localSources:
@@ -94,6 +104,22 @@ localSources:
     level: S1
     checkedAt: 2026-10-20
 ---
+
+## 대출 상환 계산기 사용법
+
+위 계산기에 네 가지만 넣으면 매달 갚을 돈과 총이자, 회차별 상환표가 바로 나와요. 주택담보대출, 신용대출, 전세대출 모두 같은 방식으로 계산할 수 있어요.
+
+<figure class="shot">
+  <a href="/images/articles/loan-calc-how-to-use.webp" class="shot__zoom"><img src="/images/articles/loan-calc-how-to-use.webp" width="800" height="1126" alt="이 페이지 대출 계산기 사용 화면. 1번 상환방식 원리금균등 선택, 2번 대출금액 100,000,000원, 3번 연 금리 4%와 대출기간 30년, 4번 거치기간 12개월 입력, 5번 거치기간 뒤 매달 갚을 돈 485,973원, 6번 총이자 73,118,577원과 총상환액 173,118,577원이 빨간 상자로 표시돼 있어요." loading="lazy" decoding="async"></a>
+  <figcaption>1억원을 연 4%로 30년, 거치 1년을 두고 넣은 결과예요. (2026년 11월 1일 확인)</figcaption>
+</figure>
+
+1. **상환방식**: 원리금균등, 원금균등, 만기일시 중 대출계약서에 적힌 방식을 골라요.
+2. **대출금액**: 빌린 원금을 넣어요. 100억원까지 계산해요.
+3. **연 금리와 대출기간**: 금리는 소수 둘째 자리까지, 기간은 년이나 개월로 넣어요.
+4. **거치기간**: 이자만 내는 기간을 개월로 넣어요. 거치가 없으면 0이에요.
+
+결과에는 매달 갚을 돈, 총이자, 총상환액이 나오고, 아래로 내리면 회차별 상환표도 볼 수 있어요. 상환방식만 바꿔 가며 넣어 보면 어떤 방식이 나한테 맞는지 바로 비교할 수 있어요.
 
 ## 상환방식 3가지 비교
 
@@ -164,7 +190,7 @@ localSources:
 
 기간을 30년에서 40년으로 늘리면 매달 갚을 돈은 약 6만원 줄어요. 하지만 **총이자는 약 2,874만원 늘어나요.**
 
-## 거치기간을 두면 이자가 늘어나는 이유
+## 대출 상환 계산기 거치기간 계산
 
 거치기간은 처음 몇 개월 동안 이자만 내고, 원금은 그 뒤에 갚는 기간이에요.
 
