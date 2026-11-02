@@ -21,12 +21,15 @@ const fm = (md, key) => (md.match(new RegExp(`^${key}: (.*)$`, 'm')) || [])[1]?.
 
 export function missingWords(title, parts) {
   const t = title.replace(/\s+/g, '').toLowerCase();
-  return parts.join(' ').split(/\s+/).filter((w) => w && w !== '·').filter((w) => !t.includes(w.toLowerCase()));
+  // 썸네일에는 '언제?'처럼 물음표·느낌표를 쓸 수 있다(제목에는 특수기호 금지). 비교할 때는 빼고 본다.
+  return parts.join(' ').split(/\s+/).filter((w) => w && w !== '·').filter((w) => !t.includes(w.replace(/[?!]/g, '').toLowerCase()));
 }
 
 test('검사기 자체: 제목에 없는 말은 잡는다', () => {
   assert.deepEqual(missingWords('연차 계산기 발생 기준', ['연차 계산기', '발생 기준', '총정리']), ['총정리']);
   assert.deepEqual(missingWords('클로드 코드 요금제 Pro와 Max 차이', ['클로드 코드 요금제', 'Pro · Max 차이', '']), []);
+  assert.deepEqual(missingWords('정년연장 시행시기 언제 확인 방법', ['정년연장', '시행시기 언제?', '확인 방법']), []);
+  assert.deepEqual(missingWords('정년연장 시행시기', ['정년연장', '통과?', '']), ['통과?']);
 });
 
 for (const [slug, parts] of Object.entries(manifest)) {
