@@ -15,8 +15,9 @@ import { carInspection } from './car-inspection/constants';
 import { pensionAge } from './pension-age/constants';
 import { unemploymentBenefit } from './unemployment-benefit/constants';
 import { severanceTax } from './severance-tax/constants';
+import { prepaymentFee } from './prepayment-fee/constants';
 
-export const toolIds = ['electricity-bill', 'mvno-plan-cost', 'weekly-holiday-pay', 'vat-calculator', 'social-insurance-calculator', 'severance-pay', 'tax-calendar', 'annual-leave', 'take-home-pay', 'freelancer-tax', 'parental-leave-pay', 'savings-interest', 'loan-repayment', 'car-inspection', 'pension-age', 'unemployment-benefit', 'severance-tax'] as const;
+export const toolIds = ['electricity-bill', 'mvno-plan-cost', 'weekly-holiday-pay', 'vat-calculator', 'social-insurance-calculator', 'severance-pay', 'tax-calendar', 'annual-leave', 'take-home-pay', 'freelancer-tax', 'parental-leave-pay', 'savings-interest', 'loan-repayment', 'car-inspection', 'pension-age', 'unemployment-benefit', 'severance-tax', 'prepayment-fee'] as const;
 export type ToolId = (typeof toolIds)[number];
 
 // 사이드바 '계산기·도구' 목록에 쓰는 짧은 이름(도구가 들어 있는 글로 연결된다)
@@ -38,6 +39,7 @@ export const toolNames: Record<ToolId, string> = {
   'pension-age': '국민연금 수령나이 계산기',
   'unemployment-benefit': '실업급여 계산기',
   'severance-tax': '퇴직금 세금 계산기',
+  'prepayment-fee': '중도상환수수료 계산기',
 };
 
 // 도구를 둘 수 있는 글 유형(도구마다 하나)
@@ -63,6 +65,7 @@ export const toolContentTypes: Record<ToolId, 'cost' | 'compare' | 'guide'> = {
   'unemployment-benefit': 'cost',
   // 기존 행동형(guide) 글 '퇴직금 세금'에 붙는 계산 도구(공식 확인 링크·체크리스트 배치를 유지)
   'severance-tax': 'guide',
+  'prepayment-fee': 'cost',
 };
 
 const eb = electricityBill;
@@ -99,4 +102,6 @@ export const toolSourceIds: Record<ToolId, string[]> = {
   'unemployment-benefit': [...unemploymentBenefit.sourceIds],
   // 소득세법 제48조·제55조·국고금관리법·지방세법 근거는 글의 localSources에 둔다
   'severance-tax': [...severanceTax.sourceIds],
+  // 금융소비자보호법 제20조·금융위 2025.1 개편 근거는 글의 localSources에 둔다
+  'prepayment-fee': [...prepaymentFee.sourceIds],
 };

@@ -1,0 +1,369 @@
+---
+// 중도상환수수료 계산기. 계산은 src/lib/finance/prepayment/calculation.ts에만 있고, 이 컴포넌트는 입력을 모아 결과를 그리기만 한다.
+// 범위: 중도상환금액 1원부터 100억원, 수수료율 0%부터 3.00%, 대출기간 1개월부터 600개월, 부과기간은 3년(대출기간이 더 짧으면 대출기간).
+// 입력값·결과는 저장·전송하지 않는다(form 제출 없음, URL·GA 전송 없음).
+import ToolShell from '../ToolShell.astro';
+import { prepaymentFee as c } from '../../tools/prepayment-fee/constants';
+import { calcFee } from '../../lib/finance/prepayment/calculation.ts';
+import { formatDate } from '../../lib/format';
+
+const won = (n: number) => `${n.toLocaleString('ko-KR')}원`;
+const day = (s: string) => formatDate(new Date(s));
+const ex = calcFee({ amount: 100_000_000, freeAmount: 0, rateBp: 55, start: '2026-01-01', repay: '2027-01-01', loanMonths: 360 });
+const quickRates = ['0.12', '0.55', '0.75', '1.2'];
+---
+
+<ToolShell id="prepayment-fee" title="중도상환수수료 계산기" reviewFrom={c.reviewFrom} reviewNote={c.reviewNote}>
+  <p class="tool-scope">
+    <strong>예상 중도상환수수료</strong> · 갚을 금액, 수수료율, 대출 실행일과 상환일을 넣으면 남은 기간에 맞춰 수수료를 계산합니다.
+  </p>
+  <noscript><p class="tool-noscript">계산기는 JavaScript가 켜져 있어야 동작합니다. 아래 예시 결과와 계산 근거를 참고하세요.</p></noscript>
+
+  <div class="tool-form" data-js-only>
+    <div class="tool-field">
+      <label class="tool-label" for="pf-amount">중도상환금액</label>
+      <div class="tool-input">
+        <input id="pf-amount" type="text" inputmode="numeric" autocomplete="off" maxlength="14" aria-describedby="pf-amount-hint pf-amount-error" />
+        <span aria-hidden="true">원</span>
+      </div>
+      <p id="pf-amount-hint" class="tool-hint">만기 전에 미리 갚으려는 원금입니다. 100억원까지 계산합니다.</p>
+      <p id="pf-amount-error" class="tool-error" data-pf-amount-error></p>
+    </div>
+
+    <div class="tool-field">
+      <label class="tool-label" for="pf-rate">중도상환수수료율</label>
+      <div class="tool-input">
+        <input id="pf-rate" type="text" inputmode="decimal" autocomplete="off" maxlength="5" aria-describedby="pf-rate-hint pf-rate-error" />
+        <span aria-hidden="true">%</span>
+      </div>
+      <div class="pf-quick" role="group" aria-label="수수료율 빠른 입력">
+        {quickRates.map((r) => <button type="button" class="pf-quick__btn" data-pf-rate={r}>{r}%</button>)}
+      </div>
+      <p id="pf-rate-hint" class="tool-hint">대출계약서나 은행 앱에 적힌 율을 넣으세요. 0%부터 3%까지, 소수 둘째 자리까지 계산합니다.</p>
+      <p id="pf-rate-error" class="tool-error" data-pf-rate-error></p>
+    </div>
+
+    <div class="pf-row">
+      <div class="tool-field">
+        <label class="tool-label" for="pf-start">대출 실행일</label>
+        <div class="tool-input"><input id="pf-start" type="date" min="1990-01-01" max="2099-12-31" aria-describedby="pf-date-error" /></div>
+      </div>
+      <div class="tool-field">
+        <label class="tool-label" for="pf-repay">상환 예정일</label>
+        <div class="tool-input"><input id="pf-repay" type="date" min="1990-01-01" max="2099-12-31" aria-describedby="pf-date-error" /></div>
+      </div>
+    </div>
+    <p id="pf-date-error" class="tool-error" data-pf-date-error></p>
+
+    <div class="tool-field">
+      <label class="tool-label" for="pf-term">대출기간</label>
+      <div class="pf-term">
+        <div class="tool-input"><input id="pf-term" type="text" inputmode="numeric" autocomplete="off" maxlength="3" value="30" aria-describedby="pf-term-hint pf-term-error" /></div>
+        <select id="pf-term-unit" aria-label="대출기간 단위">
+          <option value="year" selected>년</option>
+          <option value="month">개월</option>
+        </select>
+      </div>
+      <p id="pf-term-hint" class="tool-hint">대출기간이 3년보다 짧으면 그 기간 안에서만 수수료가 붙습니다.</p>
+      <p id="pf-term-error" class="tool-error" data-pf-term-error></p>
+    </div>
+
+    <div class="tool-field">
+      <label class="tool-label" for="pf-free">수수료 없이 갚을 수 있는 금액 <small>(선택)</small></label>
+      <div class="tool-input">
+        <input id="pf-free" type="text" inputmode="numeric" autocomplete="off" maxlength="14" value="0" aria-describedby="pf-free-hint pf-free-error" />
+        <span aria-hidden="true">원</span>
+      </div>
+      <p id="pf-free-hint" class="tool-hint">해마다 대출금의 10%처럼 수수료 없이 갚을 수 있는 한도가 있는 상품이면 올해 남은 한도를 넣으세요. 없으면 0으로 두세요.</p>
+      <p id="pf-free-error" class="tool-error" data-pf-free-error></p>
+    </div>
+  </div>
+
+  <div aria-live="polite" aria-atomic="true">
+    <p class="tool-result pf-msg" data-pf-msg hidden></p>
+    <div class="tool-result pf-result" data-pf-result hidden>
+      <div class="pf-head">
+        <h3>예상 중도상환수수료</h3>
+        <p class="pf-total" data-pf-out="fee"></p>
+        <p class="pf-sub" data-pf-out="sub"></p>
+      </div>
+      <dl class="pf-lines">
+        <div><dt>수수료 대상 금액</dt><dd data-pf-out="base"></dd></div>
+        <div><dt>남은 일수 ÷ 부과기간</dt><dd data-pf-out="days"></dd></div>
+        <div><dt>수수료가 없어지는 날</dt><dd data-pf-out="end"></dd></div>
+      </dl>
+      <ul class="pf-notes">
+        <li>은행 공통 산식으로 계산한 예상 금액입니다. 금융회사마다 일수 계산(1,095일 고정 등)과 원 미만 처리가 달라 몇백 원에서 몇천 원 차이가 날 수 있습니다.</li>
+        <li>2025년 1월 13일 이전에 맺은 대출은 예전 수수료율(주담대 1.2%에서 1.4% 정도)이 적용될 수 있습니다. 정확한 금액은 은행 앱의 중도상환 조회나 상담으로 확인하세요.</li>
+      </ul>
+    </div>
+  </div>
+
+  <noscript>
+    <div class="tool-result">
+      <p class="pf-example">예시 · 1억원, 수수료율 0.55%, 2026년 1월 1일 실행한 30년 대출을 2027년 1월 1일에 갚을 때</p>
+      {ex.ok && <p>예상 수수료 {won(ex.result.fee)} (남은 {ex.result.remainDays}일 ÷ {ex.result.totalDays}일)</p>}
+    </div>
+  </noscript>
+
+  <details class="pf-basis">
+    <summary class="disclosure">계산 근거</summary>
+    <div class="pf-basis__body">
+      <ul>
+        <li>중도상환수수료 = (중도상환금액 − 수수료 없이 갚을 수 있는 금액) × 수수료율 × 남은 일수 ÷ 부과기간 일수(원 미만 버림)</li>
+        <li>부과기간은 대출 실행일부터 3년입니다. 대출기간이 3년보다 짧으면 대출기간 전체가 부과기간입니다</li>
+        <li>남은 일수는 상환 예정일부터 부과기간이 끝나는 날까지의 날짜 수입니다. 부과기간이 지나면 0원입니다</li>
+        <li>금융소비자보호법은 대출 계약 후 3년 안에 갚는 경우 등에만 중도상환수수료를 받을 수 있게 정하고 있습니다</li>
+      </ul>
+      <p>확인일 {day(c.checkedAt)}</p>
+    </div>
+  </details>
+</ToolShell>
+
+<script>
+  // 입력값은 이 페이지 안에서만 계산한다(저장·전송 없음). 계산은 lib의 함수만 쓴다.
+  import { parseWonInt } from '../../lib/payroll/shared/validation.ts';
+  import { calcFee, parseFeeRateBp, LIMITS, type FeeError } from '../../lib/finance/prepayment/calculation.ts';
+
+  const won = (n: number) => `${n.toLocaleString('ko-KR')}원`;
+  const errorText: Record<FeeError, string> = {
+    'amount-invalid': '중도상환금액을 1원 이상, 100억원 이하로 입력해 주세요.',
+    'free-invalid': '수수료 없이 갚을 수 있는 금액을 0원 이상으로 입력해 주세요.',
+    'rate-invalid': '수수료율을 0%부터 3% 사이로, 소수 둘째 자리까지 입력해 주세요.',
+    'months-invalid': '대출기간을 1개월 이상, 50년(600개월) 이하의 정수로 입력해 주세요.',
+    'date-invalid': '날짜를 다시 확인해 주세요.',
+    'repay-before-start': '상환 예정일은 대출 실행일과 같거나 그 뒤여야 합니다.',
+  };
+  const kDate = (s: string) => {
+    const [y, m, d] = s.split('-').map(Number);
+    return `${y}년 ${m}월 ${d}일`;
+  };
+  const today = () => {
+    const t = new Date();
+    return `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')}`;
+  };
+
+  const root = document.querySelector<HTMLElement>('[data-tool="prepayment-fee"]');
+  if (root) {
+    const $ = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
+    const $$ = <T extends HTMLElement>(sel: string) => [...root.querySelectorAll<T>(sel)];
+    const result = $('[data-pf-result]');
+    const msg = $('[data-pf-msg]');
+    const amount = $<HTMLInputElement>('#pf-amount');
+    const free = $<HTMLInputElement>('#pf-free');
+    const rate = $<HTMLInputElement>('#pf-rate');
+    const start = $<HTMLInputElement>('#pf-start');
+    const repay = $<HTMLInputElement>('#pf-repay');
+    const term = $<HTMLInputElement>('#pf-term');
+    const unit = $<HTMLSelectElement>('#pf-term-unit');
+    let signaled = false;
+    const signalUse = () => {
+      if (signaled) return;
+      signaled = true;
+      document.dispatchEvent(new CustomEvent('kkultip:tool-use', { detail: 'prepayment-fee' }));
+    };
+    const out = (key: string, text: string) => ($(`[data-pf-out="${key}"]`).textContent = text);
+    const withCommas = (input: HTMLInputElement) => {
+      const raw = input.value;
+      if (!/^[\d,]*$/.test(raw)) return;
+      const caret = input.selectionStart ?? raw.length;
+      const digitsBefore = raw.slice(0, caret).replace(/,/g, '').length;
+      const digits = raw.replace(/,/g, '').replace(/^0+(?=\d)/, '');
+      const next = digits === '' ? '' : Number(digits).toLocaleString('ko-KR');
+      if (next === raw || digits.length > 11) return;
+      input.value = next;
+      let pos = 0;
+      for (let seen = 0; pos < next.length && seen < digitsBefore; pos++) if (next[pos] !== ',') seen++;
+      input.setSelectionRange(pos, pos);
+    };
+    const setError = (sel: string, input: HTMLInputElement, text: string) => {
+      $(sel).textContent = text;
+      if (text) input.setAttribute('aria-invalid', 'true');
+      else input.removeAttribute('aria-invalid');
+    };
+    const hide = (text = '') => {
+      result.hidden = true;
+      msg.textContent = text;
+      msg.hidden = text === '';
+    };
+
+    const run = () => {
+      const a = parseWonInt(amount.value, { min: LIMITS.minAmount, max: LIMITS.maxAmount });
+      const f = free.value.trim() === '' ? { ok: true as const, value: 0 } : parseWonInt(free.value, { min: 0, max: LIMITS.maxAmount });
+      const bp = rate.value.trim() === '' ? null : parseFeeRateBp(rate.value);
+      const t = /^\d{1,3}$/.test(term.value.trim()) ? Number(term.value.trim()) : NaN;
+      const months = unit.value === 'year' ? t * 12 : t;
+      const monthsOk = Number.isInteger(months) && months >= LIMITS.minMonths && months <= LIMITS.maxMonths;
+      const rateOk = bp !== null && bp >= LIMITS.minRateBp && bp <= LIMITS.maxRateBp;
+      const datesFilled = start.value !== '' && repay.value !== '';
+      const order = datesFilled && repay.value < start.value;
+      setError('[data-pf-amount-error]', amount, !a.ok && a.code !== 'empty' ? errorText['amount-invalid'] : '');
+      setError('[data-pf-free-error]', free, !f.ok ? errorText['free-invalid'] : '');
+      setError('[data-pf-rate-error]', rate, rate.value.trim() !== '' && !rateOk ? errorText['rate-invalid'] : '');
+      setError('[data-pf-term-error]', term, term.value.trim() !== '' && !monthsOk ? errorText['months-invalid'] : '');
+      setError('[data-pf-date-error]', repay, order ? errorText['repay-before-start'] : '');
+      if (!a.ok || !f.ok || !rateOk || !monthsOk || !datesFilled || order) {
+        hide();
+        return;
+      }
+      const r = calcFee({ amount: a.value, freeAmount: f.value, rateBp: bp!, start: start.value, repay: repay.value, loanMonths: months });
+      if (!r.ok) {
+        hide(errorText[r.error]);
+        return;
+      }
+      const x = r.result;
+      out('fee', won(x.fee));
+      out(
+        'sub',
+        x.expired
+          ? `부과기간(${kDate(x.feeEnd)}까지)이 지나 수수료 없이 갚을 수 있어요.`
+          : x.base === 0
+            ? '수수료 없이 갚을 수 있는 금액 안이라 수수료가 없어요.'
+            : `${won(x.base)} × ${(bp! / 100).toFixed(2)}% × ${x.remainDays.toLocaleString('ko-KR')}일 ÷ ${x.totalDays.toLocaleString('ko-KR')}일`,
+      );
+      out('base', won(x.base));
+      out('days', `${x.remainDays.toLocaleString('ko-KR')}일 ÷ ${x.totalDays.toLocaleString('ko-KR')}일`);
+      out('end', kDate(x.feeEnd));
+      msg.hidden = true;
+      result.hidden = false;
+      signalUse();
+    };
+
+    if (!repay.value) repay.value = today();
+    for (const b of $$<HTMLButtonElement>('[data-pf-rate]'))
+      b.addEventListener('click', () => {
+        rate.value = b.dataset.pfRate!;
+        run();
+      });
+    for (const el of [amount, free])
+      el.addEventListener('input', () => {
+        withCommas(el);
+        run();
+      });
+    for (const el of [rate, term]) el.addEventListener('input', run);
+    for (const el of [start, repay, unit]) el.addEventListener('change', run);
+  }
+</script>
+
+<style>
+  .pf-msg[hidden] {
+    display: none;
+  }
+
+  .pf-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .pf-row > * {
+    min-width: 0;
+  }
+
+  .pf-row :global(.tool-input input) {
+    width: 100%;
+  }
+
+  .pf-term {
+    display: flex;
+    gap: var(--space-2);
+    min-width: 0;
+  }
+
+  .pf-term .tool-input {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .pf-term select {
+    flex: none;
+    min-height: var(--touch);
+    padding: 0 var(--space-3);
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font: inherit;
+  }
+
+  .pf-quick {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+  }
+
+  .pf-quick__btn {
+    min-height: var(--touch);
+    padding: 0 var(--space-3);
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .pf-quick__btn:hover {
+    border-color: var(--color-brand);
+  }
+
+  .pf-head h3 {
+    margin: 0;
+    font-size: var(--text-base, 1rem);
+  }
+
+  .pf-total {
+    margin: var(--space-1) 0 0;
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--color-brand-text);
+  }
+
+  .pf-sub {
+    margin: var(--space-1) 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  .pf-lines {
+    display: grid;
+    gap: var(--space-2);
+    margin: var(--space-4) 0 0;
+  }
+
+  .pf-lines > div {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .pf-lines dt {
+    color: var(--color-text-muted);
+  }
+
+  .pf-lines dd {
+    margin: 0;
+    font-weight: 700;
+    text-align: right;
+  }
+
+  .pf-notes {
+    margin: var(--space-4) 0 0;
+    padding-left: 1.1em;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+
+  .pf-basis__body ul {
+    padding-left: 1.1em;
+  }
+
+  @media (max-width: 480px) {
+    .pf-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
