@@ -150,7 +150,7 @@ localSources:
 </figure>
 
 <figure class="shot">
-  <a href="/images/articles/dosu-silbi-compare.svg" class="shot__zoom"><img src="/images/articles/dosu-silbi-compare.svg" width="800" height="526" alt="실비 되는 도수치료와 안 되는 도수치료 비교. 실비를 받을 수 있는 경우는 의사의 치료 목적 처방, 선행치료 2주·4회 뒤, 주 2회 이내, 연 15회 안(최대 24회)이에요. 실비가 안 나오는 경우는 피로회복·체형교정, 인정 횟수를 넘긴 치료, 선행치료 기록이 없음, 5세대 외래(약 2천원만 환급)예요." loading="lazy" decoding="async"></a>
+  <a href="/images/articles/dosu-silbi-compare.svg" class="shot__zoom"><img src="/images/articles/dosu-silbi-compare.svg" width="800" height="526" alt="실비 되는 도수치료와 안 되는 도수치료 비교. 실비를 받을 수 있는 경우는 의사의 치료 목적 처방, 선행치료 2주·4회 뒤, 주 2회 이내, 연 15회 안(최대 24회)이에요. 실비가 안 나오는 경우는 피로회복·체형교정, 인정 횟수를 넘긴 치료, 선행치료 기록이 없음, 5세대 외래(환급 약 2천원)예요." loading="lazy" decoding="async"></a>
   <figcaption>피로회복이나 체형교정 목적의 도수는 건강보험도 실비도 안 돼요.</figcaption>
 </figure>
 
