@@ -25,7 +25,7 @@ summary: 실손24 참여병원은 실손24 홈페이지·앱의 참여병원 지
 thumbnail: /images/thumbnails/silson24-hospital.webp
 ogImage: /images/og/silson24-hospital.png
 datePublished: 2026-11-04
-dateModified: 2026-11-04
+dateModified: 2026-11-07
 researchedAt: 2026-11-04
 author: operator
 ymyl: medium
@@ -75,10 +75,12 @@ faq:
   - question: 약국도 실손24로 청구되나요?
     answer: 네. 2025년 10월 25일부터 약국도 실손24 대상이 됐어요. 참여약국이면 약값도 서류 없이 청구할 수 있어요.
 changelog:
+  - date: 2026-11-07
+    summary: 실손24 공식 안내에 맞춰 약국 청구 방법(약국만 청구, 미참여 약국 영수증 첨부)을 바로잡았어요.
   - date: 2026-11-04
     summary: 실손24 참여병원 조회 방법, 참여병원이 아닌 곳 청구 방법, 참여 요청과 병원 등록, 지역별 현황과 약국 청구를 정리한 글을 새로 올렸어요.
 related: [/money/silson24-claim/, /money/silson-insurance-claim/]
-sourceIds: [local:silson24-hospital-list, local:fsc-silson24-2, local:fsc-silson24-card, local:korea-silson24-1028, local:imaeil-silson24, local:dailypharm-silson24, local:fsc-silson24-2026, local:fsc-silson24-0506]
+sourceIds: [local:silson24-hospital-list, local:silson24-faq, local:fsc-silson24-2, local:fsc-silson24-card, local:korea-silson24-1028, local:imaeil-silson24, local:dailypharm-silson24, local:fsc-silson24-2026, local:fsc-silson24-0506]
 localSources:
   - id: local:silson24-hospital-list
     title: 실손24 참여병원(전산청구 가능 의료기관 지도)
@@ -86,6 +88,12 @@ localSources:
     url: https://www.silson24.or.kr/claim/web/serviceHospitalList
     level: S1
     checkedAt: 2026-11-04
+  - id: local:silson24-faq
+    title: 실손24 자주하는 질문(약제비 청구, 미참여 병원 청구)
+    publisher: 실손24
+    url: https://www.silson24.or.kr/claim/web/custSupp/custSuppFAQ
+    level: S1
+    checkedAt: 2026-11-07
   - id: local:fsc-silson24-2
     title: 실손보험 청구 전산화 2단계 시행(참여병원 검색, 참여 요청, 약국 포함)
     publisher: 금융위원회
@@ -218,9 +226,10 @@ localSources:
 |---|---|
 | 참여약국 찾기 | 실손24 첫 화면 '참여약국', 또는 네이버 지도·카카오맵에서 '실손24' 검색 |
 | 청구 방법 | 병원 청구와 같아요. 약국을 고르고 날짜를 골라 청구 |
-| 참여약국이 아니면 | 약국 영수증을 사진으로 찍어 보험사 앱이나 네이버페이·토스로 청구 |
+| 약국만 참여 | 병원 선택 화면 오른쪽 위 '약국만 청구'를 누르고, 병원 서류는 사진으로 첨부 |
+| 병원·약국 모두 미참여 | 실손24로는 안 돼요. 보험사에 직접 청구 |
 
-병원은 참여했는데 약국이 참여하지 않았다면, 병원 진료비는 실손24로 청구하고 약값은 약국 영수증으로 따로 청구하면 돼요.
+병원은 참여했는데 약국이 참여하지 않았다면, 실손24로 병원 진료비를 청구하면서 약제비 영수증을 사진이나 스캔으로 추가서류에 첨부하면 돼요.
 
 실손24로 청구하는 순서는 [실손24 보험청구 방법](/money/silson24-claim/)에서 그림으로 정리해 두었어요.
 

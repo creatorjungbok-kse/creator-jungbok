@@ -22,11 +22,11 @@ synonyms:
   - 실손24 네이버
   - 실손24 토스
   - 실손24 자녀청구
-summary: 실손24는 병원이 영수증·세부산정내역서·처방전을 보험사로 바로 보내 주는 무료 청구 서비스예요. 실손24 앱이나 홈페이지, 네이버·토스에서 본인인증을 하고 보험계약, 병원, 진료일을 고른 뒤 질병·상해와 입금 계좌만 넣고 전송하면 끝나요. 진료일부터 3년 안의 내역을 청구할 수 있고, 병원이 참여하지 않았다면 기존처럼 서류를 떼서 청구해야 해요.
+summary: 실손24는 병원이 영수증·세부산정내역서·처방전을 보험사로 바로 보내 주는 무료 청구 서비스예요. 실손24 앱이나 홈페이지, 네이버·토스에서 본인인증을 하고 보험계약, 병원, 진료일을 고른 뒤 질병·상해와 입금 계좌만 넣고 전송하면 끝나요. 2024년 10월 25일 이후 진료 중 조회일 기준 3년 안의 내역을 청구할 수 있고, 병원이 참여하지 않았다면 기존처럼 서류를 떼서 청구해야 해요.
 thumbnail: /images/thumbnails/silson24-claim.webp
 ogImage: /images/og/silson24-claim.png
 datePublished: 2026-11-04
-dateModified: 2026-11-04
+dateModified: 2026-11-07
 researchedAt: 2026-11-04
 author: operator
 ymyl: medium
@@ -72,14 +72,16 @@ faq:
   - question: 실손24로 청구하면 언제 입금되나요?
     answer: 실손24는 청구를 보험사에 전달하고, 지급은 보험사가 심사한 뒤 해요. 보험사는 서류를 받은 날부터 3영업일 안에 지급하는 게 원칙이고, 조사가 필요하면 더 걸릴 수 있어요.
   - question: 실손24로 몇 년 전 진료비까지 청구할 수 있나요?
-    answer: 진료일부터 3년 안의 내역을 조회해 청구할 수 있어요. 실손보험 청구권도 3년이 지나면 소멸시효가 끝나요.
+    answer: 오늘(조회일)부터 3년 안의 진료내역을 조회해 청구할 수 있어요. 다만 실손24가 문을 연 2024년 10월 25일 이전 진료는 실손24로 청구할 수 없어 보험사에 직접 청구해야 해요.
   - question: 부모님 실손보험도 대신 청구할 수 있나요?
     answer: 실손24의 나의부모/제3자 청구 메뉴를 쓰면 돼요. 부모님이 카카오톡 알림으로 위임에 동의해야 해요. 미성년 자녀는 나의 자녀청구 메뉴로 부모가 청구할 수 있어요.
 changelog:
+  - date: 2026-11-07
+    summary: 실손24 공식 안내에 맞춰 청구 가능 기간을 조회일 기준 3년, 2024년 10월 25일 이후 진료로 바로잡았어요.
   - date: 2026-11-04
     summary: 실손24 보험청구 순서를 7단계 그림으로 정리하고, 네이버·토스 청구, 청구 기간, 수수료, 입금, 청구가 안 될 때 대처법을 담은 글을 새로 올렸어요.
 related: [/money/silson-insurance-claim/, /money/prepayment-fee-calculator/]
-sourceIds: [local:silson24, local:fsc-silson24-2, local:fsc-silson24-naver, local:fsc-silson24-card, local:korea-silson24-1028, local:imaeil-silson24, local:kb-silson24, local:fss-claim, local:appstore-silson24]
+sourceIds: [local:silson24, local:silson24-faq, local:fsc-silson24-2, local:fsc-silson24-naver, local:fsc-silson24-card, local:korea-silson24-1028, local:imaeil-silson24, local:kb-silson24, local:fss-claim, local:appstore-silson24]
 localSources:
   - id: local:silson24
     title: 실손24(실손보험 청구 전산화 서비스, 보험개발원 운영)
@@ -87,6 +89,12 @@ localSources:
     url: https://www.silson24.or.kr
     level: S1
     checkedAt: 2026-11-04
+  - id: local:silson24-faq
+    title: 실손24 자주하는 질문(조회 기준, 2024.10.25 이전 진료)
+    publisher: 실손24
+    url: https://www.silson24.or.kr/claim/web/custSupp/custSuppFAQ
+    level: S1
+    checkedAt: 2026-11-07
   - id: local:fsc-silson24-2
     title: 실손보험 청구 전산화 2단계 시행(2025.10.25 의원·약국)
     publisher: 금융위원회
@@ -130,7 +138,7 @@ localSources:
     level: S1
     checkedAt: 2026-11-04
   - id: local:appstore-silson24
-    title: 실손24 앱 설명(무료, 보험개발원, 진료일 3년 조회)
+    title: 실손24 앱 설명(무료, 보험개발원, 3년 조회)
     publisher: App Store
     url: https://apps.apple.com/kr/app/id6553966660
     level: S2
@@ -146,7 +154,7 @@ localSources:
 아래는 실손24 앱·홈페이지 기준 순서예요. 네이버·토스는 마이데이터로 일부 단계가 자동으로 채워져서 더 짧아요.
 
 <figure class="shot">
-  <a href="/images/articles/silson24-claim-steps.svg" class="shot__zoom"><img src="/images/articles/silson24-claim-steps.svg" width="800" height="1200" alt="실손24 보험청구 순서 7단계. 1 실손24 열기(앱 설치 또는 네이버·토스에서 실손24 검색), 2 본인인증(휴대폰·아이핀 인증, 회원가입 없이도 가능), 3 보험계약 선택(가입한 실손보험 자동 조회), 4 병원 선택(진료받은 병원 검색), 5 진료일과 진료내역 선택(진료일부터 3년 안의 내역), 6 청구서 작성(질병·상해, 처음 진료인지, 입금 계좌), 7 확인하고 전송(영수증·처방전은 병원이 보험사로 전송)이라는 내용이에요." loading="lazy" decoding="async"></a>
+  <a href="/images/articles/silson24-claim-steps.svg" class="shot__zoom"><img src="/images/articles/silson24-claim-steps.svg" width="800" height="1200" alt="실손24 보험청구 순서 7단계. 1 실손24 열기(앱 설치 또는 네이버·토스에서 실손24 검색), 2 본인인증(휴대폰·아이핀 인증, 회원가입 없이도 가능), 3 보험계약 선택(가입한 실손보험 자동 조회), 4 병원 선택(진료받은 병원 검색), 5 진료일과 진료내역 선택(조회일 기준 3년 안, 2024년 10월 25일 이후 진료), 6 청구서 작성(질병·상해, 처음 진료인지, 입금 계좌), 7 확인하고 전송(영수증·처방전은 병원이 보험사로 전송)이라는 내용이에요." loading="lazy" decoding="async"></a>
   <figcaption>실손24 보험청구는 이 7단계 순서로 진행돼요.</figcaption>
 </figure>
 
@@ -156,7 +164,7 @@ localSources:
 2. **본인인증:** 휴대폰이나 아이핀으로 인증해요. 회원가입을 하지 않아도 청구할 수 있어요.
 3. **보험계약 선택:** 내가 가입한 실손보험이 자동으로 조회돼요. 청구할 보험을 골라요.
 4. **병원 선택:** 진료받은 병원을 검색해서 골라요.
-5. **진료일과 진료내역 선택:** 청구할 진료일을 골라요. 진료일부터 3년 안의 내역이 보여요.
+5. **진료일과 진료내역 선택:** 청구할 진료일을 골라요. 조회일 기준 3년 안의 내역이 보여요(2024년 10월 25일 이후 진료부터).
 6. **청구서 작성:** 질병인지 상해인지, 처음 받은 진료인지, 보험금 받을 계좌를 넣어요.
 7. **확인하고 전송:** 내용을 확인하고 전송을 누르면 '보험금 청구가 완료되었어요' 화면이 나와요.
 
@@ -203,7 +211,9 @@ localSources:
 
 ## 실손24 보험청구 기간
 
-실손24에서는 **진료일부터 3년 안의 진료내역**을 조회해 청구할 수 있어요. 실손보험 청구권의 소멸시효도 3년이라 기준이 같아요.
+실손24에서는 **조회일 기준 3년 안의 진료내역**을 조회해 청구할 수 있어요. 실손보험 청구권의 소멸시효도 3년이에요.
+
+다만 실손24가 정식으로 문을 연 **2024년 10월 25일 이전 진료는 실손24로 청구할 수 없어요.** 이 진료비는 보험사에 직접 청구하세요.
 
 다만 병원이 실손24에 연결되기 전에 받은 진료는 실손24에서 보이지 않을 수 있어요. 이럴 때는 기존처럼 서류를 떼서 보험사 앱으로 청구하면 돼요.
 
