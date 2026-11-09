@@ -25,7 +25,7 @@ summary: 우리 집 관리비는 고지서나 단지가 쓰는 관리비 앱에�
 thumbnail: /images/thumbnails/apartment-maintenance-fee.webp
 ogImage: /images/og/apartment-maintenance-fee.png
 datePublished: 2026-10-05
-dateModified: 2026-10-31
+dateModified: 2026-11-09
 researchedAt: 2026-10-31
 author: operator
 ymyl: medium
@@ -78,10 +78,12 @@ faq:
   - question: 우리 아파트가 K-apt에서 안 나와요.
     answer: 의무관리대상이 아니고 100세대 미만인 공동주택은 K-apt 공개를 생략할 수 있어요. 단지 홈페이지나 동별 게시판을 확인하고, K-apt 관리비 메뉴의 '우리단지 월별관리비등 공개/미공개 현황'도 볼 수 있어요.
 changelog:
+  - date: 2026-11-09
+    summary: 관리비가 갑자기 올랐을 때 확인하는 순서와 항목별 이유 표, 관리비 장부 열람 권리, 세입자 장기수선충당금 계산 예시를 추가했어요.
   - date: 2026-10-31
     summary: 우리 집 관리비 조회 방법, 납부 방법, 카드 자동납부 신청과 적용 시기, 카드 변경 시 주의점, 은행 자동이체, 미납 시 연체료와 조치를 추가했어요.
 related: [/living/move-in-report/, /living/rent-contract-report/]
-sourceIds: [local:law-aptmgmt-2, local:law-aptmgmt-23, local:law-aptmgmt-decree-23, local:law-aptmgmt-decree-31, local:kapt-main, local:shinhancard-apt, local:kbcard-apt, local:kakaobank-apti-2024, local:seoul-unpaid-fee, local:scourt-2001da8677]
+sourceIds: [local:law-aptmgmt-2, local:law-aptmgmt-23, local:law-aptmgmt-27, local:law-aptmgmt-decree-23, local:law-aptmgmt-decree-31, local:kapt-main, local:shinhancard-apt, local:kbcard-apt, local:kakaobank-apti-2024, local:seoul-unpaid-fee, local:scourt-2001da8677]
 localSources:
   - id: local:law-aptmgmt-2
     title: 공동주택관리법 제2조(정의) 제1항 제2호 의무관리대상 공동주택
@@ -95,6 +97,12 @@ localSources:
     url: https://www.law.go.kr/법령/공동주택관리법/제23조
     level: S1
     checkedAt: 2026-10-05
+  - id: local:law-aptmgmt-27
+    title: 공동주택관리법 제27조(회계서류 등의 작성·보관 및 공개 등)
+    publisher: 법제처 국가법령정보센터
+    url: https://www.law.go.kr/법령/공동주택관리법/제27조
+    level: S1
+    checkedAt: 2026-11-09
   - id: local:law-aptmgmt-decree-23
     title: 공동주택관리법 시행령 제23조(관리비 등)
     publisher: 법제처 국가법령정보센터
@@ -277,10 +285,28 @@ K-apt에는 단지 전체의 항목별 금액과 사용량이 나와요. 우리 
 
 공개할 때는 난방비·급탕비와 전기·수도·가스·지역난방 사용료의 사용량, 장기수선충당금의 적립요율과 사용 금액, 재활용품 매각 수입 같은 잡수입도 함께 공개해야 해요.
 
+## 아파트 관리비가 갑자기 올랐을 때 확인할 것
+
+관리비가 지난달보다 많이 나왔다면 아래 순서로 보면 이유를 찾기 쉬워요.
+
+1. **고지서에서 '사용료'부터 봐요.** 전기료, 수도료, 난방비처럼 쓴 만큼 내는 항목이 늘었는지 확인해요. 겨울철 난방비가 가장 흔한 이유예요.
+2. **K-apt에서 우리 단지 월별 내역을 비교해요.** 단지 전체 항목이 함께 올랐다면 우리 집만의 문제가 아니에요.
+3. **장기수선충당금 요율이 바뀌었는지 봐요.** 단지 장기수선계획이 바뀌면 적립 금액도 달라질 수 있어요.
+4. **그래도 이해가 안 되면 관리사무소에 물어봐요.** 입주자와 사용자는 관리비 장부와 증빙서류를 열람하거나, 자기 비용으로 복사해 달라고 요구할 수 있어요. 다만 고유식별정보 같은 개인정보나 아직 검토 중인 사항처럼 법에서 정한 정보는 빼고 보여 줘요.
+
+| 늘어난 항목 | 흔한 이유 | 확인할 곳 |
+|---|---|---|
+| 난방비·급탕비 | 겨울철 사용량 증가, 요금 인상 | 고지서 사용량, K-apt 단지 월별 내역 |
+| 전기료·수도료 | 우리 집 사용량 증가 | 고지서 사용량 |
+| 일반관리비·경비비 | 인건비나 위탁 계약 변경 | K-apt 공용관리비, 관리사무소 |
+| 장기수선충당금 | 장기수선계획 조정 | 관리사무소 공고, K-apt 공개 내역 |
+
 ## 세입자 장기수선충당금 돌려받기
 
 장기수선충당금은 소유자가 내는 돈이에요. 세입자(사용자)가 관리비와 함께 대신 냈다면 소유자가 그 금액을 돌려줘야 해요.
 
 관리사무소는 세입자가 요구하면 납부 확인서를 바로 발급해야 해요. 이사 나가기 전에 관리사무소에서 확인서를 받아 두면 정산할 때 편해요.
+
+예를 들어 장기수선충당금이 월 2만원이고 2년을 살았다면 2만원 × 24개월 = 48만원을 집주인에게 돌려받을 수 있어요. 금액은 단지와 면적마다 다르고 중간에 바뀔 수도 있으니, 관리사무소에서 받은 납부 확인서 금액으로 정산하세요.
 
 이사할 때 함께 챙길 신고는 [전입신고](/living/move-in-report/)와 [주택 임대차 신고](/living/rent-contract-report/)에서 정리했어요.
