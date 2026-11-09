@@ -9,16 +9,22 @@ export interface Props {
   tone: string;
   // 첫 화면의 대표 이미지만 true(그 밖은 화면에 가까워질 때 불러온다)
   eager?: boolean;
+  // 글 상단 대표 이미지에만 제목 기반 alt(2026-11-09 운영 가이드). 카드·관련 글 썸네일은 장식용이라 비운다
+  alt?: string;
   class?: string;
 }
 
-const { src, label, tone, eager = false, class: className } = Astro.props;
+const { src, label, tone, eager = false, alt = '', class: className } = Astro.props;
 ---
 
 <div class:list={['thumb', `thumb--${tone}`, className]}>
   {
     src ? (
-      <img src={src} alt="" width="640" height="360" loading={eager ? 'eager' : 'lazy'} decoding="async" />
+      alt ? (
+        <img src={src} alt={alt} width="640" height="360" loading={eager ? 'eager' : 'lazy'} decoding="async" />
+      ) : (
+        <img src={src} alt="" width="640" height="360" loading={eager ? 'eager' : 'lazy'} decoding="async" />
+      )
     ) : (
       <span aria-hidden="true">{label}</span>
     )

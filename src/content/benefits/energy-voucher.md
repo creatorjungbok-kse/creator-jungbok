@@ -175,6 +175,7 @@ localSources:
     publisher: 경향신문
     url: https://www.khan.co.kr/article/202601272106015/
     level: S2
+    type: news
     checkedAt: 2026-10-27
   - id: local:kb-sbiz-voucher
     title: 소상공인 경영안정 바우처, 끝나기 전에 얼른 신청·소진하세요(2026.8.26.)

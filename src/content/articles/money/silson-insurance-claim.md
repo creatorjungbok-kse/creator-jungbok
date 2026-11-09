@@ -134,6 +134,7 @@ localSources:
     publisher: 데일리팜
     url: https://dailypharm.com/user/news/342946
     level: S2
+    type: news
     checkedAt: 2026-11-04
   - id: local:fsc-silson-4gen
     title: 4세대 실손보험 자기부담률과 공제금액, 비급여 할증
@@ -146,12 +147,14 @@ localSources:
     publisher: 메디칼타임즈
     url: https://www.medicaltimes.com/Mobile/News/NewsView.html?ID=1113944
     level: S2
+    type: news
     checkedAt: 2026-11-04
   - id: local:mt-5gen
     title: 5세대 실손보험 출시(2026.5.6)
     publisher: 머니투데이
     url: https://www.mt.co.kr/finance/2026/05/06/2026050519444624779
     level: S2
+    type: news
     checkedAt: 2026-11-04
 ---
 

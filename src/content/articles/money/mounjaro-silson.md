@@ -91,36 +91,42 @@ localSources:
     publisher: 헤럴드경제
     url: https://www.heraldk.com/article/2026011022014604106
     level: S2
+    type: news
     checkedAt: 2026-11-07
   - id: local:dailypharm-5gen
     title: 5세대 실손 비중증 비급여 주사제 한도·자기부담률
     publisher: 데일리팜
     url: https://www.dailypharm.com/user/news/338173
     level: S2
+    type: news
     checkedAt: 2026-11-07
   - id: local:sbs-fss-obesity
     title: 금감원, 실손보험은 비만 관련 의료비 보상 안 하는 게 일반적(2025.7.15)
     publisher: SBS Biz
     url: https://biz.sbs.co.kr/amp/article/20000246743
     level: S2
+    type: news
     checkedAt: 2026-11-07
   - id: local:bizwatch-fss-obesity
     title: 비만치료제 실손 청구 유의사항(2025.7.15)
     publisher: 비즈워치
     url: https://news.bizwatch.co.kr/article/finance/2025/07/15/0005
     level: S2
+    type: news
     checkedAt: 2026-11-07
   - id: local:heraldk-mounjaro
     title: 마운자로 실손 청구 136배 급증, 보험사 심사 강화(2026.3.9)
     publisher: 헤럴드경제
     url: https://www.heraldk.com/article/2026030922254530798
     level: S2
+    type: news
     checkedAt: 2026-11-07
   - id: local:hktv-mounjaro
     title: 보험사, 마운자로 청구에 3개월 평균 혈당·의사 소견서 확인(2026.2.12)
     publisher: 한국경제TV
     url: https://v.daum.net/v/20260212180020289
     level: S2
+    type: news
     checkedAt: 2026-11-07
   - id: local:shinhan-mounjaro
     title: 마운자로 실손 보상 판단 기준(2026.5.29)
@@ -133,18 +139,21 @@ localSources:
     publisher: 데일리팜
     url: https://www.dailypharm.com/Users/News/NewsView.html?ID=326037
     level: S2
+    type: news
     checkedAt: 2026-11-07
   - id: local:dailypharm-mounjaro-benefit
     title: 마운자로 급여 협상 결렬(2026.5)과 재결정 신청(2026.10.27 보도)
     publisher: 데일리팜
     url: https://dailypharm.com/user/news/343897
     level: S2
+    type: news
     checkedAt: 2026-11-07
   - id: local:sbs-fraud-2026
     title: 금감원 실손보험 사기 특별신고기간, 비만치료제 허위 청구(2026.1)
     publisher: SBS Biz
     url: https://biz.sbs.co.kr/amp/article/20000283898
     level: S2
+    type: news
     checkedAt: 2026-11-07
   - id: local:knia-silson-docs
     title: 실손의료보험금 청구서류 표준화 및 통일화 안내

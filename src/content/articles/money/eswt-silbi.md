@@ -96,6 +96,7 @@ localSources:
     publisher: 보험저널
     url: https://www.insjournal.co.kr/news/articleView.html?idxno=32001
     level: S2
+    type: news
     checkedAt: 2026-11-07
 ---
 

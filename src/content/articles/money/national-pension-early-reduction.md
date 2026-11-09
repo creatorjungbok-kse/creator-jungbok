@@ -96,18 +96,21 @@ localSources:
     publisher: SBS Biz
     url: https://biz.sbs.co.kr/amp/article/20000336729
     level: S2
+    type: news
     checkedAt: 2026-11-02
   - id: local:hankyung-1223
     title: 조기노령연금 수급자 100만 명 돌파와 감액률(2025.12.23)
     publisher: 한국경제
     url: https://www.hankyung.com/article/202512239688i
     level: S2
+    type: news
     checkedAt: 2026-11-02
   - id: local:dt-0126
     title: 더 받으려다 건보료 낸다, 국민연금 추납의 함정(2026.1.26)
     publisher: 디지털타임스
     url: https://v.daum.net/v/20260126150703708
     level: S2
+    type: news
     checkedAt: 2026-11-02
 ---
 

@@ -156,6 +156,7 @@ localSources:
     publisher: SBS Biz
     url: https://biz.sbs.co.kr/amp/article/20000149544
     level: S2
+    type: news
     checkedAt: 2026-10-31
 ---
 휴대폰 요금이 25% 할인되고 있는지, 지금 해지하면 위약금이 얼마인지 막상 확인하려면 어디서 봐야 할지 헷갈리죠. 선택약정할인 조건과 조회 방법, 할인반환금 계산, 연장과 기기변경까지 순서대로 정리했어요.

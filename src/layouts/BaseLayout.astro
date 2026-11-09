@@ -55,6 +55,7 @@ const canonicalUrl = canonical ? absoluteUrl(Astro.url.pathname) : undefined;
       )
     }
     {jsonLd.map((data) => <JsonLd data={data} />)}
+    <link rel="alternate" type="application/rss+xml" title={site.name} href="/rss.xml" />
     <meta name="google-site-verification" content={site.verification.google} />
     <meta name="naver-site-verification" content={site.verification.naver} />
     <meta name="google-adsense-account" content={site.adsenseClient} />

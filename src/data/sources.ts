@@ -20,6 +20,8 @@ export interface Source {
   publisher: string;
   url: string;
   level: (typeof sourceLevels)[number];
+  // 언론 기사면 'news'(화면 라벨 '언론 보도')
+  type?: 'news';
   // 특정 문서를 가리킬 때만. 사이트 단위 공통 출처는 비워 둔다.
   checkedAt?: Date;
   // 행동 링크(actionLinks) 예외: 출처 도메인과 다르지만 같은 기관이 실제로 쓰는 공식 호스트(정확한 이름만, 사람이 확인 후 등록)

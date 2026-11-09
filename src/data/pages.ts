@@ -3,8 +3,8 @@
 export const infoPages = [
   { href: '/about/', label: '소개', inSitemap: true },
   { href: '/editorial-policy/', label: '정보 조사 원칙', inSitemap: true },
-  { href: '/disclosure/', label: '고지 사항', inSitemap: false },
-  { href: '/contact/', label: '문의', inSitemap: false },
-  { href: '/privacy/', label: '개인정보처리방침', inSitemap: false },
-  { href: '/terms/', label: '이용약관', inSitemap: false },
+  { href: '/disclosure/', label: '고지 사항', inSitemap: true },
+  { href: '/contact/', label: '문의', inSitemap: true },
+  { href: '/privacy/', label: '개인정보처리방침', inSitemap: true },
+  { href: '/terms/', label: '이용약관', inSitemap: true },
 ] as const;

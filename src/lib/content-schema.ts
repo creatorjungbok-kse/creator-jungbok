@@ -25,6 +25,8 @@ const sourceShape = {
   publisher: text,
   url: z.url(),
   level: z.enum(sourceLevels),
+  // 언론 기사면 'news'(화면 라벨을 '언론 보도'로 구분, 2026-11-09 운영 가이드)
+  type: z.enum(['news']).optional(),
   // 행동 링크용 예외 호스트(공식 S1 출처만, 정확한 호스트 이름만)
   actionHosts: z
     .array(z.string().superRefine((h, ctx) => {

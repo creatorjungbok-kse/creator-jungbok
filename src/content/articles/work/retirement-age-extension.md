@@ -102,18 +102,21 @@ localSources:
     publisher: 파이낸셜뉴스
     url: https://www.fnnews.com/news/202610131241233652
     level: S2
+    type: news
     checkedAt: 2026-11-02
   - id: local:khan-0630
     title: 정년연장 6월 입법 무산, 2029년 61세부터 단계 연장안 거론(2026.6.30)
     publisher: 경향신문
     url: https://www.khan.co.kr/article/202606301608011
     level: S2
+    type: news
     checkedAt: 2026-11-02
   - id: local:heraldk-0723
     title: 정년연장 특위 초안, 재고용 의무와 취업규칙 특례(2026.7.23)
     publisher: 헤럴드경제
     url: https://www.heraldk.com/article/2026072319404456046
     level: S2
+    type: news
     checkedAt: 2026-11-02
   - id: local:nodong-1029
     title: 양대노총 정년연장 공동 요구(2026.10.29)
@@ -126,24 +129,28 @@ localSources:
     publisher: 세계일보
     url: https://www.segye.com/newsView/20261027519603
     level: S2
+    type: news
     checkedAt: 2026-11-02
   - id: local:herald-1102
     title: 67년생 정년 공백 우려와 경과 재고용 논의(2026.11.2)
     publisher: 헤럴드경제
     url: https://biz.heraldcorp.com/article/10922077
     level: S2
+    type: news
     checkedAt: 2026-11-02
   - id: local:mt-cost-1107
     title: 한경협 의뢰 연구, 65세 정년연장 시 연 30.2조원 추가 고용비용(2025.11.7)
     publisher: 머니투데이
     url: https://www.mt.co.kr/economy/2025/11/07/2025110619564778745
     level: S2
+    type: news
     checkedAt: 2026-11-02
   - id: local:labortoday-plans
     title: 민주당 정년연장 특위 3가지 안과 국민의힘 법안(2026.1.6)
     publisher: 매일노동뉴스
     url: https://www.labortoday.co.kr/news/articleView.html?idxno=232108
     level: S2
+    type: news
     checkedAt: 2026-11-02
 ---
 

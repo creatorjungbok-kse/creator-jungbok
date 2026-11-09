@@ -154,7 +154,7 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
         </div>
         {data.thumbnail && (
           <div class:list={['article__thumb', { 'article__thumb--hide-mobile': !!program || data.contentMode === 'timely' || isGuide }]}>
-            <Thumbnail src={data.thumbnail} label={category.name} tone={category.slug} eager />
+            <Thumbnail src={data.thumbnail} label={category.name} tone={category.slug} alt={data.title} eager />
           </div>
         )}
       </header>

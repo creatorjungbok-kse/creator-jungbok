@@ -108,12 +108,14 @@ localSources:
     publisher: 비즈워치
     url: https://news.bizwatch.co.kr/article/finance/2026/01/21/0042
     level: S2
+    type: news
     checkedAt: 2026-11-04
   - id: local:imaeil-prepayment
     title: 중도상환수수료 개편 뒤 은행 수수료 수입 감소(2026.10.9)
     publisher: 매일신문
     url: https://www.imaeil.com/page/view/2026100916570923571
     level: S2
+    type: news
     checkedAt: 2026-11-04
   - id: local:hana-beotimmok
     title: 버팀목 전세자금대출 상품 안내
@@ -132,6 +134,7 @@ localSources:
     publisher: 이코노미스트
     url: https://economist.co.kr/article/view/ecn202509180047
     level: S2
+    type: news
     checkedAt: 2026-11-04
 ---
 

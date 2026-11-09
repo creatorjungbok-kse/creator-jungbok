@@ -53,7 +53,8 @@ const navHubs = new Set(hubs.filter((hub) => postCount(hub) >= navMin.get(hub)))
 
 // 색인 정책(04 1장): 404·검색은 항상 noindex, sitemap 제외. 신뢰 페이지 4종은 index지만 sitemap 제외
 const ALWAYS_NOINDEX = new Set(['/404.html', '/search/']);
-const SITEMAP_EXEMPT = new Set(['/contact/', '/privacy/', '/terms/', '/disclosure/']);
+// 2026-11-09 운영 가이드: 필수 페이지 4개도 sitemap에 넣는다
+const SITEMAP_EXEMPT = new Set([]);
 const SCRIPT_PAGES = new Set(['/benefits/', '/search/']);
 // 도구 상수 기한(production만): 남은 날이 이 값 이하면 Warning, 지나면 Fail. 오늘 = 한국 날짜
 const TOOL_EXPIRY_WARN_DAYS = 14;

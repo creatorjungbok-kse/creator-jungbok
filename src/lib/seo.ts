@@ -36,7 +36,7 @@ export const collectionJsonLd = (name: string, description: string, path: string
   url: absoluteUrl(path),
 });
 
-// benefit·change 포함 모든 글은 Article(04 13장). author url은 작성자 소개 페이지(P9)가 생기면 연결한다
+// benefit·change 포함 모든 글은 Article(04 13장). author는 화면 표시와 같은 운영자명 Person, url은 소개 페이지(2026-11-09 운영 가이드)
 export function articleJsonLd(item: ContentItem) {
   const { data } = item.entry;
   const author = people.find((p) => p.id === data.author)!;
@@ -48,7 +48,7 @@ export function articleJsonLd(item: ContentItem) {
     datePublished: isoKst(data.datePublished),
     dateModified: isoKst(data.dateModified),
     // 사이트 이름으로 쓰는 글은 Organization, 실제 사람이면 Person
-    author: author.isSite ? organization() : { '@type': 'Person', name: author.name },
+    author: author.isSite ? organization() : { '@type': 'Person', name: author.name, url: absoluteUrl('/about/') },
     publisher: organization(),
     mainEntityOfPage: absoluteUrl(item.url),
     // og:image와 같은 이미지(글 전용이 없으면 사이트 기본)

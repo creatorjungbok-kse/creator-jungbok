@@ -107,6 +107,7 @@ localSources:
     publisher: 뉴스핌
     url: https://www.newspim.com/news/view/20260630000958
     level: S2
+    type: news
     checkedAt: 2026-11-07
   - id: local:banksalad-dosu
     title: 도수치료 실비 세대별 횟수와 금액 기준

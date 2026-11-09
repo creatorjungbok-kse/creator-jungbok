@@ -96,12 +96,14 @@ localSources:
     publisher: 헤럴드경제
     url: https://www.heraldk.com/article/2025110317431536446
     level: S2
+    type: news
     checkedAt: 2026-11-03
   - id: local:daum-daytime
     title: 미국주식 주간거래 1년 2개월 만에 재개(2025.11.4)
     publisher: 다음 뉴스
     url: https://v.daum.net/v/K5h8TeFYG2
     level: S2
+    type: news
     checkedAt: 2026-11-03
   - id: local:dst-almanac
     title: When Does Daylight Saving Time Start and End

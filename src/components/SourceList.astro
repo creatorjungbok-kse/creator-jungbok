@@ -22,7 +22,7 @@ const { sources, id } = Astro.props;
           <li>
             <a href={s.url}>{s.title}</a>
             <span>
-              {[s.publisher, sourceLevelLabels[s.level], s.checkedAt && `확인 ${formatDate(s.checkedAt)}`].filter(Boolean).join(' · ')}
+              {[s.publisher, (s.type === 'news' ? '언론 보도' : sourceLevelLabels[s.level]), s.checkedAt && `확인 ${formatDate(s.checkedAt)}`].filter(Boolean).join(' · ')}
             </span>
           </li>
         ))}

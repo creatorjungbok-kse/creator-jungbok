@@ -156,12 +156,14 @@ localSources:
     publisher: Android Police
     url: https://www.androidpolice.com/google-shrinking-gemini-choices-unless-you-pay-more/
     level: S2
+    type: news
     checkedAt: 2026-10-31
   - id: local:9to5google-plus-nov13
     title: Google AI Plus loses Gemini Pro access on November 13
     publisher: 9to5Google
     url: https://9to5google.com/2026/10/14/gemini-ai-plus-loses-pro-november/
     level: S2
+    type: news
     checkedAt: 2026-10-31
 ---
 

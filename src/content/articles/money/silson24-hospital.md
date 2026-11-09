@@ -117,12 +117,14 @@ localSources:
     publisher: 매일신문
     url: https://www.imaeil.com/page/view/2026101112534083582
     level: S2
+    type: news
     checkedAt: 2026-11-04
   - id: local:dailypharm-silson24
     title: 실손24 연결 47.7%, 기관 유형별 현황(2026.9.30)
     publisher: 데일리팜
     url: https://dailypharm.com/user/news/342946
     level: S2
+    type: news
     checkedAt: 2026-11-04
   - id: local:fsc-silson24-2026
     title: 실손24 참여 현황과 EMR 업체 참여 확대 방안(2026.4)

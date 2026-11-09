@@ -96,48 +96,56 @@ localSources:
     publisher: SBS Biz
     url: https://biz.sbs.co.kr/amp/article/20000340525
     level: S2
+    type: news
     checkedAt: 2026-11-03
   - id: local:etoday-godeok
     title: 고덕강일3단지 1305가구 공급, 특별공급 물량(2026.10)
     publisher: 이투데이
     url: https://www.etoday.co.kr/news/view/2636747
     level: S2
+    type: news
     checkedAt: 2026-11-03
   - id: local:newspim-godeok
     title: 고덕강일3단지 입주자모집공고 일정과 자격(2026.10.16)
     publisher: 뉴스핌
     url: https://www.newspim.com/news/view/20261016001188
     level: S2
+    type: news
     checkedAt: 2026-11-03
   - id: local:jkn-godeok
     title: 고덕강일3단지 본청약 개시, 전용 59㎡ 분양가 3억원대
     publisher: 재경일보
     url: https://news.jkn.co.kr/post/1066740
     level: S2
+    type: news
     checkedAt: 2026-11-03
   - id: local:metro-rule
     title: 토지임대부 주택 전매제한 10년 뒤 매매 허용, 환매 가격 기준(2024.3)
     publisher: 메트로서울
     url: https://www.metroseoul.co.kr/article/20240304500246
     level: S2
+    type: news
     checkedAt: 2026-11-03
   - id: local:metro-loan
     title: 토지임대부 사전청약 당첨자 전용 대출(2026.8)
     publisher: 메트로서울
     url: https://www.metroseoul.co.kr/article/20260826500050
     level: S2
+    type: news
     checkedAt: 2026-11-03
   - id: local:newstomato-loan
     title: 토지임대부 주택 대출 조건(2026.8)
     publisher: 뉴스토마토
     url: https://newstomato.com/ReadNews.aspx?no=1310030
     level: S2
+    type: news
     checkedAt: 2026-11-03
   - id: local:pressian-gangnam
     title: 강남 세곡 토지임대부 주택 분양가와 거래 가격
     publisher: 프레시안
     url: https://pressian.com/pages/articles/2023121310252061294
     level: S2
+    type: news
     checkedAt: 2026-11-03
 ---
 

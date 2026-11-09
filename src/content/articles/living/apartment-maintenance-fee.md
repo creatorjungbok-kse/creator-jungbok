@@ -136,6 +136,7 @@ localSources:
     publisher: 스마트투데이
     url: https://www.smarttoday.co.kr/ko-kr/articles/64131
     level: S2
+    type: news
     checkedAt: 2026-10-31
   - id: local:seoul-unpaid-fee
     title: 전 입주자가 체납한 아파트 관리비, 누가 내야 할까?(내 손안에 서울)
@@ -148,6 +149,7 @@ localSources:
     publisher: 법률신문
     url: https://www.lawtimes.co.kr/news/articleViewAmp.html?idxno=5931
     level: S2
+    type: news
     checkedAt: 2026-10-31
 ---
 

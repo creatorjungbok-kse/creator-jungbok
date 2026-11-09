@@ -103,12 +103,14 @@ localSources:
     publisher: 매일신문
     url: https://www.imaeil.com/page/view/2026101112534083582
     level: S2
+    type: news
     checkedAt: 2026-11-07
   - id: local:medicaltimes-cert-fee
     title: 의료기관 제증명수수료 상한(진단서 2만원 등)
     publisher: 메디칼타임즈
     url: https://www.medicaltimes.com/Mobile/News/NewsView.html?ID=1113944
     level: S2
+    type: news
     checkedAt: 2026-11-07
 ---
 

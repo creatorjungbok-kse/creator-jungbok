@@ -124,6 +124,7 @@ localSources:
     publisher: 매일신문
     url: https://www.imaeil.com/page/view/2026101112534083582
     level: S2
+    type: news
     checkedAt: 2026-11-04
   - id: local:kb-silson24
     title: 실손24 청구 화면 안내(사고유형·최초진료·계좌 입력)
