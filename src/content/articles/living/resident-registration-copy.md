@@ -30,7 +30,7 @@ summary: 주민등록등본은 정부24(인터넷·모바일)에서 본인이나
 thumbnail: /images/thumbnails/resident-registration-copy.webp
 ogImage: /images/og/resident-registration-copy.png
 datePublished: 2026-10-08
-dateModified: 2026-10-31
+dateModified: 2026-11-09
 researchedAt: 2026-10-31
 author: operator
 ymyl: low
@@ -78,6 +78,8 @@ faq:
     answer: 기초생활수급자, 국가유공자 등, 한부모가족 지원 대상자, 미성년 자녀 2명 이상을 키우는 사람이 신청하는 경우와 출생신고된 사람의 초본 첫 1통 등은 수수료가 면제돼요. 지방자치단체 조례로 면제하는 경우도 있으니 발급 기관에 확인하세요.
 related: [/living/move-in-report/, /living/rent-contract-report/, /living/lease-fixed-date/]
 changelog:
+  - date: 2026-11-09
+    summary: 정부24로 등본을 바로 발급받은 운영자 경험을 도입부에 넣었어요.
   - date: 2026-10-31
     summary: 제목을 주민등록등본 발급 방법으로 바꾸고, 발급 방법별 시간, 수령 방법, 출력 오류 해결, 모바일 발급과 파일 저장, 무인민원발급기 위치·운영시간·본인확인, 열람과 발급 알림을 추가했어요. 정부24 무인민원발급안내 화면 캡처를 넣었어요.
   - date: 2026-10-28
@@ -131,6 +133,8 @@ localSources:
 ---
 
 주민등록등본이 급하게 필요한데 인터넷으로 뗄지, 무인발급기로 갈지, 휴대폰에 PDF로 저장할 수 있는지 헷갈리죠. 발급 방법별 비용과 시간, 정부24 출력이 안 될 때, 모바일 저장, 초본과의 차이까지 순서대로 정리했어요.
+
+저는 등본을 정부24에서 뗐는데, 신청하자마자 바로 발급돼서 굉장히 편했어요. 집에 프린터가 있거나 PDF로 저장해 내면 되는 곳이라면 인터넷 발급이 가장 빨라요.
 
 ## 주민등록등본 발급 방법 한눈에
 
