@@ -21,7 +21,7 @@ summary: 클로드는 claude.ai 웹, Mac·Windows 데스크톱 앱, iOS·Android
 thumbnail: /images/thumbnails/claude-usage.webp
 ogImage: /images/og/claude-usage.png
 datePublished: 2026-10-28
-dateModified: 2026-10-28
+dateModified: 2026-11-16
 researchedAt: 2026-10-28
 author: operator
 ymyl: low
@@ -108,11 +108,13 @@ localSources:
     url: https://code.claude.com/docs/en/memory
     level: S1
     checkedAt: 2026-10-28
+changelog:
+  - date: 2026-11-16
+    summary: 읽기 쉽게 다시 썼어요. 그림 설명을 카드 이미지로 바꾸고 문단을 짧게 나눴어요.
 ---
+클로드를 처음 깔아 보면 빈 대화창만 덩그러니 있어서 뭘 해야 할지 막막하죠. 대화가 쌓이면 매번 같은 설명을 반복하는 것도 은근히 귀찮고요.
 
-저는 개발자가 아닌데도 클로드로 앱까지 만들고 있어요.
-
-이 글에는 클로드를 처음 시작하는 법, 작업을 정리하는 프로젝트, 그리고 제가 꼭 추천하는 'MD 지침서' 만드는 법을 핵심만 담았어요. 기능 설명은 2026년 10월 28일 공식 도움말 기준이에요.
+저는 개발자가 아닌데도 클로드로 앱까지 만들고 있어요. 이 글에는 클로드를 처음 시작하는 법, 작업을 정리하는 프로젝트, 그리고 제가 꼭 추천하는 'MD 지침서' 만드는 법을 핵심만 담았어요. 기능 설명은 2026년 10월 28일 공식 도움말 기준이에요.
 
 ## 클로드 시작하기
 
@@ -124,59 +126,74 @@ localSources:
 | 데스크톱 앱 | Mac, Windows용 앱 설치 |
 | 모바일 앱 | iOS, Android 앱 설치 |
 
-가입은 구글 계정으로 하거나 이메일로 받은 로그인 링크로 할 수 있어요. 처음엔 무료로 써 보고, 부족하면 그때 유료로 바꿔도 돼요.
+가입은 구글 계정으로 하거나, 이메일로 받은 로그인 링크로 하면 돼요. 처음엔 무료로 써 보고 부족하면 그때 유료로 바꿔도 늦지 않아요.
 
-무료 플랜은 5시간마다 초기화되는 사용량 한도가 있어요. 요금제별 차이는 [클로드 요금제](/digital/claude-pricing/) 글에 정리해 두었어요.
+무료 플랜은 **5시간마다** 초기화되는 사용량 한도가 있어요. 요금제별 차이는 [클로드 요금제](/digital/claude-pricing/) 글에 정리해 두었어요.
 
 ## 클로드 프로젝트로 작업 정리하기
 
+<figure class="shot">
+  <a href="/images/articles/claude-usage-card-1.webp" class="shot__zoom"><img src="/images/articles/claude-usage-card-1.webp" width="800" height="419" alt="클로드 무료로 쓸 때 숫자 세 가지. 무료 플랜은 5시간마다 초기화되는 사용량 한도가 있다. 무료 계정은 프로젝트를 최대 5개까지 만들 수 있다. 프로젝트에 올리는 파일은 한 개에 30MB까지다." loading="lazy" decoding="async"></a>
+  <figcaption>파일 수는 정해져 있지 않지만 전체 양에는 한계가 있어요.</figcaption>
+</figure>
+
 대화가 쌓이면 매번 "나는 이런 일을 하고 있어"라고 다시 설명하기 번거롭죠. 이럴 때 프로젝트를 쓰면 편해요.
 
-프로젝트에 지침과 자료를 넣어 두면, 그 프로젝트 안의 모든 대화가 같은 지침과 자료를 참고해요. 무료 계정도 쓸 수 있고, 무료는 최대 5개까지 만들 수 있어요.
+프로젝트에 지침과 자료를 넣어 두면 그 안의 모든 대화가 같은 지침과 자료를 참고해요. 무료 계정에서도 되고, 무료는 **최대 5개**까지 만들어져요.
 
 <figure class="shot">
-  <a href="/images/articles/claude-usage-project.svg" class="shot__zoom"><img src="/images/articles/claude-usage-project.svg" width="800" height="920" alt="claude.ai 웹·데스크톱 기준 클로드 프로젝트 만드는 법. 1 왼쪽 사이드바에서 Projects를 클릭한다. 2 오른쪽 위 + New Project로 새 프로젝트를 만든다. 3 Set project instructions에 기초 지침을 붙여 넣는다. 4 프로젝트 지식에 PDF, DOCX, TXT 같은 자료를 올린다. 5 그 안에서 대화하면 모든 대화가 지침과 자료를 함께 참고한다." loading="lazy" decoding="async"></a>
+  <a href="/images/articles/claude-usage-card-2.webp" class="shot__zoom"><img src="/images/articles/claude-usage-card-2.webp" width="800" height="913" alt="claude.ai 웹·데스크톱 기준 클로드 프로젝트 만드는 법. 1 왼쪽 사이드바에서 Projects를 클릭한다. 2 오른쪽 위 + New Project로 새 프로젝트를 만든다. 3 Set project instructions에 기초 지침을 붙여 넣는다. 4 프로젝트 지식에 PDF, DOCX, TXT 같은 자료를 올린다. 5 그 안에서 대화하면 모든 대화가 지침과 자료를 함께 참고한다." loading="lazy" decoding="async"></a>
   <figcaption>프로젝트를 하나 만들어 지침과 자료를 넣어 두세요.</figcaption>
 </figure>
 
-| 넣는 곳 | 무엇을 |
-|---|---|
-| 프로젝트 지침 | 이 프로젝트에서 클로드가 지킬 규칙, 나와 작업 소개 |
-| 프로젝트 지식 | 참고 자료 파일(PDF, DOCX, CSV, TXT 등) |
+1. 왼쪽 사이드바에서 **Projects**를 눌러요
+2. 오른쪽 위 **+ New Project**로 새 프로젝트를 만들어요
+3. **Set project instructions**에 기초 지침을 붙여 넣어요
+4. 프로젝트 지식에 PDF, DOCX, TXT 같은 자료를 올려요
+5. 그 안에서 대화를 시작하면 끝이에요
 
-프로젝트에 올리는 파일은 한 개에 30MB까지예요. 파일 수는 정해져 있지 않지만, 전체 내용이 클로드가 한 번에 볼 수 있는 양 안에 들어가야 해요.
+프로젝트 지침에는 이 프로젝트에서 클로드가 지킬 규칙과 나와 작업 소개를 적어요. 프로젝트 지식에는 참고 자료 파일(PDF, DOCX, CSV, TXT 등)을 넣고요.
+
+파일은 한 개에 **30MB**까지 올라가요. 파일 수는 정해져 있지 않지만, 전체 내용이 클로드가 한 번에 볼 수 있는 양 안에 들어가야 해요.
 
 ## MD 지침서 폴더 만들기
 
 제가 꼭 추천하고 싶은 방법이에요. 작업을 잊어버리지 않게 하려고 폴더를 하나 만들고, 그 안에 기초 지침서를 MD 파일로 정리해 둬요.
 
-MD(마크다운) 파일은 제목과 목록 정도만 쓰는 아주 단순한 글 파일이에요. 메모장으로도 만들 수 있어요.
+MD(마크다운) 파일은 제목과 목록 정도만 쓰는 아주 단순한 글 파일이에요. 메모장으로도 만들어져요.
 
 ### MD 파일 저장하는 법
 
-1. 메모장을 열고 지침 내용을 적어요.
-2. 파일 > 다른 이름으로 저장을 눌러요.
-3. 파일 형식을 '모든 파일'로 바꾸고, 파일 이름을 about-me.md처럼 끝에 .md를 붙여 적어요.
-4. 인코딩은 UTF-8로 두고 저장해요. 한글이 깨지지 않아요.
+1. 메모장을 열고 지침 내용을 적어요
+2. 파일 > 다른 이름으로 저장을 눌러요
+3. 파일 형식을 '모든 파일'로 바꾸고, 파일 이름을 about-me.md처럼 끝에 .md를 붙여 적어요
+4. 인코딩은 UTF-8로 두고 저장해요. 그래야 한글이 깨지지 않아요
+
+### 지침서에 적을 것
 
 <figure class="shot">
-  <a href="/images/articles/claude-usage-folder.svg" class="shot__zoom"><img src="/images/articles/claude-usage-folder.svg" width="800" height="842" alt="클로드가 작업을 잊지 않게 하는 기초 지침서 폴더 예시. about-me.md에는 나는 누구인지와 원하는 답변 방식, company.md에는 우리 회사와 브랜드 소개와 하는 일, current-work.md에는 지금 하고 있는 작업과 진행 상황을 적는다. 클로드 앱에서는 프로젝트 지침에 붙여 넣고, 클로드 코드에서는 CLAUDE.md로 두면 자동으로 읽는다." loading="lazy" decoding="async"></a>
-  <figcaption>파일 이름은 예시예요. 나에게 맞게 바꿔도 돼요.</figcaption>
+  <a href="/images/articles/claude-usage-card-3.webp" class="shot__zoom"><img src="/images/articles/claude-usage-card-3.webp" width="800" height="455" alt="클로드가 작업을 잊지 않게 하는 기초 지침서 폴더 예시. about-me.md에는 나는 누구인지와 원하는 답변 방식, company.md에는 우리 회사와 브랜드 소개와 하는 일, current-work.md에는 지금 하고 있는 작업과 진행 상황을 적는다." loading="lazy" decoding="async"></a>
+  <figcaption>작업이 바뀌면 current-work.md만 고치면 돼요.</figcaption>
 </figure>
 
 이 폴더에 적어 두는 건 크게 세 가지예요.
 
-- **나에 대해**: 어떤 일을 하는 사람인지, 어떤 말투와 형식으로 답해 주면 좋은지
-- **우리 회사에 대해**: 회사나 브랜드가 하는 일, 지켜야 할 원칙
-- **지금 하는 작업**: 어떤 작업인지, 어디까지 했고 다음에 무엇을 할지
+- 나에 대해서는 어떤 일을 하는 사람인지, 어떤 말투와 형식으로 답해 주면 좋은지 적어요
+- 우리 회사에 대해서는 회사나 브랜드가 하는 일과 지켜야 할 원칙을 적어요
+- 지금 하는 작업은 어떤 작업인지, 어디까지 했고 다음에 무엇을 할지 적어요
 
 이렇게 해 두면 새 대화를 열 때마다 처음부터 설명할 필요가 없어요. 작업이 바뀌면 지금 하는 작업 파일만 고쳐 주면 되고요!
 
 ### 클로드 앱에서 쓰는 법
 
-MD 파일 내용을 복사해서 프로젝트 지침에 붙여 넣으면 돼요. 공식 안내의 업로드 형식 목록에는 MD가 따로 나와 있지 않아서, 붙여 넣는 방법이 가장 확실해요.
+<figure class="shot">
+  <a href="/images/articles/claude-usage-card-4.webp" class="shot__zoom"><img src="/images/articles/claude-usage-card-4.webp" width="800" height="496" alt="MD 지침서를 클로드 앱과 클로드 코드에서 쓰는 법 비교. 클로드 앱에서는 MD 내용을 복사해 프로젝트 지침에 붙여 넣고, 모든 대화에 적용할 내용은 설정의 지침에 넣는다. 클로드 코드에서는 CLAUDE.md를 세션 시작 때 자동으로 읽고, /init으로 기본 파일을 만들고, /memory로 열어 고친다." loading="lazy" decoding="async"></a>
+  <figcaption>CLAUDE.md는 200줄 이하로 짧게 두는 게 좋아요.</figcaption>
+</figure>
 
-모든 대화에 똑같이 적용하고 싶은 내용은 설정 > Your Claude > 지침(Instructions)에 넣어 둘 수도 있어요. 여기에 넣은 내용은 모든 대화에 적용돼요.
+MD 파일 내용을 복사해서 프로젝트 지침에 붙여 넣으면 돼요. 공식 안내의 업로드 형식 목록에는 MD가 따로 나와 있지 않아서, 붙여 넣는 쪽이 가장 확실해요.
+
+모든 대화에 똑같이 적용하고 싶은 내용은 설정 > Your Claude > 지침(Instructions)에 넣어 두세요. 여기 넣은 내용은 모든 대화에 적용돼요.
 
 ### 클로드 코드에서 쓰는 법
 
@@ -187,9 +204,9 @@ MD 파일 내용을 복사해서 프로젝트 지침에 붙여 넣으면 돼요.
 | 작업 폴더의 ./CLAUDE.md 또는 ./.claude/CLAUDE.md | 그 프로젝트에서 |
 | 내 홈 폴더 안 .claude 폴더의 CLAUDE.md | 내 컴퓨터의 모든 프로젝트에서 |
 
-처음이라면 클로드 코드에서 /init을 입력해 보세요. 기본 CLAUDE.md를 자동으로 만들어 주고, 이미 있으면 덮어쓰지 않고 고칠 점을 제안해요. /memory를 입력하면 지침서 파일을 열어서 고칠 수 있어요.
+처음이라면 클로드 코드에서 **/init**을 입력해 보세요. 기본 CLAUDE.md를 자동으로 만들어 주고, 이미 있으면 덮어쓰지 않고 고칠 점을 제안해요. **/memory**를 입력하면 지침서 파일이 열려서 바로 고치면 돼요.
 
-공식 문서는 파일 하나를 200줄 이하로 짧게 유지하라고 권해요. 길게 쓰기보다 핵심만 적는 게 좋아요.
+공식 문서는 파일 하나를 **200줄 이하**로 짧게 두라고 권해요. 길게 쓰기보다 핵심만 적는 게 나아요.
 
 ## 클로드 코드로 앱 만들기
 
@@ -197,10 +214,12 @@ MD 파일 내용을 복사해서 프로젝트 지침에 붙여 넣으면 돼요.
 
 처음에는 뭐가 뭔지 하나도 몰랐어요. 그래도 하다 보니까 익숙해지더라고요.
 
-클로드 코드는 무료 플랜에서는 쓸 수 없고 Pro부터 쓸 수 있어요. 어떤 요금제가 맞는지는 [클로드 코드 요금제](/digital/claude-code-pricing/) 글에 제 경험과 함께 정리해 두었어요.
+클로드 코드는 무료 플랜에서는 못 쓰고 **Pro부터** 돼요. 어떤 요금제가 맞는지는 [클로드 코드 요금제](/digital/claude-code-pricing/) 글에 제 경험과 함께 정리해 두었어요.
 
 ## AI에게 모두 맡기지 마세요
 
 이건 꼭 말하고 싶어요. 모든 것을 AI에게 맡기면 안 돼요.
 
-무조건 사람이 개입해서 명령을 내리고, 내 아이디어를 반영하는 게 중요해요. 앞에서 말한 지침서도 내 아이디어를 AI에게 전하는 방법 중 하나예요.
+무조건 사람이 개입해서 명령을 내리고, 내 아이디어를 반영해야 해요. 앞에서 말한 지침서도 내 아이디어를 AI에게 전하는 방법 중 하나예요.
+
+오늘 메모장을 열어서 about-me.md 하나부터 만들어 보세요!
