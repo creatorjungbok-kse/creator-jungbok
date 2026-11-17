@@ -70,7 +70,7 @@ faq:
     answer: 가입 신청 뒤 30일 안에 필수 서류를 내야 해요. 안 내면 30일째 보류 상태가 되고, 보류가 180일째까지 이어지면 자동으로 거부 처리돼요. 나중에 내려면 판매자 정보 > 판매자 관리 > 심사내역 조회에서 제출하기를 누르면 돼요.
   - question: 통신판매업 신고는 꼭 해야 하나요?
     answer: 개인·법인 사업자는 통신판매업 신고번호 입력이 필수예요. 간이사업자는 직전년도나 올해 판매금액이 1억400만원 이상일 때, 개인판매자는 구매확정 50건 이상일 때 안내를 받아요.
-related: [/business/business-registration-application/, /business/simplified-taxpayer/]
+related: [/business/mail-order-report/, /business/business-registration-application/, /business/simplified-taxpayer/]
 sourceIds: [local:ss-join, local:ss-docs, local:ss-docs-deadline, local:ss-fee, local:ss-fee-extra, local:ss-mailorder, local:ss-escrow]
 localSources:
   - id: local:ss-join
@@ -234,6 +234,8 @@ localSources:
 신고할 때 필요한 **구매안전서비스 이용확인증**은 스마트스토어센터 **판매자 정보 > 판매자 관리 > 판매자 정보** 메뉴 위쪽에서 받아요. 이건 **PC에서만** 받을 수 있고, 가입 심사 중에도 받을 수 있어요.
 
 신고번호를 입력할 때 영문은 한글로 바꿔서 넣어야 해요. 예를 들어 2020-성남분당B-1234는 2020-성남분당비-1234로 적어요.
+
+정부24에서 신고하는 순서와 등록면허세는 [통신판매업 신고증 발급 방법](/business/mail-order-report/)에 따로 정리해 뒀어요.
 
 ## 스마트스토어 개설 안될 때 확인할 것
 
