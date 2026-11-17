@@ -1,20 +1,21 @@
 ---
 // 글 상단 '핵심 요약'. 요약 문장을 한 줄씩 나눠 목록으로 보여 준다. 광고 금지 영역(data-ad-protected).
-import { splitSummary } from '../lib/summary';
+import { splitSummary, emphasizeSummary } from '../lib/summary';
 
 export interface Props {
   summary: string;
+  bold?: string[];
   title?: string;
 }
 
-const { summary, title = '핵심 요약' } = Astro.props;
+const { summary, bold = [], title = '핵심 요약' } = Astro.props;
 const items = splitSummary(summary);
 ---
 
 <section class="summary-box" data-ad-protected="summary">
   <h2>{title}</h2>
   <ul>
-    {items.map((s) => <li>{s}</li>)}
+    {items.map((s) => <li set:html={emphasizeSummary(s, bold)} />)}
   </ul>
 </section>
 

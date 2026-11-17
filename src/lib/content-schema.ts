@@ -126,6 +126,8 @@ const baseShape = {
   primaryQuery: text,
   synonyms: z.array(text).optional(),
   summary: text,
+  // 핵심 요약에서 굵게 보여 줄 말(summary 안에 그대로 있는 말만). 숫자·금액은 자동으로 굵게 표시된다
+  summaryBold: z.array(text).optional(),
   // 목록 카드·글 머리의 대표 이미지(없으면 대분류 색 칸으로 대신 표시)
   thumbnail: thumbnailPath.optional(),
   // 카카오톡·SNS 공유 미리보기·Article.image 이미지(없으면 사이트 기본 이미지)
