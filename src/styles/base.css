@@ -100,15 +100,69 @@ h3 {
 
 .prose h2 {
   margin-top: var(--space-7);
+  position: relative;
+  padding-left: 14px;
   font-size: var(--text-xl);
+  line-height: 1.4;
   letter-spacing: -0.01em;
 }
 
 .prose h3 {
+  position: relative;
   margin-top: var(--space-6);
+  padding-left: 18px;
   font-size: var(--text-lg);
   font-weight: var(--weight-semibold);
 }
+
+/* 큰 소제목 왼쪽 색 막대(글자 높이에만) */
+.prose h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0.2em;
+  width: 5px;
+  height: 1.1em;
+  border-radius: 3px;
+  background: var(--color-brand);
+}
+
+/* 작은 소제목: 큰 소제목과 같은 막대를 작고 얇게 */
+.prose h3::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--color-brand);
+  transform: translateY(-50%);
+}
+
+/* 형광펜 강조: 핵심 숫자·조건에만 짧게 */
+.prose mark {
+  padding: 0 2px;
+  background: linear-gradient(transparent 50%, #ffe08a 50%);
+  font-weight: var(--weight-semibold);
+  color: inherit;
+}
+
+/* 팁·주의 상자 */
+.prose .box {
+  padding: var(--space-4) var(--space-5);
+  border-radius: 12px;
+}
+.prose .box > :first-child { margin-top: 0; }
+.prose .box__title {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: var(--weight-bold);
+}
+.prose .box--tip { background: var(--color-link-soft); }
+.prose .box--tip .box__title { color: var(--color-link-strong); }
+.prose .box--warn { background: var(--color-status-closing-soft); }
+.prose .box--warn .box__title { color: var(--color-status-closing); }
 
 .prose ul,
 .prose ol {

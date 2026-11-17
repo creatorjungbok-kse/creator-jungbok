@@ -7,7 +7,7 @@ export const site = {
   // 홈 title의 한 줄 정의(`{name}: {tagline}`), 헤더 아래·푸터 설명
   tagline: '생활에 필요한 정보를 쉽고 정확하게',
   // 홈 meta description·RSS 채널 설명
-  description: '지원·혜택부터 생활비용, 사업·창업, 통신·디지털까지 알아두면 도움 되는 정보를 최신 기준으로 정리합니다.',
+  description: '지원·혜택부터 생활비용, 사업·창업, AI·IT까지 알아두면 도움 되는 정보를 최신 기준으로 정리합니다.',
   lang: 'ko',
   // 공유 미리보기 기본 이미지(1200x630 PNG). 글은 frontmatter ogImage가 있으면 그것을 쓴다
   ogImage: '/images/og/default.png',

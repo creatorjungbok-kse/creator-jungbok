@@ -208,7 +208,7 @@ localSources:
 
 ## 확정일자 인터넷 신청 방법
 
-온라인 확정일자는 **대법원 인터넷등기소**에서 받아요. 정부24가 아니라 인터넷등기소라는 점, 이것만 기억해 두세요.
+온라인 확정일자는 **대법원 인터넷등기소**에서 받아요. 신청하는 곳은 정부24가 아니라 인터넷등기소예요.
 
 <figure class="shot">
   <a href="/images/articles/lease-fixed-date-iros-apply.webp" class="shot__zoom"><img src="/images/articles/lease-fixed-date-iros-apply.webp" width="800" height="260" alt="인터넷등기소 위쪽 메뉴에서 신청에 마우스를 올린 화면. 부동산, 법인, 동산·채권담보, 전자확정일자 칸이 펼쳐지고, 오른쪽 전자확정일자 칸의 신청서 작성/제출과 신청사건 관리가 빨간 상자로 표시돼 신청은 여기라는 안내가 붙어 있어요." loading="lazy" decoding="async"></a>
