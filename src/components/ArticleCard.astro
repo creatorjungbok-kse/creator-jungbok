@@ -132,15 +132,21 @@ const showMeta = meta.length > 0 && variant !== 'mini' && variant !== 'stack';
     letter-spacing: -0.02em;
   }
 
-  /* row: 이미지 왼쪽(모바일은 작게) */
+  /* row: 매거진 와이드 카드 — 글은 왼쪽, 16:9 이미지는 오른쪽 */
   .card--row {
-    grid-template-columns: 7.5rem minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) 7.5rem;
     align-items: start;
     gap: var(--space-4);
   }
 
+  .card--row :global(.card__thumb) {
+    order: 2;
+  }
+
   .card--row .card__title {
     -webkit-line-clamp: 2;
+    font-weight: var(--weight-bold);
+    letter-spacing: -0.01em;
   }
 
   /* tile: 이미지 위 카드(홈 최신 글·관련 글). 제목 2줄 */
@@ -186,12 +192,13 @@ const showMeta = meta.length > 0 && variant !== 'mini' && variant !== 'stack';
 
   @media (min-width: 768px) {
     .card--row {
-      grid-template-columns: 12.5rem minmax(0, 1fr);
-      gap: var(--space-5);
+      grid-template-columns: minmax(0, 1fr) 15rem;
+      gap: var(--space-6);
     }
 
     .card--row .card__title {
-      font-size: var(--text-md);
+      font-size: var(--text-lg);
+      line-height: var(--leading-tight);
     }
   }
 </style>

@@ -9,20 +9,24 @@ const categoryLinks = await primaryNavCategoryLinks();
 
 <footer class="site-footer">
   <div class="container site-footer__inner">
-    <div>
+    <div class="site-footer__about">
       <a class="site-footer__brand" href="/">{site.name}</a>
       <p>{site.tagline}</p>
     </div>
     <nav aria-label="하단 카테고리">
+      <p class="site-footer__head">카테고리</p>
       <ul class="site-footer__links">
         {categoryLinks.map((l) => <li><a href={l.href}>{l.title}</a></li>)}
       </ul>
     </nav>
     <nav aria-label="사이트 정보">
-      <ul class="site-footer__links site-footer__links--info">
+      <p class="site-footer__head">사이트 정보</p>
+      <ul class="site-footer__links">
         {infoPages.map((p) => <li><a href={p.href}>{p.label}</a></li>)}
       </ul>
     </nav>
+  </div>
+  <div class="container site-footer__bottom">
     <p class="site-footer__note">
       가격·지원 정보는 각 글의 조사 기준일·확인일 기준이며 실제와 다를 수 있습니다. 지원·혜택 정보는 공식 공고를 정리한 것이며
       개인의 수급 자격을 판단하지 않습니다.
@@ -32,7 +36,10 @@ const categoryLinks = await primaryNavCategoryLinks();
 </footer>
 
 <style>
+  /* 매거진형 푸터: 위 브랜드·메뉴 칸, 아래 안내 줄 */
   .site-footer {
+    margin-top: var(--space-7);
+    border-top: 1px solid var(--color-border);
     background: var(--color-surface);
     color: var(--color-text-muted);
     font-size: var(--text-sm);
@@ -40,16 +47,34 @@ const categoryLinks = await primaryNavCategoryLinks();
 
   .site-footer__inner {
     display: grid;
-    gap: var(--space-4);
+    gap: var(--space-5);
     padding-block: var(--space-6);
   }
 
   .site-footer__brand {
     display: inline-flex;
     align-items: center;
-    justify-self: start;
+    gap: var(--space-2);
     min-height: var(--touch);
-    margin-block: calc(-1 * var(--space-3));
+    color: var(--color-text);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-bold);
+  }
+
+  .site-footer__brand::before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    background: var(--color-brand);
+  }
+
+  .site-footer__about p {
+    margin: 0;
+  }
+
+  .site-footer__head {
+    margin: 0 0 var(--space-2);
     color: var(--color-text);
     font-weight: var(--weight-bold);
   }
@@ -57,24 +82,37 @@ const categoryLinks = await primaryNavCategoryLinks();
   .site-footer__links {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-1) var(--space-5);
+    gap: 0 var(--space-4);
   }
 
   .site-footer__links a {
     display: inline-flex;
     align-items: center;
-    min-width: var(--space-6);
     min-height: var(--touch);
+    color: var(--color-text-muted);
+  }
+
+  .site-footer__links a:hover {
     color: var(--color-text);
   }
 
-  .site-footer__links--info a {
-    color: var(--color-text-muted);
-    font-size: var(--text-xs);
+  .site-footer__bottom {
+    display: grid;
+    gap: var(--space-2);
+    padding-block: var(--space-4) var(--space-6);
+    border-top: 1px solid var(--color-border);
   }
 
   .site-footer__note,
   .site-footer__copy {
+    margin: 0;
     font-size: var(--text-xs);
+  }
+
+  @media (min-width: 768px) {
+    .site-footer__inner {
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: var(--space-6);
+    }
   }
 </style>

@@ -42,8 +42,27 @@ const { title, href, tier = 'secondary' } = Astro.props;
     font-weight: var(--weight-medium);
   }
 
+  /* 매거진형: 홈 섹션 제목 아래 얇은 선, 제목 밑은 브랜드색 짧은 막대 */
+  .section-title--primary,
+  .section-title--secondary {
+    position: relative;
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .section-title--primary::after,
+  .section-title--secondary::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 40px;
+    height: 3px;
+    background: var(--color-brand);
+  }
+
   .section-title--primary h2 {
-    font-size: var(--text-lg);
+    font-size: var(--text-xl);
   }
 
   .section-title--article h2 {

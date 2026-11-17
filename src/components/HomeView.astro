@@ -203,8 +203,21 @@ const { lead, trending, popular, latest, urgent, moreUrgent, tools, sections, is
   }
 
   .lead-side h2 {
+    position: relative;
     margin-bottom: var(--space-2);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-border);
     font-size: var(--text-lg);
+  }
+
+  .lead-side h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 40px;
+    height: 3px;
+    background: var(--color-brand);
   }
 
   .lead-list > :global(.card) {

@@ -389,7 +389,7 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
     max-width: 47.5rem;
   }
 
-  /* 글 머리: 분류 · 제목 · 작성 정보. 대표 이미지는 모바일에서 아래, 태블릿 이상에서 오른쪽 작은 칸 */
+  /* 글 머리: 분류 · 제목 · 작성 정보 · 대표 이미지(본문 폭) */
   .article__head {
     display: grid;
     gap: var(--space-4);
@@ -408,11 +408,19 @@ const showAfterBodyAd = bodyParts.length > 0 && adSlots.has(isArticle ? 'lower' 
     gap: var(--space-2);
   }
 
+  /* 매거진형 글 머리: 제목 아래에 본문 폭 그대로 16:9 큰 대표 이미지 */
+  .article__thumb :global(.thumb) {
+    border-radius: var(--radius);
+  }
+
   @media (min-width: 768px) {
-    .article__head--thumb {
-      grid-template-columns: minmax(0, 1fr) 13.5rem;
-      align-items: center;
+    .article__head {
       gap: var(--space-5);
+    }
+
+    .article .article__head h1 {
+      font-size: 2.125rem;
+      line-height: 1.3;
     }
   }
 

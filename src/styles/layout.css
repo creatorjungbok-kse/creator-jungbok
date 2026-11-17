@@ -75,16 +75,18 @@
 
 @media (min-width: 768px) {
   :root {
-    --header-h: 64px;
+    --header-top-h: 68px;
+    --header-nav-h: 48px;
     --gutter: 24px;
   }
 
   .menu-button {
-    display: none;
+    visibility: hidden;
   }
 
   .site-nav[popover] {
     display: flex;
+    flex-wrap: wrap;
     position: static;
     width: auto;
     margin: 0;

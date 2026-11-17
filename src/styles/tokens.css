@@ -60,7 +60,9 @@
   --sidebar: 300px;
   --gap-layout: 32px;
   --prose: 720px;
-  --header-h: 56px;
+  --header-top-h: 56px;
+  --header-nav-h: 0px;
+  --header-h: calc(var(--header-top-h) + var(--header-nav-h));
   --gutter: 16px;
   --touch: 44px;
   --ad-min-h: 250px;
