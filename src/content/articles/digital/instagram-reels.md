@@ -75,7 +75,7 @@ faq:
     answer: 릴스를 다 만들고 공유 화면 아래의 고급 설정(안드로이드는 옵션 더 보기)을 열어 이 게시물 예약을 켜고 날짜와 시간을 고르면 돼요. 최대 75일 뒤까지 예약할 수 있어요.
   - question: 에딧 앱은 유료인가요?
     answer: 아니요. 인스타그램이 만든 에딧(Edits) 앱은 무료로 쓸 수 있고 워터마크 없이 저장돼요. 만든 영상을 인스타그램에 바로 올릴 수도 있어요.
-related: [/digital/photo-upscale/, /digital/recording-text-conversion/]
+related: [/digital/capcut-download/, /digital/photo-upscale/]
 sourceIds: [local:ig-schedule, local:ig-3min, local:edits]
 localSources:
   - id: local:ig-schedule
@@ -148,7 +148,7 @@ localSources:
 
 ### 편집은 캡컷이나 브루로
 
-캡컷은 컷 자르기, 효과, 자막을 한 번에 다루기 좋아요. 브루는 말소리를 자막으로 자동으로 바꿔 줘서 말이 많은 영상에 편해요.
+[캡컷](/digital/capcut-download/)은 컷 자르기, 효과, 자막을 한 번에 다루기 좋아요. 브루는 말소리를 자막으로 자동으로 바꿔 줘서 말이 많은 영상에 편해요.
 
 ### 업로드는 에딧으로
 
